@@ -1,9 +1,9 @@
-##Django backend App for APIs
+# Django backend App for APIs
 
 
 ## How to Setup
 
-##Go to the project home directory
+### Go to the project home directory
 `cd hospitalManagementDjango`
 
 ### Create Virtual Environment
