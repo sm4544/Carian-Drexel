@@ -30,6 +30,7 @@ export default class Login extends Component {
           <TextInput
             style={styles.input}
             placeholder="Email / Username"
+            placeholder="please enter Username"
             placeholderTextColor="white"
             onChangeText={this.email}
           />
