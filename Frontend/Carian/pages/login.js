@@ -29,7 +29,9 @@ export default class Login extends Component {
         <View style={styles.inputView}>
           <TextInput
             style={styles.input}
+
             placeholder="Username"
+
             placeholderTextColor="white"
             onChangeText={this.email}
           />
