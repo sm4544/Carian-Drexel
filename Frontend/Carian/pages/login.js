@@ -29,8 +29,9 @@ export default class Login extends Component {
         <View style={styles.inputView}>
           <TextInput
             style={styles.input}
-            placeholder="Email / Username"
-            placeholder="please enter Username"
+
+            placeholder="Username"
+
             placeholderTextColor="white"
             onChangeText={this.email}
           />
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   inputView: {
     width: "80%",
-    backgroundColor: "#465881",
+    backgroundColor: "steelblue",
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
