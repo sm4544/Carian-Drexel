@@ -3,6 +3,19 @@
 
 ## How to Setup
 
+## Docker setup for database - Postgres
+
+### Install docker 
+https://docs.docker.com/docker-for-windows/install/
+
+### Pull postgres database image
+`docker pull postgres`
+
+### Start the postgres container by verifying container_id
+`docker start <container_id>`
+
+---------------------------------------------------------------------------
+
 ### Go to the project home directory
 `cd hospitalManagementDjango`
 
@@ -18,3 +31,4 @@
 
 ### Start the application
 `py manage.py runserver`
+
