@@ -8,8 +8,13 @@ import {
   Alert,
   Image,
   ScrollView,
+  style
 } from "react-native";
-import DropdownMenu from "react-native-dropdown-menu";
+
+import styles from '../styles/commonStyles';
+
+
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -19,14 +24,25 @@ export default class Register extends Component {
       // showPatient: false,
     };
   }
+
   render() {
     // const { navigate } = this.props.navigation;
 
-    var data = [["Roles", "Admin", "Doctor", "Patient", "Pharmacy", "Lab"]];
+    this.state = {
+      country: 'uk',
+      role: 'CustomerDoct',
+      name: 'Srini'
+    };
+   
+    var data = [["I am Customer", "I am Admin", "I am Doctor", "i am Hospital Staff", "I am Pharmacy Assistant", "I am Lab Assistant"]];
     return (
-      <View style={styles.container}>
-        <Text style={styles.Textsize}>Select the role to register</Text>
 
+      <View style={styles.container}>
+        <Text style={styles.AppTitle}>CARIAN</Text>
+
+
+        {/*
+        
         <DropdownMenu
           style={{ flexHorizantal: 1 }}
           bgColor={"#CD6155"}
@@ -37,154 +53,79 @@ export default class Register extends Component {
           }
           data={data}
         >
-          {/* <View> */}
-          {/* {this.state.text ? ( */}
-          <ScrollView>
-            <View>
-              <Text style={styles.Textsize}>First Name:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  FName"
-                placeholderTextColor="black"
-              />
-              <Text style={styles.Textsize}>Last Name:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  LName"
-                placeholderTextColor="black"
-              />
+        
+        
+        
+        
+        <DropDownPicker
+            items={[
+              { label: 'UK', value: 'uk'  },
+              { label: 'France', value: 'france' },
+            ]}
+            defaultValue={this.state.country}
+            containerStyle={{ height: 40 }}
+            
+            itemStyle={{
+              justifyContent: 'flex-start'
+            }}
+            dropDownStyle={{ backgroundColor: '#fafafa' }}
+            onChangeItem={item => this.setState({
+              country: item.value
+            })}
+          />
+          {this.state.country} */}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            placeholder="First name"
+            placeholderTextColor="white"
+          /></View>
 
-              <Text style={styles.Textsize}>Age:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  Age"
-                placeholderTextColor="black"
-              />
 
-              <Text style={styles.Textsize}>Gender:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  gender"
-                placeholderTextColor="black"
-              />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            placeholder="Last Name"
+            placeholderTextColor="white"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            placeholder="Mobile Number"
+            placeholderTextColor="white"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="white"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="white"
+          />
+        </View>
 
-              <Text style={styles.Textsize}>Address: </Text>
+        <TouchableOpacity style={styles.button}
+          onPress={() => this.props.navigation.navigate('ConfirmationScreen', { role: this.state.role, name : this.state.role })}>
 
-              <TextInput
-                style={styles.input}
-                placeholder="  Apt/Street1"
-                placeholderTextColor="black"
-              />
+          <Text style={styles.buttonText}>Register/Submit</Text>
+        </TouchableOpacity>
 
-              <TextInput
-                style={styles.input}
-                placeholder="  Street2"
-                placeholderTextColor="black"
-              />
+        <TouchableOpacity
 
-              <TextInput
-                style={styles.input}
-                placeholder="  City"
-                placeholderTextColor="black"
-              />
-
-              <TextInput
-                style={styles.input}
-                placeholder="  State"
-                placeholderTextColor="black"
-              />
-
-              <TextInput
-                style={styles.input}
-                placeholder="  Country"
-                placeholderTextColor="black"
-              />
-
-              <TextInput
-                style={styles.input}
-                placeholder="  ZipCode"
-                placeholderTextColor="black"
-              />
-
-              <Text style={styles.Textsize}>Mobile Number:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  mobile"
-                placeholderTextColor="black"
-              />
-
-              <Text style={styles.Textsize}>Email ID:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  emailID"
-                placeholderTextColor="black"
-              />
-
-              <Text style={styles.Textsize}>Password :</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="  password"
-                placeholderTextColor="black"
-              />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigate("Login")}
-              >
-                <Text style={styles.buttonText}>REGISTER</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </DropdownMenu>
+          onPress={() => this.props.navigation.navigate('Login')}>
+          <Text style={styles.frgtpassword}> Already have an account? Sign in</Text>
+        </TouchableOpacity>
       </View>
+
+
+
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F0F0E1",
-    alignContent: "center",
-  },
-  TextForm: {
-    width: "80%",
-
-    borderRadius: 25,
-    height: 50,
-    marginBottom: 20,
-    justifyContent: "center",
-    padding: 20,
-    borderColor: "white",
-    borderWidth: 2,
-  },
-  Textsize: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "maroon",
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
-  input: {
-    backgroundColor: "teal",
-    borderColor: "white",
-    borderWidth: 2,
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
-  button: {
-    width: "25%",
-    backgroundColor: "#CD6155",
-    borderRadius: 25,
-    borderColor: "white",
-    borderWidth: 2,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    marginBottom: 10,
-    marginRight: "30%",
-  },
-  buttonText: {
-    color: "white",
-  },
-});
+};

@@ -5,6 +5,7 @@ export default StyleSheet.create({
       flex: 1,
       backgroundColor: "#F0F0E1",
       alignItems: "center",
+      justifyContent:'center'
     },
     AppTitle: {
       fontWeight: "bold",
@@ -17,36 +18,55 @@ export default StyleSheet.create({
     inputView: {
       width: "80%",
       backgroundColor: "steelblue",
-      borderRadius: 25,
+      borderRadius: 18,
       height: 50,
       marginBottom: 20,
       justifyContent: "center",
-      padding: 20,
+      padding: 5,
       borderColor: "white",
-      borderWidth: 2,
+      //borderWidth: 2,
     },
     input: {
-      height: 50,
+      height: 100,
       color: "white",
+      fontSize:20,
     },
     frgtpassword: {
       color: "black",
-      fontSize: 20,
+      fontSize: 25,
       textDecorationLine: "underline",
     },
     button: {
       width: "80%",
       backgroundColor: "#CD6155",
-      borderRadius: 25,
+      borderRadius: 18,
       borderColor: "white",
       borderWidth: 2,
-      height: 50,
+      height: 60,
       alignItems: "center",
       justifyContent: "center",
-      marginTop: 40,
-      marginBottom: 10,
+      marginTop: 20,
+      marginBottom: 40,
     },
     buttonText: {
       color: "white",
+      fontSize:25
     },
+    image:{
+        width: 250,
+        height:300,
+        borderRadius:20
+    },
+    dropdownstyle:{
+        backgroundColor: "steelblue", 
+        width: "80%",        
+        
+        //borderWidth: 2,
+    },
+    ConfirmationText:{
+        color:'black',
+        fontSize: 30,
+        fontStyle:"italic",
+        alignItems:'center'
+    }
   });

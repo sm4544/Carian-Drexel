@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.7.6",
+    "@react-navigation/stack": "^5.9.3",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
     "react-native-dropdown-menu": "^2.0.0",
+    "react-native-dropdown-picker": "^3.7.0",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
@@ -35,8 +38,9 @@
   "jest": {
     "preset": "react-native",
     "verbose": true,
-    "setupFilesAfterEnv": ["./setupTests.js"]
-   
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   },
   "private": true
 }

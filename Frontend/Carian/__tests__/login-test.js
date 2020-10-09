@@ -35,7 +35,7 @@ describe('<Login/>', () => {
   })
 
   it('should contain register button', () => {
-    expect(wrapper.contains("REGISTER")).to.equal(true);
+    expect(wrapper.contains("New user? Register Here")).to.equal(true);
     expect(wrapper.find(TouchableOpacity)).to.have.length(3);  
    
   })  
