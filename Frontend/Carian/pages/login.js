@@ -5,11 +5,12 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  Image
 } from "react-native";
 import Register from './register';
 import styles from '../styles/commonStyles';
 
-export default class Login extends Component {
+export default class Login extends React.Component{
   state = {
     email: "",
     password: "",
@@ -23,24 +24,29 @@ export default class Login extends Component {
     this.setState({ password: text });
   };
 
-  navigateToRegistration= () => {
-    return <Register></Register>;
+  onPressRegister= () => {
+    this.props.navigation.navigate("Register");
+  };
+
+  onPressLogin = () => {
+    
+    this.props.navigation.navigate("CustomerDashboard");
   };
 
   render() {
     //const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        
         <Text style={styles.AppTitle}>CARIAN</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.input}
-
             placeholder="Username"
-
             placeholderTextColor="white"
             onChangeText={this.email}
           />
+        
         </View>
         <View style={styles.inputView}>
           <TextInput
@@ -56,15 +62,13 @@ export default class Login extends Component {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigate("Dashboard")}
-        >
+          onPress={() => this.onPressLogin()}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => this.navigateToRegistration()}
-        >
-          <Text style={styles.buttonText}>REGISTER</Text>
+         
+          onPress={() => this.onPressRegister()}>
+          <Text style={styles.frgtpassword}>New user? Register Here</Text>
         </TouchableOpacity>
       </View>
     );
