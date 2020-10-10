@@ -58,15 +58,24 @@ export default StyleSheet.create({
         borderRadius:20
     },
     dropdownstyle:{
-        backgroundColor: "steelblue", 
-        width: "80%",        
         
-        //borderWidth: 2,
+        width: '80%',
+        height: 40,
+        marginBottom: 250,
     },
     ConfirmationText:{
         color:'black',
         fontSize: 30,
         fontStyle:"italic",
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor:'steelblue',
+        borderRadius: 15
+    },
+    errormessages:{
+      color: 'red',
+      textAlign:'left',
+      alignItems:'flex-start',
+      fontSize: 15
+
     }
   });
