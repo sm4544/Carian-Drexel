@@ -5,68 +5,74 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  Image
+  Image, Alert
 } from "react-native";
 import Register from './register';
 import styles from '../styles/commonStyles';
+import ValidationComponent from 'react-native-form-validator';
 
-export default class Login extends React.Component{
+export default class Login extends ValidationComponent {
   state = {
     email: "",
     password: "",
   };
 
-  email = (text) => {
-    this.setState({ email: text });
-  };
-
-  password = (text) => {
-    this.setState({ password: text });
-  };
-
-  onPressRegister= () => {
+  onPressRegister = () => {
     this.props.navigation.navigate("Register");
   };
-
+ 
   onPressLogin = () => {
-    
-    this.props.navigation.navigate("CustomerDashboard");
+    const isvalid = this.validate({
+      email: { email: true, required: true },
+      password: { password: true, required: true, minlength: 8}
+
+    });
+    if(isvalid){
+      this.props.navigation.navigate("CustomerDashboard");
+    }
+
+   
   };
 
   render() {
-    //const { navigate } = this.props.navigation;
+    
     return (
       <View style={styles.container}>
-        
         <Text style={styles.AppTitle}>CARIAN</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.input}
-            placeholder="Username"
-            placeholderTextColor="white"
-            onChangeText={this.email}
-          />
-        
+            placeholder="Email"
+            placeholderTextColor="white"            
+            ref="email" onChangeText={(email) => this.setState({ email })}
+            value={this.state.email}/>
         </View>
+
         <View style={styles.inputView}>
           <TextInput
             secureTextEntry
             style={styles.input}
             placeholder="Password"
             placeholderTextColor="white"
-            onChangeText={this.password}
-          />
+            ref="password" onChangeText={(password) => this.setState({ password })}
+            value={this.state.password}/>
         </View>
+        {this.getErrorMessages?<Text style={styles.errormessages}>
+            {this.getErrorMessages()}
+          </Text>: null}
+        
+
         <TouchableOpacity>
           <Text style={styles.frgtpassword}>Forgot Password</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.onPressLogin()}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-         
           onPress={() => this.onPressRegister()}>
           <Text style={styles.frgtpassword}>New user? Register Here</Text>
         </TouchableOpacity>

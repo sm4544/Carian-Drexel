@@ -12,117 +12,116 @@ import {
 } from "react-native";
 
 import styles from '../styles/commonStyles';
+import DropdownMenu from 'react-native-dropdown-menu';
+import ValidationComponent from 'react-native-form-validator';
 
-
-
-export default class Register extends Component {
+export default class Register extends ValidationComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      text: "",
-      // showAdmin: false,
-      // showPatient: false,
+    this.state = {      
+      role: '',
+      fName: '',
+      lName:'',
+      mnumber:'',
+      email:'',
+      password:''
     };
   }
-
+  onPressRegister = () => {
+    const isvalid = this.validate({
+      email: { email: true, required: true },
+      password: { password: true, required: true, minlength: 8},
+      fName: {required: true},
+      lName: {required: true},
+      mnumber: {numbers:true}
+        
+    });
+    if(isvalid){
+      this.props.navigation.navigate('ConfirmationScreen', { role: this.state.role, name: this.state.fName + " " +this.state.lName });
+    }
+  };
   render() {
-    // const { navigate } = this.props.navigation;
-
-    this.state = {
-      country: 'uk',
-      role: 'CustomerDoct',
-      name: 'Srini'
-    };
-   
-    var data = [["I am Customer", "I am Admin", "I am Doctor", "i am Hospital Staff", "I am Pharmacy Assistant", "I am Lab Assistant"]];
+    
+    var data = [["Customer", "Admin", "Doctor", "Hospital Staff", "Pharmacy Assistant", "Lab Assistant"]];
+    
     return (
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.AppTitle}>CARIAN</Text>
 
-      <View style={styles.container}>
-        <Text style={styles.AppTitle}>CARIAN</Text>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="First name"
+              placeholderTextColor="white"
+              ref="fName" onChangeText={(fName) => this.setState({ fName })}
+              value={this.state.fName} />
+          </View>
 
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Last Name"
+              placeholderTextColor="white"
+              ref="lName" onChangeText={(lName) => this.setState({ lName })}
+              value={this.state.lName} />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Mobile Number"
+              placeholderTextColor="white"
+              keyboardType="number-pad"
+              ref="mnumber" onChangeText={(mnumber) => this.setState({ mnumber })}
+              value={this.state.mnumber} />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="white"
+              ref="email" onChangeText={(email) => this.setState({ email })}
+              value={this.state.email} />
 
-        {/*
-        
-        <DropdownMenu
-          style={{ flexHorizantal: 1 }}
-          bgColor={"#CD6155"}
-          tintColor={"#666666"}
-          activityTintColor={"green"}
-          handler={(selection, row) =>
-            this.setState({ text: data[selection][row] })
-          }
-          data={data}
-        >
-        
-        
-        
-        
-        <DropDownPicker
-            items={[
-              { label: 'UK', value: 'uk'  },
-              { label: 'France', value: 'france' },
-            ]}
-            defaultValue={this.state.country}
-            containerStyle={{ height: 40 }}
-            
-            itemStyle={{
-              justifyContent: 'flex-start'
-            }}
-            dropDownStyle={{ backgroundColor: '#fafafa' }}
-            onChangeItem={item => this.setState({
-              country: item.value
-            })}
-          />
-          {this.state.country} */}
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            placeholder="First name"
-            placeholderTextColor="white"
-          /></View>
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="white"
+              ref="password" onChangeText={(password) => this.setState({ password })}
+              value={this.state.password} />
+          </View>
 
+          <View style={styles.dropdownstyle}>
+            <DropdownMenu
+              style={{ flexHorizantal: 1 }}
+              bgColor={"steelblue"}
+              tintColor={"#666666"}
+              activityTintColor={"green"}
+              handler={(selection, row) =>
+                this.setState({ role: data[selection][row] })
+              }
+              data={data}>
+            </DropdownMenu>
+          </View>
+          <Text style={styles.errormessages}>
+            {this.getErrorMessages()}
+          </Text>
 
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            placeholder="Last Name"
-            placeholderTextColor="white"
-          />
+          <TouchableOpacity style={styles.button}
+            onPress={() => this.onPressRegister()}>
+
+            <Text style={styles.buttonText}>Register/Submit</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+
+            onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={styles.frgtpassword}> Already have an account? Sign in</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            placeholder="Mobile Number"
-            placeholderTextColor="white"
-          />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="white"
-          />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="white"
-          />
-        </View>
-
-        <TouchableOpacity style={styles.button}
-          onPress={() => this.props.navigation.navigate('ConfirmationScreen', { role: this.state.role, name : this.state.role })}>
-
-          <Text style={styles.buttonText}>Register/Submit</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-
-          onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={styles.frgtpassword}> Already have an account? Sign in</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
 
 
 
