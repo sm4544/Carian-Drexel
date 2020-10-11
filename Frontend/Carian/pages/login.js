@@ -12,6 +12,7 @@ import styles from '../styles/commonStyles';
 import ValidationComponent from 'react-native-form-validator';
 
 export default class Login extends ValidationComponent {
+  
   state = {
     email: "",
     password: "",
@@ -22,12 +23,14 @@ export default class Login extends ValidationComponent {
   };
  
   onPressLogin = () => {
+    
     const isvalid = this.validate({
       email: { email: true, required: true },
       password: { password: true, required: true, minlength: 8}
 
     });
     if(isvalid){
+      this._resetErrors();
       this.props.navigation.navigate("CustomerDashboard");
     }
 
@@ -47,6 +50,9 @@ export default class Login extends ValidationComponent {
             ref="email" onChangeText={(email) => this.setState({ email })}
             value={this.state.email}/>
         </View>
+        {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("email")}
+          </Text>: null}
 
         <View style={styles.inputView}>
           <TextInput
@@ -57,13 +63,13 @@ export default class Login extends ValidationComponent {
             ref="password" onChangeText={(password) => this.setState({ password })}
             value={this.state.password}/>
         </View>
-        {this.getErrorMessages?<Text style={styles.errormessages}>
-            {this.getErrorMessages()}
+        {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("password")}
           </Text>: null}
         
 
         <TouchableOpacity>
-          <Text style={styles.frgtpassword}>Forgot Password</Text>
+          <Text style={styles.hyperlink}>Forgot Password</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -74,7 +80,7 @@ export default class Login extends ValidationComponent {
 
         <TouchableOpacity
           onPress={() => this.onPressRegister()}>
-          <Text style={styles.frgtpassword}>New user? Register Here</Text>
+          <Text style={styles.hyperlink}>New user? Register Here</Text>
         </TouchableOpacity>
       </View>
     );

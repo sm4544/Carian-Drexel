@@ -20,9 +20,9 @@ export default class Register extends ValidationComponent {
     super(props);
     this.state = {      
       role: '',
-      fName: '',
-      lName:'',
-      mnumber:'',
+      firstName: '',
+      lastName:'',
+      mobileNumber:'',
       email:'',
       password:''
     };
@@ -31,16 +31,17 @@ export default class Register extends ValidationComponent {
     const isvalid = this.validate({
       email: { email: true, required: true },
       password: { password: true, required: true, minlength: 8},
-      fName: {required: true},
-      lName: {required: true},
-      mnumber: {numbers:true}
+      firstName: {required: true},
+      lastName: {required: true},
+      mobileNumber: {numbers:true, required:true}
         
     });
     if(isvalid){
-      this.props.navigation.navigate('ConfirmationScreen', { role: this.state.role, name: this.state.fName + " " +this.state.lName });
+      this.props.navigation.navigate('ConfirmationScreen', { role: this.state.role, name: this.state.firstName + " " +this.state.lastName });
     }
   };
   render() {
+    const { navigate} = this.props.navigation;
     
     var data = [["Customer", "Admin", "Doctor", "Hospital Staff", "Pharmacy Assistant", "Lab Assistant"]];
     
@@ -54,27 +55,38 @@ export default class Register extends ValidationComponent {
               style={styles.input}
               placeholder="First name"
               placeholderTextColor="white"
-              ref="fName" onChangeText={(fName) => this.setState({ fName })}
+              ref="firstName" onChangeText={(firstName) => this.setState({ firstName })}
               value={this.state.fName} />
           </View>
+          {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("firstName")}
+          </Text>: null}
 
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
               placeholder="Last Name"
               placeholderTextColor="white"
-              ref="lName" onChangeText={(lName) => this.setState({ lName })}
+              ref="lastName" onChangeText={(lastName) => this.setState({ lastName })}
               value={this.state.lName} />
           </View>
+          {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("lastName")}
+          </Text>: null}
+
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
               placeholder="Mobile Number"
               placeholderTextColor="white"
               keyboardType="number-pad"
-              ref="mnumber" onChangeText={(mnumber) => this.setState({ mnumber })}
-              value={this.state.mnumber} />
+              ref="mobileNumber" onChangeText={(mobileNumber) => this.setState({ mobileNumber })}
+              value={this.state.mobileNumber} />
           </View>
+          {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("mobileNumber")}
+          </Text>: null}
+
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -82,8 +94,11 @@ export default class Register extends ValidationComponent {
               placeholderTextColor="white"
               ref="email" onChangeText={(email) => this.setState({ email })}
               value={this.state.email} />
-
           </View>
+          {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("email")}
+          </Text>: null}
+
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -92,6 +107,9 @@ export default class Register extends ValidationComponent {
               ref="password" onChangeText={(password) => this.setState({ password })}
               value={this.state.password} />
           </View>
+          {this.isFormValid?<Text style={styles.errormessages}>
+            {this.getErrorsInField("password")}
+          </Text>: null}
 
           <View style={styles.dropdownstyle}>
             <DropdownMenu
@@ -105,10 +123,7 @@ export default class Register extends ValidationComponent {
               data={data}>
             </DropdownMenu>
           </View>
-          <Text style={styles.errormessages}>
-            {this.getErrorMessages()}
-          </Text>
-
+        
           <TouchableOpacity style={styles.button}
             onPress={() => this.onPressRegister()}>
 
@@ -118,7 +133,7 @@ export default class Register extends ValidationComponent {
           <TouchableOpacity
 
             onPress={() => this.props.navigation.navigate('Login')}>
-            <Text style={styles.frgtpassword}> Already have an account? Sign in</Text>
+            <Text style={styles.hyperlink}> Already have an account? Sign in</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
