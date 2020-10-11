@@ -2,13 +2,25 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from . import views
+from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()
 router.register(r'hospitals', views.hospitalViewset,basename='hospitals')
+router.register(r'Patients',views.PatientsViewset,basename='patients')
+router.register(r'Profiles',views.ProfilesViewset,basename='profiles')
+router.register(r'Pharmacy',views.PharmacyViewset,basename='pharmacy')
+router.register(r'Medicine',views.MedicineViewset,basename='medicine')
+router.register(r'MedicineOrder',views.MedicineOrderViewset,basename='medicineOrder')
+router.register(r'Lab',views.LabViewset,basename='lab')
+router.register(r'Department',views.DepartmentViewset,basename='department')
+router.register(r'Staff',views.StaffViewset,basename='staff')
+router.register(r'LabReports',views.LabReportsViewset,basename='lab_reports')
+router.register(r'Appointments',views.AppointmentsViewset,basename='appointments')
+router.register(r'Messages',views.MessagesViewset,basename='messages')
 
-#router = DefaultRouter()
-#router.register(r'users', UserViewSet, basename='user')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
