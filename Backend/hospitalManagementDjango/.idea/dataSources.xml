@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/hospitalmanagement</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="postgres@heroku" uuid="59269897-05b1-4b6f-bd6d-414bec905885">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-34-235-62-201.compute-1.amazonaws.com:5432/d1c26pseafsj8p</jdbc-url>
+    </data-source>
   </component>
 </project>
