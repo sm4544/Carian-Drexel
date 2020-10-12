@@ -20,7 +20,7 @@ export default StyleSheet.create({
       backgroundColor: "steelblue",
       borderRadius: 18,
       height: 50,
-      marginBottom: 20,
+      marginTop: 20,
       justifyContent: "center",
       padding: 5,
       borderColor: "white",
@@ -31,7 +31,7 @@ export default StyleSheet.create({
       color: "white",
       fontSize:20,
     },
-    frgtpassword: {
+    hyperlink: {
       color: "black",
       fontSize: 25,
       textDecorationLine: "underline",
@@ -62,6 +62,7 @@ export default StyleSheet.create({
         width: '80%',
         height: 40,
         marginBottom: 250,
+        marginTop:20
     },
     ConfirmationText:{
         color:'black',
@@ -72,6 +73,7 @@ export default StyleSheet.create({
         borderRadius: 15
     },
     errormessages:{
+      width:'75%',
       color: 'red',
       textAlign:'left',
       alignItems:'flex-start',

@@ -14,10 +14,11 @@ export default class App extends React.Component {
     return (
       <NavigationContainer>
       <Stack.Navigator>
+      
         <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }}/>
-        <Stack.Screen name="Register" component={Register} options={{ title: 'Register' }}/>
-        <Stack.Screen name="CustomerDashboard" component={CustomerDashboard} options={{ title: 'DashBoard' }}/>
+        <Stack.Screen name="Register" component={Register} options={{ title: 'Register' }}/>        
         <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ title: 'ConfirmationScreen' }}/>
+        <Stack.Screen name="CustomerDashboard" component={CustomerDashboard} options={{ title: 'DashBoard' }}/>
       </Stack.Navigator>
     </NavigationContainer>
     );
