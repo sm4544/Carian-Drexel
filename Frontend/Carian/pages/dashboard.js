@@ -7,24 +7,36 @@ import {
   StyleSheet,
   Picker,
 } from "react-native";
-export default class Dashboard extends Component {
-  render() {
-    const { navigate } = this.props.navigation;
-    return <Text style={styles.Textsize}>Welcome to Dashboard</Text>;
-  }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F0F0E1",
-    alignItems: "center",
-  },
-  Textsize: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "#D35400",
-    paddingBottom: 30,
-    paddingTop: 30,
-  },
-});
+import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
+export default class Dashboard extends React.Component {
+  constructor() {
+    super();
+    this.deleteAccount = this.deleteAccount.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  deleteAccount(e) {
+    console.log("Deleting Account")
+  }
+ 
+  logout(e) {
+    console.log("Logging out")
+  }
+ 
+  render() {
+    return  (
+     <View>
+       <View>
+        <Text>hello</Text>
+       </View>
+      <DropdownMenu userName="Chris Smith123">        
+        <MenuItem text="Delete Account" onClick={this.deleteAccount} />
+        <MenuItem text="Logout" onClick={this.logout} />
+    </DropdownMenu>
+    </View>    
+    );
+  };
+};
+
+
