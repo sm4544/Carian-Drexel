@@ -53,10 +53,10 @@ export default class Register extends ValidationComponent {
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
-              placeholder="First name"
+              placeholder="firstName"
               placeholderTextColor="white"
               ref="firstName" onChangeText={(firstName) => this.setState({ firstName })}
-              value={this.state.fName} />
+              value={this.state.firstName} />
           </View>
           {this.isFormValid?<Text style={styles.errormessages}>
             {this.getErrorsInField("firstName")}
@@ -68,7 +68,7 @@ export default class Register extends ValidationComponent {
               placeholder="Last Name"
               placeholderTextColor="white"
               ref="lastName" onChangeText={(lastName) => this.setState({ lastName })}
-              value={this.state.lName} />
+              value={this.state.lastName} />
           </View>
           {this.isFormValid?<Text style={styles.errormessages}>
             {this.getErrorsInField("lastName")}
@@ -120,7 +120,9 @@ export default class Register extends ValidationComponent {
               handler={(selection, row) =>
                 this.setState({ role: data[selection][row] })
               }
-              data={data}>
+              data={data}
+             // value={this.state.role}>
+             >
             </DropdownMenu>
           </View>
         
@@ -131,7 +133,6 @@ export default class Register extends ValidationComponent {
           </TouchableOpacity>
 
           <TouchableOpacity
-
             onPress={() => this.props.navigation.navigate('Login')}>
             <Text style={styles.hyperlink}> Already have an account? Sign in</Text>
           </TouchableOpacity>
