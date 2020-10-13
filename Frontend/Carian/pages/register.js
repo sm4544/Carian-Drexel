@@ -18,33 +18,62 @@ import ValidationComponent from 'react-native-form-validator';
 export default class Register extends ValidationComponent {
   constructor(props) {
     super(props);
-    this.state = {      
-      role: '',
+    this.state = {
+      profile_type: '',
       firstName: '',
-      lastName:'',
-      mobileNumber:'',
-      email:'',
-      password:''
+      lastName: '',
+      mobileNumber: '',
+      email: '',
+      password: ''      
     };
   }
-  onPressRegister = () => {
+  onPressRegister = () => {    
     const isvalid = this.validate({
       email: { email: true, required: true },
-      password: { password: true, required: true, minlength: 8},
-      firstName: {required: true},
-      lastName: {required: true},
-      mobileNumber: {numbers:true, required:true}
-        
+      password: { password: true, required: true, minlength: 8 },
+      firstName: { required: true },
+      lastName: { required: true },
+      mobileNumber: { numbers: true, required: true },
+      profile_type:{required:true}
     });
-    if(isvalid){
-      this.props.navigation.navigate('ConfirmationScreen', { role: this.state.role, name: this.state.firstName + " " +this.state.lastName });
+    if (isvalid) {      
+      try {
+        fetch("http://127.0.0.1:8000/Profiles/", {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            first_name: this.state.firstName,
+            last_name: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            username: this.state.email.split('@')[0],
+            profile_type: this.state.profile_type
+          }),
+        }).then(resp => {
+          setTimeout(function () {
+            if (resp.status != 201) {            
+              alert("Error occured while posting data :" + resp.status + " : " + resp.statusText);
+              return false;
+            } 
+          }, 0);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+      this.props.navigation.navigate('ConfirmationScreen', { profile_type: this.state.profile_type, name: this.state.firstName + " " + this.state.lastName });
+    }
+    else{
+      return false;
     }
   };
   render() {
-    const { navigate} = this.props.navigation;
-    
-    var data = [["Customer", "Admin", "Doctor", "Hospital Staff", "Pharmacy Assistant", "Lab Assistant"]];
-    
+    const { navigate } = this.props.navigation;
+
+    var data = [["Please Select profile type", "Customer", "Admin", "Doctor", "Hospital Staff", "Pharmacy Assistant", "Lab Assistant"]];
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -58,9 +87,9 @@ export default class Register extends ValidationComponent {
               ref="firstName" onChangeText={(firstName) => this.setState({ firstName })}
               value={this.state.firstName} />
           </View>
-          {this.isFormValid?<Text style={styles.errormessages}>
+          {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("firstName")}
-          </Text>: null}
+          </Text> : null}
 
           <View style={styles.inputView}>
             <TextInput
@@ -70,9 +99,9 @@ export default class Register extends ValidationComponent {
               ref="lastName" onChangeText={(lastName) => this.setState({ lastName })}
               value={this.state.lastName} />
           </View>
-          {this.isFormValid?<Text style={styles.errormessages}>
+          {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("lastName")}
-          </Text>: null}
+          </Text> : null}
 
           <View style={styles.inputView}>
             <TextInput
@@ -83,9 +112,9 @@ export default class Register extends ValidationComponent {
               ref="mobileNumber" onChangeText={(mobileNumber) => this.setState({ mobileNumber })}
               value={this.state.mobileNumber} />
           </View>
-          {this.isFormValid?<Text style={styles.errormessages}>
+          {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("mobileNumber")}
-          </Text>: null}
+          </Text> : null}
 
           <View style={styles.inputView}>
             <TextInput
@@ -95,9 +124,9 @@ export default class Register extends ValidationComponent {
               ref="email" onChangeText={(email) => this.setState({ email })}
               value={this.state.email} />
           </View>
-          {this.isFormValid?<Text style={styles.errormessages}>
+          {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("email")}
-          </Text>: null}
+          </Text> : null}
 
           <View style={styles.inputView}>
             <TextInput
@@ -107,9 +136,9 @@ export default class Register extends ValidationComponent {
               ref="password" onChangeText={(password) => this.setState({ password })}
               value={this.state.password} />
           </View>
-          {this.isFormValid?<Text style={styles.errormessages}>
+          {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("password")}
-          </Text>: null}
+          </Text> : null}
 
           <View style={styles.dropdownstyle}>
             <DropdownMenu
@@ -118,14 +147,13 @@ export default class Register extends ValidationComponent {
               tintColor={"#666666"}
               activityTintColor={"green"}
               handler={(selection, row) =>
-                this.setState({ role: data[selection][row] })
+                this.setState({ profile_type: data[selection][row] })
               }
               data={data}
-             // value={this.state.role}>
-             >
+              ref="profile_type">
             </DropdownMenu>
           </View>
-        
+
           <TouchableOpacity style={styles.button}
             onPress={() => this.onPressRegister()}>
 
