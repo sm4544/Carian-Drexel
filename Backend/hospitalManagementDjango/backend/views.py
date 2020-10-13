@@ -1,13 +1,14 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+import random
 
 # Create your views here.
 from backend.serializers import *
 
 
 class hospitalViewset(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
     def create(self, request, format=None):
         print("Testing create post")
@@ -36,6 +37,41 @@ class hospitalViewset(viewsets.ViewSet):
         return Response(serializer.data)
 
 class ProfilesViewset(viewsets.ViewSet):
+
+
+    def create(self, request, format=None):
+        print('entered create')
+        data = request.data
+        print(data)
+        if data['email'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid email'})
+        elif data['password'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter password'})
+        elif data['first_name'] == '' or data['last_name'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid name!'})
+        #elif data['date_of_birth'] == '':
+            #return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid date of birth!'})
+        elif data['profile_type'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid profile type!'})
+        else:
+            try:
+                _str = 'pic'
+                # new_str = _str.join(format(ord(x), 'b') for x in _str)
+                # print(new_str)
+                Profiles.objects.get_or_create(id=random.randint(10, 100), first_name=data['first_name'], last_name=data['last_name'],
+                                               email=data['email'],
+                                               user_name=data['username'], password=data['password'],
+                                               registred_date=datetime.utcnow(),
+                                               date_of_birth=datetime.utcnow(),
+                                               security_question='test',
+                                               security_answer='test', password_attempts=0,
+                                               last_login_date=datetime.utcnow(),
+                                               status='test', profile_pic=bytes(_str, 'utf-8'), profile_type=data['profile_type'])
+            except Exception as exception:
+                print(exception)
+                return Response(status=status.HTTP_409_CONFLICT, data={"Message12345": "{}".format(
+                    exception)})
+            return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Profile"})
 
     def list(self,req):
         querySet = Profiles.objects.all()
