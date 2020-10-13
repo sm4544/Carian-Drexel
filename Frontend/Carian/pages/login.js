@@ -5,14 +5,14 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  Image, Alert
+  Image,
+  Alert,
 } from "react-native";
-import Register from './register';
-import styles from '../styles/commonStyles';
-import ValidationComponent from 'react-native-form-validator';
+import Register from "./register";
+import styles from "../styles/commonStyles";
+import ValidationComponent from "react-native-form-validator";
 
 export default class Login extends ValidationComponent {
-  
   state = {
     email: "",
     password: "",
@@ -21,24 +21,19 @@ export default class Login extends ValidationComponent {
   onPressRegister = () => {
     this.props.navigation.navigate("Register");
   };
- 
+
   onPressLogin = () => {
-    
     const isvalid = this.validate({
       email: { email: true, required: true },
-      password: { password: true, required: true, minlength: 8}
-
+      password: { password: true, required: true, minlength: 8 },
     });
-    if(isvalid){
+    if (isvalid) {
       this._resetErrors();
-      this.props.navigation.navigate("CustomerDashboard");
+      this.props.navigation.navigate("doctor_dashboard");
     }
-
-   
   };
 
   render() {
-    
     return (
       <View style={styles.container}>
         <Text style={styles.AppTitle}>CARIAN</Text>
@@ -46,13 +41,17 @@ export default class Login extends ValidationComponent {
           <TextInput
             style={styles.input}
             placeholder="Email"
-            placeholderTextColor="white"            
-            ref="email" onChangeText={(email) => this.setState({ email })}
-            value={this.state.email}/>
+            placeholderTextColor="white"
+            ref="email"
+            onChangeText={(email) => this.setState({ email })}
+            value={this.state.email}
+          />
         </View>
-        {this.isFormValid?<Text style={styles.errormessages}>
+        {this.isFormValid ? (
+          <Text style={styles.errormessages}>
             {this.getErrorsInField("email")}
-          </Text>: null}
+          </Text>
+        ) : null}
 
         <View style={styles.inputView}>
           <TextInput
@@ -60,13 +59,16 @@ export default class Login extends ValidationComponent {
             style={styles.input}
             placeholder="Password"
             placeholderTextColor="white"
-            ref="password" onChangeText={(password) => this.setState({ password })}
-            value={this.state.password}/>
+            ref="password"
+            onChangeText={(password) => this.setState({ password })}
+            value={this.state.password}
+          />
         </View>
-        {this.isFormValid?<Text style={styles.errormessages}>
+        {this.isFormValid ? (
+          <Text style={styles.errormessages}>
             {this.getErrorsInField("password")}
-          </Text>: null}
-        
+          </Text>
+        ) : null}
 
         <TouchableOpacity>
           <Text style={styles.hyperlink}>Forgot Password</Text>
@@ -74,15 +76,15 @@ export default class Login extends ValidationComponent {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.onPressLogin()}>
+          onPress={() => this.onPressLogin()}
+        >
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => this.onPressRegister()}>
+        <TouchableOpacity onPress={() => this.onPressRegister()}>
           <Text style={styles.hyperlink}>New user? Register Here</Text>
         </TouchableOpacity>
       </View>
     );
   }
-};
+}
