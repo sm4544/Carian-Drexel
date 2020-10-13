@@ -3,6 +3,8 @@ from django.urls import path, include
 from rest_framework import routers
 from . import views
 from rest_framework_simplejwt import views as jwt_views
+from django.views.decorators.csrf import csrf_exempt
+from .views import LoginSetup
 
 router = routers.DefaultRouter()
 router.register(r'hospitals', views.hospitalViewset,basename='hospitals')
@@ -19,8 +21,8 @@ router.register(r'Appointments',views.AppointmentsViewset,basename='appointments
 router.register(r'Messages',views.MessagesViewset,basename='messages')
 
 
+
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('login', csrf_exempt(LoginSetup.as_view()),name='post') ## added login
 ]
