@@ -18,7 +18,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import OptionsMenu from "react-native-options-menu";
-export default class Dashboard extends Component {
+export default class DoctorDashboard extends Component {
   onPressProfile = () => {
     this.props.navigation.navigate("doctor_profile");
   };
