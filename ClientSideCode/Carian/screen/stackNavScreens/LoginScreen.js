@@ -5,21 +5,20 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  Image,
-  Alert,
+  Image, Alert
 } from "react-native";
-import Register from "./register";
-import styles from "../styles/commonStyles";
-import ValidationComponent from "react-native-form-validator";
+import styles from '../../styles/commonStyles';
+import ValidationComponent from 'react-native-form-validator';
 
-export default class Login extends ValidationComponent {
+export default class LoginScreen extends ValidationComponent {
+
   state = {
     email: "",
     password: "",
   };
 
   onPressRegister = () => {
-    this.props.navigation.navigate("Register");
+    this.props.navigation.navigate("RegistrationScreen");
   };
 
   onPressLogin = () => {
@@ -46,13 +45,15 @@ export default class Login extends ValidationComponent {
             if (resp.status != 200) {            
               alert("Error occured while posting data :" + resp.status + " : " + resp.statusText);
               return false;
-            } 
+            } else{
+              alert("sucess" + resp.status);
+            }
           }, 0);
         });
       } catch (e) {
         console.log(e);
-      }
-    this.props.navigation.navigate("CustomerDashboard");
+      }    
+    this.props.navigation.navigate('DrawerNavigationRoutes', { login: 'user' })
   }else{
     return false;
   } 
@@ -89,7 +90,6 @@ render() {
       </Text> : null}
 
 
-
       <TouchableOpacity>
         <Text style={styles.hyperlink}>Forgot Password</Text>
       </TouchableOpacity>
@@ -108,4 +108,3 @@ render() {
   );
 }
 };
-
