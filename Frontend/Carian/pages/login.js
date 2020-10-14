@@ -5,14 +5,14 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  Image, Alert
+  Image,
+  Alert,
 } from "react-native";
-import Register from './register';
-import styles from '../styles/commonStyles';
-import ValidationComponent from 'react-native-form-validator';
+import Register from "./register";
+import styles from "../styles/commonStyles";
+import ValidationComponent from "react-native-form-validator";
 
 export default class Login extends ValidationComponent {
-
   state = {
     email: "",
     password: "",
@@ -89,6 +89,7 @@ render() {
       </Text> : null}
 
 
+
       <TouchableOpacity>
         <Text style={styles.hyperlink}>Forgot Password</Text>
       </TouchableOpacity>
@@ -107,3 +108,4 @@ render() {
   );
 }
 };
+
