@@ -5,81 +5,51 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  Picker,
-  Alert,
 } from "react-native";
-import { color } from "react-native-reanimated";
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import Iconpharm from 'react-native-vector-icons/MaterialCommunityIcons'
-import Icondoc from 'react-native-vector-icons/Fontisto'
+import {
+  Fontisto ,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import OptionsMenu from "react-native-options-menu";
+export default class DoctorProfile extends Component {
 
-
-export default class Dashboard extends Component {
-  render(){
-
+  render() {
     const { navigate } = this.props.navigation;
-    const hospitalbutton = (
-      <Icon.Button name="hospital" backgroundColor="#2ed397" size ={100}  onPress={()=>navigate("Adminset")}>
-         <Text style={{ color: 'white', fontSize: 30 }}>
-           Hospital   </Text>
-       </Icon.Button>
-     );
-     const pharmacybutton = (
-     <Iconpharm.Button name="pharmacy" backgroundColor="blue" size ={100} onPress={()=>navigate("Pharmset")}>
-         <Text style={{ color: 'white', fontSize: 30 }}>
-           Pharmacy
-         </Text>
-       </Iconpharm.Button>
-     );
-     
-     const doctorbutton = (
-       <Icondoc.Button name="doctor" backgroundColor="#6d9581" size ={100} onPress={()=>navigate("Doctorset")}>
-         <Text style={{ color: 'white', fontSize: 30 }}>
-           Doctor       </Text>
-       </Icondoc.Button>
-     );
-     
-     const labbutton = (
-       <Icondoc.Button name="laboratory" backgroundColor="#268fae"  size ={100} onPress={()=>navigate("Labset")}>
-         <Text style={{ color: 'white', fontSize: 30 }}>
-         Laboratory
-         </Text>
-       </Icondoc.Button>
-     );
-     
-    return (
-   // <Text style={styles.Textsize}>Welcome to Dashboard</Text>;
-   <View style={styles.container}>
-   <TouchableOpacity>  
-            {hospitalbutton}  
-         </TouchableOpacity>  
-    
-        <TouchableOpacity style={{marginTop: 50}}>  
-           {pharmacybutton}  
-         </TouchableOpacity>  
-   
-   
-        <TouchableOpacity style={{marginTop: 50}}>  
-           {doctorbutton}  
-         </TouchableOpacity>  
-         <TouchableOpacity style={{marginTop: 50}}>  
-           {labbutton}  
-         </TouchableOpacity>  
-   </View>
-    );
-    
 
-}
+    return (
+      <View style={styles.container}>
+
+        <Text style={styles.text}> Hospital</Text>
+        <TouchableOpacity onPress={()=>navigate("Adminset")}>
+        <MaterialCommunityIcons name="hospital-building" type="Feather" size={70} color="teal" />
+        </TouchableOpacity>
+
+        <Text style={styles.text}> Pharmacy</Text>
+        <TouchableOpacity onPress={()=>navigate("Pharmset")}>
+        <MaterialCommunityIcons name="pharmacy" type="Feather" size={70} color="teal" />
+        </TouchableOpacity>
+
+        <Text style={styles.text}> Doctor</Text>
+        <TouchableOpacity onPress={()=>navigate("Doctorset")}>
+        <Fontisto name="doctor" type="Feather" size={70} color="teal" />
+
+        </TouchableOpacity>
+        <Text style={styles.text}> Laboratory</Text>
+        <TouchableOpacity  onPress={()=>navigate("Labset")}>
+        <Fontisto name="laboratory" type="Feather" size={70} color="teal" />
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F0F0E1",    
-    alignItems: 'center',   
-    padding: 20  
+    backgroundColor: "#F0F0E1",
+    alignItems: "center",
   },
-  Textsize: {
+  text: {
     fontWeight: "bold",
     fontSize: 20,
     color: "#D35400",

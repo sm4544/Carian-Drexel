@@ -1,102 +1,88 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  Picker,
+  Alert,
+  Image,
+  ScrollView,
+  style,
 } from "react-native";
-export default class Labdetails extends Component {
-    render() {
-        const { navigate } = this.props.navigation;
-        return (
-<View style={styles.textval}>
-<View style={styles.inputval}>
-      <Text style={{fontSize: 20, fontWeight: "bold"}}>Lab Name</Text>
-      <TextInput style={{width: 200 ,borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
-    <View style={styles.inputval}>
-      <Text style={{fontSize: 20, fontWeight: "bold"}}>Address1</Text>
-      <TextInput style={{width: 200 ,borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
-    <View style={styles.inputval}>
-      <Text style={{fontSize: 20, fontWeight: "bold"}}>Address2</Text>
-      <TextInput style={{width: 200 ,borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
-    <View style={styles.inputval}>
-      <Text style={{fontSize: 20,fontWeight: "bold"}}>Phone Number</Text>
-      <TextInput style={{width: 200, borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
-    <View style={styles.inputval}>
-      <Text style={{fontSize: 20, fontWeight: "bold"}}>Registered Date</Text>
-      <TextInput style={{width: 200, borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
 
-    <View style={styles.inputval}>
-      <Text style={{fontSize: 20,fontWeight: "bold"}}>License Number</Text>
-      <TextInput style={{width: 200, borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
-    <View style={styles.inputval}>
-      <Text style={{fontSize: 20,fontWeight: "bold"}}>Hospital Id</Text>
-      <TextInput style={{width: 200, borderColor: '#008CBA',
-    borderWidth: 2, marginLeft: 10}}/>
-    </View>
-    <TouchableOpacity style = {styles.button}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-  </View>
-  
+import styles from "../styles/commonStyles";
+import ValidationComponent from "react-native-form-validator";
 
-        );
-      }
-    }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F0F0E1",
-    alignItems: "center",
-  },
-  Textsize: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "#D35400",
-    paddingBottom: 30,
-    paddingTop: 30,
-  },
-  button: {
-    width: "50%",
-    backgroundColor: "#CD6155",
-    borderRadius: 30,
-    borderColor: "white",
-    borderWidth: 2,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    marginBottom: 10,
+export default class Labdetails extends ValidationComponent {
+  constructor(props) {
+    super(props);
+  }
 
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20,
-  },
+  render() {
+    const { navigate } = this.props.navigation;
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Lab Name"
+              placeholderTextColor="white"
+            />
+          </View>
 
-  textval: {
-    flexDirection: 'column',
-     flex: 1, 
-     justifyContent: 'flex-start',
-     marginTop:50  
-  },
-  inputval: {
-    flexDirection: 'row',
-     marginBottom: 30,
-      marginLeft: 10   
-  },
-});
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Lab Address1"
+              placeholderTextColor="white"
+            />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Lab Address2"
+              placeholderTextColor="white"
+            />
+          </View>
+
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              placeholderTextColor="white"
+            />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="License Number"
+              placeholderTextColor="white"
+            />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Registered Date"
+              placeholderTextColor="white"
+            />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Hospital Id"
+              placeholderTextColor="white"
+            />
+          </View>
+
+          <TouchableOpacity
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
+}
