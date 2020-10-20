@@ -11,6 +11,15 @@ import DoctorEducation from "./pages/doctor_education";
 import DoctorLicense from "./pages/doctor_license";
 import DoctorWork from "./pages/doctor_work";
 import DoctorDashboard from "./pages/doctor_dashboard";
+import Admindashboard from "./pages/admindashboard";
+import Adminset from "./pages/adminset";
+import Pharmset from "./pages/pharmset";
+import Labset from "./pages/labset";
+import Doctorset from "./pages/doctorset";
+import Hospitaldetails from "./pages/hospitaldetails";
+import Pharmacydetails from "./pages/pharmacydetails";
+import Doctordetails from "./pages/doctordetails";
+import Labdetails from "./pages/labdetails";
 
 export default class App extends React.Component {
   render() {
@@ -58,6 +67,51 @@ export default class App extends React.Component {
             component={DoctorLicense}
             options={{ title: "DoctorLicense" }}
           />
+          <Stack.Screen
+            name="Admindashboard"
+            component={Admindashboard}
+            options={{ title: "Admindashboard" }}
+          />
+          <Stack.Screen
+            name="Adminset"
+            component={Adminset}
+            options={{ title: "Adminset" }}
+          />
+          <Stack.Screen
+            name="Pharmset"
+            component={Pharmset}
+            options={{ title: "Pharmset" }}
+          />
+          <Stack.Screen
+            name="Labset"
+            component={Labset}
+            options={{ title: "Labset" }}
+          />
+          <Stack.Screen
+            name="Doctorset"
+            component={Doctorset}
+            options={{ title: "Doctorset" }}
+          />
+          <Stack.Screen
+            name="Hospitaldetails"
+            component={Hospitaldetails}
+            options={{ title: "Hospitaldetails" }}
+          />
+          <Stack.Screen
+            name="Pharmacydetails"
+            component={Pharmacydetails}
+            options={{ title: "Pharmacydetails" }}
+          />
+          <Stack.Screen
+            name="Doctordetails"
+            component={Doctordetails}
+            options={{ title: "Doctordetails" }}
+          />
+          <Stack.Screen
+            name="Labdetails"
+            component={Labdetails}
+            options={{ title: "Labdetails" }}
+          />		  
         </Stack.Navigator>
       </NavigationContainer>
     );
