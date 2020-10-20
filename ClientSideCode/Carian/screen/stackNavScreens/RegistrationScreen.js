@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import { PostProfileApi } from '../services/profileService'
 import {
     View,
     Text,
@@ -10,12 +11,11 @@ import {
     ScrollView,
     style
 } from "react-native";
-
 import styles from '../../styles/commonStyles';
-import DropdownMenu from 'react-native-dropdown-menu';
 import ValidationComponent from 'react-native-form-validator';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
+
 
 export default class Register extends ValidationComponent {
     constructor(props) {
@@ -28,9 +28,12 @@ export default class Register extends ValidationComponent {
             email: '',
             password: ''
         };
+        this.onPressRegister = this.onPressRegister.bind(this);
+        this.isvalidForm = this.isvalidForm.bind(this);
+
     }
-    onPressRegister = () => {
-        const isvalid = this.validate({
+    isvalidForm = () => {
+        return this.validate({
             email: { email: true, required: true },
             password: { password: true, required: true, minlength: 8 },
             firstName: { required: true },
@@ -38,36 +41,30 @@ export default class Register extends ValidationComponent {
             mobileNumber: { numbers: true, required: true },
             profile_type: { required: true }
         });
-        if (isvalid) {
-            try {
-                fetch("http://127.0.0.1:8000/Profiles/", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        first_name: this.state.firstName,
-                        last_name: this.state.lastName,
-                        email: this.state.email,
-                        password: this.state.password,
-                        username: this.state.email.split('@')[0],
-                        profile_type: this.state.profile_type
-                    }),
-                }).then(resp => {
-                    setTimeout(function () {
-                        if (resp.status != 201) {
-                            alert("Error occured while posting data :" + resp.status + " : " + resp.statusText);
-                            return false;
-                        }
-                    }, 0);
-                });
-            } catch (e) {
-                console.log(e);
-            }
-            this.props.navigation.navigate('LoginScreen');
-        }
-        else {
+    }
+    onPressRegister = () => {
+
+
+        if (this.isvalidForm()) {
+            body = JSON.stringify({
+                first_name: this.state.firstName,
+                last_name: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+                username: this.state.email.split('@')[0],
+                profile_type: this.state.profile_type
+            });
+            PostProfileApi(body).then((res) => {
+                console.log(res.message);
+                if (res.message == 'Incorrect Username/Password') {
+                    return false;
+                }
+                else {
+                    this.props.navigation.navigate('LoginScreen');
+                }
+            });
+
+        } else {
             return false;
         }
     };

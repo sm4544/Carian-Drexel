@@ -97,17 +97,31 @@ describe('<Login/>', () => {
     expect(wrapper.contains('The field "password" length must be greater than 7.')).to.equal(true);
   })
 
-  it('should navigate to register component', () => {
-    const register = wrapper.find(TouchableOpacity).at(2);
-    register.simulate('press');
-    expect(spyon.calledOnceWith("Register"));
+  it('should through error message if user click on login with empty email and  password', () => {    
+    const loginButton = wrapper.find(TouchableOpacity).at(1);
+    loginButton.simulate('press');
+    expect(wrapper.contains('The field "password" length must be greater than 7.')).to.equal(true);
+    expect(wrapper.contains('The field "password" is mandatory.')).to.equal(true);
+    expect(wrapper.contains('The field "email" must be a valid email address.')).to.equal(true);
+    expect(wrapper.contains('The field "email" is mandatory.')).to.equal(true);
   })
 
-  it('should navigate to Confirmation component', () => {
+
+  it('should navigate to register component', () => {
+    const register = wrapper.find(TouchableOpacity).at(2);
+    console.log(register)
+    register.simulate('press');    
+    sinon.assert.calledWith(spyon, "RegistrationScreen");
+    sinon.assert.calledOnce(spyon);
+    
+  })
+
+  it('should navigate to home page component', () => {
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(1).simulate('ChangeText', '123456789632');
-    const register = wrapper.find(TouchableOpacity).at(1);
-    register.simulate('press');
-    expect(navigation.navigate.calledOnceWith("CustomerDashboard"));
+    const login = wrapper.find(TouchableOpacity).at(1);
+    login.simulate('press');
+    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes",  { login: 'user' });
+    sinon.assert.calledOnce(spyon);
   })
 });
