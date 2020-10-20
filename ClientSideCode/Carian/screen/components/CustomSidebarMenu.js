@@ -19,6 +19,15 @@ const CustomSidebarMenu = props => {
       screenToNavigate: 'SettingsScreen',
     },
     {
+      navOptionName: 'Doctor DashBoard Screen',
+      screenToNavigate: 'DoctorDashboardScreen',
+    },
+    {
+      navOptionName: 'Doctor Calender Screen',
+      screenToNavigate: 'DoctorCalenderScreen',
+    },
+
+    {
       navOptionName: 'Change Options for the Guest',
       screenToNavigate: 'ChangeOptionGuest',
     },

@@ -60,7 +60,11 @@ export default class Register extends ValidationComponent {
                     return false;
                 }
                 else {
-                    this.props.navigation.navigate('LoginScreen');
+                    if ((this.state.profile_type == 'Customer') || (this.state.profile_type == 'Admin')){
+                        this.props.navigation.navigate('ConfirmationScreen');
+                    }else {
+                        this.props.navigation.navigate('StaffInfoScreen');
+                    }
                 }
             });
 
