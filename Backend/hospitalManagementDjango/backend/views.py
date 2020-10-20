@@ -69,7 +69,7 @@ class ProfilesViewset(viewsets.ViewSet):
                 # print(new_str)
                 Profiles.objects.get_or_create(id=random.randint(10, 100), first_name=data['first_name'], last_name=data['last_name'],
                                                email=data['email'],
-                                               user_name=data['username'], password=data['password'],
+                                               username=data['username'], password=data['password'],
                                                registred_date=datetime.utcnow(),
                                                date_of_birth=datetime.utcnow(),
                                                security_question='test',

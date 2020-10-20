@@ -1,10 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Login from '../pages/login';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../styles/commonStyles';
+import fetch from 'node-fetch';
 const navigation = { navigate: jest.fn() };
 global.expect = expect;
 global.sinon = sinon;
@@ -13,6 +14,7 @@ global.shallow = shallow;
 describe('<Login/>', () => {
   beforeEach(function () {
     spyon = sinon.spy(navigation, 'navigate');
+    jest.useFakeTimers();
     wrapper = shallow(<Login navigation={navigation}></Login>);
   });
 
@@ -100,6 +102,7 @@ describe('<Login/>', () => {
 
   it('should navigate to register component', () => {
     const register = wrapper.find(TouchableOpacity).at(2);
+    console.log(register);
     register.simulate('press');
     expect(spyon.calledOnceWith("Register"));
   })
