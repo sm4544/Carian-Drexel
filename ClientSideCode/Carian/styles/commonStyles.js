@@ -74,7 +74,8 @@ export default StyleSheet.create({
         fontStyle:"italic",
         alignItems:'center',
         backgroundColor:'steelblue',
-        borderRadius: 15
+        borderRadius: 15,
+        width: '80%'
     },
     errormessages:{
       width:'75%',
@@ -83,5 +84,13 @@ export default StyleSheet.create({
       alignItems:'flex-start',
       fontSize: 15
 
-    }
+    },
+    text: {
+      fontWeight: 'bold',
+      fontSize: 30,
+      color: 'teal',
+      fontStyle: 'italic',
+      paddingBottom: 30,
+      paddingTop: 30,
+      },
   });
