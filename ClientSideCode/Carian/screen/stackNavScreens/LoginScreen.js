@@ -35,12 +35,12 @@ export default class LoginScreen extends ValidationComponent {
       body = JSON.stringify({ email: this.state.email,   password: this.state.password  });
       
       postLoginApi(body).then((res) => {
-        console.log(res.message);
+        console.log(res);
         if (res.message == 'Incorrect Username/Password') {
           return false;
         }
         else {
-          this.props.navigation.navigate('DrawerNavigationRoutes', { login: 'user' })
+          this.props.navigation.navigate('DrawerNavigationRoutes', { login: 'Doctor', name: 'Srini', profileId:'12345' })
         }
       });
 
