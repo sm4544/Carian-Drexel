@@ -7,6 +7,8 @@ export default StyleSheet.create({
       alignItems: "center",
       justifyContent:'center'
     },
+
+
     AppTitle: {
       fontWeight: "bold",
       fontSize: 40,
@@ -83,5 +85,36 @@ export default StyleSheet.create({
       alignItems:'flex-start',
       fontSize: 15
 
+<<<<<<< Updated upstream
     }
+=======
+    },
+    text: {
+      fontWeight: 'bold',
+      fontSize: 30,
+      color: 'teal',
+      fontStyle: 'italic',
+      paddingBottom: 30,
+      paddingTop: 30,
+      },
+
+    dataWrapper: { marginTop: -1 },
+
+    TableText: { 
+         textAlign: "center" ,
+         textDecorationLine: "underline",
+         fontSize: 25,
+         fontWeight: "bold", 
+         color: "steelblue", 
+    },
+
+    HeaderText: { 
+      fontSize: 30, 
+      textAlign: "center", 
+      fontWeight: "bold",
+      color: 'teal', 
+      fontStyle: 'italic', 
+      marginBottom:40 },
+
+>>>>>>> Stashed changes
   });
