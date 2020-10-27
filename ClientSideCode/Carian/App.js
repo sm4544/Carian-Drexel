@@ -22,6 +22,7 @@ import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
 import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
 import PatientsScreen from './screen/drawerScreens/PatientsScreen';
+import HospitalScreen from './screen/drawerScreens/HospitalScreen'
 
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
@@ -118,6 +119,7 @@ const SeventhActivity_stackNavigator = createStackNavigator({
       },
       headerTintColor: '#fff',
     }),
+    
   },
 });
 

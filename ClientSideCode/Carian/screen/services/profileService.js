@@ -1,4 +1,4 @@
-const URL = "http://127.0.0.1:8000/";
+const URL = "https://hospitalmanagementbackend.herokuapp.com/";
 
 export const postLoginApi = async (loginBody) => {
     console.log(loginBody);

@@ -69,13 +69,15 @@ export default StyleSheet.create({
     
     },
     ConfirmationText:{
-        color:'black',
-        fontSize: 30,
-        fontStyle:"italic",
+        fontSize: 25,
+        color: 'teal',
+        fontStyle: 'italic',
+        paddingBottom: 15,
+        paddingTop: 15,
+        width:'80%',
         alignItems:'center',
-        backgroundColor:'steelblue',
-        borderRadius: 15,
-        width: '80%'
+        justifyContent:'center'
+      
     },
     errormessages:{
       width:'75%',
@@ -88,9 +90,10 @@ export default StyleSheet.create({
     text: {
       fontWeight: 'bold',
       fontSize: 30,
-      color: 'teal',
+      color: '#CD6155',
       fontStyle: 'italic',
-      paddingBottom: 30,
-      paddingTop: 30,
+      paddingBottom: 10,
+      paddingTop: 10,
+      width:'80%'
       },
   });
