@@ -17,7 +17,7 @@ export default class LoginScreen extends ValidationComponent {
     super(props);
     this.state = {
 
-      email: '',
+      username: '',
       password: ''
     };
     this.onPressRegister = this.onPressRegister.bind(this);
@@ -32,15 +32,16 @@ export default class LoginScreen extends ValidationComponent {
 
   onPressLogin = () => {
     if (this.isValidForm()) {
-      body = JSON.stringify({ email: this.state.email,   password: this.state.password  });
+      body = JSON.stringify({ username: this.state.username,   password: this.state.password  });
       
       postLoginApi(body).then((res) => {
         console.log(res);
-        if (res.message == 'Incorrect Username/Password') {
+        if (res.Message == "Incorrect Username/Password") {
           return false;
         }
         else {
-          this.props.navigation.navigate('DrawerNavigationRoutes', { login: 'Doctor', name: 'Srini', profileId:'12345' })
+
+          this.props.navigation.navigate('DrawerNavigationRoutes', { login: res.Profile_Type, name: res.FirstName+ ' ' + res.LastName, profileId: res.ProfileID })
         }
       });
 
@@ -51,8 +52,8 @@ export default class LoginScreen extends ValidationComponent {
 
   isValidForm = () => {
     return this.validate({
-      email: { email: true, required: true },
-      password: { password: true, required: true, minlength: 8 }
+      username: { required: true },
+      password: { password: true, required: true, minlength: 3 }
 
     });
   }
@@ -65,13 +66,13 @@ export default class LoginScreen extends ValidationComponent {
         <View style={styles.inputView}>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="User Name"
             placeholderTextColor="white"
-            ref="email" onChangeText={(email) => this.setState({ email })}
-            value={this.state.email} />
+            ref="username" onChangeText={(username) => this.setState({ username })}
+            value={this.state.username} />
         </View>
         {this.isFormValid ? <Text style={styles.errormessages}>
-          {this.getErrorsInField("email")}
+          {this.getErrorsInField("username")}
         </Text> : null}
 
         <View style={styles.inputView}>

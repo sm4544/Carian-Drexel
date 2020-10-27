@@ -3,12 +3,14 @@ import { View, StyleSheet, Text } from 'react-native';
 import stylesSidebar from '../../styles/CustomSidebarMenuStyles';
 
 const CustomSidebarMenu = props => {
-  let [loginAs, setLoginAs, name, setName, profileId, setProfileId] = useState('');
+  let [loginAs, setLoginAs] = useState('');
+  let [name, setName] = useState('');
+  let [profileId, setProfileId] = useState('');
 
   useEffect(() => {
-    setLoginAs(props.navigation.getParam('login', 'defaultValue'));
-    //setName(props.navigation.getParam('name', 'defaultValue'));
-    //setProfileId(props.navigation.getParam('profileId', 'defaultValue'));
+    setLoginAs(props.navigation.getParam('login', 'Guest'));
+    setName(props.navigation.getParam('name', 'React'));
+    setProfileId(props.navigation.getParam('profileId', 'defaultValue'));
 
   }, []);
 
@@ -175,7 +177,7 @@ const CustomSidebarMenu = props => {
   getUser = () =>{
     if(loginAs === 'Customer'){
       return CustomerOptions;
-    }else if ( loginAs == 'Admin'){
+    }else if ( loginAs === 'Admin'){
       return AdminOptions;
     }else if ( loginAs === 'Doctor'){
       return DoctorOptions;
@@ -194,10 +196,10 @@ const CustomSidebarMenu = props => {
       <View style={stylesSidebar.profileHeader}>
         <View style={stylesSidebar.profileHeaderPicCircle}>
           <Text style={{ fontSize: 25, color: '#307ecc' }}>
-            {'About React'.charAt(0)}
+            {name.charAt(0)}
           </Text>
         </View>
-        <Text style={stylesSidebar.profileHeaderText}>AboutReact</Text>
+        <Text style={stylesSidebar.profileHeaderText}>{name}</Text>
       </View>
       <View style={stylesSidebar.profileHeaderLine} />
       <View style={{ width: '100%', flex: 1 }}>

@@ -17,7 +17,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 
 
+
 export default class Register extends ValidationComponent {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +28,10 @@ export default class Register extends ValidationComponent {
             lastName: '',
             mobileNumber: '',
             email: '',
-            password: ''
+            password: '',
+            username: '',
+            securityQuestion: '',
+            securityAnswer: ''
         };
         this.onPressRegister = this.onPressRegister.bind(this);
         this.isvalidForm = this.isvalidForm.bind(this);
@@ -35,36 +40,43 @@ export default class Register extends ValidationComponent {
     isvalidForm = () => {
         return this.validate({
             email: { email: true, required: true },
-            password: { password: true, required: true, minlength: 8 },
+            password: { password: true, required: true, minlength: 3 },
             firstName: { required: true },
             lastName: { required: true },
             mobileNumber: { numbers: true, required: true },
-            profile_type: { required: true }
+            profile_type: { required: true },
+            username: { required: true },
+            securityQuestion: { required: true },
+            securityAnswer: { required: true }
         });
     }
     onPressRegister = () => {
-
-
         if (this.isvalidForm()) {
-            body = JSON.stringify({
+            const body = JSON.stringify({
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
                 email: this.state.email,
                 password: this.state.password,
-                username: this.state.email.split('@')[0],
-                profile_type: this.state.profile_type
+                username: this.state.username,
+                profile_type: this.state.profile_type,
+                security_question: this.state.securityQuestion,
+                security_answer: this.state.securityAnswer,
+                date_of_birth: '1988-08-08',
+                profile_pic: 'default'
             });
             PostProfileApi(body).then((res) => {
-                console.log(res.message);
-                if (res.message == 'Incorrect Username/Password') {
-                    return false;
+                console.log(res);
+                if (res.Message == 'Added Profile') {
+                    
+                    if ((this.state.profile_type == 'Customer') || (this.state.profile_type == 'Admin')) {
+                        this.props.navigation.navigate('ConfirmationScreen', {name : this.state.firstName+ ' ' + this.state.lastName});
+                    } else {
+                        this.props.navigation.navigate('StaffInfoScreen', {name : this.state.firstName+ ',' + this.state.lastName, profileId: res.ProfileID});
+                    }
+                    
                 }
                 else {
-                    if ((this.state.profile_type == 'Customer') || (this.state.profile_type == 'Admin')){
-                        this.props.navigation.navigate('ConfirmationScreen');
-                    }else {
-                        this.props.navigation.navigate('StaffInfoScreen');
-                    }
+                    return false;
                 }
             });
 
@@ -157,6 +169,18 @@ export default class Register extends ValidationComponent {
                     <View style={styles.inputView}>
                         <TextInput
                             style={styles.input}
+                            placeholder="User Name"
+                            placeholderTextColor="white"
+                            ref="username" onChangeText={(username) => this.setState({ username })}
+                            value={this.state.username} />
+                    </View>
+                    {this.isFormValid ? <Text style={styles.errormessages}>
+                        {this.getErrorsInField("username")}
+                    </Text> : null}
+
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.input}
                             placeholder="Password"
                             placeholderTextColor="white"
                             ref="password" onChangeText={(password) => this.setState({ password })}
@@ -165,6 +189,32 @@ export default class Register extends ValidationComponent {
                     {this.isFormValid ? <Text style={styles.errormessages}>
                         {this.getErrorsInField("password")}
                     </Text> : null}
+
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Security Question"
+                            placeholderTextColor="white"
+                            ref="securityQuestion" onChangeText={(securityQuestion) => this.setState({ securityQuestion })}
+                            value={this.state.securityQuestion} />
+                    </View>
+                    {this.isFormValid ? <Text style={styles.errormessages}>
+                        {this.getErrorsInField("securityQuestion")}
+                    </Text> : null}
+
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Security Q Answer"
+                            placeholderTextColor="white"
+                            ref="securityAnswer" onChangeText={(securityAnswer) => this.setState({ securityAnswer })}
+                            value={this.state.securityAnswer} />
+                    </View>
+                    {this.isFormValid ? <Text style={styles.errormessages}>
+                        {this.getErrorsInField("securityAnswer")}
+                    </Text> : null}                  
+
+
                     <TouchableOpacity style={styles.button}
                         onPress={() => this.onPressRegister()}>
 
