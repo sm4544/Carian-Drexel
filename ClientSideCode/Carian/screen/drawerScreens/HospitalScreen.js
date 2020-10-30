@@ -1,22 +1,13 @@
-
-
 import React, { Component } from 'react';
-
 import { StyleSheet, TextInput, View, TouchableOpacity, Text, Alert , ScrollView, TouchableHighlight } from 'react-native';
-
 import { StackNavigator } from 'react-navigation';
 import styles from '../../styles/commonStyles';
 import { Table, TableWrapper, Row, Rows, Cell  } from "react-native-table-component";
 
-
-
 export default class HospitalScreen extends Component {
   constructor(props) {
     super(props);
-  }
-
-
- 
+  } 
   render() {
     const state = this.state;
 

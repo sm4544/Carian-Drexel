@@ -29,6 +29,7 @@ import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 
+
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: HomeScreen,
@@ -114,7 +115,9 @@ const SixthActivity_stackNavigator = createStackNavigator({
 });
 
 const SeventhActivity_stackNavigator = createStackNavigator({
+
 First: {
+
     screen: HospitalScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Hospital Screen',
@@ -124,6 +127,7 @@ First: {
       },
       headerTintColor: '#fff',
     }),
+
   },
 
 
@@ -137,6 +141,7 @@ First: {
     //   },
     //   headerTintColor: '#fff',
     // }),
+
 
 });
 
@@ -344,12 +349,7 @@ const DrawerNavigationRoutes = createDrawerNavigator({
       drawerLabel: 'Patients Screen',
     },
   },
-  // HospitalDetailsScreen: {
-  //   screen:SeventhActivity_stackNavigator,
-  //   navigationOptions: {
-  //     drawerLabel: 'Hospital Details Screen',
-  //   },
-  // },
+
 },
 {
     contentComponent: CustomSidebarMenu,

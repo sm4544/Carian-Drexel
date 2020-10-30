@@ -71,12 +71,15 @@ export default StyleSheet.create({
     
     },
     ConfirmationText:{
-        color:'black',
-        fontSize: 30,
-        fontStyle:"italic",
+        fontSize: 25,
+        color: 'teal',
+        fontStyle: 'italic',
+        paddingBottom: 15,
+        paddingTop: 15,
+        width:'80%',
         alignItems:'center',
-        backgroundColor:'steelblue',
-        borderRadius: 15
+        justifyContent:'center'
+      
     },
     errormessages:{
       width:'75%',
@@ -85,9 +88,6 @@ export default StyleSheet.create({
       alignItems:'flex-start',
       fontSize: 15
 
-<<<<<<< Updated upstream
-    }
-=======
     },
     text: {
       fontWeight: 'bold',
@@ -114,7 +114,8 @@ export default StyleSheet.create({
       fontWeight: "bold",
       color: 'teal', 
       fontStyle: 'italic', 
-      marginBottom:40 },
+      marginBottom:40 
+    },
 
->>>>>>> Stashed changes
+
   });

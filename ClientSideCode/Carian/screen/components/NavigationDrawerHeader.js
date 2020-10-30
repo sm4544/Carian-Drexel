@@ -1,6 +1,3 @@
-/*Example to Dynamically Change Drawer/Sidebar Options in React Navigation Drawer */
-/* https://aboutreact.com/dynamically-change-sidebar-options/ */
-
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 

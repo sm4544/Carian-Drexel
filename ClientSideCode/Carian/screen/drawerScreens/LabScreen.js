@@ -68,3 +68,4 @@ export default class LabScreen extends Component {
     row: { height: 30, flexDirection: 'row', marginBottom: 20},
     cell: {flex: 1, }
   });
+

@@ -1,15 +1,8 @@
-
-
 import React, { Component } from 'react';
-
 import { StyleSheet, TextInput, View, TouchableOpacity, Text, ScrollView } from 'react-native';
-
 import styles from '../../styles/commonStyles';
 import { Table, TableWrapper, Row, Rows, Cell  } from "react-native-table-component";
-
-
 export default class ManageStaffScreen extends Component {
- 
   render() {
     const state = this.state;
 
@@ -70,4 +63,5 @@ const styles1 = StyleSheet.create({
   row: { height: 30, flexDirection: 'row', marginBottom: 20},
   cell: {flex: 1, }
 });
+
 

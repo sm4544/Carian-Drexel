@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import { PostProfileApi } from '../services/profileService'
 import {
     View,
     Text,
@@ -10,14 +11,15 @@ import {
     ScrollView,
     style
 } from "react-native";
-
 import styles from '../../styles/commonStyles';
-import DropdownMenu from 'react-native-dropdown-menu';
 import ValidationComponent from 'react-native-form-validator';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 
+
+
 export default class Register extends ValidationComponent {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,48 +28,59 @@ export default class Register extends ValidationComponent {
             lastName: '',
             mobileNumber: '',
             email: '',
-            password: ''
+            password: '',
+            username: '',
+            securityQuestion: '',
+            securityAnswer: ''
         };
+        this.onPressRegister = this.onPressRegister.bind(this);
+        this.isvalidForm = this.isvalidForm.bind(this);
+
     }
-    onPressRegister = () => {
-        const isvalid = this.validate({
+    isvalidForm = () => {
+        return this.validate({
             email: { email: true, required: true },
-            password: { password: true, required: true, minlength: 8 },
+            password: { password: true, required: true, minlength: 3 },
             firstName: { required: true },
             lastName: { required: true },
             mobileNumber: { numbers: true, required: true },
-            profile_type: { required: true }
+            profile_type: { required: true },
+            username: { required: true },
+            securityQuestion: { required: true },
+            securityAnswer: { required: true }
         });
-        if (isvalid) {
-            try {
-                fetch("http://127.0.0.1:8000/Profiles/", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        first_name: this.state.firstName,
-                        last_name: this.state.lastName,
-                        email: this.state.email,
-                        password: this.state.password,
-                        username: this.state.email.split('@')[0],
-                        profile_type: this.state.profile_type
-                    }),
-                }).then(resp => {
-                    setTimeout(function () {
-                        if (resp.status != 201) {
-                            alert("Error occured while posting data :" + resp.status + " : " + resp.statusText);
-                            return false;
-                        }
-                    }, 0);
-                });
-            } catch (e) {
-                console.log(e);
-            }
-            this.props.navigation.navigate('LoginScreen');
-        }
-        else {
+    }
+    onPressRegister = () => {
+        if (this.isvalidForm()) {
+            const body = JSON.stringify({
+                first_name: this.state.firstName,
+                last_name: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+                username: this.state.username,
+                profile_type: this.state.profile_type,
+                security_question: this.state.securityQuestion,
+                security_answer: this.state.securityAnswer,
+                date_of_birth: '1988-08-08',
+                profile_pic: 'default'
+            });
+            PostProfileApi(body).then((res) => {
+                console.log(res);
+                if (res.Message == 'Added Profile') {
+                    
+                    if ((this.state.profile_type == 'Customer') || (this.state.profile_type == 'Admin')) {
+                        this.props.navigation.navigate('ConfirmationScreen', {name : this.state.firstName+ ' ' + this.state.lastName});
+                    } else {
+                        this.props.navigation.navigate('StaffInfoScreen', {name : this.state.firstName+ ',' + this.state.lastName, profileId: res.ProfileID});
+                    }
+                    
+                }
+                else {
+                    return false;
+                }
+            });
+
+        } else {
             return false;
         }
     };
@@ -156,6 +169,18 @@ export default class Register extends ValidationComponent {
                     <View style={styles.inputView}>
                         <TextInput
                             style={styles.input}
+                            placeholder="User Name"
+                            placeholderTextColor="white"
+                            ref="username" onChangeText={(username) => this.setState({ username })}
+                            value={this.state.username} />
+                    </View>
+                    {this.isFormValid ? <Text style={styles.errormessages}>
+                        {this.getErrorsInField("username")}
+                    </Text> : null}
+
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.input}
                             placeholder="Password"
                             placeholderTextColor="white"
                             ref="password" onChangeText={(password) => this.setState({ password })}
@@ -164,6 +189,32 @@ export default class Register extends ValidationComponent {
                     {this.isFormValid ? <Text style={styles.errormessages}>
                         {this.getErrorsInField("password")}
                     </Text> : null}
+
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Security Question"
+                            placeholderTextColor="white"
+                            ref="securityQuestion" onChangeText={(securityQuestion) => this.setState({ securityQuestion })}
+                            value={this.state.securityQuestion} />
+                    </View>
+                    {this.isFormValid ? <Text style={styles.errormessages}>
+                        {this.getErrorsInField("securityQuestion")}
+                    </Text> : null}
+
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Security Q Answer"
+                            placeholderTextColor="white"
+                            ref="securityAnswer" onChangeText={(securityAnswer) => this.setState({ securityAnswer })}
+                            value={this.state.securityAnswer} />
+                    </View>
+                    {this.isFormValid ? <Text style={styles.errormessages}>
+                        {this.getErrorsInField("securityAnswer")}
+                    </Text> : null}                  
+
+
                     <TouchableOpacity style={styles.button}
                         onPress={() => this.onPressRegister()}>
 
