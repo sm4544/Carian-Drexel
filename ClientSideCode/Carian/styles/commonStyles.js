@@ -7,6 +7,8 @@ export default StyleSheet.create({
       alignItems: "center",
       justifyContent:'center'
     },
+
+
     AppTitle: {
       fontWeight: "bold",
       fontSize: 40,
@@ -90,10 +92,30 @@ export default StyleSheet.create({
     text: {
       fontWeight: 'bold',
       fontSize: 30,
-      color: '#CD6155',
+      color: 'teal',
       fontStyle: 'italic',
-      paddingBottom: 10,
-      paddingTop: 10,
-      width:'80%'
+      paddingBottom: 30,
+      paddingTop: 30,
       },
+
+    dataWrapper: { marginTop: -1 },
+
+    TableText: { 
+         textAlign: "center" ,
+         textDecorationLine: "underline",
+         fontSize: 25,
+         fontWeight: "bold", 
+         color: "steelblue", 
+    },
+
+    HeaderText: { 
+      fontSize: 30, 
+      textAlign: "center", 
+      fontWeight: "bold",
+      color: 'teal', 
+      fontStyle: 'italic', 
+      marginBottom:40 
+    },
+
+
   });

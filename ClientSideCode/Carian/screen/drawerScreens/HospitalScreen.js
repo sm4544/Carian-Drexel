@@ -1,20 +1,70 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, TextInput, View, TouchableOpacity, Text, Alert , ScrollView, TouchableHighlight } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import styles from '../../styles/commonStyles';
+import { Table, TableWrapper, Row, Rows, Cell  } from "react-native-table-component";
 
-const HospitalScreen = () => {
-    global.currentScreenIndex = 'HospitalScreen';
+export default class HospitalScreen extends Component {
+  constructor(props) {
+    super(props);
+  } 
+  render() {
+    const state = this.state;
+
+    const tableHead = ['Added Hospitals:'];
+    const tableData = [
+      ['ABC Hospital'],
+      ['XYZ Hospital'],
+      ['XYZHJKTE Hospital'],
+      ['XYZHJKTEKKKKK Hospital'],
+    ];
+
     return (
-        <View style={{ flex: 1, alignItems: 'center', marginTop: 100 }}>
-            <Text style={{ fontSize: 23, marginTop: 10 }}>HospitalScreen</Text>
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
-                Example to Dynamically Change Drawer/Sidebar Options in React Navigation Drawer
-            </Text>
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
-            HospitalScreen
+        <View  >
+        <View style = {{justifyContent:"center", alignItems:"center", marginTop: 80}}>
 
-            </Text>
+        <TouchableOpacity style = {styles.button}
+           onPress={() => this.props.navigation.navigate('HospitalDetailsScreen')}>
+          <Text style={styles.buttonText}>Add Hospital</Text>
+
+        </TouchableOpacity>
         </View>
-    );
-};
 
-export default HospitalScreen;
+        <View style = {{width: '80%', justifyContent: "center", marginLeft: 40 }}>
+
+        <Table >
+          <TableWrapper >
+            <Row data={tableHead} style={styles.HeadStyle} textStyle={styles.HeaderText}/>
+            {
+              tableData.map((data, i) => (
+                <TableWrapper key={i} style={styles1.row}>
+                  {
+                    data.map((cell, j) => (
+                      <TouchableOpacity key={j} style={styles1.cell} onPress={() => this.props.navigation.navigate('HospitalDetailsScreen')}>
+                        <Cell data={cell} textStyle={styles.TableText}/>
+                      </TouchableOpacity>
+                    // <TouchableOpacity>
+                    //  <Cell data={cell} textStyle={styles.TableText}/>
+                    //  </TouchableOpacity>
+                    ))
+                  }
+                </TableWrapper>
+              ))                          
+            }
+          </TableWrapper>
+        </Table>
+      </View>
+
+      </View>
+      
+    );
+  }
+}
+
+
+const styles1 = StyleSheet.create({
+  head: { height: 40, backgroundColor: '#f1f8ff', },
+  text: { marginLeft: 5 },
+  row: { height: 30, flexDirection: 'row', marginBottom: 20},
+  cell: {flex: 1, }
+});
