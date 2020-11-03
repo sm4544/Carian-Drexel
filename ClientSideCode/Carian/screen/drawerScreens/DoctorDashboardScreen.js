@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import {View, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Fontisto';
 import ValidationComponent from 'react-native-form-validator';
 import styles from '../../styles/commonStyles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -18,14 +19,14 @@ export default class DoctorDashboard extends ValidationComponent {
         <Text style={styles.AppTitle}> Doctor's Profile</Text>
         <Text style={styles.text}>View Profile</Text>
         <Icon
-          name="university"
+          name="doctor"
           color="teal"
-          size={80}
+          size={100}
           onPress={this.ViewProfile}></Icon>
         <Text style={styles.text}>Calendar</Text>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('DoctorCalendar')}>
-          <Icon name="calendar-plus-o" color="teal" size={80}></Icon>
+          <Icon name="calendar" color="teal" size={100}></Icon>
         </TouchableOpacity>
       </View>
     );
