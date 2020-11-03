@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { PostProfileApi } from '../services/profileService'
+import { PostProfileApi } from '../services/profileService';
 import {
     View,
     Text,
@@ -24,14 +24,14 @@ export default class Register extends ValidationComponent {
         super(props);
         this.state = {
             profile_type: '',
-            firstName: '',
-            lastName: '',
-            mobileNumber: '',
-            email: '',
-            password: '',
-            username: '',
-            securityQuestion: '',
-            securityAnswer: ''
+            firstName: 'Doctor',
+            lastName: 'Doctor',
+            mobileNumber: '2159669623',
+            email: 'Doctor10@carian.com',
+            password: 'doctor',
+            username: 'doctor10',
+            securityQuestion: 'Who are you',
+            securityAnswer: 'doctor'
         };
         this.onPressRegister = this.onPressRegister.bind(this);
         this.isvalidForm = this.isvalidForm.bind(this);
@@ -66,14 +66,12 @@ export default class Register extends ValidationComponent {
             });
             PostProfileApi(body).then((res) => {
                 console.log(res);
-                if (res.Message == 'Added Profile') {
-                    
+                if (res.Message == 'Added Profile') {                    
                     if ((this.state.profile_type == 'Customer') || (this.state.profile_type == 'Admin')) {
                         this.props.navigation.navigate('ConfirmationScreen', {name : this.state.firstName+ ' ' + this.state.lastName});
                     } else {
-                        this.props.navigation.navigate('StaffInfoScreen', {name : this.state.firstName+ ',' + this.state.lastName, profileId: res.ProfileID});
-                    }
-                    
+                        this.props.navigation.navigate('StaffInfoScreen', {name : this.state.firstName+ ',' + this.state.lastName, profileId: res.ProfileID, profile_type: this.state.profile_type});
+                    }                    
                 }
                 else {
                     return false;

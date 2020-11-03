@@ -5,15 +5,20 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
+import { postLoginApi } from '../../screen/services/profileService';
 const navigation = { navigate: jest.fn() };
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
 
+jest.mock("../../screen/services/profileService");
+
+
+
 describe('<Login/>', () => {
   beforeEach(function () {
-    spyon = sinon.spy(navigation, 'navigate');
-    wrapper = shallow(<Login navigation={navigation}></Login>);
+    spyon = sinon.spy(navigation, 'navigate');    
+    wrapper = shallow(<Login navigation={navigation}></Login>); 
   });
 
   afterEach(function () {
@@ -110,12 +115,35 @@ describe('<Login/>', () => {
     
   })
 
-  it('should navigate to home page component', () => {
+  it('should navigate to home page component', async() => {
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(1).simulate('ChangeText', '123456789632');
     const login = wrapper.find(TouchableOpacity).at(1);
+    const output = {"FirstName": "Admin", 
+                  "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk", 
+                  "LastName": "Admin", 
+                  "Message": "Logged in succesfully", 
+                  "ProfileID": "39", 
+                  "Profile_Type": "test"};
+    
+    postLoginApi.mockResolvedValue(output);
     login.simulate('press');
-    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes");
+    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { login: '', name: '', profileId: '' });
     sinon.assert.calledOnce(spyon);
   })
+
+  it('should not navigate to home page component', async() => {
+    wrapper.find(TextInput).at(0).simulate('ChangeText', 'test@test.com');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', '123456789632');
+    const login = wrapper.find(TouchableOpacity).at(1);
+    const output = {"Message": "incorrect username"};
+    
+    postLoginApi.mockResolvedValue(output);
+    login.simulate('press');
+    //sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { login: '', name: '', profileId: '' });
+    //sinon.assert.calledOnce(spyon);
+    sinon.assert.notCalled(spyon)
+  })
+
+  
 });

@@ -16,35 +16,29 @@ export default class LoginScreen extends ValidationComponent {
   constructor(props) {
     super(props);
     this.state = {
-
       username: '',
       password: ''
     };
     this.onPressRegister = this.onPressRegister.bind(this);
     this.onPressLogin = this.onPressLogin.bind(this);
     this.isValidForm = this.isValidForm.bind(this);
-
   }
-
+  
   onPressRegister = () => {
     this.props.navigation.navigate("RegistrationScreen");
   };
 
   onPressLogin = () => {
     if (this.isValidForm()) {
-      body = JSON.stringify({ username: this.state.username,   password: this.state.password  });
-      
-      postLoginApi(body).then((res) => {
-        console.log(res);
-        if (res.Message == "Incorrect Username/Password") {
+      const body= JSON.stringify({ username: this.state.username,   password: this.state.password  }) ;      
+      postLoginApi(body).then((data) => {
+        console.log(data)
+        if(data.Message === 'Logged in succesfully') {
+          this.props.navigation.navigate("DrawerNavigationRoutes", { login: data.FirstName, name: data.FirstName+ ' ' + data.LastName, profileId: data.ProfileID})                                 
+        } else{  
           return false;
-        }
-        else {
-
-          this.props.navigation.navigate('DrawerNavigationRoutes', { login: res.Profile_Type, name: res.FirstName+ ' ' + res.LastName, profileId: res.ProfileID })
-        }
-      });
-
+        } 
+      }); 
     } else {
       return false;
     }
@@ -59,7 +53,6 @@ export default class LoginScreen extends ValidationComponent {
   }
 
   render() {
-
     return (
       <View style={styles.container}>
         <Text style={styles.AppTitle}>CARIAN</Text>
