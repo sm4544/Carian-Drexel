@@ -16,32 +16,34 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import StaffInfoScreen from '../../screen/stackNavScreens/StaffInfoScreen';
-import { postStaffInfoProfileApi } from '../../screen/services/StaffInfoService'
-const navigation = { navigate: jest.fn() };
+import { postStaffInfoProfileApi } from '../../screen/services/StaffInfoService';
+import { getAllHospitals } from '../../screen/services/hospitalService';
+const navigation = {
+  navigate: jest.fn(),
+  state: {
+    params: {
+      name: 'hello',
+      profileid: '1',
+      profile_type: 'Doctor'
+
+    }
+  }
+};
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+jest.mock("../../screen/services/StaffInfoService");
+jest.mock("../../screen/services/hospitalService");
 
-const spyNavigate = jest.fn()
-const props = {
-  navigation: {
-    navigate: spyNavigate,
-    state: {
-      params: {
-        name: 'hello',
-        profileid: '1234'
-      }
-    }
-  }
-}
 
 describe('<StaffInfoScreen/>', () => {
   beforeEach(function () {
-    //spyon = sinon.spy(navigation, 'navigate');
-    wrapper = shallow(<StaffInfoScreen {...props}></StaffInfoScreen>);
+    spyon = sinon.spy(navigation, 'navigate');
+    getAllHospitals.mockResolvedValue([{ 'label': 'Applos', 'value': '1' }])
+    wrapper = shallow(<StaffInfoScreen navigation={navigation}></StaffInfoScreen>);
   });
   afterEach(function () {
-    //navigation.navigate.restore();
+    navigation.navigate.restore();
   });
   it('should have Scrollview', () => {
     expect(wrapper.type()).to.equal(ScrollView);
@@ -258,4 +260,58 @@ describe('<StaffInfoScreen/>', () => {
 
     expect(wrapper.contains('The field "doctor_fee" must be a valid number.')).to.equal(true);
   })
+
+  it('should contain login link button', () => {
+    expect(wrapper.contains(<Text style={styles.hyperlink}> Already have an account? Sign in</Text>)).to.equal(true);
+    expect(wrapper.find(TouchableOpacity)).to.have.length(2);
+  })
+
+  it('DROPDOWNDATA should NOT BE EMPTY', () => {
+    
+    //expect(wrapper.state('dropdowndata')).to.have.length(2);
+    expect(wrapper.state('dropdowndata')).to.be.an('array').that.is.not.empty;
+    
+  })
+
+  it('should navigate to confirmation screen ', async () => {
+
+    wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', '4');
+    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test@test.com');
+    wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
+    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', '100.2');
+    wrapper.setState({ hospital_id: '1' })
+
+    const output = { "Message": "Added Staff", "StaffID": "39" };
+
+    postStaffInfoProfileApi.mockResolvedValue(output);
+    await wrapper.instance().onPressStaffProfile('test', '30', 'Doctor');
+    console.log(spyon + 'spyon')
+    sinon.assert.calledWith(spyon, "ConfirmationScreen", { name: 'test' });
+    sinon.assert.calledOnce(spyon);
+  })
+
+  it('should NOT navigate to confirmation screen ', async () => {
+
+    wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', '4');
+    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test@test.com');
+    wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
+    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', '100.2');
+    wrapper.setState({ hospital_id: '1' })
+
+    const output = { "Message": "ERROR", "StaffID": "39" };
+
+    postStaffInfoProfileApi.mockResolvedValue(output);
+    await wrapper.instance().onPressStaffProfile('test', '30', 'Doctor');
+    console.log(spyon + 'spyon')
+    sinon.assert.notCalled(spyon)
+  })
+
 });

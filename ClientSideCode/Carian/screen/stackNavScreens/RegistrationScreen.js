@@ -24,14 +24,14 @@ export default class Register extends ValidationComponent {
         super(props);
         this.state = {
             profile_type: '',
-            firstName: 'Doctor',
-            lastName: 'Doctor',
-            mobileNumber: '2159669623',
-            email: 'Doctor10@carian.com',
-            password: 'doctor',
-            username: 'doctor10',
-            securityQuestion: 'Who are you',
-            securityAnswer: 'doctor'
+            firstName: '',
+            lastName: '',
+            mobileNumber: '',
+            email: '',
+            password: '',
+            username: '',
+            securityQuestion: '',
+            securityAnswer: ''
         };
         this.onPressRegister = this.onPressRegister.bind(this);
         this.isvalidForm = this.isvalidForm.bind(this);
@@ -64,6 +64,7 @@ export default class Register extends ValidationComponent {
                 date_of_birth: '1988-08-08',
                 profile_pic: 'default'
             });
+            console.log(body)
             PostProfileApi(body).then((res) => {
                 console.log(res);
                 if (res.Message == 'Added Profile') {                    
@@ -79,6 +80,7 @@ export default class Register extends ValidationComponent {
             });
 
         } else {
+            //this.props.navigation.navigate('StaffInfoScreen')
             return false;
         }
     };

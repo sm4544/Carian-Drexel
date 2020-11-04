@@ -37,11 +37,12 @@ export default class StaffInfoScreen extends ValidationComponent {
     this.onPressStaffProfile = this.onPressStaffProfile.bind(this);
   }
 
-  onPressStaffProfile = (name, profileid) => {
-    console.log(name + profileid)
+  onPressStaffProfile = (name, profileid, profile_type) => {
+    console.log(name + profileid + profile_type)
 
     if (this.isValidForm()) {
-      body = JSON.stringify({
+      console.log("inside if "+ name + profileid + profile_type)
+      const body = JSON.stringify({
         highest_degree: this.state.Highest_degree,
         specilization: this.state.Specilization,
         college_name: this.state.College_name,
@@ -60,13 +61,15 @@ export default class StaffInfoScreen extends ValidationComponent {
       postStaffInfoProfileApi(body).then((res) => {
         console.log(res);
         if(res.Message == 'Added Staff'){
+          console.log("inside navigation "+ name + profileid + profile_type)
           this.props.navigation.navigate('ConfirmationScreen', { name: name });
         }else{
-          
+          console.log("inside else nav "+ name + profileid + profile_type)
           return false;
         }        
       });
     } else {
+      console.log("inside else "+ name + profileid + profile_type)
       return false;
     }
   };
@@ -250,7 +253,7 @@ export default class StaffInfoScreen extends ValidationComponent {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.onPressStaffProfile(name, profileid)}>
+            onPress={() => this.onPressStaffProfile(name, profileid, profile_type)}>
             <Text style={styles.buttonText}>Register/Submit</Text>
           </TouchableOpacity>
 

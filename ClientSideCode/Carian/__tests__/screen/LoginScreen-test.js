@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import {  shallow } from 'enzyme';
 import Login from '../../screen/stackNavScreens/LoginScreen';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { expect } from 'chai';
@@ -100,16 +100,13 @@ describe('<Login/>', () => {
     const loginButton = wrapper.find(TouchableOpacity).at(1);
     loginButton.simulate('press');
     expect(wrapper.contains('The field "password" length must be greater than 2.')).to.equal(true);
-    expect(wrapper.contains('The field "password" is mandatory.')).to.equal(true);
-    
+    expect(wrapper.contains('The field "password" is mandatory.')).to.equal(true);    
     expect(wrapper.contains('The field "username" is mandatory.')).to.equal(true);
   })
 
 
   it('should navigate to register component', () => {
-    const register = wrapper.find(TouchableOpacity).at(2);
-    console.log(register)
-    register.simulate('press');    
+    wrapper.instance().onPressRegister();
     sinon.assert.calledWith(spyon, "RegistrationScreen");
     sinon.assert.calledOnce(spyon);
     
@@ -117,8 +114,7 @@ describe('<Login/>', () => {
 
   it('should navigate to home page component', async() => {
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test@test.com');
-    wrapper.find(TextInput).at(1).simulate('ChangeText', '123456789632');
-    const login = wrapper.find(TouchableOpacity).at(1);
+    wrapper.find(TextInput).at(1).simulate('ChangeText', '123456789632');    
     const output = {"FirstName": "Admin", 
                   "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk", 
                   "LastName": "Admin", 
@@ -126,9 +122,9 @@ describe('<Login/>', () => {
                   "ProfileID": "39", 
                   "Profile_Type": "test"};
     
-    postLoginApi.mockResolvedValue(output);
-    login.simulate('press');
-    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { login: '', name: '', profileId: '' });
+    postLoginApi.mockResolvedValue(output);    
+    await wrapper.instance().onPressLogin();
+    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { login: 'Admin', name: 'Admin Admin', profileId: '39' });
     sinon.assert.calledOnce(spyon);
   })
 
@@ -136,12 +132,9 @@ describe('<Login/>', () => {
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(1).simulate('ChangeText', '123456789632');
     const login = wrapper.find(TouchableOpacity).at(1);
-    const output = {"Message": "incorrect username"};
-    
+    const output = {"Message": "incorrect username"};    
     postLoginApi.mockResolvedValue(output);
-    login.simulate('press');
-    //sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { login: '', name: '', profileId: '' });
-    //sinon.assert.calledOnce(spyon);
+    await wrapper.instance().onPressLogin();    
     sinon.assert.notCalled(spyon)
   })
 
