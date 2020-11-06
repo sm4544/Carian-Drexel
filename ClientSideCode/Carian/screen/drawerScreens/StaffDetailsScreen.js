@@ -17,18 +17,43 @@ import ValidationComponent from "react-native-form-validator";
 export default class StaffDetailsScreen extends ValidationComponent {
   constructor(props) {
     super(props);
-    this.state = {
-   
+    this.state = {   
         doctorId: '',
         qualification: '',
         experience: '',
         phonenumber: '',
         email: '',
-        registernumber: '',
-   
+        registernumber: ''
       }
-
   }
+
+  isValidForm = () => {
+    return this.validate({  
+      doctorId: { required: true },
+      qualification: { required: true },
+      experience:{ required: true },
+      phonenumber: { numbers: true, required: true },
+      registerdate: { required: true },       
+      email: {  email: true,required: true }       
+    });
+  };
+  
+ 
+  onPressDoctorStaffInfo = () => {
+    if (this.isValidForm()) {
+      body = JSON.stringify({
+        doctorId: this.state.doctorId,
+        qualification: this.state.qualification,
+        experience: this.state.experience,
+        phonenumber: this.state.phonenumber,
+        registerdate: this.state.registerdate,
+        email: this.state.email,
+        
+      });
+   console.log(body);
+   this.props.navigation.navigate('ManageStaffScreen',);          
+    }
+  };
 
   render() {
     const { navigate } = this.props.navigation;
@@ -44,6 +69,9 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.doctorId}
             />
           </View>
+          {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("doctorId")}
+            </Text>:null}
 
           <View style={styles.inputView}>
             <TextInput
@@ -54,6 +82,9 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.qualification}
             />
           </View>
+          {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("qualification")}
+            </Text>:null}
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -63,6 +94,9 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.experience}
             />
           </View>
+          {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("experience")}
+            </Text>:null}
 
           <View style={styles.inputView}>
             <TextInput
@@ -73,6 +107,9 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.phonenumber}
             />
           </View>
+          {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("phonenumber")}
+            </Text>:null}
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -82,21 +119,16 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.email}
             />
           </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Register Number"
-              placeholderTextColor="white"
-              onChangeText={(registernumber) => this.setState({ registernumber })}
-              value={this.state.registernumber}
-            />
-          </View>
+          {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("email")}
+            </Text>:null}
+         
 
-          <TouchableOpacity
-            style={styles.button} onPress={() => this.props.navigation.navigate('ManageStaffScreen',)}
-          >
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={this.onPressDoctorStaffInfo} activeOpacity={0.7} style={styles.button} >   
+          <Text style={styles.buttonText}> Submit </Text>
+
+    </TouchableOpacity>  
         </View>
       </ScrollView>
     );

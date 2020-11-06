@@ -26,7 +26,7 @@ import HospitalScreen from './screen/drawerScreens/HospitalScreen';
 import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
 import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
-import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
+//import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 
 
@@ -422,10 +422,10 @@ const OtherExternal = createStackNavigator({
     screen: StaffDetailsScreen,
     navigationOptions: { title: 'StaffDetailsScreen' },
   },
-  DisplayHospitalScreen: {
-    screen: DisplayHospitalScreen,
-    navigationOptions: { title: 'DisplayHospitalScreen' },
-  },
+  // DisplayHospitalScreen: {
+  //   screen: DisplayHospitalScreen,
+  //   navigationOptions: { title: 'DisplayHospitalScreen' },
+  // },
 });
 export default createAppContainer(OtherExternal);
 //export default createAppContainer(App);
