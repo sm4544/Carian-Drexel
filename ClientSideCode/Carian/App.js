@@ -22,7 +22,13 @@ import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
 import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
 import PatientsScreen from './screen/drawerScreens/PatientsScreen';
-import HospitalScreen from './screen/drawerScreens/HospitalScreen'
+import HospitalScreen from './screen/drawerScreens/HospitalScreen';
+import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
+import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
+import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
+//import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
+import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
+
 
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
@@ -109,7 +115,9 @@ const SixthActivity_stackNavigator = createStackNavigator({
 });
 
 const SeventhActivity_stackNavigator = createStackNavigator({
-  First: {
+
+First: {
+
     screen: HospitalScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Hospital Screen',
@@ -119,8 +127,22 @@ const SeventhActivity_stackNavigator = createStackNavigator({
       },
       headerTintColor: '#fff',
     }),
-    
+
   },
+
+
+
+    // screen: HospitalDetailsScreen,
+    // navigationOptions: ({ navigation }) => ({
+    //   title: 'Hospital Details Screen',
+    //   headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+    //   headerStyle: {
+    //     backgroundColor: '#307ecc',
+    //   },
+    //   headerTintColor: '#fff',
+    // }),
+
+
 });
 
 const EigthActivity_stackNavigator = createStackNavigator({
@@ -327,6 +349,7 @@ const DrawerNavigationRoutes = createDrawerNavigator({
       drawerLabel: 'Patients Screen',
     },
   },
+
 },
 {
     contentComponent: CustomSidebarMenu,
@@ -373,5 +396,36 @@ const App = createStackNavigator({
       headerShown: false,
     },
   },
+
+
 });
-export default createAppContainer(App);
+
+
+const OtherExternal = createStackNavigator({
+  App: { screen: App, navigationOptions: { header: null } },
+  HospitalDetailsScreen: {
+    screen: HospitalDetailsScreen,
+    navigationOptions: { title: 'HospitalDetailsScreen' },
+  },
+
+  PharmacyDetailsScreen: {
+    screen: PharmacyDetailsScreen,
+    navigationOptions: { title: 'PharmacyDetailsScreen' },
+  },
+
+  LabDetailsScreen: {
+    screen: LabDetailsScreen,
+    navigationOptions: { title: 'LabDetailsScreen' },
+  },
+
+  StaffDetailsScreen: {
+    screen: StaffDetailsScreen,
+    navigationOptions: { title: 'StaffDetailsScreen' },
+  },
+  // DisplayHospitalScreen: {
+  //   screen: DisplayHospitalScreen,
+  //   navigationOptions: { title: 'DisplayHospitalScreen' },
+  // },
+});
+export default createAppContainer(OtherExternal);
+//export default createAppContainer(App);
