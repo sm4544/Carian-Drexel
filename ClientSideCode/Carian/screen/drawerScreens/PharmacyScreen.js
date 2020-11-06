@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput , StyleSheet } from 'react-native';
 import styles from '../../styles/commonStyles';
 import ValidationComponent from 'react-native-form-validator';
-import { Table, TableWrapper, Row, Rows, Cell  } from "react-native-table-component";
+import { Table, TableWrapper, Row, Cell  } from 'react-native-table-component';
 export default class PharmacyScreen extends Component {
     render() {
       //  const { navigation } = this.props;  

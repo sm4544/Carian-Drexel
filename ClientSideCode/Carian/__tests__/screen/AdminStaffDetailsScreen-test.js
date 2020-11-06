@@ -26,7 +26,7 @@ describe('<StaffDetailsScreen/>', () => {
 
 
   it('should have doctor/staff detail boxes', () => {
-    expect(wrapper.find(TextInput)).to.have.length(6);
+    expect(wrapper.find(TextInput)).to.have.length(5);
   })
 
   it('should have the doctorId component with empty value ', () => {
@@ -79,27 +79,38 @@ describe('<StaffDetailsScreen/>', () => {
     expect(wrapper.state('email')).to.equal('abc@gmail.com');
   });
 
-  it('should have the registernumber component with empty value ', () => {
-    expect(wrapper.find(TextInput).at(5).props().value).to.equal('');
-  });
-
-  it('should change state when text changed on registernumber box', () => {
-    const registernumber = wrapper.find(TextInput).at(5);
-    registernumber.simulate('ChangeText', 'abc123');
-    expect(wrapper.state('registernumber')).to.equal('abc123');
-  });
-
+  
   it('should contain Submit button', () => {
-    expect(wrapper.contains(<Text style={styles.buttonText}>Submit</Text>)).to.equal(true);
-    expect(wrapper.find(TouchableOpacity)).to.have.length(1);
+    expect(wrapper.contains(<Text style={styles.buttonText}> Submit </Text>)).to.equal(true);
   })
 
-  it('should navigate to display doctor/staff component', () => {
-    const Submit = wrapper.find(TouchableOpacity).at(0);
-    console.log(Submit)
-    Submit.simulate('press');    
-    sinon.assert.calledWith(spyon, "ManageStaffScreen");
-    sinon.assert.calledOnce(spyon);
-    
+  
+  it('should through error messages if user click on submit with empty doctorid', () => {
+    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    registerButton.simulate('press');    
+    expect(wrapper.contains('The field "doctorId" is mandatory.')).to.equal(true);
+
+  })
+  it('should through error messages if user click on submit with empty qualification', () => {
+    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    registerButton.simulate('press');    
+    expect(wrapper.contains('The field "qualification" is mandatory.')).to.equal(true);
+
+  })
+  it('should through error messages if user click on submit with empty experience', () => {
+    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    registerButton.simulate('press');    
+    expect(wrapper.contains('The field "experience" is mandatory.')).to.equal(true);
+  })
+  it('should through error messages if user click on submit with empty phonenumber', () => {
+    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    registerButton.simulate('press');    
+    expect(wrapper.contains('The field "phonenumber" is mandatory.')).to.equal(true);
+  })
+  it('should through error messages if user click on submit with empty email', () => {
+    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    registerButton.simulate('press');
+    expect(wrapper.contains('The field "email" must be a valid email address.')).to.equal(true);
+    expect(wrapper.contains('The field "email" is mandatory.')).to.equal(true);
   })
 });

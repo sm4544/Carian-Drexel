@@ -4,43 +4,50 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text , ScrollView} from 
 
 import { StackNavigator } from 'react-navigation';
 import styles from '../../styles/commonStyles';
-
-
-
-export default class HospitalDetailsScreen extends Component {
+import ValidationComponent from 'react-native-form-validator';
+export default class HospitalDetailsScreen extends ValidationComponent {
  
- 
- 
-    constructor(props) {
-   
-      super(props)
-   
-      this.state = {
-   
+    constructor(props) {   
+      super(props);   
+      this.state = {   
         hospitalname: '',
         hospitaladd1: '',
         hospitaladd2: '',
         phonenumber: '',
         registerdate: '',
-        licensenumber: '',
-   
-      }
+        licensenumber: '',   
+      };
+      this.onPressHospitalInfo = this.onPressHospitalInfo.bind(this);
    
     }
 
+    isValidForm = () => {
+      return this.validate({  
+        hospitalname: { required: true },
+        hospitaladd1: { required: true },
+        hospitaladd2:{ required: true },
+        phonenumber: { numbers: true, required: true },
+        registerdate: { required: true },       
+        licensenumber: { numbers: true, required: true },          
+      });
+    };
     
    
-    Send_Data_Function = () => {
+    onPressHospitalInfo = () => {
+      if (this.isValidForm()) {
+        body = JSON.stringify({
 
-      // this.props.navigation.navigate("DisplayHospitalScreen", {
-      //   NameOBJ: this.state.hospitalname,
-        this.props.navigation.navigate('HospitalScreen', { login: this.state.hospitalname, });
-   
-      // this.props.navigation.navigate('DisplayHospitalScreen', {
-      //   NameOBJ: this.state.hospitalname,
-      // });
-   
-    }
+          hospitalname: this.state.hospitalname,
+          hospitaladd1: this.state.hospitaladd1,
+          hospitaladd2: this.state.hospitaladd2,
+          phonenumber: this.state.phonenumber,
+          registerdate: this.state.registerdate,
+          licensenumber: this.state.licensenumber
+        });
+             console.log(body);
+        this.props.navigation.navigate('HospitalScreen', { login: this.state.hospitalname});          
+      }
+    };
    
     render() {
       return (
@@ -58,7 +65,11 @@ export default class HospitalDetailsScreen extends Component {
                 onChangeText={(hospitalname) => this.setState({ hospitalname })}
                 value={this.state.hospitalname}
                />
-            </View>
+              </View>
+                {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("hospitalname")}
+            </Text>:null}
+            
   
             <View style={styles.inputView}>
               <TextInput
@@ -68,7 +79,11 @@ export default class HospitalDetailsScreen extends Component {
                 ref="hospitaladd1" onChangeText={(hospitaladd1) => this.setState({ hospitaladd1 })}
                 value={this.state.hospitaladd1}
               />
-            </View>
+                </View>
+               {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("hospitaladd1")}
+            </Text>:null}
+          
             <View style={styles.inputView}>
               <TextInput
                 style={styles.input}
@@ -77,7 +92,12 @@ export default class HospitalDetailsScreen extends Component {
                 ref="hospitaladd2" onChangeText={(hospitaladd2) => this.setState({ hospitaladd2 })}
                 value={this.state.hospitaladd2}
               />
-            </View>
+                </View>
+              {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("hospitaladd2")}
+            </Text>:null}
+               
+          
   
             <View style={styles.inputView}>
               <TextInput
@@ -87,7 +107,11 @@ export default class HospitalDetailsScreen extends Component {
                 ref="phonenumber" onChangeText={(phonenumber) => this.setState({ phonenumber })}
                 value={this.state.phonenumber}
               />
-            </View>
+              </View>
+               {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("phonenumber")}
+            </Text>:null}
+            
             <View style={styles.inputView}>
               <TextInput
                 style={styles.input}
@@ -96,7 +120,11 @@ export default class HospitalDetailsScreen extends Component {
                 ref="registerdate" onChangeText={(registerdate) => this.setState({ registerdate })}
                 value={this.state.registerdate}
               />
-            </View>
+              </View>
+               {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("registerdate")}
+            </Text>:null}
+            
             <View style={styles.inputView}>
               <TextInput
                 style={styles.input}
@@ -105,24 +133,21 @@ export default class HospitalDetailsScreen extends Component {
                 ref="licensenumber" onChangeText={(licensenumber) => this.setState({ licensenumber })}
                 value={this.state.licensenumber}
               />
-            </View>
+               </View>
+               {this.isFormValid ? <Text style={styles.errormessages}>
+                {this.getErrorsInField("licensenumber")}
+            </Text>:null}
+           
    
-            <TouchableOpacity onPress={this.Send_Data_Function} activeOpacity={0.7} style={styles.button} >
+            <TouchableOpacity onPress={this.onPressHospitalInfo} activeOpacity={0.7} style={styles.button} >
    
            <Text style={styles.buttonText}> Submit </Text>
  
-            </TouchableOpacity>
-
-            
+            </TouchableOpacity>      
 
   
           </View>         
-          </ScrollView>
-  
-  
-  
-
- 
+          </ScrollView> 
    
       );
     }
