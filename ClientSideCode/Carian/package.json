@@ -23,6 +23,7 @@
     "react-native-add-calendar-event": "^4.0.0",
     "react-native-calendar-events": "^2.1.1",
     "react-native-calendars": "^1.403.0",
+    "react-native-cardview": "^2.0.5",
     "react-native-datepicker": "^1.7.2",
     "react-native-dropdown-picker": "^3.7.0",
     "react-native-form-validator": "^0.3.2",

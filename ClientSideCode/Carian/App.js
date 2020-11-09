@@ -402,7 +402,7 @@ const App = createStackNavigator({
 
 
 const OtherExternal = createStackNavigator({
-  App: { screen: App, navigationOptions: { header: null } },
+  App: { screen: App, navigationOptions: { headerShown: false } },
   HospitalDetailsScreen: {
     screen: HospitalDetailsScreen,
     navigationOptions: { title: 'HospitalDetailsScreen' },
@@ -421,11 +421,7 @@ const OtherExternal = createStackNavigator({
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
     navigationOptions: { title: 'StaffDetailsScreen' },
-  },
-  // DisplayHospitalScreen: {
-  //   screen: DisplayHospitalScreen,
-  //   navigationOptions: { title: 'DisplayHospitalScreen' },
-  // },
+  }  
 });
 export default createAppContainer(OtherExternal);
 //export default createAppContainer(App);

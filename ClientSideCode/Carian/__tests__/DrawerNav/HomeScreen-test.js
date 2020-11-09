@@ -16,6 +16,9 @@ import sinon from 'sinon';
 import styles from '../../styles/homeScreenStyles';
 import HomeScreen from '../../screen/drawerScreens/HomeScreen';
 import DropDownPicker from 'react-native-dropdown-picker';
+import SpecialityCard from '../../screen/drawerScreens/Cards/SpecialityCard';
+import HospitalCard from '../../screen/drawerScreens/Cards/HospitalCard';
+import DoctorProfileCard from '../../screen/drawerScreens/Cards/DoctorProfileCard';
 const navigation = {
   navigate: jest.fn(),
   state: {
@@ -49,7 +52,7 @@ describe('<StaffInfoScreen/>', () => {
   });
 
   it('should have view Container', () => {
-    expect(wrapper.find(View)).to.have.length(1);
+    expect(wrapper.find(View)).to.have.length(26);
   });
 
   it('should have Carian Text', () => {
@@ -67,17 +70,17 @@ describe('<StaffInfoScreen/>', () => {
 
   it('should have search hospital by Symptoms section', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.contains(<Text style={styles.text}>Find Hospitals by Symptoms</Text>)).to.equal(true);
+    expect(wrapper.contains(<Text style={styles.sectionText}>Find Hospitals by Symptoms</Text>)).to.equal(true);
   });
 
   it('should have search hospital by Specilazation section', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.contains(<Text style={styles.text}>Find Hospitals by Specilazation</Text>)).to.equal(true);
+    expect(wrapper.contains(<Text style={styles.sectionText}>Find Hospitals by Specilazation</Text>)).to.equal(true);
   });
 
   it('should have hospitals in your area section', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.contains(<Text style={styles.text}>Hospitals near me</Text>)).to.equal(true);
+    expect(wrapper.contains(<Text style={styles.sectionText}>Top Hospitals near you</Text>)).to.equal(true);
   });
 
   it('should have view all hospitals button', () => {
@@ -87,7 +90,7 @@ describe('<StaffInfoScreen/>', () => {
 
   it('should have doctors in your area section', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.contains(<Text style={styles.text}>Doctors near me</Text>)).to.equal(true);
+    expect(wrapper.contains(<Text style={styles.sectionText}>Top Doctors near you</Text>)).to.equal(true);
   });
 
   it('should have view all Doctors button', () => {
@@ -97,7 +100,7 @@ describe('<StaffInfoScreen/>', () => {
 
   it('should have our network section', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.contains(<Text style={styles.text}>Our Strenth</Text>)).to.equal(true);
+    expect(wrapper.contains(<Text style={styles.sectionText}>Our Strenth</Text>)).to.equal(true);
   });
 
   it('CustomerCount should not be empty on load', () => {
@@ -138,6 +141,43 @@ describe('<StaffInfoScreen/>', () => {
 
   it('should have About us section', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.contains(<Text style={styles.text}>About US</Text>)).to.equal(true);
+    expect(wrapper.contains(<Text style={styles.sectionText}>About US</Text>)).to.equal(true);
   });
+
+  it('should have specialistCarddata ready', () => {
+    //expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.state('specialistCarddata')).to.be.an('array').that.is.not.empty;
+    
+  });
+
+  it('should have no of Specilality cards of length equal to specialistCarddata array length', () => {
+    //expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.find(SpecialityCard)).to.have.length(24);
+    expect(wrapper.state('specialistCarddata')).to.have.lengthOf(24);
+  });
+
+  it('should have hospitalsList ready', () => {
+    //expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.state('hospitalsList')).to.be.an('array').that.is.not.empty;
+    
+  });
+
+  it('should have no of hospitals equal to hospitalsList array length', () => {
+    //expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.find(HospitalCard)).to.have.length(4);
+    expect(wrapper.state('hospitalsList')).to.have.lengthOf(4);
+  });
+
+  it('should have DoctorsList ready', () => {
+    //expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.state('doctorsList')).to.be.an('array').that.is.not.empty;
+    
+  });
+
+  it('should have no of hospitals equal to hospitalsList array length', () => {
+    //expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.find(DoctorProfileCard)).to.have.length(4);
+    expect(wrapper.state('doctorsList')).to.have.lengthOf(4);
+  });
+  
 })
