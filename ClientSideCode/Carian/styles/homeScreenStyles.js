@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: "#F0F0E1",
@@ -38,12 +37,12 @@ export default StyleSheet.create({
     textDecorationLine: "underline",
   },
   button: {
-    width: "80%",
+    width: "60%",
     backgroundColor: "#CD6155",
     borderRadius: 18,
     borderColor: "white",
     borderWidth: 2,
-    height: 60,
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
@@ -51,7 +50,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: 25
+    fontSize: 20
   },
   image: {
     width: 250,
@@ -90,19 +89,28 @@ export default StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 20,
     color: '#CD6155',
     fontStyle: 'italic',
     paddingBottom: 10,
     paddingTop: 10,
     width: '80%'
   },
+
+  sectionText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#CD6155',
+    fontStyle: 'italic',
+    paddingBottom: 10,
+    paddingTop: 10,
+    width: '95%'
+  },
   textCal: {
     fontWeight: 'bold',
     fontSize: 20,
     color: '#D35400',
     fontStyle: 'italic',
-
     paddingTop: 10,
   },
   buttonCal: {
@@ -112,11 +120,83 @@ export default StyleSheet.create({
     borderRadius: 18,
     borderColor: 'black',
     borderWidth: 2,
-
     flexDirection: 'row',
     marginTop: 20,
     marginBottom: 40,
-    // paddingLeft: 10,
     paddingHorizontal: 15,
   },
+  cardContainer: {
+    width: '90%',
+    flex: 1,
+    backgroundColor: "#F0F0E1",
+    alignItems: "center",
+    justifyContent: 'center'
+  },
+  setFlexRow:{ flex: 1, flexDirection: 'row' },
+  positionImage:{ width: '30%', alignItems: "center", justifyContent: 'center', alignSelf: 'center'},
+  card: {
+    backgroundColor: 'white',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+    alignSelf: 'center',
+    flex: 1,
+    margin: 10,
+    height: 130,
+  },
+  hospitalCard: {
+    backgroundColor: 'white',
+    //alignItems: 'flex-start',
+    //justifyContent: 'flex-end',
+    alignSelf: 'center',
+    flex: 1,
+    margin: 10,
+    height: 'auto',
+    width: '100%'
+  },
+  cardText: {
+    textAlign: 'left',
+    margin: 5,
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  cardSubBoldText: {
+    textAlign: 'left',
+    margin: 5,
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
+  cardSubItalicText: {
+    textAlign: 'left',
+    margin: 5,
+    fontSize: 15,
+    fontStyle:'italic'
+  },
+  imageRightPosition:{ width: '70%', justifyContent: 'center', alignSelf: 'center' },
+  image: {
+    flex: 1,
+    width: 180,
+    justifyContent: "flex-end",
+
+  },
+  hospitalImage: {
+    width: 100,
+    height: 125,    
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+
+  },
+  profileImage: {
+    //flex: 1,    
+    width: 100,
+    height: 100,
+    borderRadius: 100/2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+    //justifyContent: "flex-end",
+
+  }
 });
