@@ -25,8 +25,8 @@ export default class DoctorProfileCard extends ValidationComponent {
         return (
             <View style={styles.cardContainer}>
                 <CardView
-                    cardElevation={10}
-                    cardMaxElevation={10}
+                    cardElevation={2}
+                    cardMaxElevation={2}
                     cornerRadius={5}
                     style={styles.hospitalCard}>
                     <View style={styles.setFlexRow}>
@@ -34,9 +34,9 @@ export default class DoctorProfileCard extends ValidationComponent {
                             <Image source={this.props.doctor.image} style={styles.profileImage} />
                         </View>
                         <View style={styles.imageRightPosition}>
-                            <Text style={styles.cardText}>Dr. {this.props.doctor.name}</Text>
-                            <Text style={styles.cardSubBoldText}>{this.props.doctor.specialization} ({this.props.doctor.highestDegree})</Text>
-                            <Text style={styles.cardSubItalicText}>{this.props.doctor.overAllExperience} Years of work exp</Text>
+                            <Text style={styles.cardText}>Dr. {this.props.doctor.name}({this.props.doctor.highestDegree})</Text>
+                            <Text style={styles.cardSubBoldText}>{this.props.doctor.specialization}. {this.props.doctor.overAllExperience} Years exp</Text>
+                            <Text style={styles.cardSubItalicText}>$ {this.props.doctor.fee} Fees</Text>
                             <Text style={styles.cardSubItalicText}>{this.props.doctor.area}, {this.props.doctor.city}</Text>
                             <Text style={styles.cardSubBoldText}>{this.props.doctor.avgRating}({this.props.doctor.totalNoOfReviews} Stories )</Text>
                         </View>

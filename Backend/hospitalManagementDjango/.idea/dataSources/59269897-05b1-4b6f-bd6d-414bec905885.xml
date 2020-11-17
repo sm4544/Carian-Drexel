@@ -382,15 +382,15 @@
       <Owner>jvzdizzqsnutty</Owner>
       <IntrospectionStateNumber>17163722</IntrospectionStateNumber>
       <Current>1</Current>
-      <Relations>sequence|table|9302894|9302896|1
-sequence|table|9302808|9302810|1
-sequence|table|9302816|9302818|1
-sequence|table|9302826|9302828|1
-sequence|table|9302834|9302836|1
+      <Relations>sequence|table|9302808|9302810|1
 sequence|table|9302769|9302771|1
 sequence|table|9302780|9302782|1
 sequence|table|9302790|9302792|1
 sequence|table|9302798|9302800|1
+sequence|table|9302894|9302896|1
+sequence|table|9302816|9302818|1
+sequence|table|9302826|9302828|1
+sequence|table|9302834|9302836|1
 </Relations>
     </database>
     <database id="96" parent="1" name="d1c3u25f55d7qp">

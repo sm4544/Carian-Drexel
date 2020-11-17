@@ -20,13 +20,13 @@ import Icon from 'react-native-vector-icons/Feather';
 const image = { uri: "https://reactjs.org/logo-og.png" };
 
 
-export default class SpecialityCard extends ValidationComponent {
+export default class HospitalCard extends ValidationComponent {
     render() {
         return (
             <View style={styles.cardContainer}>                
                 <CardView
-                    cardElevation={10}
-                    cardMaxElevation={10}
+                    cardElevation={2}
+                    cardMaxElevation={2}
                     cornerRadius={5}
                     style={styles.hospitalCard}>
                     <View style={styles.setFlexRow}>

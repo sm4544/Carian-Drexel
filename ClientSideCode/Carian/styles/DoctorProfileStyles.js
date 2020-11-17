@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: 'center'
     
@@ -46,20 +46,20 @@ export default StyleSheet.create({
     textDecorationLine: "underline",
   },
   button: {
-    width: "60%",
-    backgroundColor: "#CD6155",
-    borderRadius: 18,
+    //width: "60%",
+    backgroundColor: "#F7DC6F",
+    borderRadius: 10,
+    flexBasis: '30%',
     borderColor: "white",
     borderWidth: 2,
-    height: 40,
+    height: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
-    marginBottom: 40,
+    margin:4
   },
   buttonText: {
-    color: "white",
-    fontSize: 20
+    color: "black",
+    fontSize: 15
   },
   image: {
     width: 250,
@@ -137,12 +137,13 @@ export default StyleSheet.create({
   cardContainer: {
     width: '90%',
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#F0F0E1",
     alignItems: "center",
     justifyContent: 'center'
   },
-  setFlexRow:{ flex: 1, flexDirection: 'row' },
-  positionImage:{ width: '30%', alignItems: "center", justifyContent: 'center', alignSelf: 'center'},
+  setFlexRow:{ flex: 1, flexDirection: 'row', marginTop:20, marginLeft:10,  },
+  feesdisplay:{ flex: 1, flexDirection: 'row', margin:15,  fontSize:20, borderRadius:5, backgroundColor:'#82E0AA', padding:10, width:'90%', justifyContent:"space-between"},
+  positionImage:{ width: '40%', alignItems: "center", justifyContent: 'center', alignSelf: 'center'},
   card: {
     backgroundColor: 'white',
     alignItems: 'flex-start',
@@ -165,19 +166,19 @@ export default StyleSheet.create({
   cardText: {
     textAlign: 'left',
     margin: 3,
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   cardSubBoldText: {
     textAlign: 'left',
     margin: 3,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 'bold'
   },
   cardSubItalicText: {
     textAlign: 'left',
     margin: 3,
-    fontSize: 13,
+    fontSize: 15,
     fontStyle:'italic'
   },
   imageRightPosition:{ width: '70%', justifyContent: 'center', alignSelf: 'center' },
@@ -198,9 +199,9 @@ export default StyleSheet.create({
   },
   profileImage: {
     //flex: 1,    
-    width: 100,
-    height: 100,
-    borderRadius: 100/2,
+    width: 120,
+    height: 120,
+    borderRadius: 120/2,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -208,22 +209,17 @@ export default StyleSheet.create({
     //justifyContent: "flex-end",
 
   },
-  profileHeaderPicCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 40 / 2,
-    color: 'white',
-    backgroundColor: 'black',
-    textAlign: 'center',
+
+  hospitalImage: {
+    //flex: 1,    
+    width: 120,
+    height: 120,
+    //borderRadius: 120/2,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+    //justifyContent: "flex-end",
 
-  },
-  profileHeaderText: {
-    color: 'black',
-    alignSelf: 'flex-start',
-    paddingHorizontal: 10,
-    fontWeight: 'bold',
-  },
-  
+  }
 });

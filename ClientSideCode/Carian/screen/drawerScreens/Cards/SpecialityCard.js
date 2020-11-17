@@ -27,8 +27,8 @@ export default class SpecialityCard extends ValidationComponent {
             <View style={styles.container}>
                 <TouchableOpacity>
                     <CardView
-                        cardElevation={10}
-                        cardMaxElevation={10}
+                        cardElevation={2}
+                        cardMaxElevation={2}
                         cornerRadius={5}
                         style={styles.card}>
                         <ImageBackground source={this.props.data.image} style={styles.image}>
