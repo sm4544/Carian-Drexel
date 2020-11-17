@@ -99,12 +99,9 @@ export default class HomeScreen extends ValidationComponent {
                         items={this.state.cityArray}
                         defaultValue={this.state.city}
                         containerStyle={{ height: 40 }}
-                        style={{ backgroundColor: '#307ecc', width: "80%", borderRadius: 18, }}
-                        itemStyle={{
-                            justifyContent: 'flex-start',
-                            width: "80%"
-                        }}
-                        dropDownStyle={{ backgroundColor: '#fafafa', width: "80%" }}
+                        style={styles.dropdownstyle}
+                        itemStyle={styles.itemStyle}
+                        dropDownStyle={styles.dropDownDataStyle}
                         onChangeItem={item => this.setState({
                             city: item.value
                         })}
@@ -113,17 +110,17 @@ export default class HomeScreen extends ValidationComponent {
                     <Text style={styles.sectionText}>Find Hospitals by Symptoms</Text>
 
                     <Text style={styles.sectionText}>Find Hospitals by Specilazation</Text>
-                    <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
+                    <View style={styles.setFlexRowWithWrap}>
                         {this.state.specialistCarddata.map(item => (
                             <View key={item.name} style={{ flexBasis: '50%' }}>
-                                <SpecialityCard data={item} key={item.name} style={{ height: "80", borderRadius: 18 }}></SpecialityCard>
+                                <SpecialityCard data={item} key={item.name} style={styles.specialityCardHeightAndBorder}></SpecialityCard>
                             </View>
                         ))}
                     </View>
 
                     <Text style={styles.sectionText}>Top Hospitals near you</Text>
                     {this.state.hospitalsList.map(hospital => (
-                        <TouchableOpacity  onPress={() => this.onPressingHospital(hospital.name)} key={hospital.name} style={{ width: '100%', flex: 1, backgroundColor: "white", alignItems: "center", justifyContent: 'center' }}>
+                        <TouchableOpacity  onPress={() => this.onPressingHospital(hospital.name)} key={hospital.name} style={styles.hospitalCardTouch}>
                             <HospitalCard key={hospital.name} hospital={hospital} style={{ width: '80%', borderRadius: 18 }}></HospitalCard>
                         </TouchableOpacity>
                     ))}
@@ -134,7 +131,7 @@ export default class HomeScreen extends ValidationComponent {
                     <Text style={styles.sectionText}>Top Doctors near you</Text>
 
                     {this.state.doctorsList.map(doctor => (
-                        <TouchableOpacity  onPress={() => this.onPressingDoctorCard(doctor.name)}  key={doctor.name} style={{ width: '100%', flex: 1, backgroundColor: "white", alignItems: "center", justifyContent: 'center' }}>
+                        <TouchableOpacity  onPress={() => this.onPressingDoctorCard(doctor.name)}  key={doctor.name} style={styles.hospitalCardTouch}>
                             <DoctorProfileCard key={doctor.name} doctor={doctor} ></DoctorProfileCard>
                         </TouchableOpacity>
                     ))}

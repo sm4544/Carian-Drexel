@@ -3,47 +3,15 @@ import { StyleSheet, Dimensions } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: 'center'
-    
   },
+  doctorCardView:{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' },
   scrollViewContainer: {
     flex: 1,
     backgroundColor: "#F0F0E1",
     alignItems: "center",
     justifyContent: 'center',
     alignSelf: 'center'
-    
-  },
-  AppTitle: {
-    fontWeight: "bold",
-    fontSize: 40,
-    color: "#D35400",
-    fontStyle: "italic",
-    paddingBottom: 30,
-    paddingTop: 30,
-  },
-  inputView: {
-    width: "80%",
-    backgroundColor: "steelblue",
-    borderRadius: 18,
-    height: 50,
-    marginTop: 20,
-    justifyContent: "center",
-    padding: 5,
-    borderColor: "white",
-    //borderWidth: 2,
-  },
-  input: {
-    height: 100,
-    color: "white",
-    fontSize: 20,
-  },
-  hyperlink: {
-    color: "black",
-    fontSize: 25,
-    textDecorationLine: "underline",
+
   },
   button: {
     //width: "60%",
@@ -55,7 +23,7 @@ export default StyleSheet.create({
     height: 30,
     alignItems: "center",
     justifyContent: "center",
-    margin:4
+    margin: 4
   },
   buttonText: {
     color: "black",
@@ -141,9 +109,19 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
-  setFlexRow:{ flex: 1, flexDirection: 'row', marginTop:20, marginLeft:10,  },
-  feesdisplay:{ flex: 1, flexDirection: 'row', margin:15,  fontSize:20, borderRadius:5, backgroundColor:'#82E0AA', padding:10, width:'90%', justifyContent:"space-between"},
-  positionImage:{ width: '40%', alignItems: "center", justifyContent: 'center', alignSelf: 'center'},
+  setFlexRow: { flex: 1, flexDirection: 'row', marginTop: 20, marginLeft: 10, },
+  addressHeader:{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' },
+  adressText:{ fontSize: 16, fontStyle: 'italic' },
+  hospitalDataRow:{ flexDirection: 'row', marginTop: 1 },
+  ratingText:{ fontSize: 18, fontWeight: 'bold', marginTop: 8, },
+  imagesRowSetUp:{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', backgroundColor: 'white' },
+  footerView:{ alignSelf: 'center', flexDirection: 'row', backgroundColor: '#307ecc', width: '100%', justifyContent: 'space-between' },
+  footerSubView:{ alignSelf: 'center', justifyContent: 'center' },
+  footerText:{ color: 'black', fontSize: 20 },
+  payButton:{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "white", padding: 10, borderWidth: 2, alignItems: "center", justifyContent: "center", margin: 4 },
+  payButtonText:{ color: 'black', fontSize: 25 },
+  feesdisplay: { flex: 1, flexDirection: 'row', margin: 10, fontSize: 23, borderRadius: 5, backgroundColor: '#82E0AA', padding: 10, width: '95%', justifyContent: "space-between" },
+  positionImage: { width: '40%', alignItems: "center", justifyContent: 'center', alignSelf: 'center' },
   card: {
     backgroundColor: 'white',
     alignItems: 'flex-start',
@@ -153,6 +131,16 @@ export default StyleSheet.create({
     margin: 10,
     height: 130,
   },
+  hospitalSectionView:{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' },
+  hospitalSectionSubView:{ alignSelf: 'center', margin: 10, width: '95%' },
+  hospitalName:{ fontSize: 25, fontWeight: "bold", marginBottom: 5 },
+  slotsView:{ width: '95%', marginTop: 10, flex: 1, backgroundColor: 'white', flexWrap: 'wrap', alignSelf: 'center', flexDirection: 'row' },
+  slotsTouch:{ padding: 4, backgroundColor: '#AED6F1', borderColor: 'black', alignSelf: 'center', margin: 4, justifyContent: "center", borderRadius: 5, borderWidth: 2 },
+  sectionTitle:{ margin: 15, fontWeight: 'bold', fontSize: 18 },
+  horizontalLine:{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 },
+  calenderViewStyle:{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' },
+  calenderStrip:{ height: 135, paddingTop: 10, paddingBottom: 10 },
+  reviewsSubText:{ marginLeft: 15, fontSize: 12, marginBottom: 10 },
   hospitalCard: {
     backgroundColor: 'white',
     //alignItems: 'flex-start',
@@ -179,9 +167,9 @@ export default StyleSheet.create({
     textAlign: 'left',
     margin: 3,
     fontSize: 15,
-    fontStyle:'italic'
+    fontStyle: 'italic'
   },
-  imageRightPosition:{ width: '70%', justifyContent: 'center', alignSelf: 'center' },
+  imageRightPosition: { width: '70%', justifyContent: 'center', alignSelf: 'center' },
   image: {
     flex: 1,
     width: 180,
@@ -190,7 +178,7 @@ export default StyleSheet.create({
   },
   hospitalImage: {
     width: 100,
-    height: 125,    
+    height: 125,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -201,7 +189,7 @@ export default StyleSheet.create({
     //flex: 1,    
     width: 120,
     height: 120,
-    borderRadius: 120/2,
+    borderRadius: 120 / 2,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',

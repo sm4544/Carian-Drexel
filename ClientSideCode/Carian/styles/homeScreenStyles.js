@@ -6,7 +6,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: 'center'
-    
+
   },
   scrollViewContainer: {
     flex: 1,
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center',
     alignSelf: 'center'
-    
+
   },
   AppTitle: {
     fontWeight: "bold",
@@ -67,14 +67,9 @@ export default StyleSheet.create({
     borderRadius: 20
   },
   dropdownstyle: {
+    backgroundColor: '#307ecc',
     width: "80%",
-    backgroundColor: "steelblue",
     borderRadius: 18,
-    height: 50,
-    marginTop: 20,
-    //justifyContent: "center",
-    //padding: 5,
-    borderColor: "white",
 
   },
   ConfirmationText: {
@@ -141,8 +136,11 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
-  setFlexRow:{ flex: 1, flexDirection: 'row' },
-  positionImage:{ width: '30%', alignItems: "center", justifyContent: 'center', alignSelf: 'center'},
+  setFlexRow: { flex: 1, flexDirection: 'row' },
+  setFlexRowWithWrap: { flex: 1, flexWrap: 'wrap', flexDirection: 'row' },
+  positionImage: { width: '30%', alignItems: "center", justifyContent: 'center', alignSelf: 'center' },
+  specialityCardHeightAndBorder:{ height: "80", borderRadius: 18 },
+  hospitalCardTouch:{ width: '100%', flex: 1, backgroundColor: "white", alignItems: "center", justifyContent: 'center' },
   card: {
     backgroundColor: 'white',
     alignItems: 'flex-start',
@@ -154,8 +152,6 @@ export default StyleSheet.create({
   },
   hospitalCard: {
     backgroundColor: 'white',
-    //alignItems: 'flex-start',
-    //justifyContent: 'flex-end',
     alignSelf: 'center',
     flex: 1,
     margin: 10,
@@ -178,9 +174,9 @@ export default StyleSheet.create({
     textAlign: 'left',
     margin: 3,
     fontSize: 13,
-    fontStyle:'italic'
+    fontStyle: 'italic'
   },
-  imageRightPosition:{ width: '70%', justifyContent: 'center', alignSelf: 'center' },
+  imageRightPosition: { width: '70%', justifyContent: 'center', alignSelf: 'center' },
   image: {
     flex: 1,
     width: 180,
@@ -189,7 +185,7 @@ export default StyleSheet.create({
   },
   hospitalImage: {
     width: 100,
-    height: 125,    
+    height: 125,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -200,7 +196,7 @@ export default StyleSheet.create({
     //flex: 1,    
     width: 100,
     height: 100,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -225,5 +221,11 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     fontWeight: 'bold',
   },
-  
+  itemStyle: {
+    justifyContent: 'flex-start',
+    width: "80%"
+  },
+  dropDownDataStyle: { backgroundColor: '#fafafa', width: "80%" },
+
+
 });

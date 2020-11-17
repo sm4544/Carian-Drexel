@@ -141,9 +141,9 @@ export default class DoctorPublicProfile extends ValidationComponent {
             });
         }
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
                 <ScrollView>
-                    <View style={{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' }}>
+                    <View style={styles.doctorCardView}>
                         <View style={styles.setFlexRow}>
                             <View style={styles.positionImage}>
                                 <Image source={doctor.image} style={styles.profileImage} />
@@ -163,26 +163,20 @@ export default class DoctorPublicProfile extends ValidationComponent {
                             <View>
                                 <Text>${doctor.fee}</Text>
                             </View>
-
                         </View>
                     </View>
-                    <View style={{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' }}>
+                    <View style={styles.calenderViewStyle}>
 
-                        <CalendarStrip style={{ height: 135, paddingTop: 10, paddingBottom: 10 }}
-                            customDatesStyles={customDatesStyles}
-                            maxDate={endDate}
+                        <CalendarStrip style={styles.calenderStrip} customDatesStyles={customDatesStyles} maxDate={endDate} 
                             datesWhitelist={datesWhitelist}
-                            onDateSelected={this.displaySlots}
-
-                        >
+                            onDateSelected={this.displaySlots}                        >
                         </CalendarStrip>
-
                     </View>
-                    <Text style={{ margin: 15, fontWeight: 'bold', fontSize: 18 }}>Select available times on {this.state.selectedDate}</Text>
-                    <View style={{ width: '95%', marginTop: 10, flex: 1, backgroundColor: 'white', flexWrap: 'wrap', alignSelf: 'center', flexDirection: 'row' }}>
+                    <Text style={styles.sectionTitle}>Select available times on {this.state.selectedDate}</Text>
+                    <View style={styles.slotsView}>
                         {slots.map(item => (
                             <View key={item.id} style={{ flexBasis: '25%' }}>
-                                <TouchableOpacity onPress={() => this.onpressTime(item.time)} key={item.id} style={{ padding: 4, backgroundColor: '#AED6F1', borderColor: 'black', alignSelf: 'center', margin: 4, justifyContent: "center", borderRadius: 5, borderWidth: 2 }}>
+                                <TouchableOpacity onPress={() => this.onpressTime(item.time)} key={item.id} style={styles.slotsTouch}>
                                     <Text>{item.time}</Text>
                                 </TouchableOpacity>
                             </View>
@@ -190,19 +184,17 @@ export default class DoctorPublicProfile extends ValidationComponent {
                         ))}
                     </View>
 
-                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 }} />
-
-                    <View style={{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' }}>
-
-                        <View style={{ alignSelf: 'center', margin: 10, width: '95%' }}>
-                            <Text style={{ fontSize: 25, fontWeight: "bold", marginBottom: 5 }}>{hospital.name}</Text>
-                            <View style={{ flexDirection: 'row', marginTop: 1 }}>
+                    <View style={styles.horizontalLine} />
+                    <View style={styles.hospitalSectionView}>
+                        <View style={styles.hospitalSectionSubView}>
+                            <Text style={styles.hospitalName}>{hospital.name}</Text>
+                            <View style={styles.hospitalDataRow}>
                                 <View>
-                                    <Text style={{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' }}>Address: </Text>
+                                    <Text style={styles.addressHeader}>Address: </Text>
                                 </View>
                                 <View>
-                                    <Text style={{ fontSize: 16, fontStyle: 'italic' }}> {hospital.streatAddline1}, {hospital.streatAddline2}</Text>
-                                    <Text style={{ fontSize: 16, fontStyle: 'italic' }}> {hospital.area}, {hospital.city} ,{hospital.state}, {hospital.pincode}</Text>
+                                    <Text style={styles.adressText}> {hospital.streatAddline1}, {hospital.streatAddline2}</Text>
+                                    <Text style={styles.adressText}> {hospital.area}, {hospital.city} ,{hospital.state}, {hospital.pincode}</Text>
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row' }}>
@@ -220,19 +212,19 @@ export default class DoctorPublicProfile extends ValidationComponent {
                                 </TouchableOpacity>
 
                             </View>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 8, }}>{hospital.avgRating} {hospital.totalNoOfReviews} Reviews </Text>
+                            <Text style={styles.ratingText}>{hospital.avgRating} {hospital.totalNoOfReviews} Reviews </Text>
                         </View>
 
 
                     </View>
 
-                    <Text style={{ margin: 15, fontWeight: 'bold', fontSize: 18 }}>Location</Text>
+                    <Text style={styles.sectionTitle}>Location</Text>
 
-                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 }} />
+                    <View style={styles.horizontalLine} />
 
-                    <Text style={{ margin: 15, fontWeight: 'bold', fontSize: 18 }}>Clinic Photos</Text>
+                    <Text style={styles.sectionTitle}>Clinic Photos</Text>
 
-                    <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', backgroundColor: 'white' }}>
+                    <View style={styles.imagesRowSetUp}>
                         {this.state.hospitalImageList.map(image => (
                             <View key={image.id} style={{ flexBasis: '30%', margin: 5 }}>
                                 <Image source={image.image} style={styles.hospitalImage} />
@@ -241,43 +233,40 @@ export default class DoctorPublicProfile extends ValidationComponent {
                         ))}
                     </View>
 
-                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 }} />
-                    <Text style={{ margin: 15, fontWeight: 'bold', fontSize: 18 }}>Specialization</Text>
-                    <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', backgroundColor:'white' }}>
+                    <View style={styles.horizontalLine} />
+                    <Text style={styles.sectionTitle}>Specialization</Text>
+                    <View style={styles.imagesRowSetUp}>
                         <View style={{ flexBasis: '50%' }}>
                             <SpecialityCard data={this.state.specialistCarddata[0]} style={{ backgroundColor: 'white' }}></SpecialityCard>
 
                         </View>
                     </View>
 
-                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 }} />
-                    <Text style={{ margin: 15, fontWeight: 'bold', fontSize: 18 }}>Services</Text>
-                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 }} />
-                    <Text style={{ margin: 15, fontWeight: 'bold', fontSize: 18 }}>Patient Reviews</Text>
+                    <View style={styles.horizontalLine} />
+                    <Text style={styles.sectionTitle}>Services</Text>
+                    <View style={styles.horizontalLine} />
+                    <Text style={styles.sectionTitle}>Working Hours</Text>
+                    <View style={styles.horizontalLine} />
 
-                    <Text style={{ marginLeft: 15, fontSize: 12, marginBottom: 10 }}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>
+                    <Text style={styles.sectionTitle}>Patient Reviews</Text>
+
+                    <Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>
 
                     {this.state.doctorReviews.map(review => (
                         <ReviewCard key={review.id} review={review}></ReviewCard>
 
                     ))}
-
-
-
                 </ScrollView>
-
-                <View style={{ alignSelf: 'center', flexDirection: 'row', backgroundColor: '#307ecc', width: '100%', justifyContent: 'space-between' }}>
-                    <View style={{ alignSelf: 'center', justifyContent: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 20 }}> Date : {this.state.selectedDate}</Text>
-                        <Text style={{ color: 'black', fontSize: 20 }}> Time : {this.state.selectedTime}</Text>
+                <View style={styles.footerView}>
+                    <View style={styles.footerSubView}>
+                        <Text style={styles.footerText}> Date : {this.state.selectedDate}</Text>
+                        <Text style={styles.footerText}> Time : {this.state.selectedTime}</Text>
                     </View>
                     <View>
-                        <TouchableOpacity style={{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "white", padding: 10, borderWidth: 2, alignItems: "center", justifyContent: "center", margin: 4 }}>
-                            <Text style={{ color: 'black', fontSize: 25 }}>Pay $ {doctor.fee}</Text>
+                        <TouchableOpacity style={styles.payButton}>
+                            <Text style={styles.payButtonText}>Pay $ {doctor.fee}</Text>
                         </TouchableOpacity>
                     </View>
-
-
                 </View>
             </View>
         )
