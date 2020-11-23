@@ -13,12 +13,12 @@ import {
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import styles from '../../styles/homeScreenStyles';
-import HomeScreen from '../../screen/drawerScreens/HomeScreen';
+import styles from '../../../styles/homeScreenStyles';
+import HomeScreen from '../../../screen/drawerScreens/CommonPages/HomeScreen';
 import DropDownPicker from 'react-native-dropdown-picker';
-import SpecialityCard from '../../screen/drawerScreens/Cards/SpecialityCard';
-import HospitalCard from '../../screen/drawerScreens/Cards/HospitalCard';
-import DoctorProfileCard from '../../screen/drawerScreens/Cards/DoctorProfileCard';
+import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
+import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
+import DoctorProfileCard from '../../../screen/drawerScreens/Cards/DoctorProfileCard';
 const navigation = {
   navigate: jest.fn(),
   state: {
@@ -33,8 +33,7 @@ const navigation = {
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
-jest.mock("../../screen/services/StaffInfoService");
-jest.mock("../../screen/services/hospitalService");
+
 
 
 describe('<StaffInfoScreen/>', () => {
@@ -179,5 +178,33 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.find(DoctorProfileCard)).to.have.length(4);
     expect(wrapper.state('doctorsList')).to.have.lengthOf(4);
   });
+
+  it('should navigate to DisplayDoctorsList page', async() => {      
+    
+    wrapper.instance().onPressShowAllDoctors();
+    sinon.assert.calledWith(spyon, "DisplayDoctorsList");
+    sinon.assert.calledOnce(spyon);
+  })
+
+  it('should navigate to DisplayHospitalsList', async() => {      
+    
+    wrapper.instance().onPressShowAllHsopitals();
+    sinon.assert.calledWith(spyon, "DisplayHospitalsList");
+    sinon.assert.calledOnce(spyon);
+  })
+
+  it('should navigate to HospitalPublicProfile', async() => {      
+    
+    wrapper.instance().onPressingHospital('hello');
+    sinon.assert.calledWith(spyon, "HospitalPublicProfile", {name:'hello'});
+    sinon.assert.calledOnce(spyon);
+  })
+
+  it('should navigate to DoctorPublicProfile', async() => {      
+    
+    wrapper.instance().onPressingDoctorCard('hello');
+    sinon.assert.calledWith(spyon, "DoctorPublicProfile", {name:'hello'});
+    sinon.assert.calledOnce(spyon);
+  })
   
 })

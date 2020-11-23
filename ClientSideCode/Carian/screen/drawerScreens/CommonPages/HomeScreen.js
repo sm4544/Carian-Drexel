@@ -12,13 +12,13 @@ import {
     style,
     ImageBackground
 } from 'react-native';
-import styles from '../../styles/homeScreenStyles';
+import styles from '../../../styles/homeScreenStyles';
 import CardView from 'react-native-cardview';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
-import SpecialityCard from './Cards/SpecialityCard';
-import HospitalCard from './Cards/HospitalCard';
-import DoctorProfileCard from './Cards/DoctorProfileCard';
+import SpecialityCard from '../Cards/SpecialityCard';
+import HospitalCard from '../Cards/HospitalCard';
+import DoctorProfileCard from '../Cards/DoctorProfileCard';
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
 export default class HomeScreen extends ValidationComponent {
@@ -61,11 +61,33 @@ export default class HomeScreen extends ValidationComponent {
             { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
             { image: image, name: 'Manipal2 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
             { image: image, name: 'Manipal3 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }],
-            doctorsList: [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
+            doctorsList: [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
         }
+        this.onPressShowAllDoctors = this.onPressShowAllDoctors.bind(this);
+        this.onPressingHospital = this.onPressingHospital.bind(this);
+        this.onPressShowAllHsopitals = this.onPressShowAllHsopitals.bind(this);
+        this.onPressingDoctorCard = this.onPressingDoctorCard.bind(this);
+    }
+
+    onPressShowAllDoctors = () => {
+        this.props.navigation.navigate("DisplayDoctorsList");
+
+    }
+
+    onPressShowAllHsopitals = () => {
+        this.props.navigation.navigate("DisplayHospitalsList");
+
+    }
+
+    onPressingHospital = (name) => {
+        this.props.navigation.navigate('HospitalPublicProfile', { name: name });
+    }
+
+    onPressingDoctorCard = (name) => {
+        this.props.navigation.navigate('DoctorPublicProfile', { name: name });
     }
 
     render() {
@@ -77,12 +99,9 @@ export default class HomeScreen extends ValidationComponent {
                         items={this.state.cityArray}
                         defaultValue={this.state.city}
                         containerStyle={{ height: 40 }}
-                        style={{ backgroundColor: '#307ecc', width: "80%", borderRadius: 18, }}
-                        itemStyle={{
-                            justifyContent: 'flex-start',
-                            width: "80%"
-                        }}
-                        dropDownStyle={{ backgroundColor: '#fafafa', width: "80%" }}
+                        style={styles.dropdownstyle}
+                        itemStyle={styles.itemStyle}
+                        dropDownStyle={styles.dropDownDataStyle}
                         onChangeItem={item => this.setState({
                             city: item.value
                         })}
@@ -91,33 +110,35 @@ export default class HomeScreen extends ValidationComponent {
                     <Text style={styles.sectionText}>Find Hospitals by Symptoms</Text>
 
                     <Text style={styles.sectionText}>Find Hospitals by Specilazation</Text>
-                    <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
+                    <View style={styles.setFlexRowWithWrap}>
                         {this.state.specialistCarddata.map(item => (
                             <View key={item.name} style={{ flexBasis: '50%' }}>
-                                <SpecialityCard data={item} key={item.name} style={{ height: "80", borderRadius: 18 }}></SpecialityCard>
+                                <TouchableOpacity key={item.name}>
+                                    <SpecialityCard data={item} key={item.name} style={styles.specialityCardHeightAndBorder}></SpecialityCard>
+                                </TouchableOpacity>
                             </View>
                         ))}
                     </View>
 
                     <Text style={styles.sectionText}>Top Hospitals near you</Text>
                     {this.state.hospitalsList.map(hospital => (
-                        <TouchableOpacity key={hospital.name} style={{ width: '100%', flex: 1, backgroundColor: "#F0F0E1", alignItems: "center", justifyContent: 'center' }}>
+                        <TouchableOpacity onPress={() => this.onPressingHospital(hospital.name)} key={hospital.name} style={styles.hospitalCardTouch}>
                             <HospitalCard key={hospital.name} hospital={hospital} style={{ width: '80%', borderRadius: 18 }}></HospitalCard>
                         </TouchableOpacity>
                     ))}
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.onPressShowAllHsopitals()}>
                         <Text style={styles.buttonText}>Show All Hospitals</Text>
                     </TouchableOpacity>
 
                     <Text style={styles.sectionText}>Top Doctors near you</Text>
 
                     {this.state.doctorsList.map(doctor => (
-                        <TouchableOpacity key={doctor.name} style={{ width: '100%', flex: 1, backgroundColor: "#F0F0E1", alignItems: "center", justifyContent: 'center' }}>
+                        <TouchableOpacity onPress={() => this.onPressingDoctorCard(doctor.name)} key={doctor.name} style={styles.hospitalCardTouch}>
                             <DoctorProfileCard key={doctor.name} doctor={doctor} ></DoctorProfileCard>
                         </TouchableOpacity>
                     ))}
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.onPressShowAllDoctors()}>
                         <Text style={styles.buttonText}>Show All Doctors</Text>
                     </TouchableOpacity>
 

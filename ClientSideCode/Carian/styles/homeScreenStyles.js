@@ -3,9 +3,18 @@ import { StyleSheet, Dimensions } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F0F0E1",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: 'center'
+
+  },
+  scrollViewContainer: {
+    flex: 1,
+    backgroundColor: "#F0F0E1",
+    alignItems: "center",
+    justifyContent: 'center',
+    alignSelf: 'center'
+
   },
   AppTitle: {
     fontWeight: "bold",
@@ -58,14 +67,9 @@ export default StyleSheet.create({
     borderRadius: 20
   },
   dropdownstyle: {
+    backgroundColor: '#307ecc',
     width: "80%",
-    backgroundColor: "steelblue",
     borderRadius: 18,
-    height: 50,
-    marginTop: 20,
-    //justifyContent: "center",
-    //padding: 5,
-    borderColor: "white",
 
   },
   ConfirmationText: {
@@ -128,12 +132,15 @@ export default StyleSheet.create({
   cardContainer: {
     width: '90%',
     flex: 1,
-    backgroundColor: "#F0F0E1",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: 'center'
   },
-  setFlexRow:{ flex: 1, flexDirection: 'row' },
-  positionImage:{ width: '30%', alignItems: "center", justifyContent: 'center', alignSelf: 'center'},
+  setFlexRow: { flex: 1, flexDirection: 'row' },
+  setFlexRowWithWrap: { flex: 1, flexWrap: 'wrap', flexDirection: 'row' },
+  positionImage: { width: '30%', alignItems: "center", justifyContent: 'center', alignSelf: 'center' },
+  specialityCardHeightAndBorder:{ height: "80", borderRadius: 18 },
+  hospitalCardTouch:{ width: '100%', flex: 1, backgroundColor: "white", alignItems: "center", justifyContent: 'center' },
   card: {
     backgroundColor: 'white',
     alignItems: 'flex-start',
@@ -145,33 +152,31 @@ export default StyleSheet.create({
   },
   hospitalCard: {
     backgroundColor: 'white',
-    //alignItems: 'flex-start',
-    //justifyContent: 'flex-end',
     alignSelf: 'center',
     flex: 1,
     margin: 10,
     height: 'auto',
-    width: '100%'
+    width: '100%',
   },
   cardText: {
     textAlign: 'left',
-    margin: 5,
-    fontSize: 18,
+    margin: 3,
+    fontSize: 15,
     fontWeight: 'bold'
   },
   cardSubBoldText: {
     textAlign: 'left',
-    margin: 5,
-    fontSize: 15,
+    margin: 3,
+    fontSize: 13,
     fontWeight: 'bold'
   },
   cardSubItalicText: {
     textAlign: 'left',
-    margin: 5,
-    fontSize: 15,
-    fontStyle:'italic'
+    margin: 3,
+    fontSize: 13,
+    fontStyle: 'italic'
   },
-  imageRightPosition:{ width: '70%', justifyContent: 'center', alignSelf: 'center' },
+  imageRightPosition: { width: '70%', justifyContent: 'center', alignSelf: 'center' },
   image: {
     flex: 1,
     width: 180,
@@ -180,7 +185,7 @@ export default StyleSheet.create({
   },
   hospitalImage: {
     width: 100,
-    height: 125,    
+    height: 125,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -191,12 +196,36 @@ export default StyleSheet.create({
     //flex: 1,    
     width: 100,
     height: 100,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     alignContent: 'center'
     //justifyContent: "flex-end",
 
-  }
+  },
+  profileHeaderPicCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 40 / 2,
+    color: 'white',
+    backgroundColor: 'black',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  profileHeaderText: {
+    color: 'black',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 10,
+    fontWeight: 'bold',
+  },
+  itemStyle: {
+    justifyContent: 'flex-start',
+    width: "80%"
+  },
+  dropDownDataStyle: { backgroundColor: '#fafafa', width: "80%" },
+
+
 });

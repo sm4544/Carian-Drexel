@@ -1,14 +1,7 @@
 import React from 'react';
 import {
     View,
-    Text,
-    TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    Alert,
-    Image,
-    ScrollView,
-    style,
+    Text,    
     ImageBackground
 } from 'react-native';
 import { shallow } from 'enzyme';
@@ -22,8 +15,6 @@ import CardView from 'react-native-cardview';
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
-
-
 const data = {
     image: image,
     name: 'hello'
@@ -38,20 +29,19 @@ describe('<StaffInfoScreen/>', () => {
         expect(wrapper.type()).to.equal(View);
     });
 
-    it('should have touchable opacity', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(1);
-    });
-
     it('should have Card view', () => {
         expect(wrapper.find(CardView)).to.have.length(1);
     });
 
     it('should have background image', () => {
         expect(wrapper.find(ImageBackground)).to.have.length(1);
+        expect(wrapper.contains(<ImageBackground source={image} style={styles.image}>
+            <Text style={styles.cardText}>hello</Text>
+        </ImageBackground>)).to.equal(true);
     });
 
     it('should have text inside image', () => {
-        expect(wrapper.find(ImageBackground)).to.have.length(1);
+        
         expect(wrapper.find(Text)).to.have.length(1);
         expect(wrapper.contains(<Text style={styles.cardText}>hello</Text>)).to.equal(true);
     });
