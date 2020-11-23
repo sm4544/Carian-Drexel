@@ -34,14 +34,19 @@ const navigation = {
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
-
-
+const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" }
 
 describe('<DisplayHospitalsList/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
 
         wrapper = shallow(<DisplayHospitalsList navigation={navigation}></DisplayHospitalsList>);
+        hospitalList = [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            
+            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
+        wrapper.setState({hospitalsList:hospitalList})
+
     });
     afterEach(function () {
         navigation.navigate.restore();
@@ -56,11 +61,11 @@ describe('<DisplayHospitalsList/>', () => {
     });
 
     it('should have TouchableOpacity ', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(4);        
+        expect(wrapper.find(TouchableOpacity)).to.have.length(3);        
     });
 
     it('should have HospitalCard ', () => {
-        expect(wrapper.find(HospitalCard)).to.have.length(4);        
+        expect(wrapper.find(HospitalCard)).to.have.length(3);        
     });
 
     it('should navigate to HospitalPublicProfile', async() => {      

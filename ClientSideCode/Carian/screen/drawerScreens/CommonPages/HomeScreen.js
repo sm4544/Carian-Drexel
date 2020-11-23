@@ -61,10 +61,10 @@ export default class HomeScreen extends ValidationComponent {
             { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
             { image: image, name: 'Manipal2 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
             { image: image, name: 'Manipal3 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }],
-            doctorsList: [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee:'100',  area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee:'100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', fee:'100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee:'100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
+            doctorsList: [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
         }
         this.onPressShowAllDoctors = this.onPressShowAllDoctors.bind(this);
         this.onPressingHospital = this.onPressingHospital.bind(this);
@@ -72,22 +72,22 @@ export default class HomeScreen extends ValidationComponent {
         this.onPressingDoctorCard = this.onPressingDoctorCard.bind(this);
     }
 
-    onPressShowAllDoctors =() => {
+    onPressShowAllDoctors = () => {
         this.props.navigation.navigate("DisplayDoctorsList");
 
     }
 
-    onPressShowAllHsopitals =() => {
+    onPressShowAllHsopitals = () => {
         this.props.navigation.navigate("DisplayHospitalsList");
 
     }
 
-    onPressingHospital = (name) =>{
-        this.props.navigation.navigate('HospitalPublicProfile', {name : name});
+    onPressingHospital = (name) => {
+        this.props.navigation.navigate('HospitalPublicProfile', { name: name });
     }
 
-    onPressingDoctorCard = (name) =>{
-        this.props.navigation.navigate('DoctorPublicProfile', {name : name});
+    onPressingDoctorCard = (name) => {
+        this.props.navigation.navigate('DoctorPublicProfile', { name: name });
     }
 
     render() {
@@ -113,14 +113,16 @@ export default class HomeScreen extends ValidationComponent {
                     <View style={styles.setFlexRowWithWrap}>
                         {this.state.specialistCarddata.map(item => (
                             <View key={item.name} style={{ flexBasis: '50%' }}>
-                                <SpecialityCard data={item} key={item.name} style={styles.specialityCardHeightAndBorder}></SpecialityCard>
+                                <TouchableOpacity key={item.name}>
+                                    <SpecialityCard data={item} key={item.name} style={styles.specialityCardHeightAndBorder}></SpecialityCard>
+                                </TouchableOpacity>
                             </View>
                         ))}
                     </View>
 
                     <Text style={styles.sectionText}>Top Hospitals near you</Text>
                     {this.state.hospitalsList.map(hospital => (
-                        <TouchableOpacity  onPress={() => this.onPressingHospital(hospital.name)} key={hospital.name} style={styles.hospitalCardTouch}>
+                        <TouchableOpacity onPress={() => this.onPressingHospital(hospital.name)} key={hospital.name} style={styles.hospitalCardTouch}>
                             <HospitalCard key={hospital.name} hospital={hospital} style={{ width: '80%', borderRadius: 18 }}></HospitalCard>
                         </TouchableOpacity>
                     ))}
@@ -131,7 +133,7 @@ export default class HomeScreen extends ValidationComponent {
                     <Text style={styles.sectionText}>Top Doctors near you</Text>
 
                     {this.state.doctorsList.map(doctor => (
-                        <TouchableOpacity  onPress={() => this.onPressingDoctorCard(doctor.name)}  key={doctor.name} style={styles.hospitalCardTouch}>
+                        <TouchableOpacity onPress={() => this.onPressingDoctorCard(doctor.name)} key={doctor.name} style={styles.hospitalCardTouch}>
                             <DoctorProfileCard key={doctor.name} doctor={doctor} ></DoctorProfileCard>
                         </TouchableOpacity>
                     ))}

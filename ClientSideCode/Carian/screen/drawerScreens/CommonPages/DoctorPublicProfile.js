@@ -1,28 +1,17 @@
 import ValidationComponent from 'react-native-form-validator';
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
     TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    Alert,
     Image,
     ScrollView,
-    style,
-    ImageBackground
 } from 'react-native';
 import styles from '../../../styles/DoctorProfileStyles';
-import CardView from 'react-native-cardview';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from 'react-native-vector-icons/Feather';
 import SpecialityCard from '../Cards/SpecialityCard';
-import HospitalCard from '../Cards/HospitalCard';
-import DoctorProfileCard from '../Cards/DoctorProfileCard';
 import moment from 'moment';
 import ReviewCard from '../Cards/ReviewCard';
-
-
+import { Table, Row, Rows } from "react-native-table-component";
 import CalendarStrip from 'react-native-calendar-strip';
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
@@ -38,8 +27,6 @@ export default class DoctorPublicProfile extends ValidationComponent {
             reviewCount: '1500',
             selectedDate: moment().format("MM/DD/YYYY"),
             selectedTime: '',
-            specialists: [{ image: '', specialist: 'Dental', description: 'make an appointment for toothache' }, { image: '', specialist: 'Dental', description: 'make an appointment for toothache' }],
-            topDoctors: [{ name: 'Test, Test', qualification: 'MBBS', Specilazation: 'Dental', hospitalName: 'Apollo Hospital', area: 'nagar', city: 'Hyderabad' }],
             hospitalImageList: [{ id: 0, image: image },
             { id: 1, image: image },
             { id: 2, image: image },
@@ -76,16 +63,20 @@ export default class DoctorPublicProfile extends ValidationComponent {
             { id: 3, name: 'Hello', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
             { id: 4, name: 'Test test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
             { id: 5, name: 'Se510', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' }],
-            hospitalsList: [{ image: image, name: 'Manipal hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
-            { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
-            { image: image, name: 'Manipal2 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
-            { image: image, name: 'Manipal3 hospital', type: 'Multispecialtiy', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }],
-            doctorsList: [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
+
+
+            headerSlots: ["Days", "Morning", "Afternoon", "Evening", "Night"],
+            workingHours: [
+                ["Mon", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM", "10:00PM-07:00AM"],
+                ["Tue", "10:00AM-12:00AM", "-", "06:00PM-10:00PM", "-"],
+                ["Wed", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM", "10:00PM-07:00AM"],
+                ["Thu", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM", "10:00PM-07:00AM"],
+                ["Fri", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM", "10:00PM-07:00AM"],
+                ["Sat", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM", "10:00PM-07:00AM"],
+                ["Sun", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM", "10:00PM-07:00AM"]]
         },
             this.displaySlots = this.displaySlots.bind(this);
+        this.onPressingContinueButton = this.onPressingContinueButton.bind(this);
     }
     displaySlots = (date) => {
         console.log(date.format("MM/DD/YYYY"));
@@ -96,12 +87,21 @@ export default class DoctorPublicProfile extends ValidationComponent {
         console.log(time);
         this.setState({ selectedTime: time })
     }
+    onPressingContinueButton = () => {
+        if (this.state.selectedDate == '' || this.state.selectedTime == '') {
+            this.setState({ error: true })
+        } else {
+            this.props.navigation.navigate("PatientsScreen", { date: this.state.selectedDate, time: this.state.selectedTime, doctorId: '1', customerProfileId: '1' });
+        }
+
+
+    }
     render() {
         const doctorId = this.props.navigation.state.params.name;
         const doctor = { image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' };
         const hospital = { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', streatAddline1: 'Unit 5', streatAddline2: '3675 market st', area: 'spring garden', city: 'Philadelphia', state: 'PA', pincode: '19104', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }
-        const cal = [{date:'16/11/2020', slots:[{id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}]},
-        {date:'17/11/2020', slots:[{id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}, {id:0, time:'10:00 AM'}]}];
+        const cal = [{ date: '16/11/2020', slots: [{ id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }] },
+        { date: '17/11/2020', slots: [{ id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }, { id: 0, time: '10:00 AM' }] }];
         let customDatesStyles = [];
         let startDate = moment();
         let endDate = moment(startDate).add(30, 'days');
@@ -131,6 +131,13 @@ export default class DoctorPublicProfile extends ValidationComponent {
         { id: 11, time: '03:30 PM' }
         ]
 
+        let services = [{ id: 0, name: 'treatment A' },
+        { id: 1, name: 'treatment B' },
+        { id: 2, name: 'treatment C' },
+        { id: 3, name: 'treatment D' },
+
+        ]
+
         for (let i = 0; i < 40; i++) {
             customDatesStyles.push({
                 startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
@@ -140,6 +147,8 @@ export default class DoctorPublicProfile extends ValidationComponent {
                 dateContainerStyle: { backgroundColor: `#${(`#00000${(Math.random() * (1 << 24) | 0).toString(16)}`).slice(-6)}` },
             });
         }
+
+
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -167,12 +176,13 @@ export default class DoctorPublicProfile extends ValidationComponent {
                     </View>
                     <View style={styles.calenderViewStyle}>
 
-                        <CalendarStrip style={styles.calenderStrip} customDatesStyles={customDatesStyles} maxDate={endDate} 
+                        <CalendarStrip style={styles.calenderStrip} customDatesStyles={customDatesStyles} maxDate={endDate}
                             datesWhitelist={datesWhitelist}
-                            onDateSelected={this.displaySlots}                        >
+                            onDateSelected={this.displaySlots}>
                         </CalendarStrip>
                     </View>
                     <Text style={styles.sectionTitle}>Select available times on {this.state.selectedDate}</Text>
+                    {this.state.error ? (<Text style={styles.errorText}> Please Select Date And Time</Text>) : null}
                     <View style={styles.slotsView}>
                         {slots.map(item => (
                             <View key={item.id} style={{ flexBasis: '25%' }}>
@@ -188,15 +198,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
                     <View style={styles.hospitalSectionView}>
                         <View style={styles.hospitalSectionSubView}>
                             <Text style={styles.hospitalName}>{hospital.name}</Text>
-                            <View style={styles.hospitalDataRow}>
-                                <View>
-                                    <Text style={styles.addressHeader}>Address: </Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.adressText}> {hospital.streatAddline1}, {hospital.streatAddline2}</Text>
-                                    <Text style={styles.adressText}> {hospital.area}, {hospital.city} ,{hospital.state}, {hospital.pincode}</Text>
-                                </View>
-                            </View>
+
                             <View style={{ flexDirection: 'row' }}>
 
                                 <TouchableOpacity style={styles.button}>
@@ -212,7 +214,34 @@ export default class DoctorPublicProfile extends ValidationComponent {
                                 </TouchableOpacity>
 
                             </View>
-                            <Text style={styles.ratingText}>{hospital.avgRating} {hospital.totalNoOfReviews} Reviews </Text>
+                            <View style={styles.hospitalDataRow}>
+                                <View>
+                                    <Text style={styles.addressHeader}>Address: </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.adressText}> {hospital.streatAddline1}, {hospital.streatAddline2}</Text>
+                                    <Text style={styles.adressText}> {hospital.area}, {hospital.city} ,{hospital.state}, {hospital.pincode}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.hospitalDataRow}>
+                                <View>
+                                    <Text style={styles.addressHeader}>Reviews: </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.addressHeader}>{hospital.avgRating} {hospital.totalNoOfReviews} Reviews </Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.hospitalDataRow}>
+                                <View>
+                                    <Text style={styles.addressHeader}>Customers: </Text>
+                                </View>
+                                <View>
+                                <Text style={styles.addressHeader}>{this.state.customerCount} Served Via Carian </Text>
+                                </View>
+                            </View>
+
+                            
                         </View>
 
 
@@ -244,8 +273,25 @@ export default class DoctorPublicProfile extends ValidationComponent {
 
                     <View style={styles.horizontalLine} />
                     <Text style={styles.sectionTitle}>Services</Text>
+
+                    <View style={styles.slotsView}>
+                        {services.map(item => (
+                            <View key={item.id} style={{ flexBasis: '31%' }}>
+                                <TouchableOpacity key={item.id} disabled={true} style={styles.slotsTouch}>
+                                    <Text>{item.name}</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        ))}
+                    </View>
+
                     <View style={styles.horizontalLine} />
                     <Text style={styles.sectionTitle}>Working Hours</Text>
+                    <Table style={styles.tableStyle}>
+                        <Row data={this.state.headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />
+                        <Rows data={this.state.workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />
+                    </Table>
+
                     <View style={styles.horizontalLine} />
 
                     <Text style={styles.sectionTitle}>Patient Reviews</Text>
@@ -263,8 +309,8 @@ export default class DoctorPublicProfile extends ValidationComponent {
                         <Text style={styles.footerText}> Time : {this.state.selectedTime}</Text>
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.payButton}>
-                            <Text style={styles.payButtonText}>Pay $ {doctor.fee}</Text>
+                        <TouchableOpacity style={styles.payButton} onPress={() => this.onPressingContinueButton()} >
+                            <Text style={styles.payButtonText}>Continue ${doctor.fee}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

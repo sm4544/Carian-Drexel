@@ -156,7 +156,7 @@ export default StyleSheet.create({
     flex: 1,
     margin: 10,
     height: 'auto',
-    width: '100%'
+    width: '100%',
   },
   cardText: {
     textAlign: 'left',

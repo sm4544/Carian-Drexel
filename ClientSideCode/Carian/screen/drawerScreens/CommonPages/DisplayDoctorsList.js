@@ -77,7 +77,7 @@ export default class DisplayDoctorsList extends ValidationComponent {
             <ScrollView>
                 <View style={styles.container}>
                     {this.state.doctorsList.map(doctor => (
-                        <TouchableOpacity onPress={() => this.onPressingDoctorCard(doctor.name)}  key={doctor.name} style={{ width: '100%', flex: 1, backgroundColor: "#F0F0E1", alignItems: "center", justifyContent: 'center' }}>
+                        <TouchableOpacity onPress={() => this.onPressingDoctorCard(doctor.name)}  key={doctor.name} style={{ width: '100%', flex: 1,  alignItems: "center", justifyContent: 'center' }}>
                             <DoctorProfileCard key={doctor.name} doctor={doctor} ></DoctorProfileCard>
                         </TouchableOpacity>
                     ))}

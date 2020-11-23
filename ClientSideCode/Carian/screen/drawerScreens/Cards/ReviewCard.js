@@ -27,8 +27,7 @@ export default class ReviewCard extends ValidationComponent {
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 20, width: '90%' }}>
                     <View style={{ flex: 1, flexDirection: 'row', width: '90%' }}>
                         <View style={styles.profileHeaderPicCircle}>
-                            <Text style={{ fontSize: 20, color: '#307ecc' }}>{this.props.review.name.charAt(0)}
-                        </Text>
+                            <Text style={{ fontSize: 20, color: '#307ecc' }}>{this.props.review.name.charAt(0)}</Text>
                         </View>
                         <View style={{ justifyContent: "center", alignContent: 'center', alignSelf: 'center', }}>
                             <Text style={styles.profileHeaderText}>{this.props.review.name}</Text>

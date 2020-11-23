@@ -25,17 +25,15 @@ export default class SpecialityCard extends ValidationComponent {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity>
-                    <CardView
-                        cardElevation={2}
-                        cardMaxElevation={2}
-                        cornerRadius={5}
-                        style={styles.card}>
-                        <ImageBackground source={this.props.data.image} style={styles.image}>
-                            <Text style={styles.cardText}>{this.props.data.name}</Text>
-                        </ImageBackground>
-                    </CardView>                    
-                </TouchableOpacity>
+                <CardView
+                    cardElevation={2}
+                    cardMaxElevation={2}
+                    cornerRadius={5}
+                    style={styles.card}>
+                    <ImageBackground source={this.props.data.image} style={styles.image}>
+                        <Text style={styles.cardText}>{this.props.data.name}</Text>
+                    </ImageBackground>
+                </CardView>
             </View>
 
         )

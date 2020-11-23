@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import styles from '../../styles/commonStyles';
 
-const PatientsScreen = () => {
+const PatientsInfoScreen = () => {
   // global.currentScreenIndex = 'PatientsScreen';
   return (
     <ScrollView>
@@ -115,4 +115,4 @@ const PatientsScreen = () => {
   );
 };
 
-export default PatientsScreen;
+export default PatientsInfoScreen;

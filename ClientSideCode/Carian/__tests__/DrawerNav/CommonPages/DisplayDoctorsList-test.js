@@ -34,6 +34,7 @@ const navigation = {
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" }
 
 
 
@@ -42,6 +43,11 @@ describe('<DisplayDoctorsList/>', () => {
         spyon = sinon.spy(navigation, 'navigate');
 
         wrapper = shallow(<DisplayDoctorsList navigation={navigation}></DisplayDoctorsList>);
+        doctorsList= [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
+        wrapper.setState({doctorsList:doctorsList})
     });
     afterEach(function () {
         navigation.navigate.restore();

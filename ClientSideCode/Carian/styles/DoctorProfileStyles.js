@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'white'
   },
   doctorCardView:{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' },
   scrollViewContainer: {
@@ -137,6 +138,8 @@ export default StyleSheet.create({
   slotsView:{ width: '95%', marginTop: 10, flex: 1, backgroundColor: 'white', flexWrap: 'wrap', alignSelf: 'center', flexDirection: 'row' },
   slotsTouch:{ padding: 4, backgroundColor: '#AED6F1', borderColor: 'black', alignSelf: 'center', margin: 4, justifyContent: "center", borderRadius: 5, borderWidth: 2 },
   sectionTitle:{ margin: 15, fontWeight: 'bold', fontSize: 18 },
+
+  errorText:{ margin: 15, fontWeight: 'bold', fontSize: 18, color:'red' },
   horizontalLine:{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 15 },
   calenderViewStyle:{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' },
   calenderStrip:{ height: 135, paddingTop: 10, paddingBottom: 10 },
@@ -209,5 +212,40 @@ export default StyleSheet.create({
     alignContent: 'center'
     //justifyContent: "flex-end",
 
-  }
+  },tableStyle:{     
+    width:'95%',        
+    alignSelf: "center",
+    marginBottom:20,
+    
+  }, 
+  tableHeader: {
+    minHeight: 50,
+    alignContent: "flex-start",
+    backgroundColor: "#FFFFFF",    
+    borderWidth: 3,
+    borderColor: "#00b5ec",
+    borderRadius: 10, 
+    },
+  tableHeaderText: { 
+    margin: 0,
+    fontSize:15,    
+    textAlign: "center",
+    fontWeight: "bold",    
+  },
+  tableRowstyle:{   
+    alignContent: "flex-start",
+    backgroundColor: "#FFFFFF",  
+    borderColor: "#00b5ec",
+    borderRadius: 10,  
+    borderWidth: 1,
+    marginTop:5
+  },
+  tableRowText: {     
+    margin: 5,
+    fontSize:14,    
+    textAlign: "center",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    backgroundColor: "#FFFFFF",
+  },
 });
