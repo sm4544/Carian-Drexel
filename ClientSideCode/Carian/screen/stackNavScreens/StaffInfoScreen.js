@@ -57,8 +57,12 @@ export default class StaffInfoScreen extends ValidationComponent {
         pharmacy_id: 1,
         lab_id: 1,
 
+<<<<<<< HEAD
       });
       postStaffInfoProfileApi(body).then((res) => {
+=======
+      postStaffInfoProfileApi(body).thend((res) => {
+>>>>>>> d9fc90c3fc8d4d0e85c6e1d3303174d5c8ed35e0
         console.log(res);
         if(res.Message == 'Added Staff'){
           console.log("inside navigation "+ name + profileid + profile_type)
