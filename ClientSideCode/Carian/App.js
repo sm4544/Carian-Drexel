@@ -30,18 +30,12 @@ import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen'
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
-<<<<<<< HEAD
 import DisplayDoctorsList from './screen/drawerScreens/CommonPages/DisplayDoctorsList';
 import DisplayHospitalsList from './screen/drawerScreens/CommonPages/DisplayHospitalsList'; 
 import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPublicProfile';
-import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile'; 
-
-=======
+import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile';
 import DepartmentPage from './screen/drawerScreens/DepartmentPage';
 import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
->>>>>>> d9fc90c3fc8d4d0e85c6e1d3303174d5c8ed35e0
-
-
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: HomeScreen,
@@ -513,10 +507,8 @@ const OtherExternal = createStackNavigator({
 
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
-    navigationOptions: { title: 'StaffDetailsScreen' },
-<<<<<<< HEAD
-  }  
-=======
+    navigationOptions: { title: 'StaffDetailsScreen' }, 
+
   },
   DepartmentPage:{
     screen:DepartmentPage,
@@ -526,7 +518,7 @@ const OtherExternal = createStackNavigator({
   //   screen: DisplayHospitalScreen,
   //   navigationOptions: { title: 'DisplayHospitalScreen' },
   // },
->>>>>>> d9fc90c3fc8d4d0e85c6e1d3303174d5c8ed35e0
+
 });
 export default createAppContainer(OtherExternal);
 //export default createAppContainer(App);
