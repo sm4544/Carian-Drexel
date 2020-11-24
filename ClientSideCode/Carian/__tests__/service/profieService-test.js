@@ -7,7 +7,7 @@ sinonStubPromise(sinon)
 
 
 let stubedFetch = sinon.stub('fetch')
-const URL = "http://127.0.0.1:8000/login";
+const URL = "https://hospitalmanagementbackend.herokuapp.com/login";
 
 window.fetch.returns(Promise.resolve(mockApiResponse()));
 

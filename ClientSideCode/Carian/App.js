@@ -28,6 +28,8 @@ import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen'
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
+import DepartmentPage from './screen/drawerScreens/DepartmentPage';
+import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
 
 
 const FirstActivity_StackNavigator = createStackNavigator({
@@ -258,6 +260,20 @@ const FifteenthActivity_stackNavigator = createStackNavigator({
   },
 });
 
+const SixteenthActivity_stackNavigator= createStackNavigator({
+  First:{
+    screen: DepartmentConfirmationScreen,
+    navigationOptions:({navigation})=>({
+      title:'Department Screen',
+      headerLeft:()=><NavigationDrawerHeader navigationProps={navigation}/>,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
 const DrawerNavigationRoutes = createDrawerNavigator({
   HomeScreen: {
     screen: FirstActivity_StackNavigator,
@@ -317,6 +333,12 @@ const DrawerNavigationRoutes = createDrawerNavigator({
     screen:TenthActivity_stackNavigator,
     navigationOptions: {
       drawerLabel: 'Manage Staff Screen',
+    },
+  },
+  DepartmentConfirmationScreen:{
+    screen:SixteenthActivity_stackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Department Staff Screen',
     },
   },
   PharmacyOrdersScreen:{
@@ -421,6 +443,10 @@ const OtherExternal = createStackNavigator({
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
     navigationOptions: { title: 'StaffDetailsScreen' },
+  },
+  DepartmentPage:{
+    screen:DepartmentPage,
+    navigationOptions:{title:'DepartmentPage'},
   },
   // DisplayHospitalScreen: {
   //   screen: DisplayHospitalScreen,

@@ -56,7 +56,7 @@ export default class StaffInfoScreen extends ValidationComponent {
         doctor_fee: this.state.doctor_fee
       });
 
-      postStaffInfoProfileApi(body).then((res) => {
+      postStaffInfoProfileApi(body).thend((res) => {
         console.log(res);
         this.props.navigation.navigate('ConfirmationScreen', { name: name });
 
