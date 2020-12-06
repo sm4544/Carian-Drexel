@@ -17,15 +17,15 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 import ValidationComponent from "react-native-form-validator";
 import { postDepartmentInfoApi } from '../services/DepartmentService';
 var radio_props = [
-    {label: 'Yes', value: false },
-    {label: 'No', value: true }
+    {label: 'Yes', value: true },
+    {label: 'No', value: false }
   ];
 
 export default class DepartmentPage extends ValidationComponent {
   constructor(props) {
     super(props);
     this.state = {
-        is_same_as_hospital_address:'',
+        is_same_as_hospital_address:true,
         Department_name: '',
         addressine1:'',
         addressine2:'',
@@ -67,8 +67,8 @@ export default class DepartmentPage extends ValidationComponent {
         pincode:this.state.pincode,
         department_phone_number: this.state.department_phone_number,
        departmentAdmin_name: this.state.departmentAdmin_name,
-       email: this.state.email,      
-       
+       email: this.state.email,   
+       hospital:'Apolo',       
       });
 
       postDepartmentInfoApi(body).then((res) => {
@@ -87,7 +87,7 @@ export default class DepartmentPage extends ValidationComponent {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
+    var hospital_id = this.props.navigation.state.params.hospital_id;
     
     return (
       <ScrollView>
@@ -150,7 +150,7 @@ export default class DepartmentPage extends ValidationComponent {
           onPress={(value) => {this.setState({is_same_as_hospital_address:value})}}
         />
         <View>
-        {this.state.is_same_as_hospital_address ? (
+        {!this.state.is_same_as_hospital_address ? (
             <View>
             
              <View style={styles.inputView}>

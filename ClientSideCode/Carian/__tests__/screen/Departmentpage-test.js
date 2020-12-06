@@ -6,6 +6,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import RadioForm from 'react-native-simple-radio-button';
+import { getAllHospitals } from '../../screen/services/hospitalService';
 const navigation = { navigate: jest.fn() };
 global.expect = expect;
 global.sinon = sinon;
@@ -92,5 +93,47 @@ describe('<DepartmentPage/>', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');    
     expect(wrapper.contains('The field "department_phone_number" is mandatory.')).to.equal(true);
+  })
+
+  it('should navigate to department home screen ', async () => {
+
+    wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', 'true');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(5).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', '1234567890');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', 'test');
+   
+
+    const output = { "Message": "Added Department Staff", "Department_ID": "39" };
+
+    postDepartmentInfoApi.mockResolvedValue(output);
+    await wrapper.instance().onPressDepartmentInfo();
+    console.log(spyon + 'spyon')
+    sinon.assert.calledWith(spyon, "DepartmentConfirmationScreen", { Department_name: 'test' });
+    sinon.assert.calledOnce(spyon);
+  })
+
+  it('should NOT navigate to department home  screen ', async () => {
+
+    wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', 'true');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(5).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', '1234567890');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', 'test');
+
+    const output = { "Message": "ERROR", "Department_ID": "39" };
+
+    postStaffInfoProfileApi.mockResolvedValue(output);
+    await wrapper.instance().onPressDepartmentInfo();
+    console.log(spyon + 'spyon')
+    sinon.assert.notCalled(spyon)
   })
 });
