@@ -33,9 +33,12 @@ import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 import DisplayDoctorsList from './screen/drawerScreens/CommonPages/DisplayDoctorsList';
 import DisplayHospitalsList from './screen/drawerScreens/CommonPages/DisplayHospitalsList'; 
 import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPublicProfile';
-import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile';
+
+import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile'; 
+import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
 import DepartmentPage from './screen/drawerScreens/DepartmentPage';
 import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
+
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: HomeScreen,
@@ -65,6 +68,30 @@ const FirstActivity_StackNavigator = createStackNavigator({
     screen: DisplayHospitalsList,
     navigationOptions: ({ navigation }) => ({
       title: 'Hospitals',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  paymentScreen: {
+    screen: paymentScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Payment',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsInfoScreen: {
+    screen: PatientsInfoScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Payment',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#307ecc',

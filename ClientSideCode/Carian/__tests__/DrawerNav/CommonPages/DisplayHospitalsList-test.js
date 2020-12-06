@@ -42,10 +42,10 @@ describe('<DisplayHospitalsList/>', () => {
 
         wrapper = shallow(<DisplayHospitalsList navigation={navigation}></DisplayHospitalsList>);
         hospitalList = [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            
-            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
-        wrapper.setState({hospitalsList:hospitalList})
+        { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
+
+        { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
+        wrapper.setState({ hospitalsList: hospitalList })
 
     });
     afterEach(function () {
@@ -57,22 +57,22 @@ describe('<DisplayHospitalsList/>', () => {
     });
 
     it('should have view ', () => {
-        expect(wrapper.find(View)).to.have.length(1);        
+        expect(wrapper.find(View)).to.have.length(1);
     });
 
     it('should have TouchableOpacity ', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(3);        
+        expect(wrapper.find(TouchableOpacity)).to.have.length(3);
     });
 
     it('should have HospitalCard ', () => {
-        expect(wrapper.find(HospitalCard)).to.have.length(3);        
+        expect(wrapper.find(HospitalCard)).to.have.length(3);
     });
 
-    it('should navigate to HospitalPublicProfile', async() => {      
-    
+    it('should navigate to HospitalPublicProfile', async () => {
+
         wrapper.instance().onPressingHospital('hello');
-        sinon.assert.calledWith(spyon, "HospitalPublicProfile", {name:'hello'});
+        sinon.assert.calledWith(spyon, "HospitalPublicProfile", { name: 'hello' });
         sinon.assert.calledOnce(spyon);
-      })
+    })
 
 })
