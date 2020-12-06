@@ -23,7 +23,7 @@ class PatientsSerializer(serializers.ModelSerializer):
 class PharmacySerializer(serializers.ModelSerializer):
     class Meta:
         model = Pharmacy
-        fields = 'id', 'name', 'addressine1', 'addressine2', 'city', 'state', 'pincode', 'pharmacy_phone_number', 'licence_number', 'hospital_id', 'originally_registered_date', 'registered_date', 'timestamp', 'regisrted_by', 'medicine'
+        fields = 'id', 'name', 'addressine1', 'addressine2', 'city', 'state', 'pincode', 'pharmacy_phone_number', 'licence_number', 'hospital_id', 'originally_registered_date', 'registered_date', 'timestamp', 'regisrted_by', '_medicine'
 
 
 class MedicineSerializer(serializers.ModelSerializer):
@@ -41,7 +41,7 @@ class MedicineOrderSerializer(serializers.ModelSerializer):
 class LabSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lab
-        fields = 'id', 'Name', 'addressine1', 'addressine2', 'city', 'state', 'pincode', 'lab_phone_number', 'licence_number', 'hospital_id', 'originally_registered_date', 'registered_date', 'regisrted_by'
+        fields = 'id', 'name', 'addressine1', 'addressine2', 'city', 'state', 'pincode', 'lab_phone_number', 'licence_number', 'hospital_id', 'originally_registered_date', 'registered_date', 'regisrted_by'
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -53,7 +53,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
-        fields = 'id', 'profile_id', 'highest_qualification', 'studied_at', 'work_phone_number', 'work_email_address', 'overall_work_experience', 'experience_at_this_hospital', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'status', 'approved_by', 'licence_number', 'doctor_fee'
+        fields = 'id', 'profile_id', 'highest_qualification', 'studied_at', 'work_phone_number', 'work_email_address', 'overall_work_experience', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'status', 'approved_by', 'licence_number', 'doctor_fee', 'specialization'
 
 
 class LabReportsSerializer(serializers.ModelSerializer):
@@ -65,10 +65,22 @@ class LabReportsSerializer(serializers.ModelSerializer):
 class AppointmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointments
-        fields = 'id', 'patient_id', 'doctor_id', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'status', 'date', 'start_time', 'end_time'
+        fields = 'id', 'patient_id', 'doctor_id', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'status', 'date', 'start_time', 'end_time '
 
 
 class MessagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Messages
         fields = 'id', 'appointment_id', 'generated_by', 'generated_for', 'message', 'generated_date'
+
+
+class ReviewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reviews
+        fields = 'id', 'review_content', 'reviewTimeStamp', 'review_for', 'review_by', 'review_stars'
+
+
+class StaticImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StaticImages
+        fields = 'id', 'image_title', 'encoded_image'
