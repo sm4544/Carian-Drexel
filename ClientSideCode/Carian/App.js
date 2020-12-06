@@ -28,6 +28,13 @@ import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen'
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
+<<<<<<< Updated upstream
+=======
+import HospitalOverview from './screen/drawerScreens/HospitalOverview';
+import LabOverview from './screen/drawerScreens/LabOverview';
+import StaffOverview from './screen/drawerScreens/StaffOverview';
+import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
+>>>>>>> Stashed changes
 
 
 const FirstActivity_StackNavigator = createStackNavigator({
@@ -421,10 +428,31 @@ const OtherExternal = createStackNavigator({
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
     navigationOptions: { title: 'StaffDetailsScreen' },
+<<<<<<< Updated upstream
   },
   DisplayHospitalScreen: {
     screen: DisplayHospitalScreen,
     navigationOptions: { title: 'DisplayHospitalScreen' },
+=======
+  } ,
+  
+  HospitalOverview: {
+    screen: HospitalOverview,
+    navigationOptions: { title: 'HospitalOverview' },
+  },
+
+  LabOverview: {
+    screen: LabOverview,
+    navigationOptions: { title: 'LabOverview' },
+  },
+  StaffOverview: {
+    screen: StaffOverview,
+    navigationOptions: { title: 'StaffOverview' },
+  },
+  PharmacyOverview: {
+    screen: PharmacyOverview,
+    navigationOptions: { title: 'PharmacyOverview' },
+>>>>>>> Stashed changes
   },
 });
 export default createAppContainer(OtherExternal);
