@@ -11,7 +11,7 @@ class HospitalsSerializer(serializers.ModelSerializer):
 class ProfilesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profiles
-        fields = 'Profiles', 'id', 'first_name', 'last_name', 'email', 'user_name', 'password', 'registred_date', 'date_of_birth', 'security_question', 'security_answer', 'password_attempts', 'last_login_date', 'status', 'profile_pic', 'profile_type'
+        fields = 'id', 'first_name', 'last_name', 'email', 'username', 'password', 'registred_date', 'date_of_birth', 'security_question', 'security_answer', 'password_attempts', 'last_login_date', 'status', 'profile_pic', 'profile_type'
 
 
 class PatientsSerializer(serializers.ModelSerializer):

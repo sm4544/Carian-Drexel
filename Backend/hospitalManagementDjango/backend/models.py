@@ -11,7 +11,7 @@ class Profiles(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=28)
     email = models.CharField(max_length=40)
-    user_name = models.CharField(max_length=15)
+    username = models.CharField(max_length=15)
     password = models.CharField(max_length=32)
     registred_date = models.DateField()
     date_of_birth = models.DateField()
