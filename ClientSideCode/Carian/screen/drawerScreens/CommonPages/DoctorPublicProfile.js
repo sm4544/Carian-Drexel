@@ -87,11 +87,13 @@ export default class DoctorPublicProfile extends ValidationComponent {
         console.log(time);
         this.setState({ selectedTime: time })
     }
-    onPressingContinueButton = () => {
+    onPressingContinueButton = (doctor, hospital) => {
         if (this.state.selectedDate == '' || this.state.selectedTime == '') {
             this.setState({ error: true })
         } else {
-            this.props.navigation.navigate("PatientsScreen", { date: this.state.selectedDate, time: this.state.selectedTime, doctorId: '1', customerProfileId: '1' });
+            console.log(doctor);
+            console.log(hospital);
+            this.props.navigation.navigate("PatientsScreen", { date: this.state.selectedDate, time: this.state.selectedTime, doctor: doctor, hospital: hospital, profileId: '1' });
         }
 
 
@@ -309,7 +311,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
                         <Text style={styles.footerText}> Time : {this.state.selectedTime}</Text>
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.payButton} onPress={() => this.onPressingContinueButton()} >
+                        <TouchableOpacity style={styles.payButton} onPress={() => this.onPressingContinueButton(doctor, hospital)} >
                             <Text style={styles.payButtonText}>Continue ${doctor.fee}</Text>
                         </TouchableOpacity>
                     </View>
