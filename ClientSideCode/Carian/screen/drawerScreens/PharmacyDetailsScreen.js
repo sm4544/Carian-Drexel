@@ -22,14 +22,6 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
 
     this.state = {
 
-<<<<<<< Updated upstream
-        pharmacyname: '',
-        pharmacyadd1: '',
-        pharmacyadd2: '',
-        phonenumber: '',
-        registerdate: '',
-        licensenumber: '',
-=======
       pharmacyname: this.props.navigation.state.params.name,
       pharmacyadd1: this.props.navigation.state.params.addressine1,
       pharmacyadd2: this.props.navigation.state.params.addressine2,
@@ -44,15 +36,12 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
 
         // pharmacyname: this.props.navigation.getParam('name'),
 
->>>>>>> Stashed changes
       };
 
       this.onPressSubmit = this.onPressSubmit.bind(this);
       this.isValidForm = this.isValidForm.bind(this);
   }
 
-<<<<<<< Updated upstream
-=======
   onPressSubmit = () => {
     var body;
     if (this.isValidForm()) {
@@ -116,7 +105,6 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
 
 
 
->>>>>>> Stashed changes
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -131,12 +119,9 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
               value={this.state.pharmacyname}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("pharmacyname")}
             </Text>:null}
->>>>>>> Stashed changes
 
           <View style={styles.inputView}>
             <TextInput
@@ -147,13 +132,10 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
               value={this.state.pharmacyadd1}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("pharmacyadd1")}
             </Text>:null}
 
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -163,12 +145,9 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
               value={this.state.pharmacyadd2}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("pharmacyadd2")}
             </Text>:null}
->>>>>>> Stashed changes
 
           <View style={styles.inputView}>
             <TextInput
@@ -179,17 +158,6 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
               value={this.state.phonenumber}
             />
           </View>
-<<<<<<< Updated upstream
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Registered Date"
-              placeholderTextColor="white"
-              ref="registerdate" onChangeText={(registerdate) => this.setState({ registerdate })}
-              value={this.state.registerdate}
-            />
-          </View>
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("phonenumber")}
             </Text>:null}
@@ -226,7 +194,6 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
             </Text>:null}
 
 
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -236,14 +203,6 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
               value={this.state.licensenumber}
             />
           </View>
-<<<<<<< Updated upstream
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate('PharmacyScreen', {pharmacyname: this.state.pharmacyname,})}  >
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("licensenumber")}
             </Text>:null}
@@ -301,7 +260,6 @@ export default class PharmacyDetailsScreen extends ValidationComponent {
             <Text style={styles.buttonText}>Update</Text>
           </TouchableOpacity>
           </View>
->>>>>>> Stashed changes
         </View>
       </ScrollView>
     );

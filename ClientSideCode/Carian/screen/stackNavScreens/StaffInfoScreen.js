@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { postStaffInfoProfileApi } from '../services/StaffInfoService';
+import { getAllHospitals } from '../services/hospitalService'
 import {
   View,
   Text,
@@ -22,80 +23,97 @@ export default class StaffInfoScreen extends ValidationComponent {
     this.state = {
       Highest_degree: '',
       Specilization: '',
-      GPA: '',
+      hospital_id: '',
       College_name: '',
-      University_name: '',
-      College_address: '',
       overall_work_experience: '',
       work_phone_number: '',
       work_email_address: '',
-      hospital_name: '',
-      Hospital_address: '',
       licence_number: '',
-      doctor_fee: ''
+      doctor_fee: '',
+      name: '',
+      profileid: '',
+      dropdowndata: []
     };
     this.onPressStaffProfile = this.onPressStaffProfile.bind(this);
   }
 
-  onPressStaffProfile = () => {
+  onPressStaffProfile = (name, profileid, profile_type) => {
+    console.log(name + profileid + profile_type)
 
     if (this.isValidForm()) {
-      body = JSON.stringify({
-        Highest_degree: this.state.Highest_degree,
-        Specilization: this.state.Specilization,
-        GPA: this.state.GPA,
-        College_name: this.state.College_name,
-        University_name: this.state.University_name,
-        College_address: this.state.College_address,
+      console.log("inside if "+ name + profileid + profile_type)
+      const body = JSON.stringify({
+        highest_degree: this.state.Highest_degree,
+        specilization: this.state.Specilization,
+        college_name: this.state.College_name,
         overall_work_experience: this.state.overall_work_experience,
         work_phone_number: this.state.work_phone_number,
         work_email_address: this.state.work_email_address,
-        hospital_name: this.state.hospital_name,
-        Hospital_address: this.state.Hospital_address,
         licence_number: this.state.licence_number,
-        doctor_fee: this.state.doctor_fee
-      });
+        doctor_fee: this.state.doctor_fee,
+        profileid: profileid,
+        hospital_id: this.state.hospital_id,
+        department_id: 1,
+        pharmacy_id: 1,
+        lab_id: 1,
 
+      });
       postStaffInfoProfileApi(body).then((res) => {
         console.log(res);
-        this.props.navigation.navigate('ConfirmationScreen', { name: name });
-
-
+        if(res.Message == 'Added Staff'){
+          console.log("inside navigation "+ name + profileid + profile_type)
+          this.props.navigation.navigate('ConfirmationScreen', { name: name });
+        }else{
+          console.log("inside else nav "+ name + profileid + profile_type)
+          return false;
+        }        
       });
-
     } else {
+      console.log("inside else "+ name + profileid + profile_type)
       return false;
     }
   };
 
   isValidForm = () => {
     return this.validate({
-
       Highest_degree: { required: true },
       Specilization: { required: true },
-      GPA: { numbers: true, required: true },
       College_name: { required: true },
-      University_name: { required: true },
-      College_address: { required: true },
-      overall_work_experience: {numbers:true, required: true },
+      overall_work_experience: { numbers: true, required: true },
       work_phone_number: { numbers: true, required: true },
       work_email_address: { email: true, required: true },
-      hospital_name: { required: true },
-      Hospital_address: { required: true },
       licence_number: { numbers: true, required: true },
       doctor_fee: { numbers: true, required: true },
-
     });
+  }
+
+  componentDidMount() {
+    var tempdata = []
+    getAllHospitals()
+      .then(results => {
+        results.forEach((data) => {
+          tempdata.push({
+            value: data.value,
+            label: data.label
+          });
+
+        });
+      });
+    this.setState({
+      dropdowndata: tempdata
+    });
+
   }
   render() {
 
     var name = this.props.navigation.state.params.name;
-    var profileid = this.props.navigation.state.params.profileid;
+    var profileid = this.props.navigation.state.params.profileId;
+    var profile_type = this.props.navigation.state.params.profile_type;
 
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.text}>Staff Additional Details</Text>
+          <Text style={styles.text}>Additional Details</Text>
           <Text style={styles.text}>Education</Text>
           <View style={styles.inputView}>
             <TextInput
@@ -124,20 +142,8 @@ export default class StaffInfoScreen extends ValidationComponent {
           {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("Specilization")}
           </Text> : null}
-          
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="GPA/CGPA"
-              placeholderTextColor="white"
-              ref="GPA"
-              onChangeText={(GPA) => this.setState({ GPA })}
-              value={this.state.GPA}
-            />
-          </View>
-          {this.isFormValid ? <Text style={styles.errormessages}>
-            {this.getErrorsInField("GPA")}
-          </Text> : null}
+
+
 
           <View style={styles.inputView}>
             <TextInput
@@ -153,35 +159,23 @@ export default class StaffInfoScreen extends ValidationComponent {
             {this.getErrorsInField("College_name")}
           </Text> : null}
 
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="University Name"
-              placeholderTextColor="white"
-              ref="University_name"
-              onChangeText={(University_name) => this.setState({ University_name })}
-              value={this.state.University_name}
-            />
-          </View>
-          {this.isFormValid ? <Text style={styles.errormessages}>
-            {this.getErrorsInField("University_name")}
-          </Text> : null}
-
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="College Address"
-              placeholderTextColor="white"
-              ref="College_address"
-              onChangeText={(College_address) => this.setState({ College_address })}
-              value={this.state.College_address}
-            />
-          </View>
-          {this.isFormValid ? <Text style={styles.errormessages}>
-            {this.getErrorsInField("College_address")}
-          </Text> : null}
-
           <Text style={styles.text}>WORK</Text>
+
+          <DropDownPicker
+            items={this.state.dropdowndata}
+            defaultValue={this.state.hospital_id}
+            containerStyle={{ height: 50 }}
+            style={{ backgroundColor: 'steelblue', width: "80%", borderRadius: 18, }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+              width: "80%"
+            }}
+            dropDownStyle={{ backgroundColor: '#fafafa', width: "80%" }}
+            onChangeItem={item => this.setState({
+              hospital_id: item.value
+            })}
+          />
+
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -196,19 +190,7 @@ export default class StaffInfoScreen extends ValidationComponent {
             {this.getErrorsInField("overall_work_experience")}
           </Text> : null}
 
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Hospital Name"
-              placeholderTextColor="white"
-              ref="hospital_name"
-              onChangeText={(hospital_name) => this.setState({ hospital_name })}
-              value={this.state.hospital_name}
-            />
-          </View>
-          {this.isFormValid ? <Text style={styles.errormessages}>
-            {this.getErrorsInField("hospital_name")}
-          </Text> : null}
+
 
           <View style={styles.inputView}>
             <TextInput
@@ -238,19 +220,7 @@ export default class StaffInfoScreen extends ValidationComponent {
             {this.getErrorsInField("work_phone_number")}
           </Text> : null}
 
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Hospital address"
-              placeholderTextColor="white"
-              ref="Hospital_address"
-              onChangeText={(Hospital_address) => this.setState({ Hospital_address })}
-              value={this.state.Hospital_address}
-            />
-          </View>
-          {this.isFormValid ? <Text style={styles.errormessages}>
-            {this.getErrorsInField("Hospital_address")}
-          </Text> : null}
+
 
           <Text style={styles.text}>License Details</Text>
           <View style={styles.inputView}>
@@ -279,10 +249,17 @@ export default class StaffInfoScreen extends ValidationComponent {
           {this.isFormValid ? <Text style={styles.errormessages}>
             {this.getErrorsInField("doctor_fee")}
           </Text> : null}
+
+
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.onPressStaffProfile()}>
+            onPress={() => this.onPressStaffProfile(name, profileid, profile_type)}>
             <Text style={styles.buttonText}>Register/Submit</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('LoginScreen')}>
+            <Text style={styles.hyperlink}> Already have an account? Sign in</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

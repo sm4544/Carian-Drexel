@@ -7,8 +7,6 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text, Alert , ScrollView
 import { StackNavigator } from 'react-navigation';
 import styles from '../../styles/commonStyles';
 import { Table, TableWrapper, Row, Rows, Cell  } from "react-native-table-component";
-<<<<<<< Updated upstream
-=======
 import { HospitalApi } from '../services/adminHospitalService'
 import { withNavigationFocus } from 'react-navigation';
 import SpecialityCard from './Cards/SpecialityCard';
@@ -18,7 +16,6 @@ import HospitalCard from './Cards/HospitalCard';
 import ActionButton from 'react-native-action-button';
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
->>>>>>> Stashed changes
 
 class HospitalScreen extends Component {
   constructor(props) {

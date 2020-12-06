@@ -3,15 +3,12 @@ import { View, Text, TouchableOpacity , ScrollView,StyleSheet} from 'react-nativ
 import styles from '../../styles/commonStyles';
 import ValidationComponent from 'react-native-form-validator';
 import { Table, TableWrapper, Row, Rows, Cell  } from "react-native-table-component";
-<<<<<<< Updated upstream
-=======
 import { LabApi } from '../services/adminLabService'
 import HospitalCard from './Cards/HospitalCard';
 import ActionButton from 'react-native-action-button';
 
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
->>>>>>> Stashed changes
 
 export default class LabScreen extends Component {
 

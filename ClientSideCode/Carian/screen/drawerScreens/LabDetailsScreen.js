@@ -10,22 +10,6 @@ import { postAdminLabApi, editAdminLabApi } from '../services/adminLabService'
 import ValidationComponent from 'react-native-form-validator';
 
 export default class LabDetailsScreen extends ValidationComponent {
-<<<<<<< Updated upstream
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-      labname: '',
-      labadd1: '',
-      labadd2: '',
-      phonenumber: '',
-      licensenumber: '',
-      registerdate: '',
-      hospitalid: '',
-    };
-  
-=======
  
  
  
@@ -57,25 +41,8 @@ export default class LabDetailsScreen extends ValidationComponent {
       
    
     }
->>>>>>> Stashed changes
 
 
-<<<<<<< Updated upstream
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Lab Name"
-              placeholderTextColor="white"
-              ref="labname" onChangeText={(labname) => this.setState({labname})}
-              value={this.state.labname}
-            />
-          </View>
-=======
    
     onPressSubmit = () => {
       var body;
@@ -152,7 +119,6 @@ export default class LabDetailsScreen extends ValidationComponent {
       return (
         <ScrollView>
    
->>>>>>> Stashed changes
 
         <View style={styles.container}>
   
@@ -180,13 +146,10 @@ export default class LabDetailsScreen extends ValidationComponent {
               value={this.state.labadd1}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("labadd1")}
             </Text>:null}
 		  
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -196,14 +159,10 @@ export default class LabDetailsScreen extends ValidationComponent {
               value={this.state.labadd2}
             />
           </View>
-<<<<<<< Updated upstream
-
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("labadd2")}
             </Text>:null}
   
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -213,8 +172,6 @@ export default class LabDetailsScreen extends ValidationComponent {
               value={this.state.phonenumber}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("phonenumber")}
             </Text>:null}
@@ -250,7 +207,6 @@ export default class LabDetailsScreen extends ValidationComponent {
                 {this.getErrorsInField("date")}
             </Text>:null}
             
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -260,18 +216,6 @@ export default class LabDetailsScreen extends ValidationComponent {
               value={this.state.licensenumber}
             />
           </View>
-<<<<<<< Updated upstream
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Registered Date"
-              placeholderTextColor="white"
-              ref="registerdate" onChangeText={(registerdate) => this.setState({registerdate})}
-              value={this.state.registerdate}
-            />
-          </View>
-          <View style={styles.inputView}>
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("licensenumber")}
             </Text>:null}
@@ -317,7 +261,6 @@ export default class LabDetailsScreen extends ValidationComponent {
             </Text>:null}
 			
 			<View style={styles.inputView}>
->>>>>>> Stashed changes
             <TextInput
               style={styles.input}
               placeholder="Hospital Id"
@@ -326,17 +269,6 @@ export default class LabDetailsScreen extends ValidationComponent {
               value={this.state.hospitalid}
             />
           </View>
-<<<<<<< Updated upstream
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate('LabScreen', {labname: this.state.labname,})}  >
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    );
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("hospitalid")}
             </Text>:null}
@@ -365,7 +297,6 @@ export default class LabDetailsScreen extends ValidationComponent {
       );
     }
 
->>>>>>> Stashed changes
   }
 
   const styles2 = StyleSheet.create({

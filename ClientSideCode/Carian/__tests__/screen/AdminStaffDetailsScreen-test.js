@@ -68,11 +68,7 @@ describe('<StaffDetailsScreen/>', () => {
 
 
   it('should have doctor/staff detail boxes', () => {
-<<<<<<< Updated upstream
-    expect(wrapper.find(TextInput)).to.have.length(6);
-=======
     expect(wrapper.find(TextInput)).to.have.length(8);
->>>>>>> Stashed changes
   })
 
 
@@ -119,29 +115,6 @@ describe('<StaffDetailsScreen/>', () => {
     expect(wrapper.state('email')).to.equal('abc123@gmail.com');
   });
 
-<<<<<<< Updated upstream
-  it('should have the registernumber component with empty value ', () => {
-    expect(wrapper.find(TextInput).at(5).props().value).to.equal('');
-  });
-
-  it('should change state when text changed on registernumber box', () => {
-    const registernumber = wrapper.find(TextInput).at(5);
-    registernumber.simulate('ChangeText', 'abc123');
-    expect(wrapper.state('registernumber')).to.equal('abc123');
-  });
-
-  it('should contain Submit button', () => {
-    expect(wrapper.contains(<Text style={styles.buttonText}>Submit</Text>)).to.equal(true);
-    expect(wrapper.find(TouchableOpacity)).to.have.length(1);
-  })
-
-  it('should navigate to display doctor/staff component', () => {
-    const Submit = wrapper.find(TouchableOpacity).at(0);
-    console.log(Submit)
-    Submit.simulate('press');    
-    sinon.assert.calledWith(spyon, "ManageStaffScreen");
-    sinon.assert.calledOnce(spyon);
-=======
 
 
   it('should change state when text changed on licensenumber box', () => {
@@ -208,7 +181,6 @@ describe('<StaffDetailsScreen/>', () => {
       await wrapper.instance().onPressUpdate();
       sinon.assert.calledWith(spyon, "ManageStaffScreen");
       sinon.assert.calledOnce(spyon);
->>>>>>> Stashed changes
     
   })
 

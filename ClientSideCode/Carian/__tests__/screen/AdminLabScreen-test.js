@@ -16,36 +16,15 @@ jest.mock("../../screen/services/adminLabService");
 describe('<LabScreen/>', () => {
   beforeEach(function () {
     spyon = sinon.spy(navigation, 'navigate');
-<<<<<<< Updated upstream
-=======
     LabApi.mockResolvedValue([{name: "hospital.name", area: "hospital.area", city: "hospital.city", phonenumber: "hospital.phonenumber"
       , addressine1: "hospital.addressine1", addressine2: "hospital.addressine2", state: "hospital.state", pincode: "hospital.pincode", licence_number: "hospital.licence_number", originally_registered_date: "hospital.originally_registered_date",
       hospital_id: "hospital.hospital_id", id: "hospital.id" }])
->>>>>>> Stashed changes
     wrapper = shallow(<LabScreen navigation={navigation}></LabScreen>);
   });
 
   afterEach(function () {
     navigation.navigate.restore();
   });
-<<<<<<< Updated upstream
-
-  it('should contain Add Lab button', () => {
-    expect(wrapper.contains(<Text style={styles.buttonText}>Add Laboratory</Text>)).to.equal(true);
-    expect(wrapper.find(TouchableOpacity)).to.have.length(1);
-  })
-
-  it('should navigate to lab details screen component', () => {
-    const lab = wrapper.find(TouchableOpacity).at(0);
-    console.log(lab)
-    lab.simulate('press');    
-    sinon.assert.calledWith(spyon, "LabDetailsScreen");
-    sinon.assert.calledOnce(spyon);
-    
-  })
-
-
-=======
 
   
   it('should have view ', () => {
@@ -76,5 +55,4 @@ describe('<LabScreen/>', () => {
 
   
 
->>>>>>> Stashed changes
 });

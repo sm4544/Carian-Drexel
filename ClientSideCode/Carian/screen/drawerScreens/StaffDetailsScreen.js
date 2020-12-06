@@ -11,22 +11,6 @@ import { postAdminStaffApi, editAdminStaffApi } from '../services/adminStaffServ
 
 
 export default class StaffDetailsScreen extends ValidationComponent {
-<<<<<<< Updated upstream
-  constructor(props) {
-    super(props);
-    this.state = {
-   
-        doctorId: '',
-        qualification: '',
-        experience: '',
-        phonenumber: '',
-        email: '',
-        registernumber: '',
-   
-      }
-
-  }
-=======
  
  
  
@@ -125,7 +109,6 @@ export default class StaffDetailsScreen extends ValidationComponent {
       });
     }
   
->>>>>>> Stashed changes
 
     render() {
       const { country, region } = this.state;
@@ -144,9 +127,6 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.highestdegree}
             />
           </View>
-<<<<<<< Updated upstream
-
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("highestdegree")}
             </Text>:null}
@@ -165,7 +145,6 @@ export default class StaffDetailsScreen extends ValidationComponent {
                 {this.getErrorsInField("collegename")}
             </Text>:null}
 		  
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -176,13 +155,10 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.specilization}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("specilization")}
             </Text>:null}
   
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -193,14 +169,11 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.overallexperience}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("overallexperience")}
             </Text>:null}
 		  
             
->>>>>>> Stashed changes
 
           <View style={styles.inputView}>
             <TextInput
@@ -212,13 +185,10 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.phonenumber}
             />
           </View>
-<<<<<<< Updated upstream
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("phonenumber")}
             </Text>:null}
 		  
->>>>>>> Stashed changes
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
@@ -229,26 +199,6 @@ export default class StaffDetailsScreen extends ValidationComponent {
               value={this.state.email}
             />
           </View>
-<<<<<<< Updated upstream
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              placeholder="Register Number"
-              placeholderTextColor="white"
-              onChangeText={(registernumber) => this.setState({ registernumber })}
-              value={this.state.registernumber}
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.button} onPress={() => this.props.navigation.navigate('ManageStaffScreen',)}
-          >
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    );
-=======
           {this.isFormValid ? <Text style={styles.errormessages}>
                 {this.getErrorsInField("email")}
             </Text>:null}
@@ -306,7 +256,6 @@ export default class StaffDetailsScreen extends ValidationComponent {
       );
     }
 
->>>>>>> Stashed changes
   }
 
   const styles2 = StyleSheet.create({

@@ -12,11 +12,6 @@ global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
 
-<<<<<<< Updated upstream
-describe('<PharmacyScreen/>', () => {
-  beforeEach(function () {
-    spyon = sinon.spy(navigation, 'navigate');
-=======
 jest.mock("../../screen/services/adminPharmacyService");
 
 describe('<PharmacyScreen/>', () => {
@@ -25,7 +20,6 @@ describe('<PharmacyScreen/>', () => {
     PharmacyApi.mockResolvedValue([{name: "hospitalname", area: "hospitalarea", city: "hospitalcity", phonenumber: "1234",
       addressine1: "hospitaladdressine1", addressine2: "hospitaladdressine2", state: "hospitalstate", pincode: "12678", licence_number: "907", originally_registered_date: "12-12-2020",
       id: "2"}])
->>>>>>> Stashed changes
     wrapper = shallow(<PharmacyScreen navigation={navigation}></PharmacyScreen>);
   });
 
@@ -38,17 +32,6 @@ describe('<PharmacyScreen/>', () => {
     expect(wrapper.find(ScrollView)).to.have.length(1);
 });
 
-<<<<<<< Updated upstream
-  it('should contain Add Pharmacy button', () => {
-    expect(wrapper.contains(<Text style={styles.buttonText}>Add Pharmacy</Text>)).to.equal(true);
-    expect(wrapper.find(TouchableOpacity)).to.have.length(1);
-  })
-
-  it('should navigate to pharmacy details screen component', () => {
-    const addPharmacy = wrapper.find(TouchableOpacity).at(0);
-    addPharmacy.simulate('press');    
-    sinon.assert.calledWith(spyon, "PharmacyDetailsScreen");
-=======
   it('should contain Add pharmacy button', () => {
        expect(wrapper.find(TouchableOpacity)).to.have.length(1);
   })
@@ -69,7 +52,6 @@ describe('<PharmacyScreen/>', () => {
     sinon.assert.calledWith(spyon, "PharmacyDetailsScreen", {name: "", area: "", city: "", phonenumber: "",
     addressine1: "", addressine2: "", state: "", pincode: "", licence_number: "", originally_registered_date: "",
     id: ""});
->>>>>>> Stashed changes
     sinon.assert.calledOnce(spyon);
     
   })
