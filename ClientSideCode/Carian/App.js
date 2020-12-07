@@ -30,6 +30,11 @@ import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen'
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
+import HospitalOverview from './screen/drawerScreens/HospitalOverview';
+import LabOverview from './screen/drawerScreens/LabOverview';
+import StaffOverview from './screen/drawerScreens/StaffOverview';
+import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
+
 import DisplayDoctorsList from './screen/drawerScreens/CommonPages/DisplayDoctorsList';
 import DisplayHospitalsList from './screen/drawerScreens/CommonPages/DisplayHospitalsList'; 
 import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPublicProfile';
@@ -534,17 +539,29 @@ const OtherExternal = createStackNavigator({
 
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
-    navigationOptions: { title: 'StaffDetailsScreen' }, 
+
+    navigationOptions: { title: 'StaffDetailsScreen' },
 
   },
-  DepartmentPage:{
-    screen:DepartmentPage,
-    navigationOptions:{title:'DepartmentPage'},
+  
+  HospitalOverview: {
+    screen: HospitalOverview,
+    navigationOptions: { title: 'HospitalOverview' },
   },
-  // DisplayHospitalScreen: {
-  //   screen: DisplayHospitalScreen,
-  //   navigationOptions: { title: 'DisplayHospitalScreen' },
-  // },
+
+  LabOverview: {
+    screen: LabOverview,
+    navigationOptions: { title: 'LabOverview' },
+  },
+  StaffOverview: {
+    screen: StaffOverview,
+    navigationOptions: { title: 'StaffOverview' },
+  },
+  PharmacyOverview: {
+    screen: PharmacyOverview,
+    navigationOptions: { title: 'PharmacyOverview' },
+  },
+
 
 });
 export default createAppContainer(OtherExternal);

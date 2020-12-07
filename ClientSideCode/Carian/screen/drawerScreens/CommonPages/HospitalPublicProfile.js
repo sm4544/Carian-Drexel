@@ -35,7 +35,9 @@ export default class HospitalPublicProfile extends ValidationComponent {
       dataSourceHospital: {},
 
       customerCount: '1000',
+
       HospitalProfile:[],
+
 
       hospitalImages: [
         'https://source.unsplash.com/1024x768/?nature',
@@ -174,10 +176,12 @@ export default class HospitalPublicProfile extends ValidationComponent {
       name: 'Apolo',
     });
     getAllHospitalsInfo()
+
       .then((res) => {    
         this.setState({doctorsList: res[1]});
         this.setState({HospitalProfile: res[0]});
         console.log(res[0]);
+
       })
       .catch((error) => {
         console.log(error);
@@ -216,14 +220,34 @@ export default class HospitalPublicProfile extends ValidationComponent {
           }
         }
         this.setState({dataSourceHospital: list1});
-     
+
+
+        //console.log(dataSource);
+
+        for (i = 0; i < res2.length; i++) {
+          //list1[i].image = images[1];
+          list2.push({
+            image: images[1],
+            name: res2[i].name,
+            specialization: res2[i].specialization,
+            highestDegree: res2[i].highestDegree,
+            area: res2[i].area,
+            city: res2[i].city,
+            avgRating: '4.5',
+            totalNoOfReviews: '150',
+            overAllExperience: res2[i].overallExperience,
+          });
+        }
+        // this.setState({dataSourceDoctors: list2});
+        // this.setState({res2: res2});
+
       })
       .catch((error) => {
         console.log(error);
       });
 
     this.hospitalInfo();
-    console.log(this.state.HospitalProfile);
+
   }
   render() {
     const hospitalId = this.props.navigation.state.params.name;
