@@ -38,10 +38,11 @@ import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
 import DisplayDoctorsList from './screen/drawerScreens/CommonPages/DisplayDoctorsList';
 import DisplayHospitalsList from './screen/drawerScreens/CommonPages/DisplayHospitalsList'; 
 import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPublicProfile';
+
 import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile'; 
 import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
-
-
+import DepartmentPage from './screen/drawerScreens/DepartmentPage';
+import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
 
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
@@ -356,6 +357,20 @@ const FifteenthActivity_stackNavigator = createStackNavigator({
   },
 });
 
+const SixteenthActivity_stackNavigator= createStackNavigator({
+  First:{
+    screen: DepartmentConfirmationScreen,
+    navigationOptions:({navigation})=>({
+      title:'Department Screen',
+      headerLeft:()=><NavigationDrawerHeader navigationProps={navigation}/>,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
 const DrawerNavigationRoutes = createDrawerNavigator({
   HomeScreen: {
     screen: FirstActivity_StackNavigator,
@@ -415,6 +430,12 @@ const DrawerNavigationRoutes = createDrawerNavigator({
     screen:TenthActivity_stackNavigator,
     navigationOptions: {
       drawerLabel: 'Manage Staff Screen',
+    },
+  },
+  DepartmentConfirmationScreen:{
+    screen:SixteenthActivity_stackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Department Staff Screen',
     },
   },
   PharmacyOrdersScreen:{
@@ -518,6 +539,7 @@ const OtherExternal = createStackNavigator({
 
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
+
     navigationOptions: { title: 'StaffDetailsScreen' },
 
   },
@@ -539,6 +561,7 @@ const OtherExternal = createStackNavigator({
     screen: PharmacyOverview,
     navigationOptions: { title: 'PharmacyOverview' },
   },
+
 
 });
 export default createAppContainer(OtherExternal);

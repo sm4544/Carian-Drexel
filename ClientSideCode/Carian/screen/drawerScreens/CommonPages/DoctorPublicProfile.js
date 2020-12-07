@@ -17,7 +17,9 @@ export default class DoctorPublicProfile extends ValidationComponent {
     super(props);
     (this.state = {
       city: '',
+
       profileD: {},
+
       cityArray: [
         {label: 'Hyd', value: 'hyd'},
         {label: 'vij', value: 'vij'},
@@ -201,8 +203,10 @@ export default class DoctorPublicProfile extends ValidationComponent {
           'https://chandigarhdeals.com/wp-content/uploads/2020/09/considering-pediatrics-1109x675-1.jpg',
         ];
 
+
         for (i = 0; i < res1.length; i++) {
           profileH.push({
+
             name: res1[i].name,
             type: 'Multispecialtiy',
             area: res1[i].area,
@@ -211,7 +215,141 @@ export default class DoctorPublicProfile extends ValidationComponent {
             totalNoOfReviews: '150',
             doctors: res1[i].doctors,
           });
+
         }
+        
+       
+
+        for (i = 0; i < res2.length; i++) {
+         if(res2[i].name==this.props.navigation.state.params.name){         
+          profileD={
+            //image: images[1],
+            name: res2[i].name,
+            specialization: res2[i].specialization,
+            highestDegree: res2[i].highestDegree,
+            area: res2[i].area,
+            city: res2[i].city,
+            avgRating: '4.5',
+            totalNoOfReviews: '150',
+            overAllExperience: res2[i].overallExperience,
+            hospital_name: res2[i].hospital_name,
+            phoneNumber:res2[i].phoneNumber,
+            email:res2[i].email,
+            doctor_fee:res2[i].doctor_fee,
+            college_name:res2[i].college_name,
+          };
+        }
+        }
+        this.setState({profileD: profileD});
+        //console.log(profileD);
+       
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  render() {
+   
+    const doctorId = this.props.navigation.state.params.name;
+    const doctor = {
+      image: image,
+      name: doctorId,
+      specialization: 'Dentist',
+      highestDegree: 'MBBS',
+      fee: '100',
+      area: 'spring garden',
+      city: 'Philadelphia',
+      avgRating: '4.5',
+      totalNoOfReviews: '150',
+      overAllExperience: '10',
+    };
+    const hospital = {
+      image: image,
+      name: 'Manipal1 hospital',
+      type: 'Multispecialtiy',
+      streatAddline1: 'Unit 5',
+      streatAddline2: '3675 market st',
+      area: 'spring garden',
+      city: 'Philadelphia',
+      state: 'PA',
+      pincode: '19104',
+      avgRating: '4.5',
+      totalNoOfReviews: '150',
+      totalNoOfDoctors: '10',
+    };
+    const cal = [
+      {
+        date: '16/11/2020',
+        slots: [
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+        ],
+      },
+      {
+        date: '17/11/2020',
+        slots: [
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+          {id: 0, time: '10:00 AM'},
+        ],
+      },
+    ];
+    let customDatesStyles = [];
+    let startDate = moment();
+    let endDate = moment(startDate).add(30, 'days');
+    let datesWhitelist = [{start: startDate, end: endDate}];
+    let radiogroup_options = [
+      {value: 0, label: '10:00 AM   '},
+      {value: 1, label: '10:30 Am   '},
+      {value: 2, label: '11:00 Am   '},
+      {value: 3, label: '10:00 AM   '},
+      {value: 4, label: '10:30 Am   '},
+      {value: 5, label: '11:00 Am   '},
+    ];
+    let slots = [
+      {id: 0, time: '09:30 AM'},
+      {id: 1, time: '10:00 AM'},
+      {id: 2, time: '10:30 AM'},
+      {id: 3, time: '11:00 AM'},
+      {id: 4, time: '11:30 AM'},
+      {id: 5, time: '12:00 AM'},
+      {id: 12, time: '12:30 AM'},
+      {id: 6, time: '01:00 PM'},
+      {id: 7, time: '01:30 PM'},
+      {id: 8, time: '02:00 PM'},
+      {id: 9, time: '02:30 PM'},
+      {id: 10, time: '03:00 PM'},
+      {id: 11, time: '03:30 PM'},
+    ];
+
+    let services = [
+      {id: 0, name: 'treatment A'},
+      {id: 1, name: 'treatment B'},
+      {id: 2, name: 'treatment C'},
+      {id: 3, name: 'treatment D'},
+    ];
+
+    for (let i = 0; i < 40; i++) {
+      customDatesStyles.push({
+        startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
+
+        dateNameStyle: styles.dateNameStyle,
+        dateNumberStyle: styles.dateNumberStyle,
+        dateContainerStyle: {
+          backgroundColor: `#${`#00000${(
+            (Math.random() * (1 << 24)) |
+            0
+          ).toString(16)}`.slice(-6)}`,
+        },
+      });
+    }
+
 
         for (i = 0; i < res2.length; i++) {
           if (res2[i].name == this.props.navigation.state.params.name) {
@@ -368,6 +506,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             </View>
 
+
             <View style={styles.feesdisplay}>
               <View>
                 <Text>In-Clinic Appointment fee:</Text>
@@ -407,9 +546,11 @@ export default class DoctorPublicProfile extends ValidationComponent {
           <View style={styles.horizontalLine} />
           <View style={styles.hospitalSectionView}>
             <View style={styles.hospitalSectionSubView}>
+
               <Text style={styles.hospitalName}>
                 {this.state.profileD.hospital_name}
               </Text>
+
 
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity style={styles.button}>
@@ -435,8 +576,10 @@ export default class DoctorPublicProfile extends ValidationComponent {
                   </Text>
                   <Text style={styles.adressText}>
                     {' '}
+
                     {this.state.profileD.area}, {this.state.profileD.city} ,
                     {hospital.state}, {hospital.pincode}
+
                   </Text>
                 </View>
               </View>
@@ -547,9 +690,11 @@ export default class DoctorPublicProfile extends ValidationComponent {
             <TouchableOpacity
               style={styles.payButton}
               onPress={() => this.onPressingContinueButton()}>
+
               <Text style={styles.payButtonText}>
                 Continue ${this.state.profileD.doctor_fee}
               </Text>
+
             </TouchableOpacity>
           </View>
         </View>

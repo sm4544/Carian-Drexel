@@ -24,16 +24,20 @@ const image = {
     'https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg',
 };
 
+
 const image1 = {
   uri:
     'https://st4.depositphotos.com/10313122/20884/i/1600/depositphotos_208847620-stock-photo-studio-shot-of-young-beautiful.jpg',
 };
+
 export default class DisplayDoctorsList extends ValidationComponent {
   constructor(props) {
     super(props);
     this.state = {
       city: '',
+
       dataSourceDoctors: [],
+
       cityArray: [
         {label: 'Hyd', value: 'hyd'},
         {label: 'vij', value: 'vij'},
@@ -187,7 +191,9 @@ export default class DisplayDoctorsList extends ValidationComponent {
   }
   onPressingDoctorCard = (name) => {
     this.props.navigation.navigate('DoctorPublicProfile', {
+
       name: name,
+
     });
   };
 
@@ -208,7 +214,9 @@ export default class DisplayDoctorsList extends ValidationComponent {
           'https://chandigarhdeals.com/wp-content/uploads/2020/09/considering-pediatrics-1109x675-1.jpg',
         ];
 
+
         for (i = 0; i < res2.length; i++) {
+
           list2.push({
             image: image,
             name: res2[i].name,
@@ -219,10 +227,12 @@ export default class DisplayDoctorsList extends ValidationComponent {
             avgRating: '4.5',
             totalNoOfReviews: '150',
             overAllExperience: res2[i].overallExperience,
+
             doctor_fee: res2[i].doctor_fee,
           });
         }
         this.setState({dataSourceDoctors: list2});
+
       })
       .catch((error) => {
         console.log(error);
@@ -230,6 +240,7 @@ export default class DisplayDoctorsList extends ValidationComponent {
   }
 
   render() {
+
     return (
       <ScrollView>
         <View style={styles.container}>

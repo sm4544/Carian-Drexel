@@ -164,7 +164,10 @@ export default class HomeScreen extends ValidationComponent {
           'https://chandigarhdeals.com/wp-content/uploads/2020/09/considering-pediatrics-1109x675-1.jpg',
         ];
 
-        for (i = 0; i < 3; i++) {
+
+        for (i = 0; i < res1.length; i++) {
+         
+
           list1.push({
             // image: images[1],
             name: res1[i].name,
@@ -175,6 +178,7 @@ export default class HomeScreen extends ValidationComponent {
             totalNoOfReviews: '150',
             doctors: res1[i].doctors,
           });
+
         }
         this.setState({dataSourceHospital: list1});
         this.setState({res1: res1});
@@ -192,7 +196,9 @@ export default class HomeScreen extends ValidationComponent {
             avgRating: '4.5',
             totalNoOfReviews: '150',
             overAllExperience: res2[i].overallExperience,
+
             doctor_fee: res2[i].doctor_fee,
+
           });
         }
         this.setState({dataSourceDoctors: list2});

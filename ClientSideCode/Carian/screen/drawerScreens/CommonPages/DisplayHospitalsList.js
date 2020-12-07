@@ -190,7 +190,9 @@ export default class DisplayHospitalsList extends ValidationComponent {
   };
   componentDidMount() {
     Promise.all([
+
       fetch('https://hospitalmanagementbackend.herokuapp.com/hospitals-simple'),
+
       fetch('http://hospitalmanagementbackend.herokuapp.com/doctors-simple'),
     ])
       .then(([res1, res2]) => {
@@ -208,6 +210,7 @@ export default class DisplayHospitalsList extends ValidationComponent {
         ];
 
         for (i = 0; i < res1.length; i++) {
+
           list1.push({
             image: image,
             name: res1[i].name,
@@ -219,6 +222,7 @@ export default class DisplayHospitalsList extends ValidationComponent {
             doctors: res1[i].doctors,
           });
         }
+
         this.setState({dataSourceHospital: list1});
 
         //console.log(dataSource);

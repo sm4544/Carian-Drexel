@@ -80,7 +80,11 @@ const CustomSidebarMenu = props => {
     {
       navOptionName: 'Profile',
       screenToNavigate: 'ManageCustomerAdminProfieScreen',
-    },    
+    },   
+    {
+      navOptionName:'Department',
+      screenToNavigate:'DepartmentConfirmationScreen',
+    }, 
     {
       navOptionName: 'Logout',
       screenToNavigate: 'logout',
