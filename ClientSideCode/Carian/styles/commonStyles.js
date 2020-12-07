@@ -28,6 +28,18 @@ export default StyleSheet.create({
     borderColor: "white",
     //borderWidth: 2,
   },
+
+  inputViewPatients: {
+    width: "80%",
+    backgroundColor: "steelblue",
+    borderRadius: 18,
+    height: 50,
+    marginBottom: 15,
+    justifyContent: "center",
+    padding: 5,
+    borderColor: "white",
+    //borderWidth: 2,
+  },
   input: {
     height: 100,
     color: "white",
@@ -96,6 +108,15 @@ export default StyleSheet.create({
     fontStyle: 'italic',
     paddingBottom: 10,
     paddingTop: 10,
+    width: '80%'
+  },
+
+  labelText: {
+    
+    fontSize: 15,
+    color: '#CD6155',    
+    paddingBottom: 3,
+    paddingTop: 3,
     width: '80%'
   },
   textCal: {
