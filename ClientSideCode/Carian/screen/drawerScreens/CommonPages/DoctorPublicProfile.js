@@ -354,7 +354,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
         for (i = 0; i < res2.length; i++) {
           if (res2[i].name == this.props.navigation.state.params.name) {
             profileD = {
-              //image: images[1],
+              image: image,
               name: res2[i].name,
               specialization: res2[i].specialization,
               highestDegree: res2[i].highestDegree,
@@ -373,10 +373,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
         }
         this.setState({profileD: profileD});
         //console.log(profileD);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    
   }
 
   render() {

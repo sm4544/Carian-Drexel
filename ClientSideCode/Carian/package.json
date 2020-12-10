@@ -23,6 +23,7 @@
     "react": "16.13.1",
     "react-dom": "^16.13.1",
     "react-native": "0.63.3",
+    "react-native-action-button": "^2.8.5",
     "react-native-add-calendar-event": "^4.0.0",
     "react-native-autocomplete-search": "^1.0.8",
     "react-native-calendar-events": "^2.1.1",

@@ -177,6 +177,7 @@ export default class HomeScreen extends ValidationComponent {
             avgRating: '4.5',
             totalNoOfReviews: '150',
             doctors: res1[i].doctors,
+            image: image
           });
 
         }
@@ -187,7 +188,7 @@ export default class HomeScreen extends ValidationComponent {
         for (i = 0; i < 3; i++) {
           //list1[i].image = images[1];
           list2.push({
-            image: images[1],
+            image: image,
             name: res2[i].name,
             specialization: res2[i].specialization,
             highestDegree: res2[i].highestDegree,

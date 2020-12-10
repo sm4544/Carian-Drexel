@@ -227,7 +227,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
         for (i = 0; i < res2.length; i++) {
           //list1[i].image = images[1];
           list2.push({
-            image: images[1],
+            image: image,
             name: res2[i].name,
             specialization: res2[i].specialization,
             highestDegree: res2[i].highestDegree,
@@ -238,7 +238,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
             overAllExperience: res2[i].overallExperience,
           });
         }
-        // this.setState({dataSourceDoctors: list2});
+        this.setState({dataSourceDoctors: list2});
         // this.setState({res2: res2});
 
       })
