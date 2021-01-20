@@ -68,7 +68,6 @@ export default class HomeScreen extends ValidationComponent {
       dataSourceDoctors: [],
       res1: [],
       res2: [],
-
       cityArray: [
         {label: 'Hyd', value: 'hyd'},
         {label: 'vij', value: 'vij'},
@@ -77,28 +76,8 @@ export default class HomeScreen extends ValidationComponent {
       customerCount: '1000',
       doctorsCount: '150',
       reviewCount: '1500',
-      specialists: [
-        {
-          image: '',
-          specialist: 'Dental',
-          description: 'make an appointment for toothache',
-        },
-        {
-          image: '',
-          specialist: 'Dental',
-          description: 'make an appointment for toothache',
-        },
-      ],
-      topDoctors: [
-        {
-          name: 'Test, Test',
-          qualification: 'MBBS',
-          Specilazation: 'Dental',
-          hospitalName: 'Apollo Hospital',
-          area: 'nagar',
-          city: 'Hyderabad',
-        },
-      ],
+      
+      
       specialistCarddata: [
         {image: fPhysician, name: 'Family physicians'},
         {image: fpediatrician, name: 'Pediatricians'},
@@ -111,20 +90,7 @@ export default class HomeScreen extends ValidationComponent {
         {image: cardiologist, name: 'Cardiologists'},
         {image: urology, name: 'Urologists'},
       ],
-      doctorsList: [
-        {
-          image: image,
-          name: 'Srinivasa Rao',
-          specialization: 'Dentist',
-          highestDegree: 'MBBS',
-          fee: '100',
-          area: 'spring garden',
-          city: 'Philadelphia',
-          avgRating: '4.5',
-          totalNoOfReviews: '150',
-          overAllExperience: '10',
-        },
-      ],
+    
     };
     this.onPressShowAllDoctors = this.onPressShowAllDoctors.bind(this);
     this.onPressingHospital = this.onPressingHospital.bind(this);
@@ -165,11 +131,9 @@ export default class HomeScreen extends ValidationComponent {
         ];
 
 
-        for (i = 0; i < res1.length; i++) {
-         
-
-          list1.push({
-            // image: images[1],
+        for (i = 0; i < 5; i++) { 
+          list1.push({     
+            id:i,       
             name: res1[i].name,
             type: 'Multispecialtiy',
             area: res1[i].area,
@@ -183,11 +147,11 @@ export default class HomeScreen extends ValidationComponent {
         }
         this.setState({dataSourceHospital: list1});
         this.setState({res1: res1});
-        //console.log(dataSource);
+        
 
-        for (i = 0; i < 3; i++) {
-          //list1[i].image = images[1];
+        for (i = 0; i < 5; i++) {          
           list2.push({
+            id:i,
             image: image,
             name: res2[i].name,
             specialization: res2[i].specialization,
@@ -197,9 +161,7 @@ export default class HomeScreen extends ValidationComponent {
             avgRating: '4.5',
             totalNoOfReviews: '150',
             overAllExperience: res2[i].overallExperience,
-
             doctor_fee: res2[i].doctor_fee,
-
           });
         }
         this.setState({dataSourceDoctors: list2});
@@ -209,13 +171,7 @@ export default class HomeScreen extends ValidationComponent {
         console.log(error);
       });
   }
-  handle = () => {
-    data = this.state.dataSourceHospital;
-    for (j = 0; i < this.state.dataSourceHospital.length; i++) {
-      data[i].push({type: 'Multispecialtiy', avgRating: '4.5'});
-    }
-    this.setState({dataSourceHospital: data});
-  };
+ 
 
   render() {
     return (

@@ -180,8 +180,9 @@ export default class DoctorPublicProfile extends ValidationComponent {
       this.props.navigation.navigate('PatientsScreen', {
         date: this.state.selectedDate,
         time: this.state.selectedTime,
-        doctorId: '1',
-        customerProfileId: '1',
+        doctor: this.state.profileD,
+        
+        profileId: '1',
       });
     }
   };
@@ -223,7 +224,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
         for (i = 0; i < res2.length; i++) {
          if(res2[i].name==this.props.navigation.state.params.name){         
           profileD={
-            //image: images[1],
+            image: image,
             name: res2[i].name,
             specialization: res2[i].specialization,
             highestDegree: res2[i].highestDegree,
@@ -249,132 +250,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
       });
   }
 
-  render() {
-   
-    const doctorId = this.props.navigation.state.params.name;
-    const doctor = {
-      image: image,
-      name: doctorId,
-      specialization: 'Dentist',
-      highestDegree: 'MBBS',
-      fee: '100',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      overAllExperience: '10',
-    };
-    const hospital = {
-      image: image,
-      name: 'Manipal1 hospital',
-      type: 'Multispecialtiy',
-      streatAddline1: 'Unit 5',
-      streatAddline2: '3675 market st',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      state: 'PA',
-      pincode: '19104',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      totalNoOfDoctors: '10',
-    };
-    const cal = [
-      {
-        date: '16/11/2020',
-        slots: [
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-        ],
-      },
-      {
-        date: '17/11/2020',
-        slots: [
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-        ],
-      },
-    ];
-    let customDatesStyles = [];
-    let startDate = moment();
-    let endDate = moment(startDate).add(30, 'days');
-    let datesWhitelist = [{start: startDate, end: endDate}];
-    let radiogroup_options = [
-      {value: 0, label: '10:00 AM   '},
-      {value: 1, label: '10:30 Am   '},
-      {value: 2, label: '11:00 Am   '},
-      {value: 3, label: '10:00 AM   '},
-      {value: 4, label: '10:30 Am   '},
-      {value: 5, label: '11:00 Am   '},
-    ];
-    let slots = [
-      {id: 0, time: '09:30 AM'},
-      {id: 1, time: '10:00 AM'},
-      {id: 2, time: '10:30 AM'},
-      {id: 3, time: '11:00 AM'},
-      {id: 4, time: '11:30 AM'},
-      {id: 5, time: '12:00 AM'},
-      {id: 12, time: '12:30 AM'},
-      {id: 6, time: '01:00 PM'},
-      {id: 7, time: '01:30 PM'},
-      {id: 8, time: '02:00 PM'},
-      {id: 9, time: '02:30 PM'},
-      {id: 10, time: '03:00 PM'},
-      {id: 11, time: '03:30 PM'},
-    ];
-
-    let services = [
-      {id: 0, name: 'treatment A'},
-      {id: 1, name: 'treatment B'},
-      {id: 2, name: 'treatment C'},
-      {id: 3, name: 'treatment D'},
-    ];
-
-    for (let i = 0; i < 40; i++) {
-      customDatesStyles.push({
-        startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
-
-        dateNameStyle: styles.dateNameStyle,
-        dateNumberStyle: styles.dateNumberStyle,
-        dateContainerStyle: {
-          backgroundColor: `#${`#00000${(
-            (Math.random() * (1 << 24)) |
-            0
-          ).toString(16)}`.slice(-6)}`,
-        },
-      });
-    }
-
-
-        for (i = 0; i < res2.length; i++) {
-          if (res2[i].name == this.props.navigation.state.params.name) {
-            profileD = {
-              image: image,
-              name: res2[i].name,
-              specialization: res2[i].specialization,
-              highestDegree: res2[i].highestDegree,
-              area: res2[i].area,
-              city: res2[i].city,
-              avgRating: '4.5',
-              totalNoOfReviews: '150',
-              overAllExperience: res2[i].overallExperience,
-              hospital_name: res2[i].hospital_name,
-              phoneNumber: res2[i].phoneNumber,
-              email: res2[i].email,
-              doctor_fee: res2[i].doctor_fee,
-              college_name: res2[i].college_name,
-            };
-          }
-        }
-        this.setState({profileD: profileD});
-        //console.log(profileD);
-    
-  }
+  
 
   render() {
     const doctorId = this.props.navigation.state.params.name;
@@ -482,7 +358,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
           <View style={styles.doctorCardView}>
             <View style={styles.setFlexRow}>
               <View style={styles.positionImage}>
-                <Image source={doctor.image} style={styles.profileImage} />
+                <Image source={this.state.profileD.image} style={styles.profileImage} />
               </View>
               <View style={styles.imageRightPosition}>
                 <Text style={styles.cardText}>

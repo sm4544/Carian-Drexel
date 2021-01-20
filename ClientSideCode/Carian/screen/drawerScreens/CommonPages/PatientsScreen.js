@@ -45,7 +45,7 @@ export default class PatientsScreen extends ValidationComponent {
         const selectedTime = this.props.navigation.state.params.time;
         const doctor = this.props.navigation.state.params.doctor;
         const profileId = this.props.navigation.state.params.profileId;
-        const hospital = this.props.navigation.state.params.hospital;
+        const hospital = { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', streatAddline1: 'Unit 5', streatAddline2: '3675 market st', area: 'spring garden', city: 'Philadelphia', state: 'PA', pincode: '19104', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }
 
         return (
             <View style={styles.container}>
@@ -86,7 +86,7 @@ export default class PatientsScreen extends ValidationComponent {
                                 <Text style={{ margin: 5 }}>Address: </Text>
                             </View>
                             <View>
-                                <Text style={{ margin: 5 }}>${doctor.fee}</Text>
+                                <Text style={{ margin: 5 }}>${doctor.doctor_fee}</Text>
                                 <Text style={{ margin: 5 }}>{selectedDate}</Text>
                                 <Text style={{ margin: 5 }}>{selectedTime}</Text>
                                 <Text style={{ margin: 5 }}>{hospital.streatAddline1}, {hospital.streatAddline2} </Text>
