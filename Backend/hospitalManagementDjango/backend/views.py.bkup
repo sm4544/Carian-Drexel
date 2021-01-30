@@ -1,0 +1,221 @@
+from django.db.models import QuerySet
+from django.views import View
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from django.http import JsonResponse
+import jwt
+
+
+# Create your views here.
+from backend.serializers import *
+from datetime import timedelta
+import json
+
+SECRET_KEY = "hkBxrbZ9Td4QEwgRewV6gZSVH4q78vBia4GBYuqd09SsiMsIjH"
+
+class hospitalViewset(viewsets.ViewSet):
+
+    def create(self, request, format=None):
+        data = request.data
+        if data['name'] == '':
+            return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Name is missing!"})
+        print("Data is {}".format(data))
+        try:
+            Hospitals.objects.get_or_create(id=1212,name=data['name'], addressine1=data['addressine1'],
+                                            addressine2=data['addressine2'], area=data['area'], city=data['city'],
+                                            state=data['state'], pincode=data['pincode'],
+                                            hospital_phone_number=data['hospital_phone_number'],
+                                            licence_number=data['licence_number'],
+                                            # originally_registered_date=data['originally_registered_date'],
+                                            # registered_date=data['registered_date'],
+                                            regisrted_by=95
+                                            )
+        except Exception as exception:
+            print(exception)
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Incorrect data-{}".format(exception)})
+        return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Hospital"})
+
+    def list(self, request):
+        querySet = Hospitals.objects.all()
+        serializer = HospitalsSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class ProfilesViewset(viewsets.ViewSet):
+
+    def create(self, request, format=None):
+        data = request.data
+        if data['email'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid email'})
+        elif data['password'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter password'})
+        elif data['first_name'] == '' or data['last_name'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid name!'})
+        elif data['date_of_birth'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid date of birth!'})
+        elif data['profile_type'] == '':
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid profile type!'})
+        else:
+            try:
+                _str = data['profile_pic']
+                # new_str = _str.join(format(ord(x), 'b') for x in _str)
+                # print(new_str)
+                _profile = Profiles.objects.get_or_create(first_name=data['first_name'], last_name=data['last_name'],
+                                               email=data['email'],
+                                               username=data['username'], password=data['password'],
+                                               registred_date=datetime.utcnow(),
+                                               date_of_birth=data['date_of_birth'],
+                                               security_question=data['security_question'],
+                                               security_answer=data['security_answer'], password_attempts=0,
+                                               last_login_date=datetime.utcnow(),
+                                               status='test', profile_pic=bytes(_str, 'utf-8'), profile_type='test')
+            except Exception as exception:
+                return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
+            return Response(status=status.HTTP_201_CREATED, data={"ProfileID":"{}".format(_profile[0].id),"Message": "Added Profile"})
+
+    def retrieve(self, req, pk=None):
+        _profile = Profiles.objects.filter(email=req.GET.get("email"), password=req.GET.get("password"))
+
+        if QuerySet(_profile).count() == 0:
+            return Response({"Message": "Incorrect Email/Password"})
+        else:
+            return Response({"Message": "Authenticated Sucesfully!"})
+
+    def list(self, req):
+
+        print('Headers are:{}'.format(req.headers))
+        if 'Authorization' not in req.headers:
+            return Response(status=403, data={"Message": "Not Authorized to view this info!"})
+        else:
+            if req.headers['Authorization'].split( )[0] =='Bearer':
+                token = req.headers['Authorization'].split( )[1]
+            else:
+                token =  req.headers['Authorization'].split( )[0]
+
+            if token ==' ' or token == '':
+                return Response('Invalid Token!')
+            else:
+                # Verify Token
+                global SECRET_KEY
+                if not verifyTokenExpiry(token,SECRET_KEY):
+                    return Response(status=403,data={"Message": "Token Expired!"})
+                else:
+        #```
+                    querySet = Profiles.objects.all()
+                    serializer = ProfilesSerializer(querySet, many=True)
+                    return Response(status=200,data=serializer.data)
+
+
+class PatientsViewset(viewsets.ViewSet):
+
+    def list(self, request):
+        querySet = Patients.objects.all()
+        serializer = PatientsSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class PharmacyViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Pharmacy.objects.all()
+        serializer = PharmacySerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class MedicineViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Medicine.objects.all()
+        serializer = MedicineSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class MedicineOrderViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = MedicineOrder.objects.all()
+        serializer = MedicineOrderSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class LabViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Lab.objects.all()
+        serializer = LabSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class DepartmentViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Department.objects.all()
+        serializer = DepartmentSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class StaffViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Staff.objects.all()
+        serializer = StaffSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class LabReportsViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = LabReports.objects.all()
+        serializer = LabReportsSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class AppointmentsViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Appointments.objects.all()
+        serializer = AppointmentsSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class MessagesViewset(viewsets.ViewSet):
+    def list(self, request):
+        querySet = Messages.objects.all()
+        serializer = MessagesSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+
+class LoginSetup(View):
+    http_method_names = ['post']
+
+    def post(self, request):
+        print("Data is {}".format(request))
+        data = request.body
+        #email = json.loads(data)['email']
+        username = json.loads(data)['username']
+        password = json.loads(data)['password']
+
+        #timelimit = datetime.utcnow() + timedelta(minutes=20)
+        #timelimit = timedelta(minutes=20)
+        _profileObject = Profiles.objects.filter(username=username, password=password)
+        if _profileObject.count() == 0:
+            # return Response({"Message":"Incorrect Username/Password"})
+            return JsonResponse({"Message": "Incorrect Username/Password"})
+        else:
+            # Create a JWT Token
+            timeLimit = datetime.utcnow()+timedelta(minutes=30)
+            payload = {"username": username, "password": password, "exp":timeLimit}
+            SECRET_KEY = "hkBxrbZ9Td4QEwgRewV6gZSVH4q78vBia4GBYuqd09SsiMsIjH"
+            token = jwt.encode(payload, SECRET_KEY)  #.decode('utf-8')
+            print("{} and type is {}".format(token,type(token)))
+            _token = token
+            #token = str(token).replace('b', '')
+            token=token.decode("utf-8")
+            #token = token.replace("'", '')
+            return JsonResponse({"Message": "Logged in succesfully", "JWT_TOKEN": "{}".format(token),"FirstName":"{}".format(_profileObject[0].first_name),"LastName":"{}".format(_profileObject[0].last_name),"Profile_Type":"{}".format(_profileObject[0].profile_type),"ProfileID":"{}".format(_profileObject[0].id)})
+
+
+def verifyTokenExpiry(token,secretKey):
+    recoveredPayload=None
+    btoken = bytes(token, 'utf-8')
+    try:
+        recoveredPayload = jwt.decode(btoken,secretKey,algorithms=['HS256'])
+    except Exception as exception:
+        print(exception)
+        print(recoveredPayload)
+        return False
+    return True
+
+

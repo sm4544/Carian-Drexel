@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="postgres@heroku" uuid="59269897-05b1-4b6f-bd6d-414bec905885">
+    <data-source source="LOCAL" name="hospitalmanagement@localhost" uuid="bf66d03a-d4d2-4e56-b991-62438baf3b00">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/hospitalmanagement</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="d1c26pseafsj8p@ec2-34-235-62-201.compute-1.amazonaws.com" uuid="d0b1dbe4-020d-486f-a9cc-d01b10ea2b2b">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
