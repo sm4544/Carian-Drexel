@@ -25,7 +25,9 @@ SECRET_KEY = 'orp9dsr1m#w9!xh1xxs5eq6cj0c5c*_4%!9$k41i1%ah8@_zez'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS=[]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backend',
-    'rest_framework',
+    'corsheaders',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -49,10 +52,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'hospitalManagementDjango.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 TEMPLATES = [
     {
@@ -76,27 +86,17 @@ WSGI_APPLICATION = 'hospitalManagementDjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-
-
-
-
 DATABASES = {
     'default': {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'d1c26pseafsj8p',
         'USER':'jvzdizzqsnutty',
         'PASSWORD':'d67468267148f3e443d7d09608d479647a7da8ffc3d7f0d76c040d62c67a9f65',
         'HOST':'ec2-34-235-62-201.compute-1.amazonaws.com',
-        'PORT':'5432'
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #'NAME':'hospitalmanagement',
-        #'USER':'postgres',
-        #'PASSWORD':'postgres123',
-        #'HOST':'localhost',
-        #'PORT':'5432'
-    },
-
-
+        'POST':'5432'
+    }
 }
 
 
@@ -137,9 +137,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS=(
-    os.path.join(BASE_DIR,'static'),
-)
-MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')

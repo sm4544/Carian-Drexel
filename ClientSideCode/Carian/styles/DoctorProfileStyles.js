@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor:'white'
   },
-  doctorCardView:{ flex: 1, alignSelf: 'center', margin: 10, backgroundColor: 'white', width: '95%' },
+  doctorCardView:{ flex: 1,  margin: 10, backgroundColor: 'white', width: '95%', justifyContent:'center' },
   scrollViewContainer: {
     flex: 1,
     backgroundColor: "#F0F0E1",
@@ -120,6 +120,7 @@ export default StyleSheet.create({
   footerSubView:{ alignSelf: 'center', justifyContent: 'center' },
   footerText:{ color: 'black', fontSize: 20 },
   payButton:{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "white", padding: 10, borderWidth: 2, alignItems: "center", justifyContent: "center", margin: 4 },
+  addNewButton:{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "black", padding: 10, borderWidth: 2, alignItems: "center", justifyContent: "center", margin: 4 },
   payButtonText:{ color: 'black', fontSize: 25 },
   feesdisplay: { flex: 1, flexDirection: 'row', margin: 10, fontSize: 23, borderRadius: 5, backgroundColor: '#82E0AA', padding: 10, width: '95%', justifyContent: "space-between" },
   positionImage: { width: '40%', alignItems: "center", justifyContent: 'center', alignSelf: 'center' },
