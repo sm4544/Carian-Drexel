@@ -1,5 +1,5 @@
 import os
-
+from rest_framework.decorators import api_view, renderer_classes
 from cryptography.fernet import Fernet
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
@@ -149,6 +149,17 @@ class ProfilesViewset(viewsets.ViewSet):
 
 class PatientsViewset(viewsets.ViewSet):
 
+    def list(self, request):
+        responseTuple = verifyAuthHeader(request, "Patients")
+        if responseTuple[0] == 403:
+            return Response(status=status.HTTP_403_FORBIDDEN, data={"Message": responseTuple[1]})
+        elif responseTuple[0] == 200:
+            querySet = Patients.objects.all()
+            serializer = PatientsSerializer(querySet, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=responseTuple[0], data={"Message": responseTuple[1]})
+
     def create(self, request, format=None):
         data = request.data
         column_names = ['first_name', 'last_name', 'email', 'mobile_number', 'age', 'weight', 'height', 'gender',
@@ -178,21 +189,12 @@ class PatientsViewset(viewsets.ViewSet):
                                                      city=data['city'],
                                                      state=data['state'],
                                                      pincode=data['pincode'],
-                                                     created_by_id=data['created_by_id'])
+                                                     created_by_id=Profiles.objects.get(id=data['created_by_id']))
         except Exception as exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data="Message - {}".format(exception))
         return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Patient - {}".format(patient[0].id)})
 
-    def list(self, request):
-        responseTuple = verifyAuthHeader(request, "Patients")
-        if responseTuple[0] == 403:
-            return Response(status=status.HTTP_403_FORBIDDEN, data={"Message": responseTuple[1]})
-        elif responseTuple[0] == 200:
-            querySet = Patients.objects.all()
-            serializer = PatientsSerializer(querySet, many=True)
-            return Response(serializer.data)
-        else:
-            return Response(status=responseTuple[0], data={"Message": responseTuple[1]})
+
 
 
 class PharmacyViewset(viewsets.ViewSet):
@@ -428,8 +430,40 @@ class AppointmentsViewset(viewsets.ViewSet):
         serializer = AppointmentsSerializer(querySet, many=True)
         return Response(serializer.data)
 
-    # def retrieve(self, request):
-    #    query_set = Appointments.objects.filter(id=)
+    def create(self,request, format=None):
+        data = request.data
+        print(data)
+        try:
+            patient_id = data['patient_id']
+            doctor_id = data['doctor_id']
+            hospital_id = data['hospital_id']
+            #status = data["status"]
+            if patient_id == doctor_id:
+                raise Exception("Patient_id can't be same as doctor_id")
+            if patient_id == '' or doctor_id == '':
+                raise Exception("Patient_id or Doctor_id is empty!")
+            #check for validity
+            profile_data = Profiles.objects.filter(id=doctor_id)
+            if profile_data is None or len(profile_data) == 0:
+                raise Exception("Invalid Doctor_id")
+            profile_data = Profiles.objects.filter(id=doctor_id)
+            if profile_data is None or len(profile_data) == 0:
+                raise Exception("Invalid Doctor_id")
+            hospital_data = Hospitals.objects.filter(id=hospital_id)
+            if hospital_data is None or len(hospital_data) == 0:
+                raise Exception("Invalid Hospital_id")
+            appointment_date_time = data['appointment_time']
+            timeslot = data['timeslot']
+            appointment = Appointments.objects.get_or_create(patient_id=Patients.objects.get(id=patient_id),doctor_id=Profiles.objects.get(id=doctor_id),hospital_id=Hospitals.objects.get(id=hospital_id),date=appointment_date_time,start_time=timeslot,end_time=timeslot,appointment_status=data['appointment_status'])
+            return Response(status=status.HTTP_201_CREATED,data={"Message":"Appointment-id {} Booked".format(appointment[0].id)})
+        except Patients.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid patient_id"})
+        except KeyError as key_error:
+            print('KeyError')
+            return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid JSON"})
+        except Exception as exception:
+            print(exception)
+            return Response(status=status.HTTP_409_CONFLICT,data={"Message":"{}".format(exception)})
 
 
 class MessagesViewset(viewsets.ViewSet):
@@ -583,34 +617,76 @@ def getImageByFilter(request):
     return JsonResponse(status=status.HTTP_200_OK, data={"ImageTitle": title, "Image Blob": images[0].encoded_image})
 
 
-@require_http_methods(['POST'])
+#@require_http_methods(['POST'])
+@api_view(('POST',))
 def getAppointments(request):
-    _data = request.body
-    print(_data)
-    _data = json.loads(_data)
     try:
+        _data = request.body
+        _data = _data.decode("utf-8")
+        print(_data)
+        if _data=='':
+            raise Exception('Improper JSON')
+        _data = json.loads(_data)
         doctorID = _data['doctorID']
+        profile_data = Profiles.objects.filter(id=doctorID)
+        print(profile_data)
+        if profile_data is None or len(profile_data) == 0:
+            return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid doctor_id"})
         doctor_appointment = Appointments.objects.filter(doctor_id=doctorID)
+        #print(doctor_appointment[0].start_time)
+        print(len(doctor_appointment))
         json_response = {"DoctorID": "", "Appointments": {}}
         json_response["Appointments"] = []
         today = datetime.now()
+        slots=["10:30","11:30","12:30","1:30","2:30","3:30","4:30","5:30","6:30","7:30","8:30","9:30","10:30"]
+        #slots = ["10:30", "11:30", "12:30", "1:30", "2:30", "3:30"]
+        #         "10:30"]
         if len(doctor_appointment) == 0:
+            datetime_object={}
             # if QuerySet(doctor_appointment).count() == 0 :
-            for day in range(1, 31):
+            for day in range(0, 30):
                 current_timestamp = datetime.now() + timedelta(days=day)
                 current_date = current_timestamp.strftime('%Y-%m-%d')
                 json_response["DoctorID"] = doctorID
-                json_response["Appointments"].append(
-                    {"Date": "{}".format(current_date), "Slots": ["10:30", "12:30", "2:30"]})
-                appointment_times = {"10:30", "1:30", "4:30"}
+                datetime_object['{}'.format(current_date)]=slots;
+            json_response['Appointments'] = datetime_object
             return JsonResponse(status=status.HTTP_200_OK, data=json_response)
         else:
-            return JsonResponse(status=status.HTTP_200_OK, data=json.dumps({"Testing": "No"}))
+            json_response = {"DoctorID": "", "Appointments": {}}
+            json_response["DoctorID"] = doctorID
+            datetime_object = {}
+            for day in range(0,30):
+                current_timestamp = datetime.now() + timedelta(days=day)
+                current_date = current_timestamp.strftime('%Y-%m-%d')
+
+                available_slots=[]
+                datetime_object['{}'.format(current_date)] = []
+                for i in range(0,len(doctor_appointment)):
+                    if doctor_appointment[i].start_time.strftime('%Y-%m-%d')==current_date:
+
+                        if len(datetime_object['{}'.format(current_date)])==0:
+                            datetime_object['{}'.format(current_date)] = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                                '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
+                        else:
+                            datetime_object['{}'.format(current_date)] = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                                '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), datetime_object['{}'.format(current_date)]))
+                        available_slots = list(filter(lambda slot: doctor_appointment[i].start_time.strftime('%Y:%m:%d %H:%M')!=current_timestamp.strftime('%Y:%m:%d {}'.format(slot)),slots))
+                    else:
+                        available_slots=slots
+                        datetime_object['{}'.format(current_date)] = slots
+                #json_response['Appointments'].append({"Date": "{}".format(current_date),"Slots":available_slots})
+                print('---------')
+                print(datetime_object)
+                print('---------')
+                json_response["Appointments"]=datetime_object
+            return JsonResponse(status=status.HTTP_200_OK, data=json_response)
+            #return JsonResponse(status=status.HTTP_200_OK, data={"Testing": "No"},safe=False)
     except KeyError as key_error:
         error_payload = {"Error": "Invalid JSON {}".format(key_error)}
         print(error_payload)
         return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON"})
-
+    except Exception as exception:
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST,data={"Message":"{}".format(exception)})
 
 @require_http_methods(['GET'])
 def hospitalsList(request):
@@ -706,6 +782,35 @@ def doctorsList(request):
             }
         )
     return JsonResponse(status=200, data=data, safe=False)
+
+#@require_http_methods(['POST'])
+@api_view(('POST',))
+def ProfilePicUpd(request):
+    try:
+        data = request.body
+        print('inside try')
+        id = json.loads(data)['id']
+        encoded_image = json.loads(data)['image']
+        #images = StaticImages.objects.filter(image_title=title)
+        profile_pic = ProfilePic.objects.filter(id=id).first()
+        #print(profile_pic)
+        if profile_pic is None:
+            profile_data = Profiles.objects.filter(id=id)
+            print(profile_data)
+            if profile_data is None or len(profile_data)==0:
+                return Response(status=status.HTTP_404_NOT_FOUND,data={"Message":"Invalid Profile_id"})
+            elif len(profile_data)==1:
+                ProfilePic.objects.create(id=Profiles.objects.get(id=id),encoded_image='')
+                return Response(status=status.HTTP_201_CREATED,data={"Message":"Profile Pic created!"})
+        else:
+            prf_pic = ProfilePic.objects.get(id=id)
+            prf_pic.encoded_image=encoded_image
+            prf_pic.save()
+            return Response(status=status.HTTP_201_CREATED,data={"Message":"Profile pic updated!"})
+    except Exception as exception:
+        print("Exception={}".format(exception))
+        return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Incorrect Body"})
+
 
 def verifyAuthHeader(_req, requestor):
     if 'Authorization' not in _req.headers:
