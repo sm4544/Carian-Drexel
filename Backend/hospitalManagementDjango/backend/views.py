@@ -508,6 +508,162 @@ class ReviewsViewset(viewsets.ViewSet):
                             data={"Message": "Comment Added {}".format(reviewObject[0].id)})
 
 
+class LabWorkingHoursViewSet(viewsets.ViewSet):
+    def create(self, request, format=None):
+        data = request.data
+        try:
+            if data['lab_id'] == '':
+                return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Lab Id is missing!"})
+            try:
+                LabWorkingHours.objects.get_or_create(lab_id_id=data['lab_id'],
+                                                           mon_start_time=data['monst'],
+                                                           mon_end_time=data['monet'], tue_start_time=data['tuest'],
+                                                           tue_end_time=data['tueet'], wed_start_time=data['wedst'],
+                                                           wed_end_time=data['wedet'],
+                                                           thu_start_time=data['thust'], thu_end_time=data['thuet'],
+                                                           fri_start_time=data['frist'],
+                                                           fri_end_time=data['friet'], sat_start_time=data['satst'],
+                                                           sat_end_time=data['satet'],
+                                                           sun_start_time=data['sunst'], sun_end_time=data['sunet']),
+
+            except Exception as exception:
+                print(exception)
+                return Response(status=status.HTTP_409_CONFLICT,
+                                data={"Message": "Incorrect data-{}".format(exception)})
+        except KeyError as keyError:
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Invalid JSON-{}".format(keyError)})
+        return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Lab working hours"})
+
+    def list(self, request):
+        querySet = LabWorkingHours.objects.all()
+        serializer = LabWorkingHoursSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+    def put(self, request):
+        _lab_wh_updated_data = request.data
+        _lab_wh = LabWorkingHours.objects.get(lab_id_id=_lab_wh_updated_data['lab_id'])
+        _lab_wh.mon_start_time = _lab_wh_updated_data["monst"]
+        _lab_wh.mon_end_time = _lab_wh_updated_data["monet"]
+        _lab_wh.tue_start_time = _lab_wh_updated_data["tuest"]
+        _lab_wh.tue_end_time = _lab_wh_updated_data["tueet"]
+        _lab_wh.wed_start_time = _lab_wh_updated_data["wedst"]
+        _lab_wh.wed_end_time = _lab_wh_updated_data["wedet"]
+        _lab_wh.thu_start_time = _lab_wh_updated_data["thust"]
+        _lab_wh.thu_end_time = _lab_wh_updated_data["thuet"]
+        _lab_wh.fri_start_time = _lab_wh_updated_data["frist"]
+        _lab_wh.fri_end_time = _lab_wh_updated_data["friet"]
+        _lab_wh.sat_start_time = _lab_wh_updated_data["satst"]
+        _lab_wh.sat_end_time = _lab_wh_updated_data["satet"]
+        _lab_wh.sun_start_time = _lab_wh_updated_data["sunst"]
+        _lab_wh.sun_end_time = _lab_wh_updated_data["sunet"]
+
+        _lab_wh.save()
+        ser = LabWorkingHoursSerializer(_lab_wh)
+        return Response(ser.data)
+
+@require_http_methods(['POST'])
+def hospitalworkinghours(request):
+    input_data = request.body
+    out_data=[]
+    hospital_id = json.loads(input_data)['hospital_id']
+    _hospitalwh = HospitalWorkingHours.objects.filter(hospital_id_id=hospital_id)
+    if len(_hospitalwh) == 0:
+        return JsonResponse(status=status.HTTP_204_NO_CONTENT, data={"Message": "Hospital working hours does not exist!!"})
+    else:
+        wh= HospitalWorkingHoursSerializer(_hospitalwh,many=True).data[0]
+        out_data.append({"Message": "Hospital working hours exist!!","id":"{}".format(wh['id']),"hospital_id":"{}".format(wh['hospital_id']),
+                     "mon_start_time":"{}".format(wh['mon_start_time']),"mon_end_time":"{}".format(wh['mon_end_time']),
+                     "tue_start_time": "{}".format(wh['tue_start_time']),"tue_end_time": "{}".format(wh['tue_end_time']),
+                     "wed_start_time": "{}".format(wh['wed_start_time']),"wed_end_time": "{}".format(wh['wed_end_time']),
+                     "thu_start_time": "{}".format(wh['thu_start_time']),"thu_end_time": "{}".format(wh['thu_end_time']),
+                     "fri_start_time": "{}".format(wh['fri_start_time']),"fri_end_time": "{}".format(wh['fri_end_time']),
+                     "sat_start_time": "{}".format(wh['sat_start_time']),"sat_end_time": "{}".format(wh['sat_end_time']),
+                     "sun_start_time": "{}".format(wh['sun_start_time']),"sun_end_time": "{}".format(wh['sun_end_time']),
+                     })
+        return JsonResponse(status=200, data=out_data, safe=False)
+
+class HospitalWorkingHoursViewSet(viewsets.ViewSet):
+    def create(self, request, format=None):
+        data = request.data
+        try:
+            if data['hospital_id'] == '':
+                return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Hospital Id is missing!"})
+            try:
+                HospitalWorkingHours.objects.get_or_create(hospital_id_id=data['hospital_id'],
+                                                           mon_start_time=data['monst'],
+                                                           mon_end_time=data['monet'], tue_start_time=data['tuest'],
+                                                           tue_end_time=data['tueet'], wed_start_time=data['wedst'],
+                                                           wed_end_time=data['wedet'],
+                                                           thu_start_time=data['thust'], thu_end_time=data['thuet'],
+                                                           fri_start_time=data['frist'],
+                                                           fri_end_time=data['friet'], sat_start_time=data['satst'],
+                                                           sat_end_time=data['satet'],
+                                                           sun_start_time=data['sunst'], sun_end_time=data['sunet']),
+
+            except Exception as exception:
+                print(exception)
+                return Response(status=status.HTTP_409_CONFLICT,
+                                data={"Message": "Incorrect data-{}".format(exception)})
+        except KeyError as keyError:
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Invalid JSON-{}".format(keyError)})
+        return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Hospital working hours"})
+
+    def list(self, request):
+        querySet = HospitalWorkingHours.objects.all()
+        serializer = HospitalWorkingHoursSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+    def put(self, request):
+        _hospital_wh_updated_data = request.data
+        _hospital_wh = HospitalWorkingHours.objects.get(hospital_id_id=_hospital_wh_updated_data['hospital_id'])
+        _hospital_wh.mon_start_time = _hospital_wh_updated_data["monst"]
+        _hospital_wh.mon_end_time = _hospital_wh_updated_data["monet"]
+        _hospital_wh.tue_start_time = _hospital_wh_updated_data["tuest"]
+        _hospital_wh.tue_end_time = _hospital_wh_updated_data["tueet"]
+        _hospital_wh.wed_start_time = _hospital_wh_updated_data["wedst"]
+        _hospital_wh.wed_end_time = _hospital_wh_updated_data["wedet"]
+        _hospital_wh.thu_start_time = _hospital_wh_updated_data["thust"]
+        _hospital_wh.thu_end_time = _hospital_wh_updated_data["thuet"]
+        _hospital_wh.fri_start_time = _hospital_wh_updated_data["frist"]
+        _hospital_wh.fri_end_time = _hospital_wh_updated_data["friet"]
+        _hospital_wh.sat_start_time = _hospital_wh_updated_data["satst"]
+        _hospital_wh.sat_end_time = _hospital_wh_updated_data["satet"]
+        _hospital_wh.sun_start_time = _hospital_wh_updated_data["sunst"]
+        _hospital_wh.sun_end_time = _hospital_wh_updated_data["sunet"]
+
+        _hospital_wh.save()
+        ser = HospitalWorkingHoursSerializer(_hospital_wh)
+        return Response(ser.data)
+
+
+@require_http_methods(['POST'])
+def hospitalDepartments(request):
+    input_data = request.body
+    out_data=[]
+    hospital_id = json.loads(input_data)['hospital_id']
+    _hospitalDepartments = Department.objects.filter(hospital_id_id=hospital_id)
+    print("len:",len(_hospitalDepartments))
+    if len(_hospitalDepartments) == 0:
+        return JsonResponse(status=status.HTTP_204_NO_CONTENT, data={"Message": "Departments does not exist!!"})
+    else:
+        for department in _hospitalDepartments:
+            out_data.append({
+                "Department_name": "{}".format(department.Department_name),
+                "addressine1": "{}".format(department.addressine1),
+                "is_same_as_hospital_address": "{}".format(department.is_same_as_hospital_address),
+                "addressine2": "{}".format(department.addressine2),
+                "city": "{}".format(department.city),
+                "state": "{}".format(department.state),
+                "pincode": "{}".format(department.pincode),
+                "department_phone_number": "{}".format(department.department_phone_number),
+                "hospital_id": "{}".format(department.hospital_id_id),
+                "id":"{}".format(department.id)
+
+            })
+        return JsonResponse(status=200, data=out_data, safe=False)
+
+
+
 @require_http_methods(['GET'])
 def HospitalsSimplifiedView(request):
     hospitals = Hospitals.objects.all()

@@ -85,7 +85,20 @@ class StaticImagesSerializer(serializers.ModelSerializer):
         model = StaticImages
         fields = 'id', 'image_title', 'encoded_image'
 
+
 class ProfilePicSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfilePic
-        fields = 'id','encoded_image'
+        fields = 'id', 'encoded_image'
+
+
+class HospitalWorkingHoursSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HospitalWorkingHours
+        fields = 'id', 'hospital_id', 'mon_start_time', 'mon_end_time', 'tue_start_time', 'tue_end_time', 'wed_start_time', 'wed_end_time', 'thu_start_time', 'thu_end_time', 'fri_start_time', 'fri_end_time', 'sat_start_time', 'sat_end_time', 'sun_start_time', 'sun_end_time'
+
+
+class LabWorkingHoursSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LabWorkingHours
+        fields = 'id', 'lab_id', 'mon_start_time', 'mon_end_time', 'tue_start_time', 'tue_end_time', 'wed_start_time', 'wed_end_time', 'thu_start_time', 'thu_end_time', 'fri_start_time', 'fri_end_time', 'sat_start_time', 'sat_end_time', 'sun_start_time', 'sun_end_time'

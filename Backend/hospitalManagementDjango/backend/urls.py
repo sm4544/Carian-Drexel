@@ -20,6 +20,8 @@ router.register(r'Appointments', views.AppointmentsViewset, basename='appointmen
 router.register(r'Messages', views.MessagesViewset, basename='messages')
 router.register(r'Reviews', views.ReviewsViewset, basename='reviews')
 router.register(r'StaticImages', views.StaticImagesViewSet, basename='staticImages')
+router.register(r'HospitalWorkingHours', views.HospitalWorkingHoursViewSet, basename='hospitalworkinghours')
+router.register(r'LabWorkingHours', views.LabWorkingHoursViewSet, basename='labworkinghours')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -31,4 +33,6 @@ urlpatterns = [
     path('hospital-details',csrf_exempt(views.hospitalDetails),name='hospital-details'),
     path('hospitals-simple',csrf_exempt(views.hospitalsList),name='hospitals-simple'),
     path('profile-pic-update',csrf_exempt(views.ProfilePicUpd),name='profile-pic-update'),
+    path('hospitaldepartments',csrf_exempt(views.hospitalDepartments),name='hospitaldepartments'),
+    path('hospital-workinghours',csrf_exempt(views.hospitalworkinghours),name='hospital-workinghours'),
 ]
