@@ -30,4 +30,5 @@ urlpatterns = [
     path('image-get',csrf_exempt(views.getImageByFilter),name='get-image'),
     path('hospital-details',csrf_exempt(views.hospitalDetails),name='hospital-details'),
     path('hospitals-simple',csrf_exempt(views.hospitalsList),name='hospitals-simple'),
+    path('profile-pic-update',csrf_exempt(views.ProfilePicUpd),name='profile-pic-update'),
 ]

@@ -65,7 +65,7 @@ class LabReportsSerializer(serializers.ModelSerializer):
 class AppointmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointments
-        fields = 'id', 'patient_id', 'doctor_id', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'status', 'date', 'start_time', 'end_time '
+        fields = 'id', 'patient_id', 'doctor_id', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'appointment_status', 'date', 'start_time', 'end_time '
 
 
 class MessagesSerializer(serializers.ModelSerializer):
@@ -84,3 +84,8 @@ class StaticImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = StaticImages
         fields = 'id', 'image_title', 'encoded_image'
+
+class ProfilePicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfilePic
+        fields = 'id','encoded_image'

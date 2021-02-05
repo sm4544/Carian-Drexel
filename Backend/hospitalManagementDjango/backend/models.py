@@ -172,10 +172,10 @@ class Appointments(models.Model):
     patient_id = models.ForeignKey(Patients, to_field='id', on_delete=models.CASCADE)
     doctor_id = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE)
     hospital_id = models.ForeignKey(Hospitals, to_field='id', on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, to_field='id', on_delete=models.CASCADE)
-    pharmacy_id = models.ForeignKey(Pharmacy, to_field='id', on_delete=models.CASCADE)
-    lab_id = models.ForeignKey(Lab, to_field='id', on_delete=models.CASCADE)
-    status = models.CharField(max_length=15)
+    department_id = models.ForeignKey(Department, to_field='id', on_delete=models.CASCADE,null=True)
+    pharmacy_id = models.ForeignKey(Pharmacy, to_field='id', on_delete=models.CASCADE,null=True)
+    lab_id = models.ForeignKey(Lab, to_field='id', on_delete=models.CASCADE,null=True)
+    appointment_status = models.CharField(max_length=15)
     date = models.DateTimeField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -203,3 +203,12 @@ class StaticImages(models.Model):
     id = models.AutoField(primary_key=True)
     image_title = models.CharField(max_length=20)
     encoded_image = models.TextField()
+
+class ProfilePic(models.Model):
+    id = models.ForeignKey(Profiles,to_field='id', primary_key=True,unique=True,on_delete=models.CASCADE, related_name='profile_pic_image')
+    encoded_image = models.TextField()
+
+class AppointmentSlots(models.Model):
+    id=models.AutoField(primary_key=True)
+    time_slot = models.TimeField()
+
