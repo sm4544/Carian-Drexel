@@ -22,6 +22,7 @@ router.register(r'Reviews', views.ReviewsViewset, basename='reviews')
 router.register(r'StaticImages', views.StaticImagesViewSet, basename='staticImages')
 router.register(r'HospitalWorkingHours', views.HospitalWorkingHoursViewSet, basename='hospitalworkinghours')
 router.register(r'LabWorkingHours', views.LabWorkingHoursViewSet, basename='labworkinghours')
+router.register(r'DoctorWorkingHours', views.DoctorWorkingHoursViewSet, basename='doctorworkinghours')
 
 urlpatterns = [
     path('', include(router.urls)),

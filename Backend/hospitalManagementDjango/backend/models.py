@@ -248,3 +248,8 @@ class LabWorkingHours(models.Model):
     sat_end_time = models.CharField(max_length=15)
     sun_start_time = models.CharField(max_length=15)
     sun_end_time = models.CharField(max_length=15)
+
+
+class DoctorWorkingHours(models.Model):
+    doctor = models.ForeignKey(Profiles,to_field='id',on_delete=models.CASCADE)
+    working_hours = models.TextField()	
