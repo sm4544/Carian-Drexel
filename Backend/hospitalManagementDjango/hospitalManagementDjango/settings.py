@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -83,18 +85,18 @@ WSGI_APPLICATION = 'hospitalManagementDjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME':'d1c26pseafsj8p',
-        # 'USER':'jvzdizzqsnutty',
-        # 'PASSWORD':'d67468267148f3e443d7d09608d479647a7da8ffc3d7f0d76c040d62c67a9f65',
-        # 'HOST':'ec2-34-235-62-201.compute-1.amazonaws.com',
-        # 'PORT':'5432'
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'hospitalmanagement',
-        'USER':'postgres',
-        'PASSWORD':'postgres123',
-        'HOST':'localhost',
-        'PORT':'5432'
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME':'d1c26pseafsj8p',
+         'USER':'jvzdizzqsnutty',
+         'PASSWORD':'d67468267148f3e443d7d09608d479647a7da8ffc3d7f0d76c040d62c67a9f65',
+         'HOST':'ec2-34-235-62-201.compute-1.amazonaws.com',
+         'PORT':'5432'
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #'NAME':'hospitalmanagement',
+        #'USER':'postgres',
+        #'PASSWORD':'postgres123',
+        #'HOST':'localhost',
+        #'PORT':'5432'
     },
 
 

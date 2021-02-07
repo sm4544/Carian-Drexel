@@ -12,6 +12,8 @@ import jwt
 import datetime
 import requests
 from PIL import Image
+from django.core import serializers
+
 
 # Create your views here.
 from backend.encryption import encrypt
@@ -582,6 +584,39 @@ def hospitalworkinghours(request):
                      })
         return JsonResponse(status=200, data=out_data, safe=False)
 
+class DoctorWorkingHoursViewSet(viewsets.ViewSet):
+
+    def list(self,request):
+        data = DoctorWorkingHours.objects.all()
+        serializer = DoctorWorkingHoursSerializer(data, many=True)
+        return Response(status=200,data=serializer.data)
+
+    def create(self,request):
+        data=request.data
+        try:
+            doctor_id = data["doctor_id"]
+            timeslots = data["working_hours"]
+            profile_data = Profiles.objects.filter(id=doctor_id)
+            #print(profile_data)
+            if profile_data is None or len(profile_data) == 0:
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid doctor_id"})
+            #print(type(timeslots))
+            #print(timeslots)		
+            DoctorWorkingHours.objects.get_or_create(doctor=Profiles.objects.get(id=doctor_id),working_hours=timeslots)
+            return Response(status=status.HTTP_201_CREATED, data={"Message": "Created doctor working hours!"})
+        except KeyError as key_error:
+            return Response(status=status.HTTP_409_CONFLICT,data={"Message":"{}".format(key_error)})
+        except Exception as exception:
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message":"{}".format(exception)})	
+	
+    def retrieve(self,request,*args, **kwargs):
+        print('Inside retrieve')
+        value = kwargs['pk']
+        #print(value)
+        doctor_working_hours = DoctorWorkingHours.objects.filter(doctor_id=value)
+        serializer = DoctorWorkingHoursSerializer(doctor_working_hours, many=True)
+        return Response(status=200, data=serializer.data)    
+	
 class HospitalWorkingHoursViewSet(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
@@ -634,6 +669,7 @@ class HospitalWorkingHoursViewSet(viewsets.ViewSet):
         _hospital_wh.save()
         ser = HospitalWorkingHoursSerializer(_hospital_wh)
         return Response(ser.data)
+
 
 
 @require_http_methods(['POST'])
