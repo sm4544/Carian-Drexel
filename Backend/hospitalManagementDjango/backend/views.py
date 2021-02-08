@@ -347,6 +347,28 @@ class DepartmentViewset(viewsets.ViewSet):
         serializer = DepartmentSerializer(querySet, many=True)
         return Response(serializer.data)
 
+    def put(self, request):
+        _department_updated_data = request.data
+        _department = Department.objects.get(id=_department_updated_data['id'])
+        _department.Department_name = _department_updated_data["name"]
+        _department.addressine1 = _department_updated_data["addressine1"]
+        _department.addressine2 = _department_updated_data["addressine2"]
+        _department.is_same_as_hospital_address =_department_updated_data["is_same_as_hospital_address"]
+        _department.city = _department_updated_data["city"]
+        _department.state = _department_updated_data["state"]
+        _department.pincode = _department_updated_data["pincode"]
+        _department.department_phone_number = _department_updated_data["department_phone_number"]
+        _department.save()
+        ser = DepartmentSerializer(_department)
+        return Response(ser.data)
+
+    def delete(self,request):
+        _department = Department.objects.get(id=request.data['id'])
+        _department.delete()
+        querySet = Department.objects.all()
+        serializer = DepartmentSerializer(querySet, many=True)
+        return Response(serializer.data)
+
 
 class StaffViewset(viewsets.ViewSet):
 
