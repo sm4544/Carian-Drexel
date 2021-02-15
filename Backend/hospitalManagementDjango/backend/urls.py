@@ -33,7 +33,9 @@ urlpatterns = [
     path('image-get',csrf_exempt(views.getImageByFilter),name='get-image'),
     path('hospital-details',csrf_exempt(views.hospitalDetails),name='hospital-details'),
     path('hospitals-simple',csrf_exempt(views.hospitalsList),name='hospitals-simple'),
+    path('doctors-simple',csrf_exempt(views.doctorsList),name='doctors-simple'),
     path('profile-pic-update',csrf_exempt(views.ProfilePicUpd),name='profile-pic-update'),
     path('hospitaldepartments',csrf_exempt(views.hospitalDepartments),name='hospitaldepartments'),
     path('hospital-workinghours',csrf_exempt(views.hospitalworkinghours),name='hospital-workinghours'),
+    path('doctordepartments',csrf_exempt(views.doctorDepartments),name='doctordepartments'),
 ]

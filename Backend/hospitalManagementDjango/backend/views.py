@@ -88,6 +88,7 @@ class ProfilesViewset(viewsets.ViewSet):
 
     def create(self, request, format=None):
         data = request.data
+        print(data)
         try:
             if data['email'] == '':
                 return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid email'})
@@ -346,7 +347,28 @@ class DepartmentViewset(viewsets.ViewSet):
         querySet = Department.objects.all()
         serializer = DepartmentSerializer(querySet, many=True)
         return Response(serializer.data)
+		
+    def put(self, request):
+        _department_updated_data = request.data
+        _department = Department.objects.get(id=_department_updated_data['id'])
+        _department.Department_name = _department_updated_data["name"]
+        _department.addressine1 = _department_updated_data["addressine1"]
+        _department.addressine2 = _department_updated_data["addressine2"]
+        _department.is_same_as_hospital_address = _department_updated_data["is_same_as_hospital_address"]
+        _department.city = _department_updated_data["city"]
+        _department.state = _department_updated_data["state"]
+        _department.pincode = _department_updated_data["pincode"]
+        _department.department_phone_number = _department_updated_data["department_phone_number"]
+        _department.save()
+        ser = DepartmentSerializer(_department)
+        return Response(ser.data)
 
+    def delete(self, request):
+        _department = Department.objects.get(id=request.data['id'])
+        _department.delete()
+        querySet = Department.objects.all()
+        serializer = DepartmentSerializer(querySet, many=True)
+        return Response(serializer.data)
 
 class StaffViewset(viewsets.ViewSet):
 
@@ -380,7 +402,7 @@ class StaffViewset(viewsets.ViewSet):
                                                          work_email_address=data['work_email_address'],
                                                          status='inactive', doctor_fee=data['doctor_fee'],
                                                          approved_by_id=13,
-                                                         hospital_id_id=data['hospital_id'], department_id_id=1,
+                                                         hospital_id_id=data['hospital_id'], department_id_id=data['department_id'],
                                                          lab_id_id=1,
                                                          pharmacy_id_id=1, profile_id_id=profile_id),
 
@@ -671,7 +693,6 @@ class HospitalWorkingHoursViewSet(viewsets.ViewSet):
         return Response(ser.data)
 
 
-
 @require_http_methods(['POST'])
 def hospitalDepartments(request):
     input_data = request.body
@@ -821,18 +842,19 @@ def getAppointments(request):
         _data = json.loads(_data)
         doctorID = _data['doctorID']
         profile_data = Profiles.objects.filter(id=doctorID)
-        print(profile_data)
+        #print(profile_data)
         if profile_data is None or len(profile_data) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid doctor_id"})
         doctor_appointment = Appointments.objects.filter(doctor_id=doctorID)
         #print(doctor_appointment[0].start_time)
-        print(len(doctor_appointment))
+        #print(len(doctor_appointment))
         json_response = {"DoctorID": "", "Appointments": {}}
         json_response["Appointments"] = []
         today = datetime.now()
         slots=["10:30","11:30","12:30","1:30","2:30","3:30","4:30","5:30","6:30","7:30","8:30","9:30","10:30"]
         #slots = ["10:30", "11:30", "12:30", "1:30", "2:30", "3:30"]
         #         "10:30"]
+        print(doctor_appointment)
         if len(doctor_appointment) == 0:
             datetime_object={}
             # if QuerySet(doctor_appointment).count() == 0 :
@@ -852,10 +874,10 @@ def getAppointments(request):
                 current_date = current_timestamp.strftime('%Y-%m-%d')
 
                 available_slots=[]
-                datetime_object['{}'.format(current_date)] = []
+                datetime_object['{}'.format(current_date)] = []				
                 for i in range(0,len(doctor_appointment)):
                     if doctor_appointment[i].start_time.strftime('%Y-%m-%d')==current_date:
-
+                        print(doctor_appointment[i].start_time)
                         if len(datetime_object['{}'.format(current_date)])==0:
                             datetime_object['{}'.format(current_date)] = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
                                 '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
@@ -867,9 +889,9 @@ def getAppointments(request):
                         available_slots=slots
                         datetime_object['{}'.format(current_date)] = slots
                 #json_response['Appointments'].append({"Date": "{}".format(current_date),"Slots":available_slots})
-                print('---------')
-                print(datetime_object)
-                print('---------')
+                #print('---------')
+                #print(datetime_object)
+                #print('---------')
                 json_response["Appointments"]=datetime_object
             return JsonResponse(status=status.HTTP_200_OK, data=json_response)
             #return JsonResponse(status=status.HTTP_200_OK, data={"Testing": "No"},safe=False)
@@ -884,7 +906,7 @@ def getAppointments(request):
 def hospitalsList(request):
     hospitals = Hospitals.objects.all()
     data = []
-    static_image = StaticImages.objects.filter(image_title="hospital")
+    #static_image = StaticImages.objects.filter(image_title="hospital")
     # print(static_image[0].encoded_image)
     for _hospital in hospitals:
         doctors = Staff.objects.filter(hospital_id_id=_hospital.id)
@@ -898,7 +920,7 @@ def hospitalsList(request):
                 "type": "{}".format(_hospital.type),
                 "avg_rating": "4.2",
                 "total_reviews": "120",
-                "image": "{}".format(static_image[0].encoded_image)
+                #"image": "{}".format(static_image[0].encoded_image)
             }
         )
     return JsonResponse(status=200, data=data, safe=False)
@@ -1022,3 +1044,34 @@ def verifyAuthHeader(_req, requestor):
                 return 403, response_tuple[1]
             else:
                 return 200, None
+
+
+@require_http_methods(['POST'])
+def doctorDepartments(request):
+    input_data = request.body
+    out_data=[]
+    hospital_id = json.loads(input_data)['hospital_id']
+    department_id = json.loads(input_data)['department_id']
+    if hospital_id == "" or department_id == "":
+        return JsonResponse(status=400, data={"Message": "hospital or department Can't be empty!"})
+    _doctorDepartments = Staff.objects.filter(hospital_id_id=hospital_id).filter(department_id_id = department_id)
+    print("len:",len(_doctorDepartments))
+    if len(_doctorDepartments) == 0:
+        return JsonResponse(status=status.HTTP_404_NOT_FOUND, data={"Message": "No Doctors avaialable!!"})
+    else:
+        for doctor in _doctorDepartments:
+            profile = Profiles.objects.filter(id=doctor.profile_id_id)
+            _profile = ProfilesSerializer(profile, many=True).data[0]
+            out_data.append({
+                "name": "{} {}".format(_profile['first_name'], _profile['last_name']),
+                "specialization": "{}".format(doctor.specialization),
+                "highest_qualification": "{}".format(doctor.highest_qualification),
+                "studied_at": "{}".format(doctor.studied_at),
+                "licence_number": "{}".format(doctor.licence_number),
+                "overall_work_experience": "{}".format(doctor.overall_work_experience),
+                "work_email_address": "{}".format(doctor.work_email_address),
+                "department_id": "{}".format(doctor.department_id_id),
+                "hospital_id": "{}".format(doctor.hospital_id_id),
+                "id":"{}".format(doctor.id)
+            })
+        return JsonResponse(status=200, data=out_data, safe=False)
