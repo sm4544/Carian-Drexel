@@ -34,7 +34,7 @@ export default class LoginScreen extends ValidationComponent {
       postLoginApi(body).then((data) => {
         console.log(data)
         if(data.Message === 'Logged in succesfully') {
-          this.props.navigation.navigate("DrawerNavigationRoutes", { login: data.FirstName, name: data.FirstName+ ' ' + data.LastName, profileId: data.ProfileID})                                 
+          this.props.navigation.navigate("DrawerNavigationRoutes", { login: data.Profile_Type, name: data.FirstName+ ' ' + data.LastName, profileId: data.ProfileID})                                 
         } else{  
           return false;
         } 

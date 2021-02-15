@@ -30,10 +30,7 @@ const CustomSidebarMenu = props => {
   ];
 
   let DoctorOptions = [
-    {
-      navOptionName: 'DashBoard',
-      screenToNavigate: 'DoctorDashboardScreen',
-    },
+    
     {
       navOptionName: 'Home',
       screenToNavigate: 'HomeScreen',
@@ -43,9 +40,10 @@ const CustomSidebarMenu = props => {
       screenToNavigate: 'DoctorCalenderScreen',
     },
     {
-      navOptionName: 'Profie',
-      screenToNavigate: 'ManageStaffProfileScreen',
+      navOptionName: 'Appointments',
+      screenToNavigate: 'DoctorDashboardScreen',
     },
+
     {
       navOptionName: 'Settings',
       screenToNavigate: 'SettingsScreen',
