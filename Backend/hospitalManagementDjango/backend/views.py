@@ -14,7 +14,6 @@ import requests
 from PIL import Image
 from django.core import serializers
 
-
 # Create your views here.
 from backend.encryption import encrypt
 from backend.serializers import *
@@ -83,6 +82,7 @@ class hospitalViewset(viewsets.ViewSet):
         querySet = Hospitals.objects.all()
         serializer = HospitalsSerializer(querySet, many=True)
         return Response(serializer.data)
+
 
 class ProfilesViewset(viewsets.ViewSet):
 
@@ -167,7 +167,7 @@ class PatientsViewset(viewsets.ViewSet):
         data = request.data
         column_names = ['first_name', 'last_name', 'email', 'mobile_number', 'age', 'weight', 'height', 'gender',
                         'occupation', 'martial_status', 'blood_group', 'is_created_by_staff',
-                        'addressine1', 'addressine2', 'city', 'state', 'pincode', 'created_by_id']
+                        'addressine1', 'addressine2', 'city', 'state', 'pincode', 'related_profile']
         try:
             for column in column_names:
                 if data[column] == " ":
@@ -191,14 +191,24 @@ class PatientsViewset(viewsets.ViewSet):
                                                      addressine2=data['addressine2'],
                                                      city=data['city'],
                                                      state=data['state'],
-                                                     pincode=data['pincode'],
-                                                     created_by_id=Profiles.objects.get(id=data['created_by_id']))
+                                                     dob=data['dob'],
+                                                     hobbies=data['hobbies'],
+                                                     recurring_problems=data['recurring_problems'],
+                                                     allergies_to_medicine=data['allergies'],
+                                                     use_of_alcohol=data['alcohol'],
+                                                     use_of_tobacco=data['tobacco'],
+                                                     physical_activities=data['activities'],
+                                                     pincode=data['pincode'], relation=data['relation'],
+                                                     created_by_id=Profiles.objects.get(id=data['related_profile']))
         except Exception as exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data="Message - {}".format(exception))
         return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Patient - {}".format(patient[0].id)})
 
-
-
+    def retrieve(self, request, *args, **kwargs):
+        value = kwargs['pk']
+        patient_object = Patients.objects.filter(related_profile_id=value)
+        serializer = PatientsSerializer(patient_object, many=True)
+        return Response(status=200, data=serializer.data)
 
 class PharmacyViewset(viewsets.ViewSet):
 
@@ -251,6 +261,7 @@ class PharmacyViewset(viewsets.ViewSet):
         ser = PharmacySerializer(_pharmacy)
         return Response(ser.data)
 
+
 class MedicineViewset(viewsets.ViewSet):
     def list(self, request):
         querySet = Medicine.objects.all()
@@ -287,7 +298,7 @@ class LabViewset(viewsets.ViewSet):
                                              regisrted_by_id=13),
 
         except Exception as exception:
-            #print(exception)
+            # print(exception)
             return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Incorrect data-{}".format(exception)})
         return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Lab"})
 
@@ -319,6 +330,7 @@ class LabViewset(viewsets.ViewSet):
         serializer = LabSerializer(querySet, many=True)
         return Response(serializer.data)
 
+
 class DepartmentViewset(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
@@ -347,7 +359,7 @@ class DepartmentViewset(viewsets.ViewSet):
         querySet = Department.objects.all()
         serializer = DepartmentSerializer(querySet, many=True)
         return Response(serializer.data)
-		
+
     def put(self, request):
         _department_updated_data = request.data
         _department = Department.objects.get(id=_department_updated_data['id'])
@@ -369,6 +381,7 @@ class DepartmentViewset(viewsets.ViewSet):
         querySet = Department.objects.all()
         serializer = DepartmentSerializer(querySet, many=True)
         return Response(serializer.data)
+
 
 class StaffViewset(viewsets.ViewSet):
 
@@ -402,7 +415,8 @@ class StaffViewset(viewsets.ViewSet):
                                                          work_email_address=data['work_email_address'],
                                                          status='inactive', doctor_fee=data['doctor_fee'],
                                                          approved_by_id=13,
-                                                         hospital_id_id=data['hospital_id'], department_id_id=data['department_id'],
+                                                         hospital_id_id=data['hospital_id'],
+                                                         department_id_id=data['department_id'],
                                                          lab_id_id=1,
                                                          pharmacy_id_id=1, profile_id_id=profile_id),
 
@@ -440,6 +454,7 @@ class StaffViewset(viewsets.ViewSet):
         serializer = LabSerializer(querySet, many=True)
         return Response(serializer.data)
 
+
 class LabReportsViewset(viewsets.ViewSet):
     def list(self, request):
         querySet = LabReports.objects.all()
@@ -454,19 +469,19 @@ class AppointmentsViewset(viewsets.ViewSet):
         serializer = AppointmentsSerializer(querySet, many=True)
         return Response(serializer.data)
 
-    def create(self,request, format=None):
+    def create(self, request, format=None):
         data = request.data
         print(data)
         try:
             patient_id = data['patient_id']
             doctor_id = data['doctor_id']
             hospital_id = data['hospital_id']
-            #status = data["status"]
+            # status = data["status"]
             if patient_id == doctor_id:
                 raise Exception("Patient_id can't be same as doctor_id")
             if patient_id == '' or doctor_id == '':
                 raise Exception("Patient_id or Doctor_id is empty!")
-            #check for validity
+            # check for validity
             profile_data = Profiles.objects.filter(id=doctor_id)
             if profile_data is None or len(profile_data) == 0:
                 raise Exception("Invalid Doctor_id")
@@ -478,16 +493,22 @@ class AppointmentsViewset(viewsets.ViewSet):
                 raise Exception("Invalid Hospital_id")
             appointment_date_time = data['appointment_time']
             timeslot = data['timeslot']
-            appointment = Appointments.objects.get_or_create(patient_id=Patients.objects.get(id=patient_id),doctor_id=Profiles.objects.get(id=doctor_id),hospital_id=Hospitals.objects.get(id=hospital_id),date=appointment_date_time,start_time=timeslot,end_time=timeslot,appointment_status=data['appointment_status'])
-            return Response(status=status.HTTP_201_CREATED,data={"Message":"Appointment-id {} Booked".format(appointment[0].id)})
+            appointment = Appointments.objects.get_or_create(patient_id=Patients.objects.get(id=patient_id),
+                                                             doctor_id=Profiles.objects.get(id=doctor_id),
+                                                             hospital_id=Hospitals.objects.get(id=hospital_id),
+                                                             date=appointment_date_time, start_time=timeslot,
+                                                             end_time=timeslot,
+                                                             appointment_status=data['appointment_status'])
+            return Response(status=status.HTTP_201_CREATED,
+                            data={"Message": "Appointment-id {} Booked".format(appointment[0].id)})
         except Patients.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid patient_id"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid patient_id"})
         except KeyError as key_error:
             print('KeyError')
-            return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid JSON"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON"})
         except Exception as exception:
             print(exception)
-            return Response(status=status.HTTP_409_CONFLICT,data={"Message":"{}".format(exception)})
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
 
 
 class MessagesViewset(viewsets.ViewSet):
@@ -540,15 +561,15 @@ class LabWorkingHoursViewSet(viewsets.ViewSet):
                 return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Lab Id is missing!"})
             try:
                 LabWorkingHours.objects.get_or_create(lab_id_id=data['lab_id'],
-                                                           mon_start_time=data['monst'],
-                                                           mon_end_time=data['monet'], tue_start_time=data['tuest'],
-                                                           tue_end_time=data['tueet'], wed_start_time=data['wedst'],
-                                                           wed_end_time=data['wedet'],
-                                                           thu_start_time=data['thust'], thu_end_time=data['thuet'],
-                                                           fri_start_time=data['frist'],
-                                                           fri_end_time=data['friet'], sat_start_time=data['satst'],
-                                                           sat_end_time=data['satet'],
-                                                           sun_start_time=data['sunst'], sun_end_time=data['sunet']),
+                                                      mon_start_time=data['monst'],
+                                                      mon_end_time=data['monet'], tue_start_time=data['tuest'],
+                                                      tue_end_time=data['tueet'], wed_start_time=data['wedst'],
+                                                      wed_end_time=data['wedet'],
+                                                      thu_start_time=data['thust'], thu_end_time=data['thuet'],
+                                                      fri_start_time=data['frist'],
+                                                      fri_end_time=data['friet'], sat_start_time=data['satst'],
+                                                      sat_end_time=data['satet'],
+                                                      sun_start_time=data['sunst'], sun_end_time=data['sunet']),
 
             except Exception as exception:
                 print(exception)
@@ -585,60 +606,72 @@ class LabWorkingHoursViewSet(viewsets.ViewSet):
         ser = LabWorkingHoursSerializer(_lab_wh)
         return Response(ser.data)
 
+
 @require_http_methods(['POST'])
 def hospitalworkinghours(request):
     input_data = request.body
-    out_data=[]
+    out_data = []
     hospital_id = json.loads(input_data)['hospital_id']
     _hospitalwh = HospitalWorkingHours.objects.filter(hospital_id_id=hospital_id)
     if len(_hospitalwh) == 0:
-        return JsonResponse(status=status.HTTP_204_NO_CONTENT, data={"Message": "Hospital working hours does not exist!!"})
+        return JsonResponse(status=status.HTTP_204_NO_CONTENT,
+                            data={"Message": "Hospital working hours does not exist!!"})
     else:
-        wh= HospitalWorkingHoursSerializer(_hospitalwh,many=True).data[0]
-        out_data.append({"Message": "Hospital working hours exist!!","id":"{}".format(wh['id']),"hospital_id":"{}".format(wh['hospital_id']),
-                     "mon_start_time":"{}".format(wh['mon_start_time']),"mon_end_time":"{}".format(wh['mon_end_time']),
-                     "tue_start_time": "{}".format(wh['tue_start_time']),"tue_end_time": "{}".format(wh['tue_end_time']),
-                     "wed_start_time": "{}".format(wh['wed_start_time']),"wed_end_time": "{}".format(wh['wed_end_time']),
-                     "thu_start_time": "{}".format(wh['thu_start_time']),"thu_end_time": "{}".format(wh['thu_end_time']),
-                     "fri_start_time": "{}".format(wh['fri_start_time']),"fri_end_time": "{}".format(wh['fri_end_time']),
-                     "sat_start_time": "{}".format(wh['sat_start_time']),"sat_end_time": "{}".format(wh['sat_end_time']),
-                     "sun_start_time": "{}".format(wh['sun_start_time']),"sun_end_time": "{}".format(wh['sun_end_time']),
-                     })
+        wh = HospitalWorkingHoursSerializer(_hospitalwh, many=True).data[0]
+        out_data.append({"Message": "Hospital working hours exist!!", "id": "{}".format(wh['id']),
+                         "hospital_id": "{}".format(wh['hospital_id']),
+                         "mon_start_time": "{}".format(wh['mon_start_time']),
+                         "mon_end_time": "{}".format(wh['mon_end_time']),
+                         "tue_start_time": "{}".format(wh['tue_start_time']),
+                         "tue_end_time": "{}".format(wh['tue_end_time']),
+                         "wed_start_time": "{}".format(wh['wed_start_time']),
+                         "wed_end_time": "{}".format(wh['wed_end_time']),
+                         "thu_start_time": "{}".format(wh['thu_start_time']),
+                         "thu_end_time": "{}".format(wh['thu_end_time']),
+                         "fri_start_time": "{}".format(wh['fri_start_time']),
+                         "fri_end_time": "{}".format(wh['fri_end_time']),
+                         "sat_start_time": "{}".format(wh['sat_start_time']),
+                         "sat_end_time": "{}".format(wh['sat_end_time']),
+                         "sun_start_time": "{}".format(wh['sun_start_time']),
+                         "sun_end_time": "{}".format(wh['sun_end_time']),
+                         })
         return JsonResponse(status=200, data=out_data, safe=False)
+
 
 class DoctorWorkingHoursViewSet(viewsets.ViewSet):
 
-    def list(self,request):
+    def list(self, request):
         data = DoctorWorkingHours.objects.all()
         serializer = DoctorWorkingHoursSerializer(data, many=True)
-        return Response(status=200,data=serializer.data)
+        return Response(status=200, data=serializer.data)
 
-    def create(self,request):
-        data=request.data
+    def create(self, request):
+        data = request.data
         try:
             doctor_id = data["doctor_id"]
             timeslots = data["working_hours"]
             profile_data = Profiles.objects.filter(id=doctor_id)
-            #print(profile_data)
+            # print(profile_data)
             if profile_data is None or len(profile_data) == 0:
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid doctor_id"})
-            #print(type(timeslots))
-            #print(timeslots)		
-            DoctorWorkingHours.objects.get_or_create(doctor=Profiles.objects.get(id=doctor_id),working_hours=timeslots)
+            # print(type(timeslots))
+            # print(timeslots)
+            DoctorWorkingHours.objects.get_or_create(doctor=Profiles.objects.get(id=doctor_id), working_hours=timeslots)
             return Response(status=status.HTTP_201_CREATED, data={"Message": "Created doctor working hours!"})
         except KeyError as key_error:
-            return Response(status=status.HTTP_409_CONFLICT,data={"Message":"{}".format(key_error)})
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(key_error)})
         except Exception as exception:
-            return Response(status=status.HTTP_409_CONFLICT, data={"Message":"{}".format(exception)})	
-	
-    def retrieve(self,request,*args, **kwargs):
+            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
+
+    def retrieve(self, request, *args, **kwargs):
         print('Inside retrieve')
         value = kwargs['pk']
-        #print(value)
+        # print(value)
         doctor_working_hours = DoctorWorkingHours.objects.filter(doctor_id=value)
         serializer = DoctorWorkingHoursSerializer(doctor_working_hours, many=True)
-        return Response(status=200, data=serializer.data)    
-	
+        return Response(status=200, data=serializer.data)
+
+
 class HospitalWorkingHoursViewSet(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
@@ -696,10 +729,10 @@ class HospitalWorkingHoursViewSet(viewsets.ViewSet):
 @require_http_methods(['POST'])
 def hospitalDepartments(request):
     input_data = request.body
-    out_data=[]
+    out_data = []
     hospital_id = json.loads(input_data)['hospital_id']
     _hospitalDepartments = Department.objects.filter(hospital_id_id=hospital_id)
-    print("len:",len(_hospitalDepartments))
+    print("len:", len(_hospitalDepartments))
     if len(_hospitalDepartments) == 0:
         return JsonResponse(status=status.HTTP_204_NO_CONTENT, data={"Message": "Departments does not exist!!"})
     else:
@@ -714,11 +747,10 @@ def hospitalDepartments(request):
                 "pincode": "{}".format(department.pincode),
                 "department_phone_number": "{}".format(department.department_phone_number),
                 "hospital_id": "{}".format(department.hospital_id_id),
-                "id":"{}".format(department.id)
+                "id": "{}".format(department.id)
 
             })
         return JsonResponse(status=200, data=out_data, safe=False)
-
 
 
 @require_http_methods(['GET'])
@@ -830,83 +862,89 @@ def getImageByFilter(request):
     return JsonResponse(status=status.HTTP_200_OK, data={"ImageTitle": title, "Image Blob": images[0].encoded_image})
 
 
-#@require_http_methods(['POST'])
+# @require_http_methods(['POST'])
 @api_view(('POST',))
 def getAppointments(request):
     try:
         _data = request.body
         _data = _data.decode("utf-8")
         print(_data)
-        if _data=='':
+        if _data == '':
             raise Exception('Improper JSON')
         _data = json.loads(_data)
         doctorID = _data['doctorID']
         profile_data = Profiles.objects.filter(id=doctorID)
-        #print(profile_data)
+        # print(profile_data)
         if profile_data is None or len(profile_data) == 0:
-            return Response(status=status.HTTP_400_BAD_REQUEST,data={"Message":"Invalid doctor_id"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid doctor_id"})
         doctor_appointment = Appointments.objects.filter(doctor_id=doctorID)
-        #print(doctor_appointment[0].start_time)
-        #print(len(doctor_appointment))
+        # print(doctor_appointment[0].start_time)
+        # print(len(doctor_appointment))
         json_response = {"DoctorID": "", "Appointments": {}}
         json_response["Appointments"] = []
         today = datetime.now()
-        slots=["10:30","11:30","12:30","1:30","2:30","3:30","4:30","5:30","6:30","7:30","8:30","9:30","10:30"]
-        #slots = ["10:30", "11:30", "12:30", "1:30", "2:30", "3:30"]
+        slots = ["10:30", "11:30", "12:30", "1:30", "2:30", "3:30", "4:30", "5:30", "6:30", "7:30", "8:30", "9:30",
+                 "10:30"]
+        # slots = ["10:30", "11:30", "12:30", "1:30", "2:30", "3:30"]
         #         "10:30"]
         print(doctor_appointment)
         if len(doctor_appointment) == 0:
-            datetime_object={}
+            datetime_object = {}
             # if QuerySet(doctor_appointment).count() == 0 :
             for day in range(0, 30):
                 current_timestamp = datetime.now() + timedelta(days=day)
                 current_date = current_timestamp.strftime('%Y-%m-%d')
                 json_response["DoctorID"] = doctorID
-                datetime_object['{}'.format(current_date)]=slots;
+                datetime_object['{}'.format(current_date)] = slots;
             json_response['Appointments'] = datetime_object
             return JsonResponse(status=status.HTTP_200_OK, data=json_response)
         else:
             json_response = {"DoctorID": "", "Appointments": {}}
             json_response["DoctorID"] = doctorID
             datetime_object = {}
-            for day in range(0,30):
+            for day in range(0, 30):
                 current_timestamp = datetime.now() + timedelta(days=day)
                 current_date = current_timestamp.strftime('%Y-%m-%d')
 
-                available_slots=[]
-                datetime_object['{}'.format(current_date)] = []				
-                for i in range(0,len(doctor_appointment)):
-                    if doctor_appointment[i].start_time.strftime('%Y-%m-%d')==current_date:
+                available_slots = []
+                datetime_object['{}'.format(current_date)] = []
+                for i in range(0, len(doctor_appointment)):
+                    if doctor_appointment[i].start_time.strftime('%Y-%m-%d') == current_date:
                         print(doctor_appointment[i].start_time)
-                        if len(datetime_object['{}'.format(current_date)])==0:
-                            datetime_object['{}'.format(current_date)] = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
-                                '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
+                        if len(datetime_object['{}'.format(current_date)]) == 0:
+                            datetime_object['{}'.format(current_date)] = list(
+                                filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                                    '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
                         else:
-                            datetime_object['{}'.format(current_date)] = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
-                                '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), datetime_object['{}'.format(current_date)]))
-                        available_slots = list(filter(lambda slot: doctor_appointment[i].start_time.strftime('%Y:%m:%d %H:%M')!=current_timestamp.strftime('%Y:%m:%d {}'.format(slot)),slots))
+                            datetime_object['{}'.format(current_date)] = list(
+                                filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                                    '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)),
+                                       datetime_object['{}'.format(current_date)]))
+                        available_slots = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                            '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
                     else:
-                        available_slots=slots
+                        available_slots = slots
                         datetime_object['{}'.format(current_date)] = slots
-                #json_response['Appointments'].append({"Date": "{}".format(current_date),"Slots":available_slots})
-                #print('---------')
-                #print(datetime_object)
-                #print('---------')
-                json_response["Appointments"]=datetime_object
+                # json_response['Appointments'].append({"Date": "{}".format(current_date),"Slots":available_slots})
+                # print('---------')
+                # print(datetime_object)
+                # print('---------')
+                json_response["Appointments"] = datetime_object
             return JsonResponse(status=status.HTTP_200_OK, data=json_response)
-            #return JsonResponse(status=status.HTTP_200_OK, data={"Testing": "No"},safe=False)
+            # return JsonResponse(status=status.HTTP_200_OK, data={"Testing": "No"},safe=False)
     except KeyError as key_error:
         error_payload = {"Error": "Invalid JSON {}".format(key_error)}
         print(error_payload)
         return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON"})
     except Exception as exception:
-        return JsonResponse(status=status.HTTP_400_BAD_REQUEST,data={"Message":"{}".format(exception)})
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "{}".format(exception)})
+
 
 @require_http_methods(['GET'])
 def hospitalsList(request):
     hospitals = Hospitals.objects.all()
     data = []
-    #static_image = StaticImages.objects.filter(image_title="hospital")
+    # static_image = StaticImages.objects.filter(image_title="hospital")
     # print(static_image[0].encoded_image)
     for _hospital in hospitals:
         doctors = Staff.objects.filter(hospital_id_id=_hospital.id)
@@ -920,7 +958,7 @@ def hospitalsList(request):
                 "type": "{}".format(_hospital.type),
                 "avg_rating": "4.2",
                 "total_reviews": "120",
-                #"image": "{}".format(static_image[0].encoded_image)
+                # "image": "{}".format(static_image[0].encoded_image)
             }
         )
     return JsonResponse(status=200, data=data, safe=False)
@@ -967,6 +1005,7 @@ def hospitalDetails(request):
 
     return JsonResponse(status=200, data=[data, data1, data2], safe=False)
 
+
 @require_http_methods(['GET'])
 def doctorsList(request):
     _doctors = Staff.objects.all()
@@ -997,7 +1036,8 @@ def doctorsList(request):
         )
     return JsonResponse(status=200, data=data, safe=False)
 
-#@require_http_methods(['POST'])
+
+# @require_http_methods(['POST'])
 @api_view(('POST',))
 def ProfilePicUpd(request):
     try:
@@ -1005,22 +1045,22 @@ def ProfilePicUpd(request):
         print('inside try')
         id = json.loads(data)['id']
         encoded_image = json.loads(data)['image']
-        #images = StaticImages.objects.filter(image_title=title)
+        # images = StaticImages.objects.filter(image_title=title)
         profile_pic = ProfilePic.objects.filter(id=id).first()
-        #print(profile_pic)
+        # print(profile_pic)
         if profile_pic is None:
             profile_data = Profiles.objects.filter(id=id)
             print(profile_data)
-            if profile_data is None or len(profile_data)==0:
-                return Response(status=status.HTTP_404_NOT_FOUND,data={"Message":"Invalid Profile_id"})
-            elif len(profile_data)==1:
-                ProfilePic.objects.create(id=Profiles.objects.get(id=id),encoded_image='')
-                return Response(status=status.HTTP_201_CREATED,data={"Message":"Profile Pic created!"})
+            if profile_data is None or len(profile_data) == 0:
+                return Response(status=status.HTTP_404_NOT_FOUND, data={"Message": "Invalid Profile_id"})
+            elif len(profile_data) == 1:
+                ProfilePic.objects.create(id=Profiles.objects.get(id=id), encoded_image='')
+                return Response(status=status.HTTP_201_CREATED, data={"Message": "Profile Pic created!"})
         else:
             prf_pic = ProfilePic.objects.get(id=id)
-            prf_pic.encoded_image=encoded_image
+            prf_pic.encoded_image = encoded_image
             prf_pic.save()
-            return Response(status=status.HTTP_201_CREATED,data={"Message":"Profile pic updated!"})
+            return Response(status=status.HTTP_201_CREATED, data={"Message": "Profile pic updated!"})
     except Exception as exception:
         print("Exception={}".format(exception))
         return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Incorrect Body"})
@@ -1049,19 +1089,21 @@ def verifyAuthHeader(_req, requestor):
 @require_http_methods(['POST'])
 def doctorDepartments(request):
     input_data = request.body
-    out_data=[]
+    out_data = []
     hospital_id = json.loads(input_data)['hospital_id']
     department_id = json.loads(input_data)['department_id']
     if hospital_id == "" or department_id == "":
         return JsonResponse(status=400, data={"Message": "hospital or department Can't be empty!"})
-    _doctorDepartments = Staff.objects.filter(hospital_id_id=hospital_id).filter(department_id_id = department_id)
-    print("len:",len(_doctorDepartments))
+    _doctorDepartments = Staff.objects.filter(hospital_id_id=hospital_id).filter(department_id_id=department_id)
+    print("len:", len(_doctorDepartments))
     if len(_doctorDepartments) == 0:
-        return JsonResponse(status=status.HTTP_404_NOT_FOUND, data={"Message": "No Doctors avaialable!!"})
+        return JsonResponse(status=404, data={"Message": "No Doctors avaialable!!"})
     else:
         for doctor in _doctorDepartments:
             profile = Profiles.objects.filter(id=doctor.profile_id_id)
             _profile = ProfilesSerializer(profile, many=True).data[0]
+            hospital = Hospitals.objects.filter(id=doctor.hospital_id_id)
+            _hospital = (HospitalsSerializer(hospital, many=True)).data[0]
             out_data.append({
                 "name": "{} {}".format(_profile['first_name'], _profile['last_name']),
                 "specialization": "{}".format(doctor.specialization),
@@ -1072,6 +1114,9 @@ def doctorDepartments(request):
                 "work_email_address": "{}".format(doctor.work_email_address),
                 "department_id": "{}".format(doctor.department_id_id),
                 "hospital_id": "{}".format(doctor.hospital_id_id),
-                "id":"{}".format(doctor.id)
+                "id": "{}".format(doctor.id),
+                "doctor_fee": "{}".format(doctor.doctor_fee),
+                "area": "{}".format(_hospital['area']),
+                "city": "{}".format(_hospital['city'])
             })
         return JsonResponse(status=200, data=out_data, safe=False)

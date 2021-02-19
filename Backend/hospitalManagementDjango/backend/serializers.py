@@ -17,7 +17,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
 class PatientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patients
-        fields = 'id', 'first_name', 'last_name', 'email', 'mobile_number', 'age', 'weight', 'height', 'gender', 'occupation', 'martial_status', 'blood_group', 'registred_date', 'created_by', 'is_created_by_staff', 'addressine1', 'addressine2', 'city', 'state', 'pincode'
+        fields = 'id', 'first_name', 'last_name', 'email', 'mobile_number', 'age', 'weight', 'height', 'gender', 'occupation', 'martial_status', 'blood_group', 'registred_date', 'related_profile', 'is_created_by_staff', 'addressine1', 'addressine2', 'city', 'state', 'pincode','dob','hobbies','recurring_problems','allergies_to_medicine','use_of_alcohol','use_of_tobacco','physical_activities', 'relation'
 
 
 class PharmacySerializer(serializers.ModelSerializer):

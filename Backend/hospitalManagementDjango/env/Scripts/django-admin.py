@@ -1,4 +1,4 @@
-#!f:\reactapps\backendflask\hospitalmanagementdjango\env\scripts\python.exe
+#!C:\Users\vhema\Desktop\drexel\quater_6\SE691\hospitalmanagementbackend\env\Scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
