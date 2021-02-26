@@ -43,7 +43,7 @@ export default class PatientsScreen extends ValidationComponent {
     }
 
     onPressingAddNew = () => {
-        this.props.navigation.navigate("PatientsInfoScreen", {
+        this.props.navigation.navigate("PatientsRegisterScreen", {
             hospital: this.state.hospital, doctor: this.state.doctor, profileId: this.state.profileId,
             selectedDate: this.state.selectedDate, selectedTime: this.state.selectedTime
         });

@@ -16,7 +16,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
-import PatientsInfoScreen from '../../screen/drawerScreens/PatientsInfoScreen';
+import PatientsRegisterScreen from '../../screen/drawerScreens/PatientsRegisterScreen';
 import { createPatient } from '../../screen/services/profileService'
 const navigation = {
   navigate: jest.fn(),
@@ -38,10 +38,10 @@ jest.mock("../../screen/services/profileService");
 
 
 
-describe('<PatientsInfoScreen/>', () => {
+describe('<PatientsRegisterScreen/>', () => {
   beforeEach(function () {
     spyon = sinon.spy(navigation, 'navigate');    
-    wrapper = shallow(<PatientsInfoScreen navigation={navigation}></PatientsInfoScreen>);
+    wrapper = shallow(<PatientsRegisterScreen navigation={navigation}></PatientsRegisterScreen>);
   });
   afterEach(function () {
     navigation.navigate.restore();
