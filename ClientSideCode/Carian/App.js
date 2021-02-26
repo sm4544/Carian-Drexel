@@ -22,21 +22,34 @@ import PharmacyOrdersScreen from './screen/drawerScreens/PharmacyOrdersScreen';
 import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
 import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
+import PatientsRegisterScreen from './screen/drawerScreens/PatientsRegisterScreen';
 import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
-import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen'
+import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
+import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
 import HospitalScreen from './screen/drawerScreens/HospitalScreen';
 import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
 import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
+import HospitalOverview from './screen/drawerScreens/HospitalOverview';
+import LabOverview from './screen/drawerScreens/LabOverview';
+import StaffOverview from './screen/drawerScreens/StaffOverview';
+import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
+
 import DisplayDoctorsList from './screen/drawerScreens/CommonPages/DisplayDoctorsList';
 import DisplayHospitalsList from './screen/drawerScreens/CommonPages/DisplayHospitalsList'; 
 import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPublicProfile';
+
 import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile'; 
 import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
+
 // import PatientsAppointment from './screen/drawerScreens/PatientsAppointment';
 
+
+
+import DepartmentPage from './screen/drawerScreens/DepartmentPage';
+import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
 
 
 const FirstActivity_StackNavigator = createStackNavigator({
@@ -78,6 +91,18 @@ const FirstActivity_StackNavigator = createStackNavigator({
   
   paymentScreen: {
     screen: paymentScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Payment',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsRegisterScreen: {
+    screen: PatientsRegisterScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Payment',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
@@ -137,6 +162,18 @@ const FirstActivity_StackNavigator = createStackNavigator({
 
   PatientsScreen:{
     screen:PatientsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Patients',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsScreen2:{
+    screen:PatientsScreen2,
     navigationOptions: ({ navigation }) => ({
       title: 'Patients',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
@@ -377,6 +414,20 @@ const FifteenthActivity_stackNavigator = createStackNavigator({
 //   },
 // });
 
+const SixteenthActivity_stackNavigator= createStackNavigator({
+  First:{
+    screen: DepartmentConfirmationScreen,
+    navigationOptions:({navigation})=>({
+      title:'Department Screen',
+      headerLeft:()=><NavigationDrawerHeader navigationProps={navigation}/>,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
 const DrawerNavigationRoutes = createDrawerNavigator({
   HomeScreen: {
     screen: FirstActivity_StackNavigator,
@@ -436,6 +487,12 @@ const DrawerNavigationRoutes = createDrawerNavigator({
     screen:TenthActivity_stackNavigator,
     navigationOptions: {
       drawerLabel: 'Manage Staff Screen',
+    },
+  },
+  DepartmentConfirmationScreen:{
+    screen:SixteenthActivity_stackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Department Staff Screen',
     },
   },
   PharmacyOrdersScreen:{
@@ -545,8 +602,30 @@ const OtherExternal = createStackNavigator({
 
   StaffDetailsScreen: {
     screen: StaffDetailsScreen,
+
     navigationOptions: { title: 'StaffDetailsScreen' },
-  }  
+
+  },
+  
+  HospitalOverview: {
+    screen: HospitalOverview,
+    navigationOptions: { title: 'HospitalOverview' },
+  },
+
+  LabOverview: {
+    screen: LabOverview,
+    navigationOptions: { title: 'LabOverview' },
+  },
+  StaffOverview: {
+    screen: StaffOverview,
+    navigationOptions: { title: 'StaffOverview' },
+  },
+  PharmacyOverview: {
+    screen: PharmacyOverview,
+    navigationOptions: { title: 'PharmacyOverview' },
+  },
+
+
 });
 export default createAppContainer(OtherExternal);
 //export default createAppContainer(App);

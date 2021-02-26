@@ -24,9 +24,11 @@ const navigation = {
     navigate: jest.fn(),
     state: {
         params: {
-            name: 'hello',
-            profileid: '1',
-            profile_type: 'Doctor'
+            
+            doctorsList: [{"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+            {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+            {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+             {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "binny@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "43", "licence_number": "188187", "name": "Doctor 1", "overallExperience": "5", "phoneNumber": "9918897654", "profile_id": "14", "specialization": "Cardiology"}]
 
         }
     }
@@ -43,12 +45,7 @@ describe('<DisplayDoctorsList/>', () => {
         spyon = sinon.spy(navigation, 'navigate');
 
         wrapper = shallow(<DisplayDoctorsList navigation={navigation}></DisplayDoctorsList>);
-        doctorsList= [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
-        wrapper.setState({doctorsList:doctorsList})
-    });
+        });
     afterEach(function () {
         navigation.navigate.restore();
     });
@@ -73,7 +70,7 @@ describe('<DisplayDoctorsList/>', () => {
     it('should navigate to DoctorPublicProfile', async () => {
 
         wrapper.instance().onPressingDoctorCard('hello');
-        sinon.assert.calledWith(spyon, "DoctorPublicProfile", { name: 'hello' });
+        sinon.assert.calledWith(spyon, "DoctorPublicProfile", { id: 'hello' });
         sinon.assert.calledOnce(spyon);
     })
 

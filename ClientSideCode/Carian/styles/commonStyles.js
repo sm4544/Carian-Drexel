@@ -8,6 +8,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
+
   AppTitle: {
     fontWeight: "bold",
     fontSize: 40,
@@ -21,7 +22,19 @@ export default StyleSheet.create({
     backgroundColor: "steelblue",
     borderRadius: 18,
     height: 50,
-    marginTop: 20,
+    marginTop: 5,
+    justifyContent: "center",
+    padding: 5,
+    borderColor: "white",
+    //borderWidth: 2,
+  },
+
+  inputViewPatients: {
+    width: "80%",
+    backgroundColor: "steelblue",
+    borderRadius: 18,
+    height: 50,
+    marginBottom: 15,
     justifyContent: "center",
     padding: 5,
     borderColor: "white",
@@ -32,9 +45,28 @@ export default StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
+
+  label: {
+    alignSelf:'flex-start',
+    marginLeft:45,
+    color: "blue",
+    fontSize: 20,
+  },
+  profileImage: {
+    //flex: 1,    
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+    //justifyContent: "flex-end",
+
+  },
   hyperlink: {
     color: "black",
-    fontSize: 25,
+    fontSize: 15,
     textDecorationLine: "underline",
   },
   button: {
@@ -97,12 +129,20 @@ export default StyleSheet.create({
     paddingTop: 10,
     width: '80%'
   },
+
+  labelText: {
+    
+    fontSize: 15,
+    color: '#CD6155',    
+    paddingBottom: 3,
+    paddingTop: 3,
+    width: '80%'
+  },
   textCal: {
     fontWeight: 'bold',
     fontSize: 20,
     color: '#D35400',
     fontStyle: 'italic',
-
     paddingTop: 10,
   },
   buttonCal: {
@@ -119,6 +159,7 @@ export default StyleSheet.create({
     // paddingLeft: 10,
     paddingHorizontal: 15,
   },
+
   buttonADD: {
     width: "100%",
     backgroundColor: "#307ecc",
@@ -148,5 +189,62 @@ export default StyleSheet.create({
     paddingBottom: 30,
     paddingTop: 30,
 
-  }
+  },
+  containerView: {
+    flex: 1,
+  },
+  loginScreenContainer: {
+    flex: 1,
+  },
+  logoText: {
+    marginTop: 150,
+    marginBottom: 30,
+    textAlign: 'center',
+    color: '#4682b4', 
+    fontSize: 40, 
+    fontStyle: 'italic', 
+    fontWeight: 'bold', 
+    lineHeight: 40,    
+    textShadowColor: '#0000cd', 
+    fontFamily: 'sans-serif', 
+    textShadowRadius: 15, 
+    textShadowOffset: {width: 4, height: 4}, 
+    textTransform: 'uppercase',
+ 
+  },
+  loginFormView: {
+    flex: 1
+  },
+  loginFormTextInput: {
+    height: 43,
+    fontSize: 14,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#eaeaea',
+    backgroundColor: '#fafafa',
+    paddingLeft: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 5,
+    marginBottom: 5,
+  
+  },
+  loginButton: {
+    backgroundColor: '#3897f1',
+    borderRadius: 5,
+    height: 45,
+    marginTop: 10,
+  },
+  fbLoginButton: {
+    height: 45,
+    marginTop: 10,
+    backgroundColor: 'transparent',
+    color: '#00bfff', 
+  },    
+  departmentPositionVisble:{
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 80
+  },          
+
 });

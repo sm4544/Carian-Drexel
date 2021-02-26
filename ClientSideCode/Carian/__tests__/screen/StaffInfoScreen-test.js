@@ -49,18 +49,18 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.type()).to.equal(ScrollView);
   });
   it('should have View', () => {
-    expect(wrapper.find(View)).to.have.length(9);
+    expect(wrapper.find(View)).to.have.length(7);
   });
   it('should have Doctors Details text component', () => {
-    expect(wrapper.find(Text)).to.have.length(14);
+    expect(wrapper.find(Text)).to.have.length(21);
     expect(wrapper.contains("Additional Details")).to.equal(true);
   });
   it('should have Education text component', () => {
-    expect(wrapper.find(Text)).to.have.length(14);
+    expect(wrapper.find(Text)).to.have.length(21);
     expect(wrapper.contains("Education")).to.equal(true);
   });
   it('should have TextInput', () => {
-    expect(wrapper.find(TextInput)).to.have.length(8);
+    expect(wrapper.find(TextInput)).to.have.length(6);
   });
   it('should have Highest Degree input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(0).props().value).to.equal('');
@@ -75,74 +75,65 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.find(TextInput).at(1).props().value).to.equal('');
   });
 
-  it('should change state when text changed on Specilization inputtext box', () => {
-    const Specilization = wrapper.find(TextInput).at(1);
-    Specilization.simulate('ChangeText', 'Orthopedic');
-    expect(wrapper.state('Specilization')).to.equal('Orthopedic');
-  });
+  
   it('should have college name  input component with empaty value ', () => {
-    expect(wrapper.find(TextInput).at(2).props().value).to.equal('');
+    expect(wrapper.find(TextInput).at(1).props().value).to.equal('');
   });
 
   it('should change state when text changed on college name inputtext box', () => {
-    const GPA = wrapper.find(TextInput).at(2);
+    const GPA = wrapper.find(TextInput).at(1);
     GPA.simulate('ChangeText', 'siddartha');
     expect(wrapper.state('College_name')).to.equal('siddartha');
   });
 
   it('should have Work Details text component', () => {
-    expect(wrapper.find(Text)).to.have.length(14);
+    expect(wrapper.find(Text)).to.have.length(21);
     expect(wrapper.contains("WORK")).to.equal(true);
   });
   it('should have Experience   input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(3).props().value).to.equal('');
   });
-  it('should change state when text changed on experince inputtext box', () => {
-    const Experience = wrapper.find(TextInput).at(3);
-    Experience.simulate('ChangeText', '10');
-    expect(wrapper.state('overall_work_experience')).to.equal('10');
-  });
-
+ 
 
   it('should have work_email_address  input component with empaty value ', () => {
-    expect(wrapper.find(TextInput).at(4).props().value).to.equal('');
+    expect(wrapper.find(TextInput).at(2).props().value).to.equal('');
   });
 
   it('should change state when text changed on work_email_address inputtext box', () => {
-    const work_email_address = wrapper.find(TextInput).at(4);
+    const work_email_address = wrapper.find(TextInput).at(2);
     work_email_address.simulate('ChangeText', 'ram@gmail.com');
     expect(wrapper.state('work_email_address')).to.equal('ram@gmail.com');
   });
   it('should have work_phone_number  input component with empaty value ', () => {
-    expect(wrapper.find(TextInput).at(5).props().value).to.equal('');
+    expect(wrapper.find(TextInput).at(3).props().value).to.equal('');
   });
 
   it('should change state when text changed on work_phone_number inputtext box', () => {
-    const work_phone_number = wrapper.find(TextInput).at(5);
+    const work_phone_number = wrapper.find(TextInput).at(3);
     work_phone_number.simulate('ChangeText', '1234567890');
     expect(wrapper.state('work_phone_number')).to.equal('1234567890');
   });
 
   it('should have License Details  text component', () => {
-    expect(wrapper.find(Text)).to.have.length(14);
+    expect(wrapper.find(Text)).to.have.length(21);
     expect(wrapper.contains("License Details")).to.equal(true);
   });
   it('should have License Number  input component with empaty value ', () => {
-    expect(wrapper.find(TextInput).at(6).props().value).to.equal('');
+    expect(wrapper.find(TextInput).at(4).props().value).to.equal('');
   });
 
   it('should change state when text changed on License Number inputtext box', () => {
-    const License = wrapper.find(TextInput).at(6);
+    const License = wrapper.find(TextInput).at(4);
     License.simulate('ChangeText', '1234');
     expect(wrapper.state('licence_number')).to.equal('1234');
   });
 
   it('should have doctor_fee  input component with empaty value ', () => {
-    expect(wrapper.find(TextInput).at(7).props().value).to.equal('');
+    expect(wrapper.find(TextInput).at(5).props().value).to.equal('');
   });
 
   it('should change state when text changed on doctor_fee inputtext box', () => {
-    const doctor_fee = wrapper.find(TextInput).at(7);
+    const doctor_fee = wrapper.find(TextInput).at(5);
     doctor_fee.simulate('ChangeText', '100');
     expect(wrapper.state('doctor_fee')).to.equal('100');
   });
@@ -153,7 +144,7 @@ describe('<StaffInfoScreen/>', () => {
   });
 
   it('should have Submit button  component', () => {
-    expect(wrapper.find(Text)).to.have.length(14);
+    expect(wrapper.find(Text)).to.have.length(21);
     expect(wrapper.contains(<Text style={styles.buttonText}>Register/Submit</Text>)).to.equal(true);
 
   });
@@ -165,12 +156,7 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.contains('The field "Highest_degree" is mandatory.')).to.equal(true);
   })
 
-  it('should through error messages if user click on Register with empty Specilaization', () => {
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');
-
-    expect(wrapper.contains('The field "Specilization" is mandatory.')).to.equal(true);
-  })
+ 
 
   it('should through error messages if user click on Register with empty College_name', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
@@ -179,22 +165,9 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.contains('The field "College_name" is mandatory.')).to.equal(true);
   })
 
-  it('should through error messages if user click on Register with empty overall_work_experience', () => {
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');
+  
 
-    expect(wrapper.contains('The field "overall_work_experience" is mandatory.')).to.equal(true);
-  })
-
-  it('should through error messages if user click on Register with invalid overall_work_experience', () => {
-    const Experience = wrapper.find(TextInput).at(3);
-    Experience.simulate('ChangeText', 'test');
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');
-
-    expect(wrapper.contains('The field "overall_work_experience" must be a valid number.')).to.equal(true);
-  })
-
+  
   it('should through error messages if user click on Register with empty work_phone_number', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
@@ -203,7 +176,7 @@ describe('<StaffInfoScreen/>', () => {
   })
 
   it('should through error messages if user click on Register with invalid work_phone_number', () => {
-    const work_phone_number = wrapper.find(TextInput).at(5);
+    const work_phone_number = wrapper.find(TextInput).at(3);
     work_phone_number.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
@@ -219,7 +192,7 @@ describe('<StaffInfoScreen/>', () => {
   })
 
   it('should through error messages if user click on Register with invalid work_email_address', () => {
-    const work_email_address = wrapper.find(TextInput).at(4);
+    const work_email_address = wrapper.find(TextInput).at(2);
     work_email_address.simulate('ChangeText', 'ram');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
@@ -237,7 +210,7 @@ describe('<StaffInfoScreen/>', () => {
   })
 
   it('should through error messages if user click on Register with invalid licence_number', () => {
-    const License = wrapper.find(TextInput).at(6);
+    const License = wrapper.find(TextInput).at(4);
     License.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
@@ -253,7 +226,7 @@ describe('<StaffInfoScreen/>', () => {
   })
 
   it('should through error messages if user click on Register with invalid doctor_fee', () => {
-    const doctor_fee = wrapper.find(TextInput).at(7);
+    const doctor_fee = wrapper.find(TextInput).at(5);
     doctor_fee.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
@@ -277,12 +250,11 @@ describe('<StaffInfoScreen/>', () => {
 
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(3).simulate('ChangeText', '4');
-    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test@test.com');
-    wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
-    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', '100.2');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test@test.com');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', '123456789632');
+    wrapper.find(TextInput).at(4).simulate('ChangeText', '12345');
+    wrapper.find(TextInput).at(5).simulate('ChangeText', '100');
+    
     wrapper.setState({ hospital_id: '1' })
 
     const output = { "Message": "Added Staff", "StaffID": "39" };
@@ -298,12 +270,11 @@ describe('<StaffInfoScreen/>', () => {
 
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(3).simulate('ChangeText', '4');
-    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test@test.com');
-    wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
-    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', '100.2');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test@test.com');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', '123456789632');
+    wrapper.find(TextInput).at(4).simulate('ChangeText', '12345');
+    wrapper.find(TextInput).at(5).simulate('ChangeText', '100');
+  
     wrapper.setState({ hospital_id: '1' })
 
     const output = { "Message": "ERROR", "StaffID": "39" };

@@ -16,11 +16,11 @@ global.shallow = shallow;
 
 
 const review = {
-    id: 0,
-    date: '10/10/2020',
-    name: 'hello',
-    rating: '5',
-    comment: 'hello',
+    review_id: 0,
+    Review_Timestamp: '10/10/2020',
+    Review_By: 'hello',
+    Review_Stars: '5',
+    Review_Content: 'hello',
 }
 
 describe('<ReviewCard/>', () => {
