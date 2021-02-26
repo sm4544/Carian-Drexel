@@ -24,9 +24,11 @@ const navigation = {
     navigate: jest.fn(),
     state: {
         params: {
-            name: 'hello',
-            profileid: '1',
-            profile_type: 'Doctor'
+            
+            hospitalsList: [{"area": "Lancaster", "avg_rating": "4.2", "city": "Philly", "doctors": "3", "hospital_id": "1", "name": "VNR", "total_reviews": "120", "type": "multi-speciality"},
+            {"area": "Fremont", "avg_rating": "4.2", "city": "Milpitas", "doctors": "2", "hospital_id": "2", "name": "JNTU", "total_reviews": "120", "type": "multi-speciality"}, 
+            {"area": "Delaware", "avg_rating": "4.2", "city": "Newark", "doctors": "2", "hospital_id": "3", "name": "AEC", "total_reviews": "120", "type": "multi-speciality"}, 
+            {"area": "franscisco", "avg_rating": "4.2", "city": "San Francisco", "doctors": "0", "hospital_id": "8", "name": "california medical", "total_reviews": "120", "type": "multi-speciality"}]
 
         }
     }
@@ -41,12 +43,7 @@ describe('<DisplayHospitalsList/>', () => {
         spyon = sinon.spy(navigation, 'navigate');
 
         wrapper = shallow(<DisplayHospitalsList navigation={navigation}></DisplayHospitalsList>);
-        hospitalList = [{ image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-        { image: image, name: 'Nallapati', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-
-        { image: image, name: 'Test Test', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },]
-        wrapper.setState({ hospitalsList: hospitalList })
-
+       
     });
     afterEach(function () {
         navigation.navigate.restore();
@@ -61,17 +58,17 @@ describe('<DisplayHospitalsList/>', () => {
     });
 
     it('should have TouchableOpacity ', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(3);
+        expect(wrapper.find(TouchableOpacity)).to.have.length(4);
     });
 
     it('should have HospitalCard ', () => {
-        expect(wrapper.find(HospitalCard)).to.have.length(3);
+        expect(wrapper.find(HospitalCard)).to.have.length(4);
     });
 
     it('should navigate to HospitalPublicProfile', async () => {
 
         wrapper.instance().onPressingHospital('hello');
-        sinon.assert.calledWith(spyon, "HospitalPublicProfile", { name: 'hello' });
+        sinon.assert.calledWith(spyon, "HospitalPublicProfile", { id: 'hello' });
         sinon.assert.calledOnce(spyon);
     })
 

@@ -35,7 +35,7 @@ const doctor = {
     avgRating: '4.5',
     totalNoOfReviews: '150',
     overAllExperience: '5',
-    fee:'100'
+    doctor_fee:'100'
 }
 
 describe('<StaffInfoScreen/>', () => {

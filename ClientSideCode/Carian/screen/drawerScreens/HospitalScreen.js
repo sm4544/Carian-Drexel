@@ -32,17 +32,17 @@ class HospitalScreen extends Component {
     }
 
     componentDidMount(){
-      console.log("loading hospitals");
-  this.onPressSubmit();
+      
+      this.onPressSubmit();
 
   }
 
 
   onPressSubmit = () => {
     var tableData = [];
-    console.log("loadinghospitals2")
+    
     HospitalApi().then((res) => {
-        console.log(res);
+        
         res.forEach((data) => {
           tableData.push({image:image,name:data.name, area:data.area, city:data.city, phonenumber: data.hospital_phone_number,
             addressine1: data.addressine1, addressine2: data.addressine2, state: data.state,
@@ -50,7 +50,7 @@ class HospitalScreen extends Component {
             id: data.id});
         });
         this.setState({ hospitalsList: tableData });
-        console.log("loadinghospitals1")
+        
 
         });
   

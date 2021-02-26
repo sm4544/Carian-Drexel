@@ -8,7 +8,7 @@ import {
   Boolean,
 } from 'react-native';
 import styles from '../../styles/commonStyles';
-import {Agenda, CalendarList, Calendar} from 'react-native-calendars';
+
 import {Root, Popup} from 'popup-ui';
 //import RNCheckboxCard from 'react-native-checkbox-card';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -29,7 +29,7 @@ export default class PatientsCalendarScreen extends Component {
       <Root>
         <View>
           <View>
-            <Calendar onDayPress={this.dayPress} />
+            
           </View>
 
           

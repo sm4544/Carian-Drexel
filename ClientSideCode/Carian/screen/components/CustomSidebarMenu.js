@@ -8,7 +8,7 @@ const CustomSidebarMenu = props => {
   let [profileId, setProfileId] = useState('');
 
   useEffect(() => {
-    setLoginAs(props.navigation.getParam('login', 'Guest'));
+    setLoginAs(props.navigation.getParam('loginAs', 'Guest'));
     setName(props.navigation.getParam('name', 'React'));
     setProfileId(props.navigation.getParam('profileId', 'defaultValue'));
 
@@ -170,6 +170,8 @@ const CustomSidebarMenu = props => {
   const handleClick = (index, screenToNavigate) => {
     if (screenToNavigate == 'logout') {
       props.navigation.toggleDrawer();
+      global.profileId = '';
+      global.name = '';
       props.navigation.navigate('LoginScreen');
     } else {
       props.navigation.toggleDrawer();

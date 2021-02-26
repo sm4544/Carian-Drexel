@@ -22,7 +22,7 @@ export default StyleSheet.create({
     backgroundColor: "steelblue",
     borderRadius: 18,
     height: 50,
-    marginTop: 20,
+    marginTop: 5,
     justifyContent: "center",
     padding: 5,
     borderColor: "white",
@@ -44,6 +44,25 @@ export default StyleSheet.create({
     height: 100,
     color: "white",
     fontSize: 20,
+  },
+
+  label: {
+    alignSelf:'flex-start',
+    marginLeft:45,
+    color: "blue",
+    fontSize: 20,
+  },
+  profileImage: {
+    //flex: 1,    
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+    //justifyContent: "flex-end",
+
   },
   hyperlink: {
     color: "black",
