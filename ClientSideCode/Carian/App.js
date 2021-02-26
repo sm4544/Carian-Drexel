@@ -22,6 +22,7 @@ import PharmacyOrdersScreen from './screen/drawerScreens/PharmacyOrdersScreen';
 import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
 import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
+import PatientsRegisterScreen from './screen/drawerScreens/PatientsRegisterScreen';
 import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
 import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
 import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
@@ -84,6 +85,18 @@ const FirstActivity_StackNavigator = createStackNavigator({
 
   paymentScreen: {
     screen: paymentScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Payment',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsRegisterScreen: {
+    screen: PatientsRegisterScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Payment',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,

@@ -125,7 +125,7 @@ describe('<PatientScreen/>', () => {
 
     it('should navigate to patiengt info screen', () => {
         wrapper.instance().onPressingAddNew(navigation.state.params.profileId, navigation.state.params.doctor, navigation.state.params.hospital, navigation.state.params.date, navigation.state.params.time)
-        sinon.assert.calledWith(spyon, "PatientsInfoScreen", { hospital : navigation.state.params.hospital, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
+        sinon.assert.calledWith(spyon, "PatientsRegisterScreen", { hospital : navigation.state.params.hospital, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
     });
 
 });
