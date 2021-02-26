@@ -289,6 +289,11 @@ export default class DoctorCalendarScreen extends Component {
         value: '11:00 am',
         index: 5,
       },
+      {
+        label: 'NA',
+        value: 'NA',
+        index: 6,
+      }
     ];
 
     let data2 = [
@@ -322,6 +327,11 @@ export default class DoctorCalendarScreen extends Component {
         value: '5:00 pm',
         index: 5,
       },
+      {
+        label: 'NA',
+        value: 'NA',
+        index: 6,
+      }
     ];
     let data3 = [
       {
@@ -349,6 +359,11 @@ export default class DoctorCalendarScreen extends Component {
         value: '9:00 pm',
         index: 4,
       },
+      {
+        label: 'NA',
+        value: 'NA',
+        index: 5,
+      }
     ];
     let data4 = [
       {
@@ -401,6 +416,11 @@ export default class DoctorCalendarScreen extends Component {
         value: '6:00 am',
         index: 9,
       },
+      {
+        label: 'NA',
+        value: 'NA',
+        index: 10,
+      }
     ];
     return (
       <ScrollView>
@@ -445,12 +465,12 @@ export default class DoctorCalendarScreen extends Component {
         <View>
           {this.state.show ? (
             <View>
-              <Text style={styles.textCal}>Morning</Text>
+              <Text style={styles.textCal}>Morning*</Text>
               <View>
                 <Dropdown
                   data={data1}
                   value={this.state.ddlSelectedValue}
-                  label="Select start time"
+                  label="Select start time*"
                   itemColor={'red'}
                   useNativeDriver={true}
                   onChangeText={(value, index) =>
@@ -463,7 +483,7 @@ export default class DoctorCalendarScreen extends Component {
                   <Dropdown
                     data={data1}
                     value={this.state.ddlSelectedValue}
-                    label="Select end time"
+                    label="Select end time*"
                     itemColor={'red'}
                     useNativeDriver={true}
                     onChangeText={(value, index) =>
@@ -472,12 +492,12 @@ export default class DoctorCalendarScreen extends Component {
                   />
                 ) : null}
               </View>
-              <Text style={styles.textCal}>Afternoon</Text>
+              <Text style={styles.textCal}>Afternoon*</Text>
               <View>
                 <Dropdown
                   data={data2}
                   value={this.state.ddlSelectedValue}
-                  label="Select start time"
+                  label="Select start time*"
                   itemColor={'red'}
                   useNativeDriver={true}
                   onChangeText={(value, index) =>
@@ -490,7 +510,7 @@ export default class DoctorCalendarScreen extends Component {
                   <Dropdown
                     data={data2}
                     value={this.state.ddlSelectedValue}
-                    label="Select end time"
+                    label="Select end time*"
                     itemColor={'red'}
                     useNativeDriver={true}
                     onChangeText={(value, index) =>
@@ -499,12 +519,12 @@ export default class DoctorCalendarScreen extends Component {
                   />
                 ) : null}
               </View>
-              <Text style={styles.textCal}>Evening</Text>
+              <Text style={styles.textCal}>Evening*</Text>
               <View>
                 <Dropdown
                   data={data3}
                   value={this.state.ddlSelectedValue}
-                  label="Select start time"
+                  label="Select start time*"
                   itemColor={'red'}
                   useNativeDriver={true}
                   onChangeText={(value, index) =>
@@ -517,7 +537,7 @@ export default class DoctorCalendarScreen extends Component {
                   <Dropdown
                     data={data3}
                     value={this.state.ddlSelectedValue}
-                    label="Select end time"
+                    label="Select end time*"
                     itemColor={'red'}
                     useNativeDriver={true}
                     onChangeText={(value, index) =>
@@ -526,12 +546,12 @@ export default class DoctorCalendarScreen extends Component {
                   />
                 ) : null}
               </View>
-              <Text style={styles.textCal}>Night</Text>
+              <Text style={styles.textCal}>Night*</Text>
               <View>
                 <Dropdown
                   data={data4}
                   value={this.state.ddlSelectedValue}
-                  label="Select start time"
+                  label="Select start time*"
                   itemColor={'red'}
                   useNativeDriver={true}
                   onChangeText={(value, index) =>
@@ -544,7 +564,7 @@ export default class DoctorCalendarScreen extends Component {
                   <Dropdown
                     data={data4}
                     value={this.state.ddlSelectedValue}
-                    label="Select end time"
+                    label="Select end time*"
                     itemColor={'red'}
                     useNativeDriver={true}
                     onChangeText={(value, index) =>
@@ -558,8 +578,8 @@ export default class DoctorCalendarScreen extends Component {
                 color="teal"
                 size={50}
                 onPress={this.add}></Icon> */}
-              <TouchableOpacity style={styles.button} onPress={this.add}>
-                <Text>Add</Text>
+              <TouchableOpacity style={styles.buttonADD} onPress={this.add}>
+                <Text>ADD</Text>
               </TouchableOpacity>
             </View>
           ) : null}

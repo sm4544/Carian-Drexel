@@ -34,11 +34,13 @@ export default class LoginScreen extends ValidationComponent {
       postLoginApi(body).then((data) => {
         console.log(data)
         if(data.Message === 'Logged in succesfully') {
+
           global.profileId = data.ProfileID;
           global.name = data.FirstName+ ' ' + data.LastName;
           global.profileType = data.Profile_Type;
           global.jwtToken = data.JWT_TOKEN;
           this.props.navigation.navigate("DrawerNavigationRoutes", { loginAs: data.Profile_Type, name: data.FirstName+ ' ' + data.LastName, profileId: data.ProfileID})                                 
+
         } else{  
           return false;
         } 

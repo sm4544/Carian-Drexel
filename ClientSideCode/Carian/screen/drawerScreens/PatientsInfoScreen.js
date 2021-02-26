@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { StyleSheet, Image,TextInput, View, TouchableOpacity, Text , ScrollView, ImageBackground} from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
@@ -154,3 +153,4 @@ export default class PatientsInfoScreen extends ValidationComponent {
       );
     }
   }
+
