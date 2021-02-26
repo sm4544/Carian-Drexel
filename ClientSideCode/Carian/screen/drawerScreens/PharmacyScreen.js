@@ -33,7 +33,7 @@ export default class PharmacyScreen extends Component {
     var tableData = [];
  
     PharmacyApi().then((res) => {
-        console.log(res);
+        
         res.forEach((data) => {
           tableData.push({ image:image,name:data.name, area:data.area, city:data.city, phonenumber:data.pharmacy_phone_number
             , addressine1: data.addressine1, addressine2: data.addressine2, state: data.state,

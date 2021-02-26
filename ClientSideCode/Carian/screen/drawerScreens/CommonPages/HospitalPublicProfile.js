@@ -33,244 +33,89 @@ export default class HospitalPublicProfile extends ValidationComponent {
     super(props);
     this.state = {
       dataSourceHospital: {},
-
       customerCount: '1000',
-
-      HospitalProfile:[],
-
-
-      hospitalImages: [
-        'https://source.unsplash.com/1024x768/?nature',
-        'https://source.unsplash.com/1024x768/?water',
-        'https://source.unsplash.com/1024x768/?girl',
-        'https://source.unsplash.com/1024x768/?tree',
-      ],
-
-      specialistCarddata: [
-        {image: image, name: 'Family physicians'},
-        {image: image, name: 'Pediatricians'},
-        {image: image, name: 'Geriatric doctors'},
-        {image: image, name: 'Allergists'},
-        {image: image, name: 'Rheumatologists'},
-      ],
+      hospitalImages: [],
+      specialistCarddata: [],
+      departments:[],
+      services:[],
       headerSlots: ['Days', '24Hours', 'Opens At', 'Closed at'],
-      workingHours: [
-        ['Mon', 'Yes', '-', '-'],
-        ['Tue', 'No', '01:00PM', '06:00PM'],
-        ['Wed', 'No', '01:00PM', '06:00PM'],
-        ['Thu', 'No', '01:00PM', '06:00PM'],
-        ['Fri', 'Yes', '-', '-'],
-        ['Sat', 'Yes', '-', '-'],
-        ['Sun', 'No', '01:00PM', '06:00PM'],
-      ],
-      // doctorsList: [
-      //   {
-      //     image: image,
-      //     name: 'Srinivasa Rao',
-      //     specialization: 'Dentist',
-      //     highestDegree: 'MBBS',
-      //     fee: '100',
-      //     area: 'spring garden',
-      //     city: 'Philadelphia',
-      //     avgRating: '4.5',
-      //     totalNoOfReviews: '150',
-      //     overAllExperience: '10',
-      //   },
-      //   {
-      //     image: image,
-      //     name: 'Nallapati',
-      //     specialization: 'Dentist',
-      //     highestDegree: 'MBBS',
-      //     fee: '100',
-      //     area: 'spring garden',
-      //     city: 'Philadelphia',
-      //     avgRating: '4.5',
-      //     totalNoOfReviews: '150',
-      //     overAllExperience: '10',
-      //   },
-      //   {
-      //     image: image,
-      //     name: 'Test',
-      //     specialization: 'Dentist',
-      //     highestDegree: 'MBBS',
-      //     fee: '100',
-      //     area: 'spring garden',
-      //     city: 'Philadelphia',
-      //     avgRating: '4.5',
-      //     totalNoOfReviews: '150',
-      //     overAllExperience: '10',
-      //   },
-      //   {
-      //     image: image,
-      //     name: 'Test Test',
-      //     specialization: 'Dentist',
-      //     highestDegree: 'MBBS',
-      //     fee: '100',
-      //     area: 'spring garden',
-      //     city: 'Philadelphia',
-      //     avgRating: '4.5',
-      //     totalNoOfReviews: '150',
-      //     overAllExperience: '10',
-      //   },
-      // ],
-      hospitalReviews: [
-        {
-          id: 0,
-          name: 'Srinivas',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 1,
-          name: 'Nallapati',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 2,
-          name: 'Test',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 3,
-          name: 'Hello',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 4,
-          name: 'Test test',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 5,
-          name: 'Se510',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-      ],
+      workingHours: [],
+      hospitalReviews: [],
       doctorsList: [],
     };
 
     this.onPressingDoctorCard = this.onPressingDoctorCard.bind(this);
   }
-  onPressingDoctorCard = (name) => {
-    this.props.navigation.navigate('DoctorPublicProfile', {name: name});
+  onPressingDoctorCard = (id) => {
+    this.props.navigation.navigate('DoctorPublicProfile', {id: id});
   };
-  hospitalInfo = () => {
-    body = JSON.stringify({
-      name: 'Apolo',
+  hospitalInfo = (id) => {
+    const body = JSON.stringify({
+      hospital_id: id,
     });
-    getAllHospitalsInfo()
+    getAllHospitalsInfo(body)
+      .then((res) => {  
+        var list2 =[];
+        var list1 = [];
+        for (i = 0; i < res.departments.length; i++) { 
+                   
+          list1.push({
+            id:res.departments[i].DepartmentID,
+            image: image,
+            name: res.departments[i].Department,           
+          });
+        }
 
-      .then((res) => {    
-        this.setState({doctorsList: res[1]});
-        this.setState({HospitalProfile: res[0]});
-        console.log(res[0]);
-
+        for (i = 0; i < res.doctors.length; i++) { 
+                   
+          list2.push({
+            id:res.doctors[i].id,
+            image: image,
+            name: res.doctors[i].name,
+            specialization: res.doctors[i].specialization,
+            highestDegree: res.doctors[i].highest_qualification,
+            area: res.doctors[i].area,
+            city: res.doctors[i].city,
+            avgRating: '4.5',
+            totalNoOfReviews: '150',
+            overAllExperience: res.doctors[i].overall_work_experience,
+            doctor_fee: res.doctors[i].doctor_fee,
+          });
+        }
+        
+        var hospital = {
+          image: image,
+          id: res.id,
+          name: res.name,
+          type: res.type,
+          streatAddline: res.address,          
+          area: res.Area,
+          city: res.City,
+          state: res.State,
+          pincode: res.pincode,
+          avgRating: '4.5',
+          totalNoOfReviews: res.reviews.length,
+          totalNoOfDoctors: res.doctors.length,
+        };
+        this.setState({specialistCarddata: list1});
+        this.setState({doctorsList: list2});
+        this.setState({hospitalReviews: res.reviews, workingHours: res.working_hours,dataSourceHospital: hospital, 
+          hospitalImages: res.hospitalImages,departments : res.departments, services: res.services})
+        
       })
       .catch((error) => {
         console.log(error);
       });
   };
   componentDidMount() {
-    Promise.all([
-      fetch('https://hospitalmanagementbackend.herokuapp.com/hospitals-simple'),
-      fetch('http://hospitalmanagementbackend.herokuapp.com/doctors-simple'),
-    ])
-      .then(([res1, res2]) => {
-        return Promise.all([res1.json(), res2.json()]);
-      })
-      .then(([res1, res2]) => {
-        var list1 = {};
-        var list2 = [];
-        var images = [
-          'https://healthengine.com.au/info/assets/iStock-879831370-1024x576.jpg',
-          'https://cdn.diabetesselfmanagement.com/2006/05/dsm-what-is-an-ophthalmologist-shutterstock_1038422095.jpg',
-          'https://chandigarhdeals.com/wp-content/uploads/2020/09/considering-pediatrics-1109x675-1.jpg',
-        ];
-
-        for (i = 0; i < res1.length; i++) {
-          if (res1[i].name == this.props.navigation.state.params.name) {
-            //list1[i].image = images[1];
-            list1 = {
-              image: image,
-              name: res1[i].name,
-              type: 'Multispecialtiy',
-              area: res1[i].area,
-              city: res1[i].city,
-              avgRating: '4.5',
-              totalNoOfReviews: '150',
-              doctors: res1[i].doctors,
-            };
-          }
-        }
-        this.setState({dataSourceHospital: list1});
-
-
-        //console.log(dataSource);
-
-        for (i = 0; i < res2.length; i++) {
-          //list1[i].image = images[1];
-          list2.push({
-            image: image,
-            name: res2[i].name,
-            specialization: res2[i].specialization,
-            highestDegree: res2[i].highestDegree,
-            area: res2[i].area,
-            city: res2[i].city,
-            avgRating: '4.5',
-            totalNoOfReviews: '150',
-            overAllExperience: res2[i].overallExperience,
-          });
-        }
-        this.setState({dataSourceDoctors: list2});
-        // this.setState({res2: res2});
-
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    this.hospitalInfo();
-
+    
+    this.hospitalInfo(this.props.navigation.state.params.id);
+    
+    
   }
   render() {
-    const hospitalId = this.props.navigation.state.params.name;
-    const hospital = {
-      image: image,
-      name: 'Manipal1 hospital',
-      type: 'Multispecialtiy',
-      streatAddline1: 'Unit 5',
-      streatAddline2: '3675 market st',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      state: 'PA',
-      pincode: '19104',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      totalNoOfDoctors: '10',
-    };
-    let services = [
-      {id: 0, name: 'treatment A'},
-      {id: 1, name: 'treatment B'},
-      {id: 2, name: 'treatment C'},
-      {id: 3, name: 'treatment D'},
-    ];
+   
+    
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -306,13 +151,13 @@ export default class HospitalPublicProfile extends ValidationComponent {
               <View>
                 <Text style={styles.adressText}>
                   {' '}
-                  {hospital.streatAddline1}, {hospital.streatAddline2}
+                  {this.state.dataSourceHospital.streatAddline}
                 </Text>
                 <Text style={styles.adressText}>
                   {' '}
                   {this.state.dataSourceHospital.area},{' '}
-                  {this.state.dataSourceHospital.city} ,{hospital.state},{' '}
-                  {hospital.pincode}
+                  {this.state.dataSourceHospital.city},{this.state.dataSourceHospital.state},{' '}
+                  {this.state.dataSourceHospital.pincode}
                 </Text>
               </View>
             </View>
@@ -349,8 +194,8 @@ export default class HospitalPublicProfile extends ValidationComponent {
 
           {this.state.doctorsList.map((doctor) => (
             <TouchableOpacity
-              onPress={() => this.onPressingDoctorCard(doctor.name)}
-              key={doctor.name}
+              onPress={() => this.onPressingDoctorCard(doctor.id)}
+              key={doctor.id}
               style={{
                 width: '100%',
                 flex: 1,
@@ -360,7 +205,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
                 justifyContent: 'center',
               }}>
               <DoctorProfileCard
-                key={doctor.name}
+                key={doctor.id}
                 doctor={doctor}></DoctorProfileCard>
             </TouchableOpacity>
           ))}
@@ -383,12 +228,12 @@ export default class HospitalPublicProfile extends ValidationComponent {
           <Text style={styles.sectionTitle}>Location</Text>
 
           <View style={styles.horizontalLine} />
-          <Text style={styles.sectionTitle}>Specialization</Text>
+          <Text style={styles.sectionTitle}>Departments</Text>
           <View style={styles.imagesRowSetUp}>
             {this.state.specialistCarddata.map((item) => (
-              <View key={item.name} style={{flexBasis: '50%'}}>
+              <View key={item.id} style={{flexBasis: '50%'}}>
                 <SpecialityCard
-                  key={item.name}
+                  key={item.id}
                   data={item}
                   style={{backgroundColor: 'white'}}></SpecialityCard>
               </View>
@@ -399,7 +244,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
           <Text style={styles.sectionTitle}>Services</Text>
 
           <View style={styles.slotsView}>
-            {services.map((item) => (
+            {this.state.services.map((item) => (
               <View key={item.id} style={{flexBasis: '31%'}}>
                 <TouchableOpacity
                   key={item.id}
@@ -421,7 +266,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
           </Text>
 
           {this.state.hospitalReviews.map((review) => (
-            <ReviewCard key={review.id} review={review}></ReviewCard>
+            <ReviewCard key={review.review_id} review={review}></ReviewCard>
           ))}
         </View>
       </ScrollView>

@@ -19,6 +19,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import SpecialityCard from '../Cards/SpecialityCard';
 import HospitalCard from '../Cards/HospitalCard';
 import DoctorProfileCard from '../Cards/DoctorProfileCard';
+import {getDoctors, getHospitals} from '../../services/hospitalService';
+
 
 const image = {
   uri:
@@ -60,14 +62,13 @@ const urology = {
     'https://previews.123rf.com/images/shidlovski/shidlovski2002/shidlovski200200022/140302484-concept-photo-of-diagnosis-in-nephrology-and-urology-doctor-hold-in-one-hand-model-of-human-kidney-i.jpg',
 };
 export default class HomeScreen extends ValidationComponent {
+  
   constructor(props) {
     super(props);
     this.state = {
       city: '',
       dataSourceHospital: [],
       dataSourceDoctors: [],
-      res1: [],
-      res2: [],
       cityArray: [
         {label: 'Hyd', value: 'hyd'},
         {label: 'vij', value: 'vij'},
@@ -98,82 +99,82 @@ export default class HomeScreen extends ValidationComponent {
     this.onPressingDoctorCard = this.onPressingDoctorCard.bind(this);
   }
   onPressShowAllDoctors = () => {
-    this.props.navigation.navigate('DisplayDoctorsList');
+    this.props.navigation.navigate('DisplayDoctorsList', {doctorsList: this.state.dataSourceDoctors });
   };
 
   onPressShowAllHsopitals = () => {
-    this.props.navigation.navigate('DisplayHospitalsList');
+    this.props.navigation.navigate('DisplayHospitalsList', {hospitalsList: this.state.dataSourceHospital});
   };
 
-  onPressingHospital = (name) => {
-    this.props.navigation.navigate('HospitalPublicProfile', {name: name});
+  onPressingHospital = (id) => {
+    this.props.navigation.navigate('HospitalPublicProfile', {id: id});
   };
 
-  onPressingDoctorCard = (name) => {
-    this.props.navigation.navigate('DoctorPublicProfile', {name: name});
+  onPressingDoctorCard = (id) => {
+    this.props.navigation.navigate('DoctorPublicProfile', {id: id});
   };
+
+  getHospitals = () => {
+    getHospitals()
+    .then((res1) => {      
+      var list1 = [];
+      for (i = 0; i < 4; i++) { 
+        if (res1[i].doctors != 0){
+        list1.push({     
+          id:res1[i].hospital_id,       
+          name: res1[i].name,
+          type: res1[i].type,
+          area: res1[i].area,
+          city: res1[i].city,
+          avgRating: res1[i].avg_rating,
+          totalNoOfReviews: res1[i].total_reviews,
+          doctors: res1[i].doctors,
+          image: image
+        });
+      }
+      }
+      this.setState({dataSourceHospital: list1});  
+  })
+  .catch((error) => {
+      console.log(error);
+  });
+  }
+
+  
+  getDoctors = () => {
+    getDoctors()
+    .then((res2) => {
+      var list2 = [];
+      for (i = 0; i < 4; i++) {                   
+        list2.push({
+          id:res2[i].id,
+          image: image,
+          name: res2[i].name,
+          specialization: res2[i].specialization,
+          highestDegree: res2[i].highestDegree,
+          area: res2[i].area,
+          city: res2[i].city,
+          avgRating: '4.5',
+          totalNoOfReviews: '150',
+          overAllExperience: res2[i].overallExperience,
+          doctor_fee: res2[i].doctor_fee,
+        });
+      }
+      this.setState({dataSourceDoctors: list2}); 
+  })
+  .catch((error) => {
+      console.log(error);
+  });
+  }
 
   componentDidMount() {
-    Promise.all([
-      fetch('https://hospitalmanagementbackend.herokuapp.com/hospitals-simple'),
-      fetch('http://hospitalmanagementbackend.herokuapp.com/doctors-simple'),
-    ])
-      .then(([res1, res2]) => {
-        return Promise.all([res1.json(), res2.json()]);
-      })
-      .then(([res1, res2]) => {
-        var list1 = [];
-        var list2 = [];
-        var images = [
-          'https://healthengine.com.au/info/assets/iStock-879831370-1024x576.jpg',
-          'https://cdn.diabetesselfmanagement.com/2006/05/dsm-what-is-an-ophthalmologist-shutterstock_1038422095.jpg',
-          'https://chandigarhdeals.com/wp-content/uploads/2020/09/considering-pediatrics-1109x675-1.jpg',
-        ];
-
-
-        for (i = 0; i < 5; i++) { 
-          list1.push({     
-            id:i,       
-            name: res1[i].name,
-            type: 'Multispecialtiy',
-            area: res1[i].area,
-            city: res1[i].city,
-            avgRating: '4.5',
-            totalNoOfReviews: '150',
-            doctors: res1[i].doctors,
-            image: image
-          });
-
-        }
-        this.setState({dataSourceHospital: list1});
-        this.setState({res1: res1});
-        
-
-        for (i = 0; i < 5; i++) {          
-          list2.push({
-            id:i,
-            image: image,
-            name: res2[i].name,
-            specialization: res2[i].specialization,
-            highestDegree: res2[i].highestDegree,
-            area: res2[i].area,
-            city: res2[i].city,
-            avgRating: '4.5',
-            totalNoOfReviews: '150',
-            overAllExperience: res2[i].overallExperience,
-            doctor_fee: res2[i].doctor_fee,
-          });
-        }
-        this.setState({dataSourceDoctors: list2});
-        this.setState({res2: res2});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getDoctors();
+    this.getHospitals();  
   }
  
 
   render() {
+    
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -218,11 +219,11 @@ export default class HomeScreen extends ValidationComponent {
           <Text style={styles.sectionText}>Top Hospitals near you</Text>
           {this.state.dataSourceHospital.map((hospital) => (
             <TouchableOpacity
-              onPress={() => this.onPressingHospital(hospital.name)}
-              key={hospital.name}
+              onPress={() => this.onPressingHospital(hospital.id)}
+              key={hospital.id}
               style={styles.hospitalCardTouch}>
               <HospitalCard
-                key={hospital.name}
+                key={hospital.id}
                 hospital={hospital}
                 style={{width: '80%', borderRadius: 18}}></HospitalCard>
             </TouchableOpacity>
@@ -237,11 +238,11 @@ export default class HomeScreen extends ValidationComponent {
 
           {this.state.dataSourceDoctors.map((doctor) => (
             <TouchableOpacity
-              onPress={() => this.onPressingDoctorCard(doctor.name)}
-              key={doctor.name}
+              onPress={() => this.onPressingDoctorCard(doctor.id)}
+              key={doctor.id}
               style={styles.hospitalCardTouch}>
               <DoctorProfileCard
-                key={doctor.name}
+                key={doctor.id}
                 doctor={doctor}></DoctorProfileCard>
             </TouchableOpacity>
           ))}

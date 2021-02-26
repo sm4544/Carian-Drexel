@@ -23,7 +23,8 @@ import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
 import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
 import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
-import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen'
+import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
+import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
 import HospitalScreen from './screen/drawerScreens/HospitalScreen';
 import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
 import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
@@ -131,6 +132,18 @@ const FirstActivity_StackNavigator = createStackNavigator({
 
   PatientsScreen:{
     screen:PatientsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Patients',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsScreen2:{
+    screen:PatientsScreen2,
     navigationOptions: ({ navigation }) => ({
       title: 'Patients',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
