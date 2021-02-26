@@ -159,6 +159,37 @@ export default StyleSheet.create({
     // paddingLeft: 10,
     paddingHorizontal: 15,
   },
+
+  buttonADD: {
+    width: "100%",
+    backgroundColor: "#307ecc",
+    borderRadius: 100,
+    borderColor: "black",
+    borderWidth: 2,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 40,
+    
+  },
+  cardText:{
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "darkblue",
+    fontStyle: "italic",
+    paddingBottom: 30,
+    paddingTop: 30,
+  },
+  cardFont:{
+    fontWeight: "bold",
+    fontSize: 10,
+    color: "#D35400",
+    fontStyle: "italic",
+    paddingBottom: 30,
+    paddingTop: 30,
+
+  },
   containerView: {
     flex: 1,
   },
@@ -215,4 +246,5 @@ export default StyleSheet.create({
     alignItems: "center",
     marginTop: 80
   },          
+
 });
