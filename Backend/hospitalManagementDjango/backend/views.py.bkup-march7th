@@ -407,7 +407,6 @@ class DepartmentViewset(viewsets.ViewSet):
         _department.Department_name = _department_updated_data["name"]
         _department.addressine1 = _department_updated_data["addressine1"]
         _department.addressine2 = _department_updated_data["addressine2"]
-        backend_v1
         _department.is_same_as_hospital_address = _department_updated_data["is_same_as_hospital_address"]
         _department.city = _department_updated_data["city"]
         _department.state = _department_updated_data["state"]
@@ -416,7 +415,6 @@ class DepartmentViewset(viewsets.ViewSet):
         _department.save()
         ser = DepartmentSerializer(_department)
         return Response(ser.data)
-
 
     def delete(self, request):
         _department = Department.objects.get(id=request.data['id'])
@@ -1033,6 +1031,82 @@ def appointments_updated(request):
         return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "Please check ".format(key_error)})
     except Exception as exception:
         return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
+
+
+# @require_http_methods(['POST'])
+@api_view(('POST',))
+def getAppointments(request):
+    try:
+        _data = request.body
+        _data = _data.decode("utf-8")
+        print(_data)
+        if _data == '':
+            raise Exception('Improper JSON')
+        _data = json.loads(_data)
+        doctorID = _data['doctorID']
+        profile_data = Profiles.objects.filter(id=doctorID)
+        # print(profile_data)
+        if profile_data is None or len(profile_data) == 0:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid doctor_id"})
+        doctor_appointment = Appointments.objects.filter(doctor_id=doctorID)
+        # print(doctor_appointment[0].start_time)
+        # print(len(doctor_appointment))
+        json_response = {"DoctorID": "", "Appointments": {}}
+        json_response["Appointments"] = []
+        today = datetime.now()
+        slots = ["10:30", "11:30", "12:30", "1:30", "2:30", "3:30", "4:30", "5:30", "6:30", "7:30", "8:30", "9:30",
+                 "10:30"]
+        print(doctor_appointment)
+        if len(doctor_appointment) == 0:
+            datetime_object = {}
+            # if QuerySet(doctor_appointment).count() == 0 :
+            for day in range(0, 30):
+                current_timestamp = datetime.now() + timedelta(days=day)
+                current_date = current_timestamp.strftime('%Y-%m-%d')
+                json_response["DoctorID"] = doctorID
+                datetime_object['{}'.format(current_date)] = slots;
+            json_response['Appointments'] = datetime_object
+            return JsonResponse(status=status.HTTP_200_OK, data=json_response)
+        else:
+            json_response = {"DoctorID": "", "Appointments": {}}
+            json_response["DoctorID"] = doctorID
+            datetime_object = {}
+            for day in range(0, 30):
+                current_timestamp = datetime.now() + timedelta(days=day)
+                current_date = current_timestamp.strftime('%Y-%m-%d')
+
+                available_slots = []
+                datetime_object['{}'.format(current_date)] = []
+                for i in range(0, len(doctor_appointment)):
+                    if doctor_appointment[i].start_time.strftime('%Y-%m-%d') == current_date:
+                        print(doctor_appointment[i].start_time)
+                        if len(datetime_object['{}'.format(current_date)]) == 0:
+                            datetime_object['{}'.format(current_date)] = list(
+                                filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                                    '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
+                        else:
+                            datetime_object['{}'.format(current_date)] = list(
+                                filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                                    '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)),
+                                       datetime_object['{}'.format(current_date)]))
+                        available_slots = list(filter(lambda slot: doctor_appointment[i].start_time.strftime(
+                            '%Y:%m:%d %H:%M') != current_timestamp.strftime('%Y:%m:%d {}'.format(slot)), slots))
+                    else:
+                        available_slots = slots
+                        datetime_object['{}'.format(current_date)] = slots
+                # json_response['Appointments'].append({"Date": "{}".format(current_date),"Slots":available_slots})
+                # print('---------')
+                # print(datetime_object)
+                # print('---------')
+                json_response["Appointments"] = datetime_object
+            return JsonResponse(status=status.HTTP_200_OK, data=json_response)
+            # return JsonResponse(status=status.HTTP_200_OK, data={"Testing": "No"},safe=False)
+    except KeyError as key_error:
+        error_payload = {"Error": "Invalid JSON {}".format(key_error)}
+        print(error_payload)
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON"})
+    except Exception as exception:
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "{}".format(exception)})
 
 
 @require_http_methods(['GET'])
