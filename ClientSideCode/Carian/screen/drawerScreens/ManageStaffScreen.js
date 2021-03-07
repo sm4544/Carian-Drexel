@@ -37,7 +37,7 @@ export default class ManageStaffScreen extends Component {
     var tableData = [];
 
     StaffApi().then((res) => {
-        console.log(res);
+        
         res.forEach((data) => {
           tableData.push({ image:image, name:data.name, specialization:data.specialization, highestDegree: data.highestDegree, overAllExperience:data.overallExperience, area:data.area, city:data.city, 
             phonenumber:data.phoneNumber, email:data.email, college_name:data.college_name, doctor_fee:data.doctor_fee,

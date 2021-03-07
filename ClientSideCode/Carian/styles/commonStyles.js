@@ -22,7 +22,7 @@ export default StyleSheet.create({
     backgroundColor: "steelblue",
     borderRadius: 18,
     height: 50,
-    marginTop: 20,
+    marginTop: 5,
     justifyContent: "center",
     padding: 5,
     borderColor: "white",
@@ -44,6 +44,25 @@ export default StyleSheet.create({
     height: 100,
     color: "white",
     fontSize: 20,
+  },
+
+  label: {
+    alignSelf:'flex-start',
+    marginLeft:45,
+    color: "blue",
+    fontSize: 20,
+  },
+  profileImage: {
+    //flex: 1,    
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+    //justifyContent: "flex-end",
+
   },
   hyperlink: {
     color: "black",
@@ -140,6 +159,37 @@ export default StyleSheet.create({
     // paddingLeft: 10,
     paddingHorizontal: 15,
   },
+
+  buttonADD: {
+    width: "100%",
+    backgroundColor: "#307ecc",
+    borderRadius: 100,
+    borderColor: "black",
+    borderWidth: 2,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 40,
+    
+  },
+  cardText:{
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "darkblue",
+    fontStyle: "italic",
+    paddingBottom: 30,
+    paddingTop: 30,
+  },
+  cardFont:{
+    fontWeight: "bold",
+    fontSize: 10,
+    color: "#D35400",
+    fontStyle: "italic",
+    paddingBottom: 30,
+    paddingTop: 30,
+
+  },
   containerView: {
     flex: 1,
   },
@@ -196,4 +246,5 @@ export default StyleSheet.create({
     alignItems: "center",
     marginTop: 80
   },          
+
 });

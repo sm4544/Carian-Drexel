@@ -5,6 +5,35 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor:'white'
   },
+
+  container2: {
+    flex: 1,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: 'center'
+  },
+  payment:{
+    fontSize : 45,
+    margin: 25,
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 20
+
+  },
+  label: {
+    alignSelf:'flex-start',
+    marginLeft:45,
+    color: "blue",
+    fontSize: 20,
+  },
+
+  paymentConfirm:{
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderRadius: 15,
+    borderWidth: 1,
+    margin: 15
+  },
   doctorCardView:{ flex: 1,  margin: 10, backgroundColor: 'white', width: '95%', justifyContent:'center' },
   scrollViewContainer: {
     flex: 1,
@@ -14,6 +43,21 @@ export default StyleSheet.create({
     alignSelf: 'center'
 
   },
+  button2: {
+    width: "80%",
+    backgroundColor: "#CD6155",
+    borderRadius: 18,
+    borderColor: "white",
+    borderWidth: 2,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf:'center',
+    margin: 20
+    
+    
+  },
+
   button: {
     //width: "60%",
     backgroundColor: "#F7DC6F",
@@ -120,8 +164,9 @@ export default StyleSheet.create({
   footerSubView:{ alignSelf: 'center', justifyContent: 'center' },
   footerText:{ color: 'black', fontSize: 20 },
   payButton:{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "white", padding: 10, borderWidth: 2, alignItems: "center", justifyContent: "center", margin: 4 },
-  addNewButton:{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "black", padding: 10, borderWidth: 2, alignItems: "center", justifyContent: "center", margin: 4 },
-  payButtonText:{ color: 'black', fontSize: 25 },
+  addNewButton:{ backgroundColor: "#F7DC6F", borderRadius: 10, borderColor: "black", padding: 10, borderWidth: 2, alignItems: "flex-start", justifyContent: "center", marginLeft: 25, marginRight:25, marginTop:10 },
+  addNewButton2:{ backgroundColor: "#66e0ff", borderRadius: 10, borderColor: "black", padding: 10, borderWidth: 2, alignItems: "flex-start", justifyContent: "center", marginLeft: 25, marginRight:25, marginTop:10 },
+  payButtonText:{ color: 'black', fontSize: 20 },
   feesdisplay: { flex: 1, flexDirection: 'row', margin: 10, fontSize: 23, borderRadius: 5, backgroundColor: '#82E0AA', padding: 10, width: '95%', justifyContent: "space-between" },
   positionImage: { width: '40%', alignItems: "center", justifyContent: 'center', alignSelf: 'center' },
   card: {

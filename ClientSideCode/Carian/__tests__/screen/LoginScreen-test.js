@@ -124,7 +124,7 @@ describe('<Login/>', () => {
     
     postLoginApi.mockResolvedValue(output);    
     await wrapper.instance().onPressLogin();
-    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { login: 'Admin', name: 'Admin Admin', profileId: '39' });
+    sinon.assert.calledWith(spyon, "DrawerNavigationRoutes", { loginAs: 'test', name: 'Admin Admin', profileId: '39' });
     sinon.assert.calledOnce(spyon);
   })
 

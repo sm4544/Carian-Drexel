@@ -407,6 +407,7 @@ class DepartmentViewset(viewsets.ViewSet):
         _department.Department_name = _department_updated_data["name"]
         _department.addressine1 = _department_updated_data["addressine1"]
         _department.addressine2 = _department_updated_data["addressine2"]
+        backend_v1
         _department.is_same_as_hospital_address = _department_updated_data["is_same_as_hospital_address"]
         _department.city = _department_updated_data["city"]
         _department.state = _department_updated_data["state"]
@@ -415,6 +416,7 @@ class DepartmentViewset(viewsets.ViewSet):
         _department.save()
         ser = DepartmentSerializer(_department)
         return Response(ser.data)
+
 
     def delete(self, request):
         _department = Department.objects.get(id=request.data['id'])
