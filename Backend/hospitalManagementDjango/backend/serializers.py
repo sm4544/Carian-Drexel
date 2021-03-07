@@ -17,7 +17,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
 class PatientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patients
-        fields = 'id', 'first_name', 'last_name', 'email', 'mobile_number', 'age', 'weight', 'height', 'gender', 'occupation', 'martial_status', 'blood_group', 'registred_date', 'related_profile', 'is_created_by_staff', 'addressine1', 'addressine2', 'city', 'state', 'pincode','dob','hobbies','recurring_problems','allergies_to_medicine','use_of_alcohol','use_of_tobacco','physical_activities', 'relation'
+        fields = 'id', 'first_name', 'last_name', 'email', 'mobile_number', 'age', 'weight', 'height', 'gender', 'occupation', 'martial_status', 'blood_group', 'registred_date', 'related_profile', 'is_created_by_staff', 'addressine1', 'addressine2', 'city', 'state', 'pincode', 'dob', 'hobbies', 'recurring_problems', 'allergies_to_medicine', 'use_of_alcohol', 'use_of_tobacco', 'physical_activities', 'relation'
 
 
 class PharmacySerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class PharmacySerializer(serializers.ModelSerializer):
 class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicine
-        fields = 'id', 'brand_name', 'drug_name', 'category', 'dosage', 'price', 'description', 'created_by', 'created_date', 'pharmacy_id'
+        fields = 'id', 'drug_name', 'dosage','pharmacy'
 
 
 class MedicineOrderSerializer(serializers.ModelSerializer):
@@ -65,7 +65,7 @@ class LabReportsSerializer(serializers.ModelSerializer):
 class AppointmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointments
-        fields = 'id', 'patient_id', 'doctor_id', 'hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'appointment_status', 'date', 'start_time', 'end_time '
+        fields = 'id', 'patient_id', 'doctor_id', 'profile_id','hospital_id', 'department_id', 'pharmacy_id', 'lab_id', 'appointment_status', 'date', 'start_time', 'end_time'
 
 
 class MessagesSerializer(serializers.ModelSerializer):
@@ -103,7 +103,14 @@ class LabWorkingHoursSerializer(serializers.ModelSerializer):
         model = LabWorkingHours
         fields = 'id', 'lab_id', 'mon_start_time', 'mon_end_time', 'tue_start_time', 'tue_end_time', 'wed_start_time', 'wed_end_time', 'thu_start_time', 'thu_end_time', 'fri_start_time', 'fri_end_time', 'sat_start_time', 'sat_end_time', 'sun_start_time', 'sun_end_time'
 
+
 class DoctorWorkingHoursSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoctorWorkingHours
-        fields = 'doctor', 'working_hours'
+        fields = 'id','doctor', 'working_hours'
+
+
+class HospitalServicesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HospitalServices
+        fields = 'id', 'service', 'hospital','doctor'

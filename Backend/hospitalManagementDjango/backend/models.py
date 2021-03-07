@@ -59,7 +59,7 @@ class Patients(models.Model):
     martial_status = models.CharField(max_length=20)
     blood_group = models.CharField(max_length=4)
     registred_date = models.DateField()
-    is_created_by_staff = models.BooleanField()
+    is_created_by_staff = models.BooleanField(default=False)
     addressine1 = models.CharField(max_length=60)
     addressine2 = models.CharField(max_length=60)
     city = models.CharField(max_length=20)
@@ -96,16 +96,9 @@ class Pharmacy(models.Model):
 
 class Medicine(models.Model):
     id = models.AutoField(primary_key=True)
-    brand_name = models.CharField(max_length=25)
     drug_name = models.CharField(max_length=35)
-    category = models.CharField(max_length=35)
     dosage = models.CharField(max_length=30)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    description = models.TextField()
-    created_by = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE)
-    created_date = models.DateField()
-    pharmacy_id = models.ForeignKey(Pharmacy, to_field='id', on_delete=models.CASCADE)
-
+    pharmacy = models.ForeignKey(Pharmacy, to_field='id', on_delete=models.CASCADE)
 
 class MedicineOrder(models.Model):
     id = models.AutoField(primary_key=True)
@@ -182,13 +175,14 @@ class Appointments(models.Model):
     id = models.AutoField(primary_key=True)
     payment_id = models.IntegerField(default=0)
     patient_id = models.ForeignKey(Patients, to_field='id', on_delete=models.CASCADE)
-    doctor_id = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE)
+    doctor_id = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE,related_name='doctor_profile_id')
+    profile_id = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE, related_name='patient_profile_id')
     hospital_id = models.ForeignKey(Hospitals, to_field='id', on_delete=models.CASCADE)
     department_id = models.ForeignKey(Department, to_field='id', on_delete=models.CASCADE, null=True)
     pharmacy_id = models.ForeignKey(Pharmacy, to_field='id', on_delete=models.CASCADE, null=True)
     lab_id = models.ForeignKey(Lab, to_field='id', on_delete=models.CASCADE, null=True)
     appointment_status = models.CharField(max_length=15)
-    date = models.DateTimeField()
+    date = models.DateField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 
@@ -210,6 +204,7 @@ class Reviews(models.Model):
     review_for = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE, related_name='_review_for')
     review_by = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE, related_name='_review_by')
     review_stars = models.IntegerField()
+    hospital = models.ForeignKey(Hospitals, to_field='id',on_delete=models.CASCADE, related_name='related_hospital')
 
 
 class StaticImages(models.Model):
@@ -232,6 +227,7 @@ class AppointmentSlots(models.Model):
 class HospitalWorkingHours(models.Model):
     id = models.AutoField(primary_key=True)
     hospital_id = models.ForeignKey(Hospitals, to_field='id', unique=True, on_delete=models.CASCADE)
+    is_open_always = models.CharField(max_length=2,default='F')
     mon_start_time = models.CharField(max_length=15)
     mon_end_time = models.CharField(max_length=15)
     tue_start_time = models.CharField(max_length=15)
@@ -267,6 +263,21 @@ class LabWorkingHours(models.Model):
     sun_end_time = models.CharField(max_length=15)
 
 
+class HospitalServices(models.Model):
+    id = models.AutoField(primary_key=True)
+    service = models.CharField(max_length=21)
+    hospital = models.ForeignKey(Hospitals,to_field='id',on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Profiles,to_field='id', on_delete=models.CASCADE)
+
+
 class DoctorWorkingHours(models.Model):
+    id = models.AutoField(primary_key=True)
     doctor = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE)
+    working_hours = models.BinaryField()
+
+class PharmacyMedicines(models.Model):
+    id = models.AutoField(primary_key=True)
+    pharmacy_id = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE)
     working_hours = models.TextField()
+
+

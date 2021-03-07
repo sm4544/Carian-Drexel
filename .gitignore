@@ -3,4 +3,8 @@ Backend/hospitalManagementDjango/.idea/misc.xml
 Backend/hospitalManagementDjango/backend/__pycache__/*
 Backend/hospitalManagementDjango/backend/migrations/__pycache__/*
 Backend/hospitalManagementDjango/hospitalManagementDjango/__pycache__/*
+/Backend/hospitalManagementDjango/env/**/**
 
+
+*.pyc
+*.pyc
