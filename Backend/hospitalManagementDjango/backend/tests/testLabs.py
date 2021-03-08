@@ -8,7 +8,6 @@ class TestLabs(TestCase):
     def setUp(self):
         self.client = Client()
 
-
     def test_get_labs(self):
         response = self.client.get(reverse('lab-list'))
         assert response.status_code, 200
@@ -18,13 +17,13 @@ class TestLabs(TestCase):
         assert response.status_code, 200
 
     def test_create_lab_with_no_name(self):
-        response = self.client.post(reverse('lab-list'),data={"name":"","licence_number":"testing"})
-        assert response.status_code,204
+        response = self.client.post(reverse('lab-list'), data={"name": "", "licence_number": "testing"})
+        assert response.status_code, 204
 
     def test_create_lab_with_no_licence(self):
         response = self.client.post(reverse('lab-list'), data={"name": "testing", "licence_number": ""})
         assert response.status_code, 204
 
     def test_create_lab_with_no_json(self):
-        response = self.client.post(reverse('lab-list'), data={"":""})
+        response = self.client.post(reverse('lab-list'), data={"": ""})
         assert response.status_code, 409

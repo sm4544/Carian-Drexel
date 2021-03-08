@@ -28,7 +28,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login', csrf_exempt(LoginSetup.as_view()),name='post'),
     path('hospitals-all',csrf_exempt(views.HospitalsSimplifiedView),name='hospitals-all'),
-    #path('appointments-all',csrf_exempt(views.getAppointments),name='appointments-data'),
     path('appointments-all',csrf_exempt(views.appointments_updated),name='appointments-data'),
     path('images-sample',csrf_exempt(views.sendImage),name='image-data'),
     path('image-get',csrf_exempt(views.getImageByFilter),name='get-image'),
@@ -45,8 +44,5 @@ urlpatterns = [
     path('pharmacymedicine',csrf_exempt(views.pharmacyMedicine),name='pharmacymedicine'),
     path('appointment-summary',csrf_exempt(views.get_appointment_summary),name='appointmentsummary'),
     path('appointment-doctor',csrf_exempt(views.get_appointment_doctor),name='appointmentdoctor'),
-
-
-
 
 ]
