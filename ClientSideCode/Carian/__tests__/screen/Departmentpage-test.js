@@ -6,11 +6,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import RadioForm from 'react-native-simple-radio-button';
-import { getAllHospitals } from '../../screen/services/hospitalService';
+import { postDepartmentInfoApi } from '../../screen/services/DepartmentService';
 const navigation = { navigate: jest.fn() };
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+jest.mock("../../screen/services/DepartmentService");
 
 describe('<DepartmentPage/>', () => {
   beforeEach(function () {
@@ -96,42 +97,44 @@ describe('<DepartmentPage/>', () => {
   })
 
   it('should navigate to department home screen ', async () => {
-
+    
+    wrapper.setState({ is_same_as_hospital_address: false });
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(1).simulate('ChangeText', 'true');
-    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(3).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test@gmail.com');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', 12345);
     wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(5).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', '1234567890');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(6).simulate('ChangeText', 'city');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
+    wrapper.find(TextInput).at(8).simulate('ChangeText', '19104');
    
 
     const output = { "Message": "Added Department Staff", "Department_ID": "39" };
 
     postDepartmentInfoApi.mockResolvedValue(output);
     await wrapper.instance().onPressDepartmentInfo();
-    console.log(spyon + 'spyon')
+    
     sinon.assert.calledWith(spyon, "DepartmentConfirmationScreen", { Department_name: 'test' });
     sinon.assert.calledOnce(spyon);
   })
 
   it('should NOT navigate to department home  screen ', async () => {
 
+    wrapper.setState({ is_same_as_hospital_address: false });
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(1).simulate('ChangeText', 'true');
-    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(3).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test@gmail.com');
+    wrapper.find(TextInput).at(3).simulate('ChangeText', 12345);
     wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(5).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(6).simulate('ChangeText', '12345');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', '1234567890');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', 'test');
+    wrapper.find(TextInput).at(6).simulate('ChangeText', 'city');
+    wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
+    wrapper.find(TextInput).at(8).simulate('ChangeText', '19104');
 
     const output = { "Message": "ERROR", "Department_ID": "39" };
 
-    postStaffInfoProfileApi.mockResolvedValue(output);
+    postDepartmentInfoApi.mockResolvedValue(output);
     await wrapper.instance().onPressDepartmentInfo();
     console.log(spyon + 'spyon')
     sinon.assert.notCalled(spyon)

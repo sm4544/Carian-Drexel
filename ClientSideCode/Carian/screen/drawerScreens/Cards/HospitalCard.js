@@ -38,7 +38,7 @@ export default class HospitalCard extends ValidationComponent {
                             <Text style={styles.cardText}>{this.props.hospital.name}</Text>
                             <Text style={styles.cardSubBoldText}>{this.props.hospital.type}</Text>
                             <Text style={styles.cardSubItalicText}>{this.props.hospital.area}, {this.props.hospital.city}</Text>
-                            <Text style={styles.cardSubBoldText}>{this.props.hospital.avgRating}({this.props.hospital.totalNoOfReviews} Stories) .{this.props.hospital.totalNoOfDoctors} Doctors</Text>
+                            <Text style={styles.cardSubBoldText}>{this.props.hospital.avgRating}({this.props.hospital.totalNoOfReviews} Stories) .{this.props.hospital.doctors} Doctors</Text>
                         </View>
 
                     </View>

@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { PostProfileApi } from '../../screen/services/profileService';
+import { launchImageLibrary } from 'react-native-image-picker';
 const navigation = { navigate: jest.fn() };
 global.expect = expect;
 global.sinon = sinon;
@@ -28,41 +29,31 @@ describe('<Register/>', () => {
   });
 
   it('should have View', () => {
-    expect(wrapper.find(View)).to.have.length(9);
+    expect(wrapper.find(View)).to.have.length(8);
   });
 
   it('should have CARIAN text component', () => {
-    expect(wrapper.find(Text)).to.have.length(11);
+    expect(wrapper.find(Text)).to.have.length(19);
     expect(wrapper.contains("CARIAN")).to.equal(true);
   });
 
   it('should have DropdownMenu', () => {
-    expect(wrapper.find(DropDownPicker)).to.have.length(1);
+    expect(wrapper.find(DropDownPicker)).to.have.length(2);
   });
 
   it('should have the Dropdown picker  input component with empaty value ', () => {
     expect(wrapper.state('profile_type')).to.equal('');
   });
 
-  it('should change state when text changed on drop down box', () => {
-    var data = [
-      { label: 'Customer', value: 'Customer', icon: () => <Icon name="flag" size={18} color="#900" /> },
-      { label: 'Admin', value: 'Admin', icon: () => <Icon name="flag" size={18} color="#900" /> },
-      { label: 'Doctor', value: 'Doctor', icon: () => <Icon name="flag" size={18} color="#900" /> },
-      { label: 'Staff', value: 'Staff', icon: () => <Icon name="flag" size={18} color="#900" /> },
-      { label: 'LabAssistant', value: 'LabAssistant', icon: () => <Icon name="flag" size={18} color="#900" /> },
-      { label: 'Pharmacist', value: 'Pharmacist', icon: () => <Icon name="flag" size={18} color="#900" /> },
-
-    ];
-    const mockMyEventHandler = jest.fn()
-    wrapper.setProps({ onChangeItem: mockMyEventHandler })
-    wrapper.find(DropDownPicker).simulate('change', '', { value: data[0].label })
-    //expect(mockMyEventHandler).to.have.been.calledWith(data[0].label);
+  it('should have the Dropdown picker  input component with empaty value ', () => {
+    expect(wrapper.state('securityQuestion')).to.equal('');
   });
+
+  
 
 
   it('should have 8 Textinput boxes', () => {
-    expect(wrapper.find(TextInput)).to.have.length(8);
+    expect(wrapper.find(TextInput)).to.have.length(7);
   });
 
   it('should have First NAme input component with empaty value ', () => {
@@ -125,51 +116,43 @@ describe('<Register/>', () => {
     expect(wrapper.state('password')).to.equal('123456789');
   });
 
-  it('should have the securityquestion input component with empaty value ', () => {
+
+
+  it('should have the securityAnswer input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(6).props().value).to.equal('');
   });
 
-  it('should change state when text changed on Security question inputtext box', () => {
-    const question = wrapper.find(TextInput).at(6);
-    question.simulate('ChangeText', 'What is Your pet name?');
-    expect(wrapper.state('securityQuestion')).to.equal('What is Your pet name?');
-  });
-
-  it('should have the securityAnswer input component with empaty value ', () => {
-    expect(wrapper.find(TextInput).at(5).props().value).to.equal('');
-  });
-
   it('should change state when text changed on securityAnswer inputtext box', () => {
-    const securityAnswer = wrapper.find(TextInput).at(7);
+    const securityAnswer = wrapper.find(TextInput).at(6);
     securityAnswer.simulate('ChangeText', 'test');
     expect(wrapper.state('securityAnswer')).to.equal('test');
   });
 
   it('should contain Register/Submit button', () => {
     expect(wrapper.contains(<Text style={styles.buttonText}>Register/Submit</Text>)).to.equal(true);
-    expect(wrapper.find(TouchableOpacity)).to.have.length(2);
+    expect(wrapper.find(TouchableOpacity)).to.have.length(3);
   })
 
   it('should through error messages if user click on Register with empty Firstname', () => {
-    const reisterButton = wrapper.find(TouchableOpacity).at(0);
+    const reisterButton = wrapper.find(TouchableOpacity).at(1);
     reisterButton.simulate('press');    
     expect(wrapper.contains('The field "firstName" is mandatory.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty lastName', () => {
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    const registerButton = wrapper.find(TouchableOpacity).at(1);
     registerButton.simulate('press');    
     expect(wrapper.contains('The field "lastName" is mandatory.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty mobileNumber', () => {
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    const registerButton = wrapper.find(TouchableOpacity).at(1);
     registerButton.simulate('press');    
     expect(wrapper.contains('The field "mobileNumber" is mandatory.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty email', () => {
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    const registerButton = wrapper.find(TouchableOpacity).at(1);
     registerButton.simulate('press');
     expect(wrapper.contains('The field "email" must be a valid email address.')).to.equal(true);
     expect(wrapper.contains('The field "email" is mandatory.')).to.equal(true);
@@ -178,13 +161,13 @@ describe('<Register/>', () => {
   it('should through error message if user click on Register with invalid email', () => {    
     const email = wrapper.find(TextInput).at(3);
     email.simulate('ChangeText', 'test');
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    const registerButton = wrapper.find(TouchableOpacity).at(1);
     registerButton.simulate('press');
     expect(wrapper.contains('The field "email" must be a valid email address.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty password', () => {
-    const registerButton = wrapper.find(TouchableOpacity).at(0);
+    const registerButton = wrapper.find(TouchableOpacity).at(1);
     registerButton.simulate('press');
     expect(wrapper.contains('The field "password" length must be greater than 2.')).to.equal(true);
     expect(wrapper.contains('The field "password" is mandatory.')).to.equal(true);
@@ -193,18 +176,18 @@ describe('<Register/>', () => {
   it('should through error message if user click on Register with invalid password', () => {
     const password = wrapper.find(TextInput).at(4);
     password.simulate('ChangeText', 'he');
-    const regButton = wrapper.find(TouchableOpacity).at(0);
+    const regButton = wrapper.find(TouchableOpacity).at(1);
     regButton.simulate('press');
     expect(wrapper.contains('The field "password" length must be greater than 2.')).to.equal(true);
   })
   
   it('should contain Sign in button', () => {
     expect(wrapper.contains(<Text style={styles.hyperlink}> Already have an account? Sign in</Text>)).to.equal(true);
-    expect(wrapper.find(TouchableOpacity)).to.have.length(2);
+    expect(wrapper.find(TouchableOpacity)).to.have.length(3);
   })
 
   it('should navigate to login component', () => {
-    const login = wrapper.find(TouchableOpacity).at(1);
+    const login = wrapper.find(TouchableOpacity).at(2);
     login.simulate('press');
     sinon.assert.calledWith(spyon, "LoginScreen");
     sinon.assert.calledOnce(spyon);
@@ -218,8 +201,9 @@ describe('<Register/>', () => {
     wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(6).simulate('ChangeText', 'Who are you');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', 'test');
+    
     wrapper.setState({ profile_type: 'Doctor' });
+    wrapper.setState({ securityQuestion: 'Doctor' });
     
     
     const output = {"FirstName": "Admin", 
@@ -242,8 +226,10 @@ describe('<Register/>', () => {
     wrapper.find(TextInput).at(3).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
-    wrapper.find(TextInput).at(6).simulate('ChangeText', 'Who are you');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', 'test');
+    
+    wrapper.find(TextInput).at(6).simulate('ChangeText', 'test');
+    wrapper.setState({ profile_type: 'Doctor' });
+    wrapper.setState({ securityQuestion: 'Doctor' });
     const register = wrapper.find(TouchableOpacity).at(0);
     const output = {"FirstName": "Admin", 
                   "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk", 
