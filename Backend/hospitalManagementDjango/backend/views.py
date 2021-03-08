@@ -151,15 +151,19 @@ class ProfilesViewset(viewsets.ViewSet):
 class PatientsViewset(viewsets.ViewSet):
 
     def list(self, request):
-        responseTuple = verifyAuthHeader(request, "Patients")
-        if responseTuple[0] == 403:
-            return Response(status=status.HTTP_403_FORBIDDEN, data={"Message": responseTuple[1]})
-        elif responseTuple[0] == 200:
-            querySet = Patients.objects.all()
-            serializer = PatientsSerializer(querySet, many=True)
-            return Response(serializer.data)
-        else:
-            return Response(status=responseTuple[0], data={"Message": responseTuple[1]})
+        querySet = Patients.objects.all()
+        serializer = PatientsSerializer(querySet, many=True)
+        return Response(status=200, data=serializer.data)
+        # return JsonResponse(status=status.HTTP_200_OK,data=serializer.data)
+        # responseTuple = verifyAuthHeader(request, "Patients")
+        # if responseTuple[0] == 403:
+        #     return Response(status=status.HTTP_403_FORBIDDEN, data={"Message": responseTuple[1]})
+        # elif responseTuple[0] == 200:
+        #     querySet = Patients.objects.all()
+        #     serializer = PatientsSerializer(querySet, many=True)
+        #     return Response(serializer.data)
+        # else:
+        #     return Response(status=responseTuple[0], data={"Message": responseTuple[1]})
 
     def create(self, request, format=None):
         data = request.data
@@ -258,7 +262,7 @@ class PharmacyViewset(viewsets.ViewSet):
         _pharmacy.originally_registered_date = _pharmacy_updated_data["originally_registered_date"]
         _pharmacy.save()
         ser = PharmacySerializer(_pharmacy)
-        return Response(ser.data)
+        return Response(status=status.HTTP_202_ACCEPTED, data=ser.data)
 
 
 class MedicineViewset(viewsets.ViewSet):
@@ -444,7 +448,16 @@ class StaffViewset(viewsets.ViewSet):
                     # new_str = _str.join(format(ord(x), 'b') for x in _str)
                     # print(new_str)
                     print(data['work_email_address'])
+                    approved_id = 13
+                    lab_id = 1
+                    pharmacy_id = 1
                     profile_id = data['profileid']
+                    if 'approved_by_id' in data:
+                        approved_id = data['approved_by_id']
+                    if 'pharmacy_id' in data:
+                        pharmacy_id = data['pharmacy_id']
+                    if 'lab_id' in data:
+                        lab_id = data['lab_id']
                     # p = Profiles.objects.filter(email = data['work_email_address'])
                     # q = ProfilesSerializer(p, many=True)
                     # print(q.data[0]['id'])
@@ -457,23 +470,23 @@ class StaffViewset(viewsets.ViewSet):
                                                          work_phone_number=data['work_phone_number'],
                                                          work_email_address=data['work_email_address'],
                                                          status='inactive', doctor_fee=data['doctor_fee'],
-                                                         approved_by_id=13,
+                                                         approved_by_id=approved_id,
                                                          hospital_id_id=data['hospital_id'],
                                                          department_id_id=data['department_id'],
-                                                         lab_id_id=1,
-                                                         pharmacy_id_id=1, profile_id_id=profile_id),
+                                                         lab_id_id=lab_id,
+                                                         pharmacy_id_id=pharmacy_id, profile_id_id=profile_id),
 
                 except Exception as exception:
                     return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
         except KeyError as key_error:
-            return JsonResponse(status=status.HTTP_400_CONFLICT, data={"Message": "{}".format(key_error)})
+            return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(key_error)})
         return Response(status=status.HTTP_201_CREATED,
                         data={"StaffID": "{}".format(_staff[0][0].id), "Message": "Added Staff"})
 
     def list(self, request):
         querySet = Staff.objects.all()
         serializer = StaffSerializer(querySet, many=True)
-        return Response(serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
     def put(self, request):
         _staff_updated_data = request.data
@@ -488,7 +501,7 @@ class StaffViewset(viewsets.ViewSet):
         _staff.licence_number = _staff_updated_data["licence_number"]
         _staff.save()
         ser = StaffSerializer(_staff)
-        return Response(ser.data)
+        return Response(status=status.HTTP_202_ACCEPTED, data=ser.data)
 
     def delete(self, request):
         _staff = Staff.objects.get(id=request.data['id'])
@@ -603,10 +616,12 @@ class LabWorkingHoursViewSet(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
         try:
-            if data['lab_id'] == '':
+            if data['lab_id'] == -1:
                 return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Lab Id is missing!"})
             try:
-                LabWorkingHours.objects.get_or_create(lab_id_id=data['lab_id'],
+                if len(Lab.objects.filter(id=data['lab_id'])) == 0:
+                    raise Exception('Non-Existent Lab_id')
+                LabWorkingHours.objects.get_or_create(lab_id=data['lab_id'],
                                                       mon_start_time=data['monst'],
                                                       mon_end_time=data['monet'], tue_start_time=data['tuest'],
                                                       tue_end_time=data['tueet'], wed_start_time=data['wedst'],
@@ -628,7 +643,7 @@ class LabWorkingHoursViewSet(viewsets.ViewSet):
     def list(self, request):
         querySet = LabWorkingHours.objects.all()
         serializer = LabWorkingHoursSerializer(querySet, many=True)
-        return Response(serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
     def put(self, request):
         _lab_wh_updated_data = request.data
@@ -757,7 +772,7 @@ class HospitalWorkingHoursViewSet(viewsets.ViewSet):
             if data['hospital_id'] == '':
                 return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Hospital Id is missing!"})
             try:
-                HospitalWorkingHours.objects.get_or_create(hospital_id_id=data['hospital_id'],
+                HospitalWorkingHours.objects.get_or_create(hospital_id=Hospitals.objects.get(id=data['hospital_id']),
                                                            mon_start_time=data['monst'],
                                                            mon_end_time=data['monet'], tue_start_time=data['tuest'],
                                                            tue_end_time=data['tueet'], wed_start_time=data['wedst'],
@@ -801,7 +816,7 @@ class HospitalWorkingHoursViewSet(viewsets.ViewSet):
 
         _hospital_wh.save()
         ser = HospitalWorkingHoursSerializer(_hospital_wh)
-        return Response(ser.data)
+        return Response(status=status.HTTP_202_ACCEPTED, data=ser.data)
 
 
 @require_http_methods(['POST'])
@@ -982,17 +997,17 @@ def appointments_updated(request):
             raise Exception('Improper JSON')
         request_data = json.loads(request_data)
         doctor_id = request_data['doctorID']
-        number_of_days=7
+        number_of_days = 7
         if "days" in request_data:
-            number_of_days = 30 if request_data['days'] >30 else int(request_data['days'])
+            number_of_days = 30 if request_data['days'] > 30 else int(request_data['days'])
 
         profile_data = Profiles.objects.filter(id=doctor_id)
 
         if profile_data is None or len(profile_data) == 0:
             raise Exception("Invalid Doctor Id")
         doctor_appointment = Appointments.objects.filter(doctor_id=doctor_id)
-        #json_response = {"DoctorID": "", "Appointments": {}}
-        #json_response["Appointments"] = []
+        # json_response = {"DoctorID": "", "Appointments": {}}
+        # json_response["Appointments"] = []
 
         today_date = date.today()
         appointments = Appointments.objects.filter(doctor_id=doctor_id)
@@ -1209,6 +1224,8 @@ def get_hospital_summary(request):
         response_body['services'] = []
         doctors = Staff.objects.filter(hospital_id=hospital.id)
         reviews_list = []
+        if len(Hospitals.objects.filter(id=hospital_id)) == 0:
+            raise Exception('Non-Existent Hospital Id')
         working_hours = HospitalWorkingHours.objects.get(hospital_id=hospital_id)
         working_hr_columns = ["mon_start_time", "mon_end_time", "tue_start_time", "tue_end_time", "wed_start_time",
                               "wed_end_time", "thu_start_time", "thu_end_time", "fri_start_time", "fri_end_time",
@@ -1293,7 +1310,8 @@ def get_hospital_summary(request):
         return JsonResponse(status=status.HTTP_200_OK, data=response_body)
     except KeyError as exception:
         return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
-
+    except Exception as exception:
+        return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
 
 @require_http_methods(['POST'])
 def get_doctor_summary(request):
