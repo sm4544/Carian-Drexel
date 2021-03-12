@@ -51,3 +51,16 @@ export const createPatient = async (body) => {
     });
     return await res.json();
 }
+
+export const postAppointment = async (body) => {
+    
+    const res = await fetch(URL + 'Appointments/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:body,
+    });
+    return await res.json();
+}
