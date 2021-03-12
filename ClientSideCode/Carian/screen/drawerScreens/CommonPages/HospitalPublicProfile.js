@@ -55,6 +55,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
     });
     getAllHospitalsInfo(body)
       .then((res) => {  
+        console.log(res)
         var list2 =[];
         var list1 = [];
         for (i = 0; i < res.departments.length; i++) { 
@@ -109,7 +110,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
   };
   componentDidMount() {
     
-    this.hospitalInfo(this.props.navigation.state.params.id);
+    Promise.all([this.hospitalInfo(this.props.navigation.state.params.id)]);
     
     
   }
@@ -266,7 +267,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
           </Text>
 
           {this.state.hospitalReviews.map((review) => (
-            <ReviewCard key={review.review_id} review={review}></ReviewCard>
+            <ReviewCard key={review.id} review={review}></ReviewCard>
           ))}
         </View>
       </ScrollView>
