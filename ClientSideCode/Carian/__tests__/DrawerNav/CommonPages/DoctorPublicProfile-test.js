@@ -24,12 +24,75 @@ import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
 import ReviewCard from '../../../screen/drawerScreens/Cards/ReviewCard';
 import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
 import CalendarStrip from 'react-native-calendar-strip';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars'
 import {getAvailableSlots, getDoctorDetails} from '../../../screen/services/hospitalService';
 
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
+const doctor = { image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' };
+const hospital = { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', streatAddline1: 'Unit 5', streatAddline2: '3675 market st', area: 'spring garden', city: 'Philadelphia', state: 'PA', pincode: '19104', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }
+let slots = [{ id: 0, time: '09:30 AM' },
+{ id: 1, time: '10:00 AM' },
+{ id: 2, time: '10:30 AM' },
+{ id: 3, time: '11:00 AM' },
+{ id: 4, time: '11:30 AM' },
+{ id: 5, time: '12:00 AM' },
+{ id: 12, time: '12:30 AM' },
+{ id: 6, time: '01:00 PM' },
+{ id: 7, time: '01:30 PM' },
+{ id: 8, time: '02:00 PM' },
+{ id: 9, time: '02:30 PM' },
+{ id: 10, time: '03:00 PM' },
+{ id: 11, time: '03:30 PM' }]
+let headerSlots=["Days", "Morning", "Afternoon", "Evening", "Night"]
+let workingHours=[
+["Mon", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Tue", "10:00AM-12:00AM", "-", "06:00PM-10:00PM","-"],
+["Wed", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Thu", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Fri", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Sat", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Sun", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"]]
+let services = [{ id: 0, name: 'treatment A' },
+{ id: 1, name: 'treatment B' },
+{ id: 2, name: 'treatment C' },
+{ id: 3, name: 'treatment D' }]
+let hospitalImageList = [{ id: 0, image: image },
+{ id: 1, image: image },
+{ id: 2, image: image },
+{ id: 3, image: image },
+{ id: 4, image: image },
+{ id: 5, image: image }]
 
+let doctorReviews= [{ id: 0, name: 'Srinivas', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 1, name: 'Nallapati', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 2, name: 'Test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 3, name: 'Hello', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 4, name: 'Test test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 5, name: 'Se510', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' }]
 
+let specialistCarddata = [{ image: image, name: 'Family physicians' },
+{ image: image, name: 'Pediatricians' },
+{ image: image, name: 'Geriatric doctors' },
+{ image: image, name: 'Allergists' },
+{ image: image, name: 'Dermatologists' },
+{ image: image, name: 'Ophthalmologists' },
+{ image: image, name: 'Infectious disease doctors' },
+{ image: image, name: 'Obstetrician/gynecologists' },
+{ image: image, name: 'Cardiologists' },
+{ image: image, name: 'Endocrinologists' },
+{ image: image, name: 'Gastroenterologists' },
+{ image: image, name: 'Nephrologists' },
+{ image: image, name: 'Urologists' },
+{ image: image, name: 'Pulmonologists' },
+{ image: image, name: 'Otolaryngologists' },
+{ image: image, name: 'Neurologists' },
+{ image: image, name: 'Psychiatrists' },
+{ image: image, name: 'Oncologists' },
+{ image: image, name: 'Radiologists' },
+{ image: image, name: 'General surgeons' },
+{ image: image, name: 'Orthopedic surgeons' },
+{ image: image, name: 'Cardiac surgeons' },
+{ image: image, name: 'Anesthesiologists' },
+{ image: image, name: 'Rheumatologists' }]
 
 const navigation = {
     navigate: jest.fn(),
@@ -70,7 +133,6 @@ const navigation = {
       ],
       doctorReviews: [],
       services:[],
-      slots: [],
       headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
       workingHours: [
         [
@@ -130,212 +192,8 @@ jest.mock('../../../screen/services/hospitalService');
 describe('<DoctorPublicProfile/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
-        getAvailableSlots.mockResolvedValue({
-            "doctor_id": 24,
-            "2021-03-10": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-11": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-12": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-13": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-14": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-15": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-16": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ]
-        });
-        getDoctorDetails.mockResolvedValue( {
-            "hospital": {
-                "id": 3,
-                "name": "AEC",
-                "addressine1": "BC3",
-                "addressine2": "BC4",
-                "area": "Delaware",
-                "city": "Newark",
-                "state": "NJ",
-                "pincode": "19104",
-                "hospital_phone_number": "1239278901",
-                "licence_number": "1890",
-                "originally_registered_date": "2021-02-05",
-                "regisrted_by": 13,
-                "registered_date": "2021-02-05"
-            },
-            "hospitalImages": [
-                "https://source.unsplash.com/1024x768/?nature",
-                "https://source.unsplash.com/1024x768/?water",
-                "https://source.unsplash.com/1024x768/?girl",
-                "https://source.unsplash.com/1024x768/?tree"
-            ],
-            "reviews": [
-                {
-                    "id": 5,
-                    "review_content": "Review Criticism imply careful examination of something, formulation of a judgement",
-                    "reviewTimeStamp": "2021-02-20",
-                    "review_for": 23,
-                    "review_by": 64,
-                    "review_stars": 4
-                }
-            ],
-            "working_hours": [
-                {
-                    "Monday": "10:00-18:00",
-                    "Tuesday": "10:00-18:00",
-                    "Wednesday": "10:00-18:00",
-                    "Thursday": "10:00-18:00",
-                    "Friday": "10:00-18:00",
-                    "Saturday": "10:00-18:00",
-                    "Sunday": "10:00-18:00"
-                }
-            ],
-            "doctor": {
-                "highest_qualification": "MBBS",
-                "studied_at": "AEC",
-                "work_phone_number": "9918897651",
-                "work_email_address": "langer@gmail.com",
-                "overall_work_experience": 5,
-                "status": "ACtive",
-                "licence_number": "188181",
-                "doctor_fee": "75.00",
-                "department_id": 3,
-                "hospital_id": 3,
-                "lab_id": 3,
-                "pharmacy_id": 3,
-                "profile_id": 23,
-                "departments": [
-                    "Neurologist"
-                ],
-                "name": "test test"
-            },
-            "services": [
-                {
-                    "id": 3,
-                    "service": "Gynaecology",
-                    "hospital": 2,
-                    "doctor": 23
-                },
-                {
-                    "id": 7,
-                    "service": "Gastroentrology",
-                    "hospital": 3,
-                    "doctor": 23
-                }
-            ]
-        });
+        getAvailableSlots.mockResolvedValue({"Message": "Invalid doctor_id"});
+        getDoctorDetails.mockResolvedValue( {"doctor": {"approved_by": 8, "department_id": 3, "doctor_fee": "75.00", "highest_qualification": "MBBS", "hospital_id": 3, "id": 42, "lab_id": 3, "licence_number": "188181", "overall_work_experience": 5, "pharmacy_id": 3, "profile_id": 23, "specialization": "Neurologist", "status": "ACtive", "studied_at": "AEC", "work_email_address": "langer@gmail.com", "work_phone_number": "9918897651"}, "hospital": {"addressine1": "BC3", "addressine2": "BC4", "area": "Delaware", "city": "Newark", "hospital_phone_number": "1239278901", "id": 3, "licence_number": "1890", "name": "AEC", "originally_registered_date": "2021-02-05", "pincode": "19104", "regisrted_by": 13, "registered_date": "2021-02-05", "state": "NJ"}, "hospitalImages": ["https://source.unsplash.com/1024x768/?nature", "https://source.unsplash.com/1024x768/?water", "https://source.unsplash.com/1024x768/?girl", "https://source.unsplash.com/1024x768/?tree"], "reviews": [{"id": 5, "reviewTimeStamp": "2021-02-20", "review_by": 64, "review_content": "Review Criticism imply careful examination of something, formulation of a judgement", "review_for": 23, "review_stars": 4}], "services": [{"doctor": 23, "hospital": 2, "id": 3, "service": "Gynaecology"}, {"doctor": 23, "hospital": 3, "id": 7, "service": "Gastroentrology"}], "working_hours": "['Mon','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM'],['Tue', '10:00AM-12:00AM', '-', '06:00PM-10:00PM', '-'],['Wed','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Thu','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Fri','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Sat','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Sun','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',]"});
         wrapper = shallow(<DoctorPublicProfile navigation={navigation}></DoctorPublicProfile>);
     });
     afterEach(function () {
@@ -356,7 +214,7 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have doctor name text ', () => {
-        expect(wrapper.contains(<Text style={styles.cardText}>Dr. test test(MBBS)</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.cardText}>Dr. (MBBS)</Text>)).to.equal(true);
     });
 
     it('should have doctor specialization text ', () => {
@@ -380,7 +238,7 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have calenderstrip ', () => {
-        expect(wrapper.find(Calendar)).to.have.length(1);
+        expect(wrapper.find(CalendarStrip)).to.have.length(1);
     });
 
     it('should have time selection text ', () => {
@@ -399,9 +257,9 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have text of slots ', () => {
-        
-            expect(wrapper.contains(<Text>10:00</Text>)).to.equal(true);
-        
+        slots.forEach(item => {
+            expect(wrapper.contains(<Text>{item.time}</Text>)).to.equal(true);
+        })
     });
 
     it('should have horizontal line', () => {
@@ -479,7 +337,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Specialization</Text>)).to.equal(true);
     })
     it('should have  doctor specilization section text', () => {
-        expect(wrapper.find(SpecialityCard)).to.have.length(2)
+        expect(wrapper.find(SpecialityCard)).to.have.length(1)
         
     })
     it('should have  horizantol line view', () => {
@@ -489,7 +347,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Services</Text>)).to.equal(true);
     })
     it('should have  services touchable', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(22)
+        expect(wrapper.find(TouchableOpacity)).to.have.length(19)
 
     })
     it('should have horizontal line view', () => {
@@ -517,7 +375,8 @@ describe('<DoctorPublicProfile/>', () => {
        expect(wrapper.find(Table)).to.have.length(1);  
        expect(wrapper.find(Row)).to.have.length(1); 
        expect(wrapper.find(Rows)).to.have.length(1);  
-       
+       expect(wrapper.contains(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />)).to.equal(true);
+       expect(wrapper.contains(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />)).to.equal(true);
     })
 
     it('should display default date in the footer', () => {

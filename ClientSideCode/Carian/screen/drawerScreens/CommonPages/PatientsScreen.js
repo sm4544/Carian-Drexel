@@ -32,9 +32,11 @@ export default class PatientsScreen extends ValidationComponent {
 
     }
     onselecting = (patientId) => {
+        console.log(patientId);
+        console.log('hello')
         this.setState({ patientId: patientId })
         this.props.navigation.navigate("paymentScreen", {
-            patientId: this.state.patientId, doctor: this.state.doctor, hospital: this.state.hospital,
+            patientId: this.state.patientId, doctor: this.state.doctor,
             profileId: this.state.profileId, selectedDate: this.state.selectedDate, selectedTime: this.state.selectedTime
         });
 
@@ -50,6 +52,7 @@ export default class PatientsScreen extends ValidationComponent {
         getdependents(profileId)
             .then((res) => {
                 var list1 = [];
+                console.log(res)
                 for (i = 0; i < res.length; i++) {
                     list1.push({
                         label: res[i].first_name + ' ' + res[i].last_name + ' (' + res[i].relation + ')',
@@ -65,7 +68,7 @@ export default class PatientsScreen extends ValidationComponent {
 
     }
     componentDidMount() {
-        
+        console.log('entered here')
         this.getdependents(this.props.navigation.state.params.profileId);
         this.setState({
             selectedDate: this.props.navigation.state.params.date,
