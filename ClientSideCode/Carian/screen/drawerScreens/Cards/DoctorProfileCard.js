@@ -36,7 +36,7 @@ export default class DoctorProfileCard extends ValidationComponent {
                         <View style={styles.imageRightPosition}>
                             <Text style={styles.cardText}>Dr. {this.props.doctor.name}({this.props.doctor.highestDegree})</Text>
                             <Text style={styles.cardSubBoldText}>{this.props.doctor.specialization}. {this.props.doctor.overAllExperience} Years exp</Text>
-                            <Text style={styles.cardSubItalicText}>$ {this.props.doctor.fee} Fees</Text>
+                            <Text style={styles.cardSubItalicText}>$ {this.props.doctor.doctor_fee} Fees</Text>
                             <Text style={styles.cardSubItalicText}>{this.props.doctor.area}, {this.props.doctor.city}</Text>
                             <Text style={styles.cardSubBoldText}>{this.props.doctor.avgRating}({this.props.doctor.totalNoOfReviews} Stories )</Text>
                         </View>

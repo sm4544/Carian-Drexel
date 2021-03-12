@@ -25,7 +25,7 @@ const hospital = {
     city: 'test',
     avgRating: '4.5',
     totalNoOfReviews: '150',
-    totalNoOfDoctors: '5'
+    doctors: '5'
 }
 
 describe('<StaffInfoScreen/>', () => {

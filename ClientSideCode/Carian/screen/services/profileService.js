@@ -26,3 +26,28 @@ export const PostProfileApi = async (body) => {
     });
     return await res2.json();
 }
+
+export const getdependents = async (id) => {
+    
+    const res2 = await fetch(URL + 'Patients/' + id + '/', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    });
+    return await res2.json();
+}
+
+export const createPatient = async (body) => {
+    
+    const res = await fetch(URL + 'Patients/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:body,
+    });
+    return await res.json();
+}

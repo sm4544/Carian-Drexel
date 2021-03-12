@@ -7,6 +7,8 @@ import moment from 'moment';
 import ReviewCard from '../Cards/ReviewCard';
 import {Table, Row, Rows} from 'react-native-table-component';
 import CalendarStrip from 'react-native-calendar-strip';
+import {SliderBox} from 'react-native-image-slider-box';
+import {getAvailableSlots, getDoctorDetails} from '../../services/hospitalService';
 const image = {
   uri:
     'https://st4.depositphotos.com/10313122/20884/i/1600/depositphotos_208847620-stock-photo-studio-shot-of-young-beautiful.jpg',
@@ -16,28 +18,12 @@ export default class DoctorPublicProfile extends ValidationComponent {
   constructor(props) {
     super(props);
     (this.state = {
-      city: '',
-
-      profileD: {},
-
-      cityArray: [
-        {label: 'Hyd', value: 'hyd'},
-        {label: 'vij', value: 'vij'},
-      ],
-      hospitalCount: '100',
-      customerCount: '1000',
-      doctorsCount: '150',
-      reviewCount: '1500',
+      doctor: {},
+      hospital:{},
+      customerCount:1000,
       selectedDate: moment().format('MM/DD/YYYY'),
       selectedTime: '',
-      hospitalImageList: [
-        {id: 0, image: image},
-        {id: 1, image: image},
-        {id: 2, image: image},
-        {id: 3, image: image},
-        {id: 4, image: image},
-        {id: 5, image: image},
-      ],
+      hospitalImageList: [],
       specialistCarddata: [
         {image: image, name: 'Family physicians'},
         {image: image, name: 'Pediatricians'},
@@ -64,57 +50,8 @@ export default class DoctorPublicProfile extends ValidationComponent {
         {image: image, name: 'Anesthesiologists'},
         {image: image, name: 'Rheumatologists'},
       ],
-      doctorReviews: [
-        {
-          id: 0,
-          name: 'Srinivas',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 1,
-          name: 'Nallapati',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 2,
-          name: 'Test',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 3,
-          name: 'Hello',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 4,
-          name: 'Test test',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-        {
-          id: 5,
-          name: 'Se510',
-          rating: 4,
-          date: '11/12/2020',
-          comment:
-            'Review, criticism imply careful examination of something, formulation of a judgment',
-        },
-      ],
-
+      doctorReviews: [],
+      services:[],
       headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
       workingHours: [
         [
@@ -180,267 +117,83 @@ export default class DoctorPublicProfile extends ValidationComponent {
       this.props.navigation.navigate('PatientsScreen', {
         date: this.state.selectedDate,
         time: this.state.selectedTime,
-        doctorId: '1',
-        customerProfileId: '1',
+        doctor: this.state.doctor,
+        hospital:this.state.hospital,
+        profileId: global.profileId,
       });
     }
   };
-
-  componentDidMount() {
-    Promise.all([
-      fetch('https://hospitalmanagementbackend.herokuapp.com/hospitals-simple'),
-      fetch('http://hospitalmanagementbackend.herokuapp.com/doctors-simple'),
-    ])
-      .then(([res1, res2]) => {
-        return Promise.all([res1.json(), res2.json()]);
-      })
-      .then(([res1, res2]) => {
-        var profileD = {};
-        var profileH = [];
-        var images = [
-          'https://healthengine.com.au/info/assets/iStock-879831370-1024x576.jpg',
-          'https://cdn.diabetesselfmanagement.com/2006/05/dsm-what-is-an-ophthalmologist-shutterstock_1038422095.jpg',
-          'https://chandigarhdeals.com/wp-content/uploads/2020/09/considering-pediatrics-1109x675-1.jpg',
-        ];
-
-
-        for (i = 0; i < res1.length; i++) {
-          profileH.push({
-
-            name: res1[i].name,
-            type: 'Multispecialtiy',
-            area: res1[i].area,
-            city: res1[i].city,
-            avgRating: '4.5',
-            totalNoOfReviews: '150',
-            doctors: res1[i].doctors,
-          });
-
-        }
+  getAvailableSlots = (doctorID) => {
+    const body = JSON.stringify({
+      doctorID: doctorID,
+    });
+    getAvailableSlots(body)
+      .then((res) => {  
         
-       
-
-        for (i = 0; i < res2.length; i++) {
-         if(res2[i].name==this.props.navigation.state.params.name){         
-          profileD={
-            //image: images[1],
-            name: res2[i].name,
-            specialization: res2[i].specialization,
-            highestDegree: res2[i].highestDegree,
-            area: res2[i].area,
-            city: res2[i].city,
-            avgRating: '4.5',
-            totalNoOfReviews: '150',
-            overAllExperience: res2[i].overallExperience,
-            hospital_name: res2[i].hospital_name,
-            phoneNumber:res2[i].phoneNumber,
-            email:res2[i].email,
-            doctor_fee:res2[i].doctor_fee,
-            college_name:res2[i].college_name,
-          };
-        }
-        }
-        this.setState({profileD: profileD});
-        //console.log(profileD);
-       
+        
+        
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
+  getDoctorDetails = (id) =>{
+    const body = JSON.stringify({
+      doctor_id: 23,
+    });
+    getDoctorDetails(body)
+      .then((res) => {         
+        
+        const doc = {
+          id: res.doctor.id,
+          name : res.doctor.name,
+          image : image,
+          highestDegree: res.doctor.highest_qualification,
+          specialization:res.doctor.specialization,
+          overAllExperience: res.doctor.overall_work_experience,
+          totalNoOfReviews:150,
+          avgRating: 4,
+          doctor_fee: res.doctor.doctor_fee,
+          
+        }
 
-  render() {
-   
-    const doctorId = this.props.navigation.state.params.name;
-    const doctor = {
-      image: image,
-      name: doctorId,
-      specialization: 'Dentist',
-      highestDegree: 'MBBS',
-      fee: '100',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      overAllExperience: '10',
-    };
-    const hospital = {
-      image: image,
-      name: 'Manipal1 hospital',
-      type: 'Multispecialtiy',
-      streatAddline1: 'Unit 5',
-      streatAddline2: '3675 market st',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      state: 'PA',
-      pincode: '19104',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      totalNoOfDoctors: '10',
-    };
-    const cal = [
-      {
-        date: '16/11/2020',
-        slots: [
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-        ],
-      },
-      {
-        date: '17/11/2020',
-        slots: [
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-        ],
-      },
-    ];
-    let customDatesStyles = [];
-    let startDate = moment();
-    let endDate = moment(startDate).add(30, 'days');
-    let datesWhitelist = [{start: startDate, end: endDate}];
-    let radiogroup_options = [
-      {value: 0, label: '10:00 AM   '},
-      {value: 1, label: '10:30 Am   '},
-      {value: 2, label: '11:00 Am   '},
-      {value: 3, label: '10:00 AM   '},
-      {value: 4, label: '10:30 Am   '},
-      {value: 5, label: '11:00 Am   '},
-    ];
-    let slots = [
-      {id: 0, time: '09:30 AM'},
-      {id: 1, time: '10:00 AM'},
-      {id: 2, time: '10:30 AM'},
-      {id: 3, time: '11:00 AM'},
-      {id: 4, time: '11:30 AM'},
-      {id: 5, time: '12:00 AM'},
-      {id: 12, time: '12:30 AM'},
-      {id: 6, time: '01:00 PM'},
-      {id: 7, time: '01:30 PM'},
-      {id: 8, time: '02:00 PM'},
-      {id: 9, time: '02:30 PM'},
-      {id: 10, time: '03:00 PM'},
-      {id: 11, time: '03:30 PM'},
-    ];
+        const h ={
+          hospital_name:res.hospital.name,
+          area:res.hospital.area,
+          city:res.hospital.city,
+          state:res.hospital.state,
+          pincode:res.hospital.pincode,
+          streatAddline1:res.hospital.addressine1,
+          streatAddline2:res.hospital.addressine2,
+          avgRating:4,
+          totalNoOfReviews:120
 
-    let services = [
-      {id: 0, name: 'treatment A'},
-      {id: 1, name: 'treatment B'},
-      {id: 2, name: 'treatment C'},
-      {id: 3, name: 'treatment D'},
-    ];
+        }
+       
 
-    for (let i = 0; i < 40; i++) {
-      customDatesStyles.push({
-        startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
+        this.setState({hospitalImageList:res.hospitalImages, services: res.services, doctor: doc,hospital: h  })
 
-        dateNameStyle: styles.dateNameStyle,
-        dateNumberStyle: styles.dateNumberStyle,
-        dateContainerStyle: {
-          backgroundColor: `#${`#00000${(
-            (Math.random() * (1 << 24)) |
-            0
-          ).toString(16)}`.slice(-6)}`,
-        },
+        
+      })
+      .catch((error) => {
+        console.log(error);
       });
+
+  }
+  componentDidMount() {
+    this.getAvailableSlots(this.props.navigation.state.params.id);
+    this.getDoctorDetails(this.props.navigation.state.params.id)
     }
 
-
-        for (i = 0; i < res2.length; i++) {
-          if (res2[i].name == this.props.navigation.state.params.name) {
-            profileD = {
-              //image: images[1],
-              name: res2[i].name,
-              specialization: res2[i].specialization,
-              highestDegree: res2[i].highestDegree,
-              area: res2[i].area,
-              city: res2[i].city,
-              avgRating: '4.5',
-              totalNoOfReviews: '150',
-              overAllExperience: res2[i].overallExperience,
-              hospital_name: res2[i].hospital_name,
-              phoneNumber: res2[i].phoneNumber,
-              email: res2[i].email,
-              doctor_fee: res2[i].doctor_fee,
-              college_name: res2[i].college_name,
-            };
-          }
-        }
-        this.setState({profileD: profileD});
-        //console.log(profileD);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  
 
   render() {
-    const doctorId = this.props.navigation.state.params.name;
-    const doctor = {
-      image: image,
-      name: doctorId,
-      specialization: 'Dentist',
-      highestDegree: 'MBBS',
-      fee: '100',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      overAllExperience: '10',
-    };
-    const hospital = {
-      image: image,
-      name: 'Manipal1 hospital',
-      type: 'Multispecialtiy',
-      streatAddline1: 'Unit 5',
-      streatAddline2: '3675 market st',
-      area: 'spring garden',
-      city: 'Philadelphia',
-      state: 'PA',
-      pincode: '19104',
-      avgRating: '4.5',
-      totalNoOfReviews: '150',
-      totalNoOfDoctors: '10',
-    };
-    const cal = [
-      {
-        date: '16/11/2020',
-        slots: [
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-        ],
-      },
-      {
-        date: '17/11/2020',
-        slots: [
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-          {id: 0, time: '10:00 AM'},
-        ],
-      },
-    ];
+  
     let customDatesStyles = [];
     let startDate = moment();
     let endDate = moment(startDate).add(30, 'days');
     let datesWhitelist = [{start: startDate, end: endDate}];
-    let radiogroup_options = [
-      {value: 0, label: '10:00 AM   '},
-      {value: 1, label: '10:30 Am   '},
-      {value: 2, label: '11:00 Am   '},
-      {value: 3, label: '10:00 AM   '},
-      {value: 4, label: '10:30 Am   '},
-      {value: 5, label: '11:00 Am   '},
-    ];
+    
     let slots = [
       {id: 0, time: '09:30 AM'},
       {id: 1, time: '10:00 AM'},
@@ -485,23 +238,23 @@ export default class DoctorPublicProfile extends ValidationComponent {
           <View style={styles.doctorCardView}>
             <View style={styles.setFlexRow}>
               <View style={styles.positionImage}>
-                <Image source={doctor.image} style={styles.profileImage} />
+                <Image source={this.state.doctor.image} style={styles.profileImage} />
               </View>
               <View style={styles.imageRightPosition}>
                 <Text style={styles.cardText}>
-                  Dr. {this.state.profileD.name}(
-                  {this.state.profileD.highestDegree})
+                  Dr. {this.state.doctor.name}(
+                  {this.state.doctor.highestDegree})
                 </Text>
                 <Text style={styles.cardSubBoldText}>
-                  {this.state.profileD.specialization}
+                  {this.state.doctor.specialization}
                 </Text>
                 <Text style={styles.cardSubItalicText}>
-                  {this.state.profileD.overAllExperience} Years of over all
+                  {this.state.doctor.overAllExperience} Years of over all
                   experience
                 </Text>
                 <Text style={styles.cardSubBoldText}>
-                  {this.state.profileD.avgRating}(
-                  {this.state.profileD.totalNoOfReviews} Stories )
+                  {this.state.doctor.avgRating}(
+                  {this.state.doctor.totalNoOfReviews} Stories )
                 </Text>
               </View>
             </View>
@@ -512,7 +265,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
                 <Text>In-Clinic Appointment fee:</Text>
               </View>
               <View>
-                <Text>${this.state.profileD.doctor_fee}</Text>
+                <Text>${this.state.doctor.doctor_fee}</Text>
               </View>
             </View>
           </View>
@@ -548,7 +301,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
             <View style={styles.hospitalSectionSubView}>
 
               <Text style={styles.hospitalName}>
-                {this.state.profileD.hospital_name}
+                {this.state.hospital.hospital_name}
               </Text>
 
 
@@ -572,13 +325,13 @@ export default class DoctorPublicProfile extends ValidationComponent {
                 <View>
                   <Text style={styles.adressText}>
                     {' '}
-                    {hospital.streatAddline1}, {hospital.streatAddline2}
+                    {this.state.hospital.streatAddline1}, {this.state.hospital.streatAddline2}
                   </Text>
                   <Text style={styles.adressText}>
                     {' '}
 
-                    {this.state.profileD.area}, {this.state.profileD.city} ,
-                    {hospital.state}, {hospital.pincode}
+                    {this.state.hospital.area}, {this.state.hospital.city} ,
+                    {this.state.hospital.state}, {this.state.hospital.pincode}
 
                   </Text>
                 </View>
@@ -589,7 +342,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
                 </View>
                 <View>
                   <Text style={styles.addressHeader}>
-                    {hospital.avgRating} {hospital.totalNoOfReviews} Reviews{' '}
+                    {this.state.hospital.avgRating} {this.state.hospital.totalNoOfReviews} Reviews{' '}
                   </Text>
                 </View>
               </View>
@@ -613,13 +366,14 @@ export default class DoctorPublicProfile extends ValidationComponent {
 
           <Text style={styles.sectionTitle}>Clinic Photos</Text>
 
-          <View style={styles.imagesRowSetUp}>
-            {this.state.hospitalImageList.map((image) => (
-              <View key={image.id} style={{flexBasis: '30%', margin: 5}}>
-                <Image source={image.image} style={styles.hospitalImage} />
-              </View>
-            ))}
-          </View>
+         
+
+          <SliderBox
+            images={this.state.hospitalImageList}
+            sliderBoxHeight={180}
+            dotColor="#FFEE58"
+            inactiveDotColor="#90A4AE"
+          />
 
           <View style={styles.horizontalLine} />
           <Text style={styles.sectionTitle}>Specialization</Text>
@@ -635,13 +389,13 @@ export default class DoctorPublicProfile extends ValidationComponent {
           <Text style={styles.sectionTitle}>Services</Text>
 
           <View style={styles.slotsView}>
-            {services.map((item) => (
+            {this.state.services.map((item) => (
               <View key={item.id} style={{flexBasis: '31%'}}>
                 <TouchableOpacity
                   key={item.id}
                   disabled={true}
                   style={styles.slotsTouch}>
-                  <Text>{item.name}</Text>
+                  <Text>{item.service}</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -692,7 +446,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
               onPress={() => this.onPressingContinueButton()}>
 
               <Text style={styles.payButtonText}>
-                Continue ${this.state.profileD.doctor_fee}
+                Continue ${this.state.doctor.doctor_fee}
               </Text>
 
             </TouchableOpacity>

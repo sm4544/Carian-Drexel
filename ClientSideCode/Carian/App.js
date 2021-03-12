@@ -22,8 +22,10 @@ import PharmacyOrdersScreen from './screen/drawerScreens/PharmacyOrdersScreen';
 import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
 import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
+import PatientsRegisterScreen from './screen/drawerScreens/PatientsRegisterScreen';
 import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
-import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen'
+import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
+import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
 import HospitalScreen from './screen/drawerScreens/HospitalScreen';
 import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
 import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
@@ -41,8 +43,14 @@ import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPu
 
 import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile'; 
 import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
+
+// import PatientsAppointment from './screen/drawerScreens/PatientsAppointment';
+
+
+
 import DepartmentPage from './screen/drawerScreens/DepartmentPage';
 import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
+
 
 const FirstActivity_StackNavigator = createStackNavigator({
   First: {
@@ -80,9 +88,21 @@ const FirstActivity_StackNavigator = createStackNavigator({
       headerTintColor: '#fff',
     }),
   },
-
+  
   paymentScreen: {
     screen: paymentScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Payment',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsRegisterScreen: {
+    screen: PatientsRegisterScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Payment',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
@@ -128,9 +148,32 @@ const FirstActivity_StackNavigator = createStackNavigator({
       headerTintColor: '#fff',
     }),
   },
+  // PatientsAppointment: {
+  //   screen: PatientsAppointment,
+  //   navigationOptions: ({ navigation }) => ({
+  //     title: 'Appointment Details',
+  //     //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+  //     headerStyle: {
+  //       backgroundColor: '#307ecc',
+  //     },
+  //     headerTintColor: '#fff',
+  //   }),
+  // },
 
   PatientsScreen:{
     screen:PatientsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Patients',
+      //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+
+  PatientsScreen2:{
+    screen:PatientsScreen2,
     navigationOptions: ({ navigation }) => ({
       title: 'Patients',
       //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
@@ -161,7 +204,7 @@ const ThirdActivity_StackNavigator = createStackNavigator({
   First: {
     screen: DoctorDashboardScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Doctor Dashboard Screen',
+      title: 'Appointment Details',
       headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#307ecc',
@@ -212,6 +255,7 @@ const SixthActivity_stackNavigator = createStackNavigator({
     }),
   },
 });
+
 
 const SeventhActivity_stackNavigator = createStackNavigator({
 
@@ -356,6 +400,19 @@ const FifteenthActivity_stackNavigator = createStackNavigator({
     }),
   },
 });
+// const SixteenthActivity_stackNavigator = createStackNavigator({
+//   First: {
+//     screen: patientsAppointment,
+//     navigationOptions: ({ navigation }) => ({
+//       title: 'Appointment Details',
+//       headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+//       headerStyle: {
+//         backgroundColor: '#307ecc',
+//       },
+//       headerTintColor: '#fff',
+//     }),
+//   },
+// });
 
 const SixteenthActivity_stackNavigator= createStackNavigator({
   First:{
@@ -468,6 +525,12 @@ const DrawerNavigationRoutes = createDrawerNavigator({
       drawerLabel: 'Patients Screen',
     },
   },
+  // PatientsAppointment: {
+  //   screen: FirstActivity_StackNavigator,
+  //   navigationOptions: {
+  //     drawerLabel: 'Appointment Details',
+  //   },
+  // },
 
 },
 {
@@ -515,7 +578,7 @@ const App = createStackNavigator({
       headerShown: false,
     },
   },
-
+  
 
 });
 

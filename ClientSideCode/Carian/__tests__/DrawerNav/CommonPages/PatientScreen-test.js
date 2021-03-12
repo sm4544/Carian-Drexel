@@ -20,6 +20,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
 import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
 import DoctorProfileCard from '../../../screen/drawerScreens/Cards/DoctorProfileCard';
+import {getdependents} from '../../../screen/services/profileService';
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
 const navigation = {
@@ -29,29 +30,24 @@ const navigation = {
             date: '10/10/2020',
             time: '10:30AM',
             profileId: '10',
-            doctor: { image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' },
-            hospital: { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', streatAddline1: 'Unit 5', streatAddline2: '3675 market st', area: 'spring garden', city: 'Philadelphia', state: 'PA', pincode: '19104', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' },
-            patientsList: [
-                { label: 'first name, Last name (Self)', value: 0 },
-                { label: 'Test, Test (Mother)', value: 1 },
-                { label: 'Test, Test (Father)', value: 2 },
-                { label: 'Test, Test (Kid)', value: 3 },
-                { label: 'Test, Test (Spouce)', value: 4 },
-                { label: 'Test, Test (Grand Mother)', value: 5 }
-            ]
+            doctor: {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+            hospital: {"area": "Lancaster", "avg_rating": "4.2", "city": "Philly", "doctors": "3", "hospital_id": "1", "name": "VNR", "total_reviews": "120", "type": "multi-speciality"},
+            
         }
     }
 };
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+jest.mock('../../../screen/services/profileService');
 
 
 
 describe('<PatientScreen/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
-
+        getdependents.mockResolvedValue( [{"addressine1": "Good Food flats", "addressine2": "Baring Street", "age": 5, "allergies_to_medicine": "allergy 1, Allergy 2", "blood_group": "A-", "city": "Philadelphia", "dob": "1978-02-02", "email": "test913@gmail.com", "first_name": "Alex", "gender": "F", "height": 30, "hobbies": "hobby 1, hobby 2", "id": 40, "is_created_by_staff": false, "last_name": "Hartley", "martial_status": "Divorced", "mobile_number": "123456", "occupation": "Paramedic", "physical_activities": "No", "pincode": "19104", "recurring_problems": "problem1, problem 2", "registred_date": "2021-02-21", "related_profile": 22, "relation": "Spouse", "state": "PA", "use_of_alcohol": "No", "use_of_tobacco": "No", "weight": 11}, 
+        {"addressine1": "Good Food flats", "addressine2": "Baring Street", "age": 5, "allergies_to_medicine": "allergy 1, Allergy 2", "blood_group": "A+", "city": "Philadelphia", "dob": "1978-02-02", "email": "test913@gmail.com", "first_name": "test", "gender": "M", "height": 31, "hobbies": "hobby 1, hobby 2", "id": 41, "is_created_by_staff": false, "last_name": "test", "martial_status": "Single", "mobile_number": "123456", "occupation": "Construction worker", "physical_activities": "No", "pincode": "19104", "recurring_problems": "problem1, problem 2", "registred_date": "2021-02-23", "related_profile": 22, "relation": "Kid", "state": "PA", "use_of_alcohol": "No", "use_of_tobacco": "No", "weight": 10}])
         wrapper = shallow(<PatientScreen navigation={navigation}></PatientScreen>);
     });
     afterEach(function () {
@@ -102,7 +98,7 @@ describe('<PatientScreen/>', () => {
         expect(wrapper.contains(<Text style={{ margin: 5 }}>Address: </Text>)).to.equal(true);
     });
     it('should have doctor fee', () => {
-        expect(wrapper.contains(<Text style={{ margin: 5 }}>${navigation.state.params.doctor.fee}</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={{ margin: 5 }}>${navigation.state.params.doctor.doctor_fee}</Text>)).to.equal(true);
     });
     it('should have selected date', () => {
         expect(wrapper.contains(<Text style={{ margin: 5 }}>{navigation.state.params.date}</Text>)).to.equal(true);
@@ -123,13 +119,13 @@ describe('<PatientScreen/>', () => {
     });
 
     it('should navigate to payment screen', () => {
-        wrapper.instance().onselecting(navigation.state.params.patientsList[0].value, navigation.state.params.doctor, navigation.state.params.profileId, navigation.state.params.date, navigation.state.params.time)
-        sinon.assert.calledWith(spyon, "paymentScreen",{ patientId : navigation.state.params.patientsList[0].value, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
+        wrapper.instance().onselecting(1, navigation.state.params.doctor, navigation.state.params.profileId, navigation.state.params.date, navigation.state.params.time)
+        sinon.assert.calledWith(spyon, "paymentScreen",{ patientId : 1, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
     });
 
     it('should navigate to patiengt info screen', () => {
         wrapper.instance().onPressingAddNew(navigation.state.params.profileId, navigation.state.params.doctor, navigation.state.params.hospital, navigation.state.params.date, navigation.state.params.time)
-        sinon.assert.calledWith(spyon, "PatientsInfoScreen", { hospital : navigation.state.params.hospital, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
+        sinon.assert.calledWith(spyon, "PatientsRegisterScreen", { hospital : navigation.state.params.hospital, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
     });
 
 });

@@ -13,6 +13,8 @@ import {
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import moment from 'moment';
+import {SliderBox} from 'react-native-image-slider-box';
 import { Table, Row, Rows } from "react-native-table-component";
 import styles from '../../../styles/DoctorProfileStyles';
 import HomeScreen from '../../../screen/drawerScreens/CommonPages/HomeScreen';
@@ -22,6 +24,7 @@ import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
 import ReviewCard from '../../../screen/drawerScreens/Cards/ReviewCard';
 import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
 import CalendarStrip from 'react-native-calendar-strip';
+import {getAvailableSlots, getDoctorDetails} from '../../../screen/services/hospitalService';
 
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 const doctor = { image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' };
@@ -95,23 +98,102 @@ const navigation = {
     navigate: jest.fn(),
     state: {
         params: {
-            name: 'hello',
-            profileid: '1',
-            profile_type: 'Doctor'
-
-        }
+            id: 1,
+            doctor: {},
+      hospital:{},
+      customerCount:1000,
+      selectedDate: moment().format('MM/DD/YYYY'),
+      selectedTime: '',
+      hospitalImageList: [],
+      specialistCarddata: [
+        {image: image, name: 'Family physicians'},
+        {image: image, name: 'Pediatricians'},
+        {image: image, name: 'Geriatric doctors'},
+        {image: image, name: 'Allergists'},
+        {image: image, name: 'Dermatologists'},
+        {image: image, name: 'Ophthalmologists'},
+        {image: image, name: 'Infectious disease doctors'},
+        {image: image, name: 'Obstetrician/gynecologists'},
+        {image: image, name: 'Cardiologists'},
+        {image: image, name: 'Endocrinologists'},
+        {image: image, name: 'Gastroenterologists'},
+        {image: image, name: 'Nephrologists'},
+        {image: image, name: 'Urologists'},
+        {image: image, name: 'Pulmonologists'},
+        {image: image, name: 'Otolaryngologists'},
+        {image: image, name: 'Neurologists'},
+        {image: image, name: 'Psychiatrists'},
+        {image: image, name: 'Oncologists'},
+        {image: image, name: 'Radiologists'},
+        {image: image, name: 'General surgeons'},
+        {image: image, name: 'Orthopedic surgeons'},
+        {image: image, name: 'Cardiac surgeons'},
+        {image: image, name: 'Anesthesiologists'},
+        {image: image, name: 'Rheumatologists'},
+      ],
+      doctorReviews: [],
+      services:[],
+      headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
+      workingHours: [
+        [
+          'Mon',
+          '10:00AM-12:00AM',
+          '01:00PM-05:00PM',
+          '06:00PM-10:00PM',
+          '10:00PM-07:00AM',
+        ],
+        ['Tue', '10:00AM-12:00AM', '-', '06:00PM-10:00PM', '-'],
+        [
+          'Wed',
+          '10:00AM-12:00AM',
+          '01:00PM-05:00PM',
+          '06:00PM-10:00PM',
+          '10:00PM-07:00AM',
+        ],
+        [
+          'Thu',
+          '10:00AM-12:00AM',
+          '01:00PM-05:00PM',
+          '06:00PM-10:00PM',
+          '10:00PM-07:00AM',
+        ],
+        [
+          'Fri',
+          '10:00AM-12:00AM',
+          '01:00PM-05:00PM',
+          '06:00PM-10:00PM',
+          '10:00PM-07:00AM',
+        ],
+        [
+          'Sat',
+          '10:00AM-12:00AM',
+          '01:00PM-05:00PM',
+          '06:00PM-10:00PM',
+          '10:00PM-07:00AM',
+        ],
+        [
+          'Sun',
+          '10:00AM-12:00AM',
+          '01:00PM-05:00PM',
+          '06:00PM-10:00PM',
+          '10:00PM-07:00AM',
+        ],
+      ],
+            }
     }
 };
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+jest.mock('../../../screen/services/hospitalService');
 
 
 
 describe('<DoctorPublicProfile/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
-
+        getAvailableSlots.mockResolvedValue({"Message": "Invalid doctor_id"});
+        getDoctorDetails.mockResolvedValue( {"doctor": {"approved_by": 8, "department_id": 3, "doctor_fee": "75.00", "highest_qualification": "MBBS", "hospital_id": 3, "id": 42, "lab_id": 3, "licence_number": "188181", "overall_work_experience": 5, "pharmacy_id": 3, "profile_id": 23, "specialization": "Neurologist", "status": "ACtive", "studied_at": "AEC", "work_email_address": "langer@gmail.com", "work_phone_number": "9918897651"}, "hospital": {"addressine1": "BC3", "addressine2": "BC4", "area": "Delaware", "city": "Newark", "hospital_phone_number": "1239278901", "id": 3, "licence_number": "1890", "name": "AEC", "originally_registered_date": "2021-02-05", "pincode": "19104", "regisrted_by": 13, "registered_date": "2021-02-05", "state": "NJ"}, "hospitalImages": ["https://source.unsplash.com/1024x768/?nature", "https://source.unsplash.com/1024x768/?water", "https://source.unsplash.com/1024x768/?girl", "https://source.unsplash.com/1024x768/?tree"], "reviews": [{"id": 5, "reviewTimeStamp": "2021-02-20", "review_by": 64, "review_content": "Review Criticism imply careful examination of something, formulation of a judgement", "review_for": 23, "review_stars": 4}], "services": [{"doctor": 23, "hospital": 2, "id": 3, "service": "Gynaecology"}, {"doctor": 23, "hospital": 3, "id": 7, "service": "Gastroentrology"}], "working_hours": "['Mon','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM'],['Tue', '10:00AM-12:00AM', '-', '06:00PM-10:00PM', '-'],['Wed','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Thu','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Fri','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Sat','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Sun','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',]"});
         wrapper = shallow(<DoctorPublicProfile navigation={navigation}></DoctorPublicProfile>);
     });
     afterEach(function () {
@@ -127,24 +209,24 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have doctor profileimage ', () => {
-        expect(wrapper.find(Image)).to.have.length(7);
-        expect(wrapper.contains(<Image source={doctor.image} style={styles.profileImage} />)).to.equal(true);
+        expect(wrapper.find(Image)).to.have.length(1);
+        
     });
 
     it('should have doctor name text ', () => {
-        expect(wrapper.contains(<Text style={styles.cardText}>Dr. {doctor.name}({doctor.highestDegree})</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.cardText}>Dr. (MBBS)</Text>)).to.equal(true);
     });
 
     it('should have doctor specialization text ', () => {
-        expect(wrapper.contains(<Text style={styles.cardSubBoldText}>{doctor.specialization}</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.cardSubBoldText}>Neurologist</Text>)).to.equal(true);
     });
 
     it('should have doctor experience text ', () => {
-        expect(wrapper.contains(<Text style={styles.cardSubItalicText}>{doctor.overAllExperience} Years of over all experience</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.cardSubItalicText}>5 Years of over all experience</Text>)).to.equal(true);
     });
 
     it('should have doctor rating text ', () => {
-        expect(wrapper.contains(<Text style={styles.cardSubBoldText}>{doctor.avgRating}({doctor.totalNoOfReviews} Stories )</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.cardSubBoldText}>4(150 Stories )</Text>)).to.equal(true);
     });
 
     it('should have doctor in-clinic fee text ', () => {
@@ -152,7 +234,7 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have doctor fee text ', () => {
-        expect(wrapper.contains(<Text>${doctor.fee}</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text>$75.00</Text>)).to.equal(true);
     });
 
     it('should have calenderstrip ', () => {
@@ -185,7 +267,7 @@ describe('<DoctorPublicProfile/>', () => {
     })
 
     it('should have hospital  name text', () => {
-        expect(wrapper.contains(<Text style={styles.hospitalName}>{hospital.name}</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.hospitalName}>AEC</Text>)).to.equal(true);
     })
 
     it('should have hospital  adress text', () => {
@@ -193,8 +275,8 @@ describe('<DoctorPublicProfile/>', () => {
     })
 
     it('should have hospital full adress  text', () => {
-        expect(wrapper.contains(<Text style={styles.adressText}> {hospital.streatAddline1}, {hospital.streatAddline2}</Text>)).to.equal(true);
-        expect(wrapper.contains(<Text style={styles.adressText}> {hospital.area}, {hospital.city} ,{hospital.state}, {hospital.pincode}</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.adressText}> BC3, BC4</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.adressText}> Delaware, Newark ,NJ, 19104</Text>)).to.equal(true);
     })
 
     it('should have Website URL button', () => {
@@ -220,7 +302,7 @@ describe('<DoctorPublicProfile/>', () => {
     })
 
     it('should have rating info text', () => {
-        expect(wrapper.contains(<Text style={styles.addressHeader}>{hospital.avgRating} {hospital.totalNoOfReviews} Reviews </Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.addressHeader}>4 120 Reviews </Text>)).to.equal(true);
     })
 
     it('should have hospital  customers text', () => {
@@ -245,9 +327,7 @@ describe('<DoctorPublicProfile/>', () => {
     })
 
     it('should have hospital images ', () => {
-        hospitalImageList.forEach(element => {
-            expect(wrapper.contains(<Image source={element.image} style={styles.hospitalImage} />)).to.equal(true);
-        });
+        expect(wrapper.find(SliderBox)).to.have.length(1);
     })
 
     it('should have  horizontal line view', () => {
@@ -258,7 +338,7 @@ describe('<DoctorPublicProfile/>', () => {
     })
     it('should have  doctor specilization section text', () => {
         expect(wrapper.find(SpecialityCard)).to.have.length(1)
-        expect(wrapper.contains(<SpecialityCard data={specialistCarddata[0]} style={{ backgroundColor: 'white' }}></SpecialityCard>)).to.equal(true);
+        
     })
     it('should have  horizantol line view', () => {
         expect(wrapper.contains(<View style={styles.horizontalLine} />)).to.equal(true);
@@ -267,11 +347,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Services</Text>)).to.equal(true);
     })
     it('should have  services touchable', () => {
-        services.forEach(item => {
-            expect(wrapper.contains(<TouchableOpacity key={item.id} disabled={true} style={styles.slotsTouch}>
-                <Text>{item.name}</Text>
-            </TouchableOpacity>)).to.equal(true);
-        });
+        expect(wrapper.find(TouchableOpacity)).to.have.length(19)
 
     })
     it('should have horizontal line view', () => {
@@ -292,9 +368,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>)).to.equal(true);
     })
     it('should have  review cards', () => {
-        doctorReviews.forEach(review => {
-            expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
-        });                
+        expect(wrapper.find(ReviewCard)).to.have.length(0);  
     })
 
     it('should have working hours table and header row and rows', () => {
@@ -320,6 +394,6 @@ describe('<DoctorPublicProfile/>', () => {
      })
 
      it('should display  touchable button to continue in the footer', () => {
-        expect(wrapper.contains(<Text style={styles.payButtonText}>Continue ${doctor.fee}</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.payButtonText}>Continue $75.00</Text>)).to.equal(true);
      })
 })

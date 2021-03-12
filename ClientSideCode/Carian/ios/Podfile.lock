@@ -327,7 +327,7 @@ PODS:
     - React
   - RNCMaskedView (0.1.10):
     - React
-  - RNDateTimePicker (3.0.6):
+  - RNDateTimePicker (3.0.4):
     - React-Core
   - RNFBApp (8.4.6):
     - Firebase/CoreOnly (~> 6.34.0)
@@ -547,7 +547,7 @@ SPEC CHECKSUMS:
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
   RNCalendarEvents: e8708e3206386328892678936648a33832ff924d
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
-  RNDateTimePicker: 54bc1830e4e8d99ed00e6b6735b8517e163b2a4a
+  RNDateTimePicker: 88dc10d685ce961339bad3353c64db96c5abd19b
   RNFBApp: 7eacc7da7ab19f96c05e434017d44a9f09410da8
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
@@ -556,6 +556,6 @@ SPEC CHECKSUMS:
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 82c239a3a9b993e8e1bd12a2e919954db849338d
+PODFILE CHECKSUM: e456a7654bcb4e848095e95c88b9a39346a00cc5
 
 COCOAPODS: 1.10.0

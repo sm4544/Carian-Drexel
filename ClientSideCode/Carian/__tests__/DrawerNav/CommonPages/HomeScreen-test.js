@@ -19,6 +19,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
 import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
 import DoctorProfileCard from '../../../screen/drawerScreens/Cards/DoctorProfileCard';
+import {getDoctors, getHospitals} from '../../../screen/services/hospitalService';
 const navigation = {
   navigate: jest.fn(),
   state: {
@@ -33,12 +34,21 @@ const navigation = {
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+jest.mock("../../../screen/services/hospitalService");
 
 
 
 describe('<StaffInfoScreen/>', () => {
   beforeEach(function () {
     spyon = sinon.spy(navigation, 'navigate');
+    getHospitals.mockResolvedValue([{"area": "Lancaster", "avg_rating": "4.2", "city": "Philly", "doctors": "3", "hospital_id": "1", "name": "VNR", "total_reviews": "120", "type": "multi-speciality"},
+     {"area": "Fremont", "avg_rating": "4.2", "city": "Milpitas", "doctors": "2", "hospital_id": "2", "name": "JNTU", "total_reviews": "120", "type": "multi-speciality"}, 
+     {"area": "Delaware", "avg_rating": "4.2", "city": "Newark", "doctors": "2", "hospital_id": "3", "name": "AEC", "total_reviews": "120", "type": "multi-speciality"}, 
+     {"area": "franscisco", "avg_rating": "4.2", "city": "San Francisco", "doctors": "0", "hospital_id": "8", "name": "california medical", "total_reviews": "120", "type": "multi-speciality"}])
+    getDoctors.mockResolvedValue( [{"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+    {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+    {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
+     {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "binny@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "43", "licence_number": "188187", "name": "Doctor 1", "overallExperience": "5", "phoneNumber": "9918897654", "profile_id": "14", "specialization": "Cardiology"}])
     
     wrapper = shallow(<HomeScreen navigation={navigation}></HomeScreen>);
   });
@@ -51,7 +61,7 @@ describe('<StaffInfoScreen/>', () => {
   });
 
   it('should have view Container', () => {
-    expect(wrapper.find(View)).to.have.length(26);
+    expect(wrapper.find(View)).to.have.length(12);
   });
 
   it('should have Carian Text', () => {
@@ -151,32 +161,24 @@ describe('<StaffInfoScreen/>', () => {
 
   it('should have no of Specilality cards of length equal to specialistCarddata array length', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.find(SpecialityCard)).to.have.length(24);
-    expect(wrapper.state('specialistCarddata')).to.have.lengthOf(24);
+    expect(wrapper.find(SpecialityCard)).to.have.length(10);
+    expect(wrapper.state('specialistCarddata')).to.have.lengthOf(10);
   });
 
-  it('should have hospitalsList ready', () => {
-    //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.state('hospitalsList')).to.be.an('array').that.is.not.empty;
-    
-  });
+  
 
   it('should have no of hospitals equal to hospitalsList array length', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.find(HospitalCard)).to.have.length(4);
-    expect(wrapper.state('hospitalsList')).to.have.lengthOf(4);
-  });
-
-  it('should have DoctorsList ready', () => {
-    //expect(wrapper.find(Text)).to.have.length(2);
-    expect(wrapper.state('doctorsList')).to.be.an('array').that.is.not.empty;
+    expect(wrapper.find(HospitalCard)).to.have.length(3);
     
   });
+
+ 
 
   it('should have no of hospitals equal to hospitalsList array length', () => {
     //expect(wrapper.find(Text)).to.have.length(2);
     expect(wrapper.find(DoctorProfileCard)).to.have.length(4);
-    expect(wrapper.state('doctorsList')).to.have.lengthOf(4);
+    
   });
 
   it('should navigate to DisplayDoctorsList page', async() => {      
@@ -196,14 +198,14 @@ describe('<StaffInfoScreen/>', () => {
   it('should navigate to HospitalPublicProfile', async() => {      
     
     wrapper.instance().onPressingHospital('hello');
-    sinon.assert.calledWith(spyon, "HospitalPublicProfile", {name:'hello'});
+    sinon.assert.calledWith(spyon, "HospitalPublicProfile", {id:'hello'});
     sinon.assert.calledOnce(spyon);
   })
 
   it('should navigate to DoctorPublicProfile', async() => {      
     
     wrapper.instance().onPressingDoctorCard('hello');
-    sinon.assert.calledWith(spyon, "DoctorPublicProfile", {name:'hello'});
+    sinon.assert.calledWith(spyon, "DoctorPublicProfile", {id:'hello'});
     sinon.assert.calledOnce(spyon);
   })
   
