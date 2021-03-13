@@ -29,10 +29,14 @@ class hospitalViewset(viewsets.ViewSet):
         data = request.data
         try:
             if data['name'] == '':
-                return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Name is missing!"})
+                raise Exception('Name is Missing')
             elif data['licence_number'] == '':
-                return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Licence Number is missing!"})
+                raise Exception('License Number is missing')
             print("Data is {}".format(data))
+            reg_by_id = 13
+            if 'regisrted_by_id' in data:
+                reg_by_id = int(data['regisrted_by_id'])
+
             try:
                 Hospitals.objects.get_or_create(name=data['name'], addressine1=data['addressine1'],
                                                 addressine2=data['addressine2'], area=data['area'], city=data['city'],
@@ -42,7 +46,7 @@ class hospitalViewset(viewsets.ViewSet):
                                                 # originally_registered_date=data['originally_registered_date'],
                                                 originally_registered_date=datetime.utcnow(),
                                                 registered_date=datetime.utcnow(),
-                                                regisrted_by_id=13),
+                                                regisrted_by_id=reg_by_id),
 
             except Exception as exception:
                 print(exception)
@@ -50,12 +54,15 @@ class hospitalViewset(viewsets.ViewSet):
                                 data={"Message": "Incorrect data-{}".format(exception)})
         except KeyError as keyError:
             return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Invalid JSON-{}".format(keyError)})
+        except Exception as exception:
+            return Response(status=status.HTTP_409_CONFLICT,
+                            data={"Message": "Incorrect data-{}".format(exception)})
         return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Hospital"})
 
     def list(self, request):
         querySet = Hospitals.objects.all()
         serializer = HospitalsSerializer(querySet, many=True)
-        return Response(serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
     def put(self, request):
         _hospital_updated_data = request.data
@@ -72,7 +79,7 @@ class hospitalViewset(viewsets.ViewSet):
         _hospital.originally_registered_date = _hospital_updated_data["originally_registered_date"]
         _hospital.save()
         ser = HospitalsSerializer(_hospital)
-        return Response(ser.data)
+        return Response(status=status.HTTP_202_ACCEPTED, data=ser.data)
 
     def delete(self, request):
         _hospital = Hospitals.objects.get(id=request.data['id'])
@@ -89,18 +96,19 @@ class ProfilesViewset(viewsets.ViewSet):
         print(data)
         try:
             if data['email'] == '':
-                return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid email'})
+                raise Exception("Enter Valid Email")
             elif data['password'] == '':
-                return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter password'})
+                raise Exception("Enter Valid Password")
             elif data['first_name'] == '' or data['last_name'] == '':
-                return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid name!'})
+                raise Exception("Enter Valid Name")
             elif data['date_of_birth'] == '':
-                return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid date of birth!'})
+                raise Exception("Enter DOB")
             elif data['profile_type'] == '':
-                return Response(status=status.HTTP_409_CONFLICT, data={"Message": 'Enter valid profile type!'})
+                raise Exception("Enter profile type")
             else:
                 try:
                     _str = data['profile_pic']
+
                     encrypted_password = encrypt(data['password'])
                     # cipher_suite = Fernet(FERNET_KEY)
                     # encrypted_password = cipher_suite.encrypt(str.encode(data['password']))
@@ -139,6 +147,7 @@ class ProfilesViewset(viewsets.ViewSet):
 
     def list(self, req):
 
+        print(req.body)
         response_tuple = verifyAuthHeader(req, "Profiles")
         if response_tuple[0] == 403:
             return Response(status=status.HTTP_403_FORBIDDEN, data={"Message": response_tuple[1]})
@@ -154,16 +163,6 @@ class PatientsViewset(viewsets.ViewSet):
         querySet = Patients.objects.all()
         serializer = PatientsSerializer(querySet, many=True)
         return Response(status=200, data=serializer.data)
-        # return JsonResponse(status=status.HTTP_200_OK,data=serializer.data)
-        # responseTuple = verifyAuthHeader(request, "Patients")
-        # if responseTuple[0] == 403:
-        #     return Response(status=status.HTTP_403_FORBIDDEN, data={"Message": responseTuple[1]})
-        # elif responseTuple[0] == 200:
-        #     querySet = Patients.objects.all()
-        #     serializer = PatientsSerializer(querySet, many=True)
-        #     return Response(serializer.data)
-        # else:
-        #     return Response(status=responseTuple[0], data={"Message": responseTuple[1]})
 
     def create(self, request, format=None):
         data = request.data
@@ -218,7 +217,7 @@ class PharmacyViewset(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
         column_names = ['name', 'addressine1', 'addressine2', 'city', 'state', 'pincode', 'pharmacy_phone_number',
-                        'licence_number', 'originally_registered_date', 'registered_date', 'timestamp', 'medicine',
+                        'licence_number', 'originally_registered_date', 'medicine',
                         'hospital_id_id', 'regisrted_by_id']
         try:
             for column in column_names:
@@ -232,7 +231,7 @@ class PharmacyViewset(viewsets.ViewSet):
                     city=data['city'], state=data['state'], pincode=data['pincode'],
                     pharmacy_phone_number=data['pharmacy_phone_number'], licence_number=data['licence_number'],
                     originally_registered_date=data['originally_registered_date'], registered_date=datetime.utcnow(),
-                    timestamp=datetime.utcnow(), medicine=data['medicine'], hospital_id_id=data['hospital_id_id'],
+                    timestamp=datetime.utcnow(), _medicine=data['medicine'], hospital_id_id=data['hospital_id_id'],
                     regisrted_by_id=data['regisrted_by_id']
                 )
             except Exception as exception:
@@ -246,7 +245,7 @@ class PharmacyViewset(viewsets.ViewSet):
     def list(self, request):
         querySet = Pharmacy.objects.all()
         serializer = PharmacySerializer(querySet, many=True)
-        return Response(serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
     def put(self, request):
         _pharmacy_updated_data = request.data
@@ -290,7 +289,7 @@ class MedicineViewset(viewsets.ViewSet):
     def list(self, request):
         querySet = Medicine.objects.all().distinct('drug_name')
         serializer = MedicineSerializer(querySet, many=True)
-        return Response(serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
 @require_http_methods(['POST'])
@@ -325,11 +324,16 @@ class LabViewset(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
         try:
-            if data['name'] == '':
-                return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Name is missing!"})
-            elif data['licence_number'] == '':
-                return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Licence Number is missing!"})
+            if data['name'] == '' or data['licence_number'] == '':
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Name/Licence is missing!"})
+            regisrted_by_id=13
+            hospital_id=1
 
+            if 'regisrted_by_id' in data:
+                regisrted_by_id = data['regisrted_by_id']
+
+            if 'hospital_id' in data:
+                hospital_id = data['hospital_id']
             print("Data is {}".format(data))
             _lab = Lab.objects.get_or_create(name=data['name'], addressine1=data['addressine1'],
                                              addressine2=data['addressine2'], city=data['city'],
@@ -339,11 +343,10 @@ class LabViewset(viewsets.ViewSet):
                                              originally_registered_date=data['originally_registered_date'],
                                              registered_date=datetime.now(tz=timezone.utc),
                                              # registered_date=datetime.utcnow(),
-                                             hospital_id_id=1,
-                                             regisrted_by_id=13),
+                                             hospital_id_id=hospital_id,
+                                             regisrted_by_id=regisrted_by_id),
 
         except Exception as exception:
-            # print(exception)
             return Response(status=status.HTTP_409_CONFLICT, data={"Message": "Incorrect data-{}".format(exception)})
         return Response(status=status.HTTP_201_CREATED, data={"Message": "Added Lab"})
 
@@ -366,7 +369,7 @@ class LabViewset(viewsets.ViewSet):
         _lab.originally_registered_date = _lab_updated_data["originally_registered_date"]
         _lab.save()
         ser = LabSerializer(_lab)
-        return Response(ser.data)
+        return Response(status=status.HTTP_202_ACCEPTED,data=ser.data)
 
     def delete(self, request):
         _lab = Lab.objects.get(id=request.data['id'])
@@ -376,14 +379,60 @@ class LabViewset(viewsets.ViewSet):
         return Response(serializer.data)
 
 
+class LabReportsOrderViewset(viewsets.ViewSet):
+    def create(self, request, format=None):
+        data = request.data
+        column_names = ['doctor_id', 'patient_id', 'labreport_id', 'lab_id']
+        try:
+            for column in column_names:
+                if data[column] == "":
+                    return Response(status=status.HTTP_400_BAD_REQUEST,
+                                    data={"Message": "Column-{} can't be empty".format(column)})
+
+            try:
+                _labreportsorder = LabReportsOrder.objects.get_or_create(
+                    generated_by=Profiles.objects.get(id=data['doctor_id']),
+                    generated_for=Patients.objects.get(id=data['patient_id']), order_status=data['order_status'],
+                    generated_date=datetime.utcnow().date(), labreport_id_id=data['labreport_id'],
+                    lab_id_id=data['lab_id']
+                )
+            except Exception as exception:
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "{}".format(exception)})
+
+            return Response(status=status.HTTP_201_CREATED,
+                            data={"Message": "Added Lab Reports  - {}".format(_labreportsorder[0].id)})
+        except KeyError as keyError:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON-{}".format(keyError)})
+
+    def list(self, request):
+        querySet = LabReportsOrder.objects.all()
+        serializer = LabReportsOrderSerializer(querySet, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        value = kwargs['pk']
+        _labreportsorder = LabReportsOrder.objects.filter(id=value)
+        report_id = LabReportsOrderSerializer(_labreportsorder, many=True).data[0]['labreport_id']
+        print(report_id)
+        _labreport = LabReports.objects.filter(id=report_id)
+        ser = LabReportsSerializer(_labreport, many=True)
+        return Response(status=status.HTTP_200_OK, data=ser.data)
+
+
 class DepartmentViewset(viewsets.ViewSet):
     def create(self, request, format=None):
         data = request.data
         if data['name'] == '':
-            return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Name is missing!"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Name is missing!"})
 
         print("Data is {}".format(data))
         try:
+            reg_by=13
+            hospital_id=1
+            if "reg_by" in data:
+                reg_by=data["reg_by"]
+            if "hospital_id" in data:
+                hospital_id = data["hospital_id"]
             _department = Department.objects.get_or_create(Department_name=data['name'],
                                                            addressine1=data['addressine1'],
                                                            is_same_as_hospital_address=data[
@@ -392,8 +441,8 @@ class DepartmentViewset(viewsets.ViewSet):
                                                            state=data['state'], pincode=data['pincode'],
                                                            department_phone_number=data['department_phone_number'],
                                                            registered_date=datetime.utcnow(),
-                                                           regisrted_by_id=13,
-                                                           hospital_id_id=1),
+                                                           regisrted_by_id=reg_by,
+                                                           hospital_id_id=hospital_id),
 
         except Exception as exception:
             print(exception)
@@ -411,7 +460,6 @@ class DepartmentViewset(viewsets.ViewSet):
         _department.Department_name = _department_updated_data["name"]
         _department.addressine1 = _department_updated_data["addressine1"]
         _department.addressine2 = _department_updated_data["addressine2"]
-        backend_v1
         _department.is_same_as_hospital_address = _department_updated_data["is_same_as_hospital_address"]
         _department.city = _department_updated_data["city"]
         _department.state = _department_updated_data["state"]
@@ -420,7 +468,6 @@ class DepartmentViewset(viewsets.ViewSet):
         _department.save()
         ser = DepartmentSerializer(_department)
         return Response(ser.data)
-
 
     def delete(self, request):
         _department = Department.objects.get(id=request.data['id'])
@@ -512,10 +559,43 @@ class StaffViewset(viewsets.ViewSet):
 
 
 class LabReportsViewset(viewsets.ViewSet):
+
+    def create(self, request, format=None):
+        data = request.data
+        column_names = ['name', 'category', 'price', 'lab_id']
+        try:
+            for column in column_names:
+                if data[column] == "":
+                    return Response(status=status.HTTP_400_BAD_REQUEST,
+                                    data={"Message": "Column-{} can't be empty".format(column)})
+
+            lab_queryset = Lab.objects.filter(id=data['lab_id'])
+            if len(lab_queryset)==0:
+                raise Exception('Lab doesn"t exist')
+
+
+            _labreport = LabReports.objects.get_or_create(
+                    name=data['name'], category=data['category'], price=data['price'], lab_id_id=data['lab_id']
+            )
+
+            return Response(status=status.HTTP_201_CREATED,
+                            data={"Message": "Added Report  - {}".format(_labreport[0].id)})
+        except KeyError as keyError:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON-{}".format(keyError)})
+        except Exception as exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON-{}".format(exception)})
+
+
     def list(self, request):
-        querySet = LabReports.objects.all()
+        querySet = LabReports.objects.all().distinct('name')
         serializer = LabReportsSerializer(querySet, many=True)
         return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        value = kwargs['pk']
+        _labreports = LabReports.objects.filter(lab_id_id=value)
+        ser = LabReportsSerializer(_labreports, many=True)
+        return Response(ser.data)
 
 
 class AppointmentsViewset(viewsets.ViewSet):
@@ -534,17 +614,13 @@ class AppointmentsViewset(viewsets.ViewSet):
             hospital_id = data['hospital_id']
             profile_id = data['profile_id']
             # status = data["status"]
-            if patient_id == doctor_id:
-                raise Exception("Patient_id can't be same as doctor_id")
             if patient_id == '' or doctor_id == '' or profile_id == '':
                 raise Exception("Patient_id or Doctor_id  or profile_id is empty!")
             # check for validity
             profile_data = Profiles.objects.filter(id=doctor_id)
             if profile_data is None or len(profile_data) == 0:
                 raise Exception("Invalid Doctor_id")
-            profile_data = Profiles.objects.filter(id=doctor_id)
-            if profile_data is None or len(profile_data) == 0:
-                raise Exception("Invalid Doctor_id")
+
             hospital_data = Hospitals.objects.filter(id=hospital_id)
             if hospital_data is None or len(hospital_data) == 0:
                 raise Exception("Invalid Hospital_id")
@@ -560,8 +636,6 @@ class AppointmentsViewset(viewsets.ViewSet):
                                                              appointment_status=data['appointment_status'])
             return Response(status=status.HTTP_201_CREATED,
                             data={"Message": "Appointment-id {} Booked".format(appointment[0].id)})
-        except Patients.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid patient_id"})
         except KeyError as key_error:
             print('KeyError')
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON"})
@@ -602,6 +676,7 @@ class ReviewsViewset(viewsets.ViewSet):
                                                          # review_for=data['review_for'],
                                                          # review_by=data['review_by']
                                                          review_by=Profiles.objects.get(id=data['review_by']),
+                                                         hospital=Hospitals.objects.get(id=data['hospital'])
                                                          )
 
         except Exception as exception:
@@ -621,7 +696,7 @@ class LabWorkingHoursViewSet(viewsets.ViewSet):
             try:
                 if len(Lab.objects.filter(id=data['lab_id'])) == 0:
                     raise Exception('Non-Existent Lab_id')
-                LabWorkingHours.objects.get_or_create(lab_id=data['lab_id'],
+                LabWorkingHours.objects.get_or_create(lab_id=Lab.objects.get(id=data['lab_id']),
                                                       mon_start_time=data['monst'],
                                                       mon_end_time=data['monet'], tue_start_time=data['tuest'],
                                                       tue_end_time=data['tueet'], wed_start_time=data['wedst'],
@@ -665,7 +740,7 @@ class LabWorkingHoursViewSet(viewsets.ViewSet):
 
         _lab_wh.save()
         ser = LabWorkingHoursSerializer(_lab_wh)
-        return Response(ser.data)
+        return Response(status=status.HTTP_202_ACCEPTED,data=ser.data)
 
 
 @require_http_methods(['POST'])
@@ -726,8 +801,14 @@ class DoctorWorkingHoursViewSet(viewsets.ViewSet):
     def create(self, request):
         data = request.data
         try:
+            print('data=', data)
             doctor_id = data["doctor_id"]
             timeslots = data["working_hours"]
+            # print(type(timeslots))
+            # timeslots = json.loads(timeslots)
+            print(timeslots, doctor_id)
+            print("type=", type(timeslots))
+            print(pickle.dumps(timeslots))
             # day = data['day']
             for day in Constants.days:
                 if day not in timeslots:
@@ -745,9 +826,10 @@ class DoctorWorkingHoursViewSet(viewsets.ViewSet):
                                                      working_hours=pickle.dumps(timeslots))
             return Response(status=status.HTTP_201_CREATED, data={"Message": "Created doctor working hours!"})
         except KeyError as key_error:
-            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(key_error)})
+            return JsonResponse(status=status.HTTP_409_CONFLICT,
+                                data={"Message": "Please check json {}".format(key_error)})
         except Exception as exception:
-            return Response(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
+            return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
 
     def retrieve(self, request, *args, **kwargs):
         # print('Inside retrieve')
@@ -827,7 +909,7 @@ def hospitalDepartments(request):
     _hospitalDepartments = Department.objects.filter(hospital_id_id=hospital_id)
     print("len:", len(_hospitalDepartments))
     if len(_hospitalDepartments) == 0:
-        return JsonResponse(status=status.HTTP_204_NO_CONTENT, data={"Message": "Departments does not exist!!"})
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Departments does not exist!!"})
     else:
         for department in _hospitalDepartments:
             out_data.append({
@@ -911,6 +993,7 @@ class LoginSetup(View):
                 return JsonResponse(status=403, data={"Message": "Incorrect Username/Password"})
             elif _profileObject.count() == 1:
                 # print("Inside one {}".format(cipher_suite.decrypt(str.encode(_profileObject[0].password))))
+                #if password != cipher_suite.decrypt(str.encode(_profileObject[0].password)).decode('utf-8'):
                 if password != cipher_suite.decrypt(str.encode(_profileObject[0].password)).decode('utf-8'):
                     return JsonResponse(status=403, data={"Message": "Incorrect Username/Password"})
                 else:
@@ -965,11 +1048,6 @@ def sendImage(request):
     file_path = os.path.join(module_dir, 'pediatrician.jpg')
     with open(file_path, "rb") as image_file:
         image_data = base64.b64encode(image_file.read()).decode('utf-8')
-    # image = Image.open(file_path)
-    # image = Image.open('/images/pediatrician.jpg')
-    # width, height = image.size
-    # image = image.resize(300, 300)
-    # image = image.resize((600, 600))
     return HttpResponse(image_data, content_type="image/jpg")
 
 
@@ -992,7 +1070,6 @@ def getImageByFilter(request):
 def appointments_updated(request):
     try:
         request_data = request.body
-        # print(request_data)
         if request_data == '':
             raise Exception('Improper JSON')
         request_data = json.loads(request_data)
@@ -1041,7 +1118,7 @@ def appointments_updated(request):
                         appointment_dict[str(temp).split(' ')[0]].append(str(temp).split(' ')[1])
                 temp = temp + timedelta(hours=0.5)
 
-        print(appointment_dict)
+        # print(appointment_dict)
         return JsonResponse(status=status.HTTP_200_OK, data=appointment_dict)
 
     except KeyError as key_error:
@@ -1076,43 +1153,51 @@ def hospitalsList(request):
 
 @require_http_methods(['POST'])
 def hospitalDetails(request):
-    data = request.body
-    name = json.loads(data)['name']
     try:
+        data = request.body
+        name = json.loads(data)['name']
+
+        hospitals = Hospitals.objects.filter(name=name)
+        if hospitals is None or len(hospitals) == 0:
+            raise Exception('Invalid Hospital')
+
         hospital = Hospitals.objects.get(name=name)
-    except Exception:
-        return Response(status=status.HTTP_204_NO_CONTENT, data={"Message": "Hospital name does not exist!! "})
 
-    data = []
-    data1 = []
-    data2 = []
+        data = []
+        data1 = []
+        data2 = []
 
-    doctors = Staff.objects.filter(hospital_id_id=hospital.id)
-    departments = Department.objects.filter(hospital_id_id=hospital.id)
-    data.append(
-        {
-
-            "name": "{}".format(hospital.name),
-            "address": "{} {}".format(hospital.addressine1, hospital.addressine2),
-            "area": "{}".format(hospital.area),
-            "city": "{}".format(hospital.city),
-            "doctors": "{}".format(len(doctors)),
-            "departments": "{}".format(len(departments)),
-        }
-    )
-    for doctor in doctors:
-        profile = Profiles.objects.filter(id=doctor.profile_id_id)
-        _profile = ProfilesSerializer(profile, many=True).data[0]
-
-        data1.append({
-            "name": "{} {}".format(_profile['first_name'], _profile['last_name'])
-        })
-    for department in departments:
-        data2.append(
+        doctors = Staff.objects.filter(hospital_id_id=hospital.id)
+        departments = Department.objects.filter(hospital_id_id=hospital.id)
+        data.append(
             {
-                "department": "{}".format(department.Department_name)
-            })
 
+                "name": "{}".format(hospital.name),
+                "address": "{} {}".format(hospital.addressine1, hospital.addressine2),
+                "area": "{}".format(hospital.area),
+                "city": "{}".format(hospital.city),
+                "doctors": "{}".format(len(doctors)),
+                "departments": "{}".format(len(departments)),
+            }
+        )
+        for doctor in doctors:
+            profile = Profiles.objects.filter(id=doctor.profile_id_id)
+            _profile = ProfilesSerializer(profile, many=True).data[0]
+
+            data1.append({
+                "name": "{} {}".format(_profile['first_name'], _profile['last_name'])
+            })
+        for department in departments:
+            data2.append(
+                {
+                    "department": "{}".format(department.Department_name)
+                })
+    except KeyError as key_error:
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid JSON - {}".format(key_error)},
+                            safe=False)
+    except Exception as exception:
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message": "Invalid Data - {}".format(exception)},
+                            safe=False)
     return JsonResponse(status=200, data=[data, data1, data2], safe=False)
 
 
@@ -1291,7 +1376,7 @@ def get_hospital_summary(request):
                     "hospital_id": "{}".format(doctor.hospital_id_id), "id": "{}".format(doctor.id),
                     "doctor_fee": "{}".format(doctor.doctor_fee),
                     "area": "{}".format(hospital.area),
-                    "city": "{}".format(hospital.city)
+                    "city": "{}".format(hospital.city),
                 })
         departments_offered = Department.objects.filter(hospital_id=hospital.id)
         _review = Reviews.objects.filter(hospital_id=hospital_id)
@@ -1300,7 +1385,7 @@ def get_hospital_summary(request):
                                  "review_Stars": reviews.review_stars, "review_By": reviews.review_by.first_name,
                                  "review_for_doctor": reviews.review_for.id, "review_for_hospital": reviews.hospital_id,
                                  "id": reviews.id})
-        response_body['reviews'] = reviews_list
+        response_body['reviews'] = ReviewsSerializer(_review, many=True).data[0]
         for department in departments_offered:
             response_body['departments'].append(
                 {"DepartmentID": department.id, "Department": department.Department_name})
@@ -1312,6 +1397,7 @@ def get_hospital_summary(request):
         return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
     except Exception as exception:
         return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message": "{}".format(exception)})
+
 
 @require_http_methods(['POST'])
 def get_doctor_summary(request):
@@ -1400,8 +1486,10 @@ def get_appointment_summary(request):
         response_body['doctorProfile'].append(ProfilesSerializer(profile).data)
         response_body['patient'].append(PatientsSerializer(patient).data)
         return JsonResponse(status=status.HTTP_200_OK, data=response_body, safe=False)
+    except KeyError as key_error:
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message":"{}".format(key_error)})
     except Exception as exception:
-        return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message:{}".format(exception)})
+        return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message":"{}".format(exception)})
 
 
 @require_http_methods(['POST'])
@@ -1410,8 +1498,9 @@ def doctorDepartments(request):
     out_data = []
     hospital_id = json.loads(input_data)['hospital_id']
     department_id = json.loads(input_data)['department_id']
-    if hospital_id == "" or department_id == "":
-        return JsonResponse(status=400, data={"Message": "hospital or department Can't be empty!"})
+
+    # if hospital_id == "" or department_id == "":
+    #     return JsonResponse(status=400, data={"Message": "hospital or department Can't be empty!"})
     _doctorDepartments = Staff.objects.filter(hospital_id_id=hospital_id).filter(department_id_id=department_id)
     print("len:", len(_doctorDepartments))
     if len(_doctorDepartments) == 0:
@@ -1472,5 +1561,7 @@ def get_appointment_doctor(request):
             })
 
         return JsonResponse(status=status.HTTP_200_OK, data=out_data, safe=False)
+    except KeyError as key_error:
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST, data={"Message":"{}".format(key_error)})
     except Exception as exception:
         return JsonResponse(status=status.HTTP_409_CONFLICT, data={"Message:{}".format(exception)})
