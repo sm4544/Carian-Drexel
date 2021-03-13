@@ -12,9 +12,11 @@ import CustomSidebarMenu from './screen/components/CustomSidebarMenu';
 import NavigationDrawerHeader from './screen/components/NavigationDrawerHeader';
 import StaffInfoScreen from './screen/stackNavScreens/StaffInfoScreen';
 import ConfirmationScreen from './screen/stackNavScreens/ConfirmationScreen';
+
 import ManageCustomerAdminProfieScreen from './screen/drawerScreens/ManageCustomerAdminProfieScreen';
 import PatientCalenderScreen from './screen/drawerScreens/PatientsCalendarScreen';
 import ManageStaffProfileScreen from './screen/drawerScreens/ManageStaffProfileScreen';
+import MedicineAddScreen from './screen/drawerScreens/MedicineAddScreen';
 import PharmacyScreen from './screen/drawerScreens/PharmacyScreen';
 import LabScreen from './screen/drawerScreens/LabScreen';
 import ManageStaffScreen from './screen/drawerScreens/ManageStaffScreen';
@@ -665,6 +667,10 @@ const OtherExternal = createStackNavigator({
   PatientAppointments: {
     screen: PatientAppointments,
     navigationOptions: { title: 'PatientAppointments' },
+  },
+  MedicineAddScreen:{
+    screen:MedicineAddScreen,
+    navigationOptions:{title:'MedicineAddScreen'},
   },
 
 });
