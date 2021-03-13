@@ -59,7 +59,12 @@ class StaffSerializer(serializers.ModelSerializer):
 class LabReportsSerializer(serializers.ModelSerializer):
     class Meta:
         model = LabReports
-        fields = 'id', 'name', 'lab_id'
+        fields = 'id', 'name', 'category', 'price', 'lab_id'
+
+class LabReportsOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LabReportsOrder
+        fields = 'id', 'generated_by', 'generated_for', 'generated_date', 'order_status', 'labreport_id', 'lab_id'
 
 
 class AppointmentsSerializer(serializers.ModelSerializer):
