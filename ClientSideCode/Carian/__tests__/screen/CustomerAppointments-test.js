@@ -7,23 +7,17 @@ import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import Icon1 from 'react-native-vector-icons/Fontisto'
-
 import { appointmentDetailsApi } from '../../screen/services/customerDetailsService';
 import CardView from 'react-native-cardview';
-
-const appointmentsList =  {appointmentsList: appointmentsList};
- 
+const appointmentsList =  {appointmentsList: appointmentsList}; 
 
 const navigation = {
-
   navigate: jest.fn(),
   state: {
       params: {
           date: '10/10/2020',
-          time: '10:30AM', 
-          
+          time: '10:30AM',           
           appointmentsList:[{ date: '10/10/2020', time: '10:30AM', }
-
           ],
       }
   }
@@ -44,8 +38,6 @@ describe('<PatientAppointments/>', () => {
   afterEach(function () {
     navigation.navigate.restore();
   });
-
-  
 
 
   it('should contain Appointments button', () => {
