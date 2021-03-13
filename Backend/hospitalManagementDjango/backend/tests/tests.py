@@ -19,7 +19,7 @@ class TestMethods(TestCase):
 
     def test_profiles_url(self):
         response = self.client.get('/Profiles/')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 403)
         # self.browser.quit()
 
     def test_pharmacy_url(self):
@@ -44,11 +44,6 @@ class TestMethods(TestCase):
 
     def test_dept_url(self):
         response = self.client.get('/Department/')
-        self.assertEqual(response.status_code, 200)
-        # self.browser.quit()
-
-    def test_staff_url(self):
-        response = self.client.get('/Staff/')
         self.assertEqual(response.status_code, 200)
         # self.browser.quit()
 

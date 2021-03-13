@@ -168,6 +168,17 @@ class Staff(models.Model):
 class LabReports(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
+    category = models.CharField(max_length=32)
+    price = models.CharField(max_length=32)
+    lab_id = models.ForeignKey(Lab, to_field='id', on_delete=models.CASCADE)
+
+class LabReportsOrder(models.Model):
+    id = models.AutoField(primary_key=True)
+    generated_by = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE, related_name='doctor')
+    generated_for = models.ForeignKey(Patients, to_field='id', on_delete=models.CASCADE,related_name='patient')
+    generated_date = models.DateField()
+    order_status = models.CharField(max_length=30)
+    labreport_id = models.ForeignKey(LabReports, to_field='id', on_delete=models.CASCADE)
     lab_id = models.ForeignKey(Lab, to_field='id', on_delete=models.CASCADE)
 
 
@@ -279,5 +290,3 @@ class PharmacyMedicines(models.Model):
     id = models.AutoField(primary_key=True)
     pharmacy_id = models.ForeignKey(Profiles, to_field='id', on_delete=models.CASCADE)
     working_hours = models.TextField()
-
-
