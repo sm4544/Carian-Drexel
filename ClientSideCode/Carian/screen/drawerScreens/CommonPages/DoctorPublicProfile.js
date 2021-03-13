@@ -69,13 +69,15 @@ export default class DoctorPublicProfile extends ValidationComponent {
     }
   };
   getAvailableSlots = (doctorID) => {
+    console.log(doctorID)
     const body = JSON.stringify({
+
       doctorID: doctorID,
       days:30
     });
     getAvailableSlots(body)
       .then((res) => {
-        
+        console.log(res)
         var list1 = [];
         let day = moment().add(1, 'days').format("YYYY-MM-DD")
         for (i = 0; i < res[day].length; i++) {
@@ -96,6 +98,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
     });
     getDoctorDetails(body)
       .then((res) => {
+        console.log(res)
         
         const doc = {
           id: res.doctor.profile_id,
@@ -140,7 +143,8 @@ export default class DoctorPublicProfile extends ValidationComponent {
        ["Sunday", hours.Sunday.split('-')[0], hours.Sunday.split('-')[1]]]
       
 
-        this.setState({ hospitalImageList: res.hospitalImages, services: res.services, doctor: doc, hospital: h, workingHours: wHours, specialistCarddata: list3})
+        this.setState({ hospitalImageList: res.hospitalImages, services: res.services, doctor: doc, 
+          doctorReviews: res.reviews, hospital: h, workingHours: wHours, specialistCarddata: list3})
         
       })
       .catch((error) => {

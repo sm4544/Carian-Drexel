@@ -283,12 +283,13 @@ describe('<DoctorPublicProfile/>', () => {
             ],
             "reviews": [
                 {
-                    "id": 5,
                     "review_content": "Review Criticism imply careful examination of something, formulation of a judgement",
-                    "reviewTimeStamp": "2021-02-20",
-                    "review_for": 23,
-                    "review_by": 64,
-                    "review_stars": 4
+                    "review_Timestamp": "2021-02-20",
+                    "review_Stars": 4,
+                    "review_By": "soundarya",
+                    "review_for_doctor": "test",
+                    "review_for_hospital": 3,
+                    "id": 5
                 }
             ],
             "working_hours": [
@@ -510,7 +511,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>)).to.equal(true);
     })
     it('should have  review cards', () => {
-        expect(wrapper.find(ReviewCard)).to.have.length(0);  
+        expect(wrapper.find(ReviewCard)).to.have.length(1);  
     })
 
     it('should have working hours table and header row and rows', () => {
