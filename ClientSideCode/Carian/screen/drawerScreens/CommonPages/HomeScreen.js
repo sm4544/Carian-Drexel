@@ -1,5 +1,5 @@
 import ValidationComponent from 'react-native-form-validator';
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import SpecialityCard from '../Cards/SpecialityCard';
 import HospitalCard from '../Cards/HospitalCard';
 import DoctorProfileCard from '../Cards/DoctorProfileCard';
-import {getDoctors, getHospitals} from '../../services/hospitalService';
+import { getDoctors, getHospitals } from '../../services/hospitalService';
 
 
 const image = {
@@ -62,7 +62,7 @@ const urology = {
     'https://previews.123rf.com/images/shidlovski/shidlovski2002/shidlovski200200022/140302484-concept-photo-of-diagnosis-in-nephrology-and-urology-doctor-hold-in-one-hand-model-of-human-kidney-i.jpg',
 };
 export default class HomeScreen extends ValidationComponent {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -70,28 +70,28 @@ export default class HomeScreen extends ValidationComponent {
       dataSourceHospital: [],
       dataSourceDoctors: [],
       cityArray: [
-        {label: 'Hyd', value: 'hyd'},
-        {label: 'vij', value: 'vij'},
+        { label: 'Hyd', value: 'hyd' },
+        { label: 'vij', value: 'vij' },
       ],
       hospitalCount: '100',
       customerCount: '1000',
       doctorsCount: '150',
       reviewCount: '1500',
-      
-      
+
+
       specialistCarddata: [
-        {image: fPhysician, name: 'Family physicians'},
-        {image: fpediatrician, name: 'Pediatricians'},
-        {image: geriatric, name: 'Geriatric doctors'},
-        {image: allergists, name: 'Allergists'},
-        {image: derma, name: 'Dermatologists'},
-        {image: ophthal, name: 'Ophthalmologists'},
-        {image: Infectious, name: 'Infectious disease doctors'},
-        {image: image, name: 'Obstetrician/gynecologists'},
-        {image: cardiologist, name: 'Cardiologists'},
-        {image: urology, name: 'Urologists'},
+        { image: fPhysician, name: 'Family physicians' },
+        { image: fpediatrician, name: 'Pediatricians' },
+        { image: geriatric, name: 'Geriatric doctors' },
+        { image: allergists, name: 'Allergists' },
+        { image: derma, name: 'Dermatologists' },
+        { image: ophthal, name: 'Ophthalmologists' },
+        { image: Infectious, name: 'Infectious disease doctors' },
+        { image: image, name: 'Obstetrician/gynecologists' },
+        { image: cardiologist, name: 'Cardiologists' },
+        { image: urology, name: 'Urologists' },
       ],
-    
+
     };
     this.onPressShowAllDoctors = this.onPressShowAllDoctors.bind(this);
     this.onPressingHospital = this.onPressingHospital.bind(this);
@@ -99,82 +99,83 @@ export default class HomeScreen extends ValidationComponent {
     this.onPressingDoctorCard = this.onPressingDoctorCard.bind(this);
   }
   onPressShowAllDoctors = () => {
-    this.props.navigation.navigate('DisplayDoctorsList', {doctorsList: this.state.dataSourceDoctors });
+    this.props.navigation.navigate('DisplayDoctorsList', { doctorsList: this.state.dataSourceDoctors });
   };
 
   onPressShowAllHsopitals = () => {
-    this.props.navigation.navigate('DisplayHospitalsList', {hospitalsList: this.state.dataSourceHospital});
+    this.props.navigation.navigate('DisplayHospitalsList', { hospitalsList: this.state.dataSourceHospital });
   };
 
   onPressingHospital = (id) => {
-    this.props.navigation.navigate('HospitalPublicProfile', {id: id});
+    this.props.navigation.navigate('HospitalPublicProfile', { id: id });
   };
 
   onPressingDoctorCard = (id) => {
-    this.props.navigation.navigate('DoctorPublicProfile', {id: id});
+    this.props.navigation.navigate('DoctorPublicProfile', { id: id });
   };
 
   getHospitals = () => {
     getHospitals()
-    .then((res1) => {      
-      var list1 = [];
-      for (i = 0; i < 4; i++) { 
-        if (res1[i].doctors != 0){
-        list1.push({     
-          id:res1[i].hospital_id,       
-          name: res1[i].name,
-          type: res1[i].type,
-          area: res1[i].area,
-          city: res1[i].city,
-          avgRating: res1[i].avg_rating,
-          totalNoOfReviews: res1[i].total_reviews,
-          doctors: res1[i].doctors,
-          image: image
-        });
-      }
-      }
-      this.setState({dataSourceHospital: list1});  
-  })
-  .catch((error) => {
-      console.log(error);
-  });
+      .then((res1) => {
+        var list1 = [];
+        for (i = 0; i < 4; i++) {
+          if (res1[i].doctors != 0) {
+            list1.push({
+              id: res1[i].hospital_id,
+              name: res1[i].name,
+              type: res1[i].type,
+              area: res1[i].area,
+              city: res1[i].city,
+              avgRating: res1[i].avg_rating,
+              totalNoOfReviews: res1[i].total_reviews,
+              doctors: res1[i].doctors,
+              image: image
+            });
+          }
+        }
+        this.setState({ dataSourceHospital: list1 });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  
+
   getDoctors = () => {
     getDoctors()
-    .then((res2) => {
-      var list2 = [];
-      for (i = 0; i < 4; i++) {                   
-        list2.push({
-          id:res2[i].id,
-          image: image,
-          name: res2[i].name,
-          specialization: res2[i].specialization,
-          highestDegree: res2[i].highestDegree,
-          area: res2[i].area,
-          city: res2[i].city,
-          avgRating: '4.5',
-          totalNoOfReviews: '150',
-          overAllExperience: res2[i].overallExperience,
-          doctor_fee: res2[i].doctor_fee,
-        });
-      }
-      this.setState({dataSourceDoctors: list2}); 
-  })
-  .catch((error) => {
-      console.log(error);
-  });
+      .then((res2) => {
+        console.log(res2)
+        var list2 = [];
+        for (i = 0; i < 4; i++) {
+          list2.push({
+            id: res2[i].profile_id,
+            image: image,
+            name: res2[i].name,
+            specialization: res2[i].specialization,
+            highestDegree: res2[i].highestDegree,
+            area: res2[i].area,
+            city: res2[i].city,
+            avgRating: '4.5',
+            totalNoOfReviews: '150',
+            overAllExperience: res2[i].overallExperience,
+            doctor_fee: res2[i].doctor_fee,
+          });
+        }
+        this.setState({ dataSourceDoctors: list2 });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   componentDidMount() {
-    this.getDoctors();
-    this.getHospitals();  
+    Promise.all([this.getDoctors(), this.getHospitals()])
+   
   }
- 
+
 
   render() {
-    
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -182,13 +183,13 @@ export default class HomeScreen extends ValidationComponent {
           <DropDownPicker
             items={this.state.cityArray}
             defaultValue={this.state.city}
-            containerStyle={{height: 40}}
-            style={{backgroundColor: '#307ecc', width: '80%', borderRadius: 18}}
+            containerStyle={{ height: 40 }}
+            style={{ backgroundColor: '#307ecc', width: '80%', borderRadius: 18 }}
             itemStyle={{
               justifyContent: 'flex-start',
               width: '80%',
             }}
-            dropDownStyle={{backgroundColor: '#fafafa', width: '80%'}}
+            dropDownStyle={{ backgroundColor: '#fafafa', width: '80%' }}
             onChangeItem={(item) =>
               this.setState({
                 city: item.value,
@@ -201,9 +202,9 @@ export default class HomeScreen extends ValidationComponent {
           <Text style={styles.sectionText}>
             Find Hospitals by Specilazation
           </Text>
-          <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
+          <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
             {this.state.specialistCarddata.map((item) => (
-              <View key={item.name} style={{flexBasis: '50%'}}>
+              <View key={item.name} style={{ flexBasis: '50%' }}>
                 <TouchableOpacity key={item.name}>
                   <SpecialityCard
                     data={item}
@@ -225,7 +226,7 @@ export default class HomeScreen extends ValidationComponent {
               <HospitalCard
                 key={hospital.id}
                 hospital={hospital}
-                style={{width: '80%', borderRadius: 18}}></HospitalCard>
+                style={{ width: '80%', borderRadius: 18 }}></HospitalCard>
             </TouchableOpacity>
           ))}
           <TouchableOpacity

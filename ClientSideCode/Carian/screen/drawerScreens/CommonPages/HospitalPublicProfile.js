@@ -69,7 +69,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
         for (i = 0; i < res.doctors.length; i++) { 
                    
           list2.push({
-            id:res.doctors[i].id,
+            id:res.doctors[i].profile_id,
             image: image,
             name: res.doctors[i].name,
             specialization: res.doctors[i].specialization,
@@ -109,7 +109,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
   };
   componentDidMount() {
     
-    this.hospitalInfo(this.props.navigation.state.params.id);
+    Promise.all([this.hospitalInfo(this.props.navigation.state.params.id)]);
     
     
   }
@@ -266,7 +266,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
           </Text>
 
           {this.state.hospitalReviews.map((review) => (
-            <ReviewCard key={review.review_id} review={review}></ReviewCard>
+            <ReviewCard key={review.id} review={review}></ReviewCard>
           ))}
         </View>
       </ScrollView>

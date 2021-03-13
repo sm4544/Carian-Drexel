@@ -20,8 +20,12 @@ const CustomSidebarMenu = props => {
       screenToNavigate: 'HomeScreen',
     },
     {
-      navOptionName: 'Profile',
-      screenToNavigate: 'ManageCustomerAdminProfieScreen',
+      navOptionName: 'Customer Profile',
+      screenToNavigate: 'CustomerDetails', 
+    },
+    {
+      navOptionName: 'Appointments',
+      screenToNavigate: 'PatientAppointments',
     },
     {
       navOptionName: 'Logout',
@@ -181,7 +185,7 @@ const CustomSidebarMenu = props => {
   getUser = () =>{
     if(loginAs === 'Customer'){
       return CustomerOptions;
-    }else if ( loginAs === 'Admin'){
+    }else if ( loginAs === 'admin'){
       return AdminOptions;
     }else if ( loginAs === 'Doctor'){
       return DoctorOptions;
