@@ -103,11 +103,11 @@ export default class DoctorPublicProfile extends ValidationComponent {
     this.onPressingContinueButton = this.onPressingContinueButton.bind(this);
   }
   displaySlots = (date) => {
-    console.log(date.format('MM/DD/YYYY'));
+    ;
     this.setState({selectedDate: date.format('MM/DD/YYYY')});
   };
   onpressTime = (time) => {
-    console.log(time);
+    
     this.setState({selectedTime: time});
   };
   onPressingContinueButton = () => {
@@ -124,15 +124,14 @@ export default class DoctorPublicProfile extends ValidationComponent {
     }
   };
   getAvailableSlots = (doctorID) => {
-    console.log(doctorID)
+    
     const body = JSON.stringify({
-
       doctorID: doctorID,
+      days:30
     });
     getAvailableSlots(body)
 
-      .then((res) => {
-        console.log(res)
+      .then((res) => {        
         var list1 = [];
         let day = moment().add(1, 'days').format("YYYY-MM-DD")
         for (i = 0; i < res[day].length; i++) {
@@ -150,14 +149,12 @@ export default class DoctorPublicProfile extends ValidationComponent {
   };
   getDoctorDetails = (id) =>{
     const body = JSON.stringify({
-      doctor_id: 23,
+      doctor_id: id,
     });
     getDoctorDetails(body)
 
       .then((res) => {
-        console.log(res)
-
-        
+                
         const doc = {
           id: res.doctor.id,
           name : res.doctor.name,

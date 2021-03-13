@@ -16,7 +16,6 @@ global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
 
-
 const hospital = {
     image: image,
     name: 'hello',
