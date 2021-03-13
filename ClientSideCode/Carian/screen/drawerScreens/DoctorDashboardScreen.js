@@ -65,7 +65,7 @@ export default class PatientsCalendarScreen extends Component {
   }
   
 
-  onPressHospitalInfo = (name, start_time,end_time) => {
+  onPressHospitalInfo = (name,start_time,end_time) => {
     
     this.props.navigation.navigate('PatientsInfoScreen',{name : name, start_time:start_time,end_time:end_time});
   }
