@@ -17,6 +17,9 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
   },
+  head: { height: 40, backgroundColor: '#f1f8ff', borderWidth: 2 },
+  text: { margin: 1 ,fontWeight: 'bold',fontSize:1},
+
   appButtonContainer: {
     elevation: 8,
     backgroundColor: "#009688",
