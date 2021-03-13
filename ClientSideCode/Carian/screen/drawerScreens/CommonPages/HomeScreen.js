@@ -144,10 +144,11 @@ export default class HomeScreen extends ValidationComponent {
   getDoctors = () => {
     getDoctors()
     .then((res2) => {
+      console.log(res2)
       var list2 = [];
       for (i = 0; i < 4; i++) {                   
         list2.push({
-          id:res2[i].id,
+          id:res2[i].profile_id,
           image: image,
           name: res2[i].name,
           specialization: res2[i].specialization,

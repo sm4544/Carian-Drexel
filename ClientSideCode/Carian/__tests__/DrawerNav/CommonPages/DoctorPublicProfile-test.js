@@ -192,8 +192,215 @@ jest.mock('../../../screen/services/hospitalService');
 describe('<DoctorPublicProfile/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
-        getAvailableSlots.mockResolvedValue({"Message": "Invalid doctor_id"});
-        getDoctorDetails.mockResolvedValue( {"doctor": {"approved_by": 8, "department_id": 3, "doctor_fee": "75.00", "highest_qualification": "MBBS", "hospital_id": 3, "id": 42, "lab_id": 3, "licence_number": "188181", "overall_work_experience": 5, "pharmacy_id": 3, "profile_id": 23, "specialization": "Neurologist", "status": "ACtive", "studied_at": "AEC", "work_email_address": "langer@gmail.com", "work_phone_number": "9918897651"}, "hospital": {"addressine1": "BC3", "addressine2": "BC4", "area": "Delaware", "city": "Newark", "hospital_phone_number": "1239278901", "id": 3, "licence_number": "1890", "name": "AEC", "originally_registered_date": "2021-02-05", "pincode": "19104", "regisrted_by": 13, "registered_date": "2021-02-05", "state": "NJ"}, "hospitalImages": ["https://source.unsplash.com/1024x768/?nature", "https://source.unsplash.com/1024x768/?water", "https://source.unsplash.com/1024x768/?girl", "https://source.unsplash.com/1024x768/?tree"], "reviews": [{"id": 5, "reviewTimeStamp": "2021-02-20", "review_by": 64, "review_content": "Review Criticism imply careful examination of something, formulation of a judgement", "review_for": 23, "review_stars": 4}], "services": [{"doctor": 23, "hospital": 2, "id": 3, "service": "Gynaecology"}, {"doctor": 23, "hospital": 3, "id": 7, "service": "Gastroentrology"}], "working_hours": "['Mon','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM'],['Tue', '10:00AM-12:00AM', '-', '06:00PM-10:00PM', '-'],['Wed','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Thu','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Fri','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Sat','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',],['Sun','10:00AM-12:00AM','01:00PM-05:00PM','06:00PM-10:00PM','10:00PM-07:00AM',]"});
+
+        getAvailableSlots.mockResolvedValue({
+            "doctor_id": 24,
+            "2021-03-10": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ],
+            "2021-03-11": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ],
+            "2021-03-12": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ],
+            "2021-03-13": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ],
+            "2021-03-14": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ],
+            "2021-03-15": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ],
+            "2021-03-16": [
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30"
+            ]
+        });
+        getDoctorDetails.mockResolvedValue( {
+            "hospital": {
+                "id": 3,
+                "name": "AEC",
+                "addressine1": "BC3",
+                "addressine2": "BC4",
+                "area": "Delaware",
+                "city": "Newark",
+                "state": "NJ",
+                "pincode": "19104",
+                "hospital_phone_number": "1239278901",
+                "licence_number": "1890",
+                "originally_registered_date": "2021-02-05",
+                "regisrted_by": 13,
+                "registered_date": "2021-02-05"
+            },
+            "hospitalImages": [
+                "https://source.unsplash.com/1024x768/?nature",
+                "https://source.unsplash.com/1024x768/?water",
+                "https://source.unsplash.com/1024x768/?girl",
+                "https://source.unsplash.com/1024x768/?tree"
+            ],
+            "reviews": [
+                {
+                    "review_content": "Review Criticism imply careful examination of something, formulation of a judgement",
+                    "review_Timestamp": "2021-02-20",
+                    "review_Stars": 4,
+                    "review_By": "soundarya",
+                    "review_for_doctor": "test",
+                    "review_for_hospital": 3,
+                    "id": 5
+                }
+            ],
+            "working_hours": [
+                {
+                    "Monday": "10:00-18:00",
+                    "Tuesday": "10:00-18:00",
+                    "Wednesday": "10:00-18:00",
+                    "Thursday": "10:00-18:00",
+                    "Friday": "10:00-18:00",
+                    "Saturday": "10:00-18:00",
+                    "Sunday": "10:00-18:00"
+                }
+            ],
+            "doctor": {
+                "highest_qualification": "MBBS",
+                "studied_at": "AEC",
+                "work_phone_number": "9918897651",
+                "work_email_address": "langer@gmail.com",
+                "overall_work_experience": 5,
+                "status": "ACtive",
+                "licence_number": "188181",
+                "doctor_fee": "75.00",
+                "department_id": 3,
+                "hospital_id": 3,
+                "lab_id": 3,
+                "pharmacy_id": 3,
+                "profile_id": 23,
+                "departments": [
+                    "Neurologist"
+                ],
+                "name": "test test"
+            },
+            "services": [
+                {
+                    "id": 3,
+                    "service": "Gynaecology",
+                    "hospital": 2,
+                    "doctor": 23
+                },
+                {
+                    "id": 7,
+                    "service": "Gastroentrology",
+                    "hospital": 3,
+                    "doctor": 23
+                }
+            ]
+        });
+
         wrapper = shallow(<DoctorPublicProfile navigation={navigation}></DoctorPublicProfile>);
     });
     afterEach(function () {
@@ -368,7 +575,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>)).to.equal(true);
     })
     it('should have  review cards', () => {
-        expect(wrapper.find(ReviewCard)).to.have.length(0);  
+        expect(wrapper.find(ReviewCard)).to.have.length(1);  
     })
 
     it('should have working hours table and header row and rows', () => {

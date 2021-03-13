@@ -124,14 +124,25 @@ export default class DoctorPublicProfile extends ValidationComponent {
     }
   };
   getAvailableSlots = (doctorID) => {
+    console.log(doctorID)
     const body = JSON.stringify({
+
       doctorID: doctorID,
     });
     getAvailableSlots(body)
-      .then((res) => {  
-        
-        
-        
+
+      .then((res) => {
+        console.log(res)
+        var list1 = [];
+        let day = moment().add(1, 'days').format("YYYY-MM-DD")
+        for (i = 0; i < res[day].length; i++) {
+          list1.push({
+            id: i,
+            time: res[day][i],
+          });
+        }
+        this.setState({ slots: list1, calen: res })
+
       })
       .catch((error) => {
         console.log(error);
@@ -142,7 +153,10 @@ export default class DoctorPublicProfile extends ValidationComponent {
       doctor_id: 23,
     });
     getDoctorDetails(body)
-      .then((res) => {         
+
+      .then((res) => {
+        console.log(res)
+
         
         const doc = {
           id: res.doctor.id,
@@ -169,9 +183,29 @@ export default class DoctorPublicProfile extends ValidationComponent {
           totalNoOfReviews:120
 
         }
-       
 
-        this.setState({hospitalImageList:res.hospitalImages, services: res.services, doctor: doc,hospital: h  })
+        var list3 =[]
+        for (i = 0; i < 1; i++) { 
+        list3.push({
+          id:i,
+          image: image,
+          name: doc.specialization,
+        });
+      }
+
+      const hours = res.working_hours[0];
+     
+      const wHours = [["Monday", hours.Monday.split('-')[0], hours.Monday.split('-')[1]],
+       ["Tuesday", hours.Tuesday.split('-')[0], hours.Tuesday.split('-')[1]],
+       ["Wednesday", hours.Wednesday.split('-')[0], hours.Wednesday.split('-')[1]],
+       ["Thursday", hours.Thursday.split('-')[0], hours.Thursday.split('-')[1]],
+       ["Friday", hours.Friday.split('-')[0], hours.Friday.split('-')[1]],
+       ["Saturday", hours.Saturday.split('-')[0], hours.Saturday.split('-')[1]],
+       ["Sunday", hours.Sunday.split('-')[0], hours.Sunday.split('-')[1]]]
+      
+
+        this.setState({ hospitalImageList: res.hospitalImages, services: res.services, doctor: doc, 
+          doctorReviews: res.reviews, hospital: h, workingHours: wHours, specialistCarddata: list3})
 
         
       })
