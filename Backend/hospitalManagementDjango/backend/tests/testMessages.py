@@ -8,5 +8,4 @@ class TestMessages(TestCase):
 
     def test_getMessages(self):
         response = self.client.get(reverse('messages-list'))
-        # response = requests.get('http://localhost:8000/Messages/')
         assert response.status_code, 200
