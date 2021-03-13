@@ -36,18 +36,21 @@ import HospitalOverview from './screen/drawerScreens/HospitalOverview';
 import LabOverview from './screen/drawerScreens/LabOverview';
 import StaffOverview from './screen/drawerScreens/StaffOverview';
 import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
-
+import CustomerDetails from './screen/drawerScreens/CustomerDetails';
+import Prescription from './screen/drawerScreens/Prescription';
+import PrescriptionOrders from './screen/drawerScreens/PrescriptionOrders';
+import LabOrderDetails from './screen/drawerScreens/LabOrderDetails';
+import PatientDetailsScreen from './screen/drawerScreens/PatientDetailsScreen';
+import Labreport from './screen/drawerScreens/Labreport';
+import PatientAppointments from './screen/drawerScreens/PatientAppointments';
+import PatDoctorDetails from './screen/drawerScreens/PatDoctorDetails';
+import HealthInformationDetails from './screen/drawerScreens/HealthInformationDetails';
 import DisplayDoctorsList from './screen/drawerScreens/CommonPages/DisplayDoctorsList';
 import DisplayHospitalsList from './screen/drawerScreens/CommonPages/DisplayHospitalsList'; 
 import HospitalPublicProfile from './screen/drawerScreens/CommonPages/HospitalPublicProfile';
-
 import DoctorPublicProfile from './screen/drawerScreens/CommonPages/DoctorPublicProfile'; 
 import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
-
 // import PatientsAppointment from './screen/drawerScreens/PatientsAppointment';
-
-
-
 import DepartmentPage from './screen/drawerScreens/DepartmentPage';
 import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
 
@@ -148,17 +151,6 @@ const FirstActivity_StackNavigator = createStackNavigator({
       headerTintColor: '#fff',
     }),
   },
-  // PatientsAppointment: {
-  //   screen: PatientsAppointment,
-  //   navigationOptions: ({ navigation }) => ({
-  //     title: 'Appointment Details',
-  //     //headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
-  //     headerStyle: {
-  //       backgroundColor: '#307ecc',
-  //     },
-  //     headerTintColor: '#fff',
-  //   }),
-  // },
 
   PatientsScreen:{
     screen:PatientsScreen,
@@ -258,9 +250,7 @@ const SixthActivity_stackNavigator = createStackNavigator({
 
 
 const SeventhActivity_stackNavigator = createStackNavigator({
-
 First: {
-
     screen: HospitalScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Hospital Screen',
@@ -270,22 +260,7 @@ First: {
       },
       headerTintColor: '#fff',
     }),
-
   },
-
-
-
-    // screen: HospitalDetailsScreen,
-    // navigationOptions: ({ navigation }) => ({
-    //   title: 'Hospital Details Screen',
-    //   headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
-    //   headerStyle: {
-    //     backgroundColor: '#307ecc',
-    //   },
-    //   headerTintColor: '#fff',
-    // }),
-
-
 });
 
 const EigthActivity_stackNavigator = createStackNavigator({
@@ -315,7 +290,6 @@ const NinthActivity_stackNavigator = createStackNavigator({
     }),
   },
 });
-
 
 const TenthActivity_stackNavigator = createStackNavigator({
   First: {
@@ -400,19 +374,6 @@ const FifteenthActivity_stackNavigator = createStackNavigator({
     }),
   },
 });
-// const SixteenthActivity_stackNavigator = createStackNavigator({
-//   First: {
-//     screen: patientsAppointment,
-//     navigationOptions: ({ navigation }) => ({
-//       title: 'Appointment Details',
-//       headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
-//       headerStyle: {
-//         backgroundColor: '#307ecc',
-//       },
-//       headerTintColor: '#fff',
-//     }),
-//   },
-// });
 
 const SixteenthActivity_stackNavigator= createStackNavigator({
   First:{
@@ -427,6 +388,35 @@ const SixteenthActivity_stackNavigator= createStackNavigator({
     }),
   },
 });
+
+const Twentyone_stackNavigator = createStackNavigator({
+  First: {
+    screen: CustomerDetails,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Customer Details',
+      headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
+const Twentytwo_stackNavigator = createStackNavigator({
+  First: {
+    screen: PatientAppointments,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Patient Appointment Details',
+      headerLeft: ()=> <NavigationDrawerHeader navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#307ecc',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
 
 const DrawerNavigationRoutes = createDrawerNavigator({
   HomeScreen: {
@@ -532,6 +522,19 @@ const DrawerNavigationRoutes = createDrawerNavigator({
   //   },
   // },
 
+  CustomerDetails:{
+    screen:Twentyone_stackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Customer Details',
+    },
+  },
+
+  PatientAppointments:{
+    screen:Twentytwo_stackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Patient Appointment Details',
+    },
+  },
 },
 {
     contentComponent: CustomSidebarMenu,
@@ -577,8 +580,7 @@ const App = createStackNavigator({
     navigationOptions: {
       headerShown: false,
     },
-  },
-  
+  }, 
 
 });
 
@@ -625,7 +627,45 @@ const OtherExternal = createStackNavigator({
     navigationOptions: { title: 'PharmacyOverview' },
   },
 
+  PatDoctorDetails: {
+    screen: PatDoctorDetails,
+    navigationOptions: { title: 'DoctorDetails' },
+  },
+
+  HealthInformationDetails: {
+    screen: HealthInformationDetails,
+    navigationOptions: { title: 'HealthInformationDetails' },
+  },
+
+  Prescription: {
+    screen: Prescription,
+    navigationOptions: { title: 'Prescription' },
+  },
+  
+  Labreport: {
+    screen: Labreport,
+    navigationOptions: { title: 'Labreport' },
+  },
+
+  PrescriptionOrders: {
+    screen: PrescriptionOrders,
+    navigationOptions: { title: 'PrescriptionOrders' },
+  },
+
+  LabOrderDetails: {
+    screen: LabOrderDetails,
+    navigationOptions: { title: 'LabOrderDetails' },
+  },
+
+  PatientDetailsScreen: {
+    screen: PatientDetailsScreen,
+    navigationOptions: { title: 'PatientDetailsScreen' },
+  },
+
+  PatientAppointments: {
+    screen: PatientAppointments,
+    navigationOptions: { title: 'PatientAppointments' },
+  },
 
 });
 export default createAppContainer(OtherExternal);
-//export default createAppContainer(App);
