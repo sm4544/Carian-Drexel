@@ -36,7 +36,6 @@ export const getMyPharmacyMedicine = async (medBody) => {
     });
     return await res.json();   
 };
-
 export const getPharmacyList = async () => {
     console.log();
     const res = await fetch(URL + 'Pharmacy/', {
@@ -73,6 +72,7 @@ export const getLabReportsList = async () => {
     });
     return await res.json();   
 };
+
   
 
  

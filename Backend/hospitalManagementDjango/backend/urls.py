@@ -7,6 +7,7 @@ from .views import LoginSetup
 
 router = routers.DefaultRouter()
 router.register(r'hospitals', views.hospitalViewset, basename='hospitals')
+router.register(r'hospitals', views.hospitalViewset, basename='hospitals')
 router.register(r'Patients', views.PatientsViewset, basename='patients')
 router.register(r'Profiles', views.ProfilesViewset, basename='profiles')
 router.register(r'Pharmacy', views.PharmacyViewset, basename='pharmacy')
@@ -23,6 +24,7 @@ router.register(r'StaticImages', views.StaticImagesViewSet, basename='staticImag
 router.register(r'HospitalWorkingHours', views.HospitalWorkingHoursViewSet, basename='hospitalworkinghours')
 router.register(r'LabWorkingHours', views.LabWorkingHoursViewSet, basename='labworkinghours')
 router.register(r'DoctorWorkingHours', views.DoctorWorkingHoursViewSet, basename='doctorworkinghours')
+router.register(r'LabReportOrders', views.LabReportsOrderViewset, basename='labreportorders')
 
 urlpatterns = [
     path('', include(router.urls)),

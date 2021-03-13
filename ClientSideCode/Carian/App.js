@@ -12,10 +12,12 @@ import CustomSidebarMenu from './screen/components/CustomSidebarMenu';
 import NavigationDrawerHeader from './screen/components/NavigationDrawerHeader';
 import StaffInfoScreen from './screen/stackNavScreens/StaffInfoScreen';
 import ConfirmationScreen from './screen/stackNavScreens/ConfirmationScreen';
+
 import ManageCustomerAdminProfieScreen from './screen/drawerScreens/ManageCustomerAdminProfieScreen';
 import PatientCalenderScreen from './screen/drawerScreens/PatientsCalendarScreen';
 import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
 import ManageStaffProfileScreen from './screen/drawerScreens/ManageStaffProfileScreen';
+import MedicineAddScreen from './screen/drawerScreens/MedicineAddScreen';
 import PharmacyScreen from './screen/drawerScreens/PharmacyScreen';
 import LabScreen from './screen/drawerScreens/LabScreen';
 import ManageStaffScreen from './screen/drawerScreens/ManageStaffScreen';
@@ -32,6 +34,7 @@ import HospitalScreen from './screen/drawerScreens/HospitalScreen';
 import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
 import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
+import MedicineViewScreen from './screen/drawerScreens/MedicineViewScreen';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 import HospitalOverview from './screen/drawerScreens/HospitalOverview';
@@ -647,6 +650,7 @@ const OtherExternal = createStackNavigator({
     screen: PatientAppointments,
     navigationOptions: { title: 'PatientAppointments' },
   },
+
   PatientsInfoScreen:{
     screen: PatientsInfoScreen,
     navigationOptions:{title:'PatientsInfoScreen'},
@@ -656,6 +660,16 @@ const OtherExternal = createStackNavigator({
     navigationOptions:{title: 'AddLabReportsScreen'}
 
   }
+
+  MedicineAddScreen:{
+    screen:MedicineAddScreen,
+    navigationOptions:{title:'MedicineAddScreen'},
+  },
+  MedicineViewScreen:{
+    screen:MedicineViewScreen,
+    navigationOptions:{title:'MedicineViewScreen'},
+  },
+
 
 });
 export default createAppContainer(OtherExternal);

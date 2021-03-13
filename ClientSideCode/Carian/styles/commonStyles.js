@@ -8,6 +8,25 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
+  space: {
+    width: 20, 
+    height: 20,
+  },
+  containerMultiSelecet: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  head: { height: 40, backgroundColor: '#f1f8ff', borderWidth: 2 },
+  text: { margin: 1 ,fontWeight: 'bold',fontSize:1},
+
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  },
 
   AppTitle: {
     fontWeight: "bold",
