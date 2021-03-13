@@ -111,7 +111,7 @@ describe('<PatientScreen/>', () => {
 
     it('should navigate to payment screen', () => {
         wrapper.instance().onselecting(1, navigation.state.params.doctor, navigation.state.params.profileId, navigation.state.params.date, navigation.state.params.time)
-        sinon.assert.calledWith(spyon, "paymentScreen", { patientId: 1, doctor: navigation.state.params.doctor, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
+        sinon.assert.calledWith(spyon, "paymentScreen", { patientId: 1, doctor: navigation.state.params.doctor,  hospital: navigation.state.params.hospital, profileId: navigation.state.params.profileId, selectedDate: navigation.state.params.date, selectedTime: navigation.state.params.time });
     });
 
     it('should navigate to patiengt info screen', () => {

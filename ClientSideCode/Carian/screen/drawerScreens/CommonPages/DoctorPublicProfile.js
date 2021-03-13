@@ -8,10 +8,13 @@ import ReviewCard from '../Cards/ReviewCard';
 import { Table, Row, Rows } from 'react-native-table-component';
 import CalendarStrip from 'react-native-calendar-strip';
 import { SliderBox } from 'react-native-image-slider-box';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
 import { getAvailableSlots, getDoctorDetails } from '../../services/hospitalService';
+
+
 const image = {
   uri:
-    'https://st4.depositphotos.com/10313122/20884/i/1600/depositphotos_208847620-stock-photo-studio-shot-of-young-beautiful.jpg',
+  'https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg',
 };
 
 export default class DoctorPublicProfile extends ValidationComponent {
@@ -21,35 +24,36 @@ export default class DoctorPublicProfile extends ValidationComponent {
       doctor: {},
       hospital: {},
       customerCount: 1000,
-      selectedDate: moment().format('MM/DD/YYYY'),
+      selectedDate: moment().format('YYYY-MM-DD'),
       selectedTime: '',
       hospitalImageList: [],
-      specialistCarddata: [
-        { image: image, name: 'Family physicians' },
-        { image: image, name: 'Pediatricians' },
-        { image: image, name: 'Geriatric doctors' },
-
-      ],
+      slots: [],
+      specialistCarddata: [{ id: 0, image: image, name: "family phy" }],
       doctorReviews: [],
       services: [],
+      calen: {},
       headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
       workingHours: [
-        [
-          'Mon',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
       ],
     }),
       (this.displaySlots = this.displaySlots.bind(this));
     this.onPressingContinueButton = this.onPressingContinueButton.bind(this);
   }
   displaySlots = (date) => {
-    this.setState({ selectedDate: date.format('MM/DD/YYYY') });
+
+    this.setState({ selectedDate: date.dateString });
+    var list1 = [];
+    for (i = 0; i < this.state.calen[date.dateString].length; i++) {
+      list1.push({
+        id: i,
+        time: this.state.calen[date.dateString][i],
+      });
+    }
+    this.setState({ slots: list1 })
+
   };
   onpressTime = (time) => {
+
     this.setState({ selectedTime: time });
   };
   onPressingContinueButton = () => {
@@ -72,6 +76,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
     });
     getAvailableSlots(body)
       .then((res) => {
+
         var list1 = [];
         let day = moment().add(1, 'days').format("YYYY-MM-DD")
         for (i = 0; i < res[day].length; i++) {
@@ -94,11 +99,11 @@ export default class DoctorPublicProfile extends ValidationComponent {
     getDoctorDetails(body)
       .then((res) => {
         const doc = {
-          id: res.doctor.id,
+          id: res.doctor.profile_id,
           name: res.doctor.name,
           image: image,
           highestDegree: res.doctor.highest_qualification,
-          specialization: res.doctor.specialization,
+          specialization: res.doctor.departments[0],
           overAllExperience: res.doctor.overall_work_experience,
           totalNoOfReviews: 150,
           avgRating: 4,
@@ -113,9 +118,10 @@ export default class DoctorPublicProfile extends ValidationComponent {
           streatAddline1: res.hospital.addressine1,
           streatAddline2: res.hospital.addressine2,
           avgRating: 4,
-          totalNoOfReviews: 120
-        }
+          totalNoOfReviews: 120,
+          id: res.hospital.id,
 
+        }
         var list3 = []
         for (i = 0; i < 1; i++) {
           list3.push({
@@ -143,55 +149,11 @@ export default class DoctorPublicProfile extends ValidationComponent {
 
   }
   componentDidMount() {
-    this.getAvailableSlots(this.props.navigation.state.params.id);
-    this.getDoctorDetails(this.props.navigation.state.params.id)
+    Promise.all([this.getAvailableSlots(this.props.navigation.state.params.id),
+    this.getDoctorDetails(this.props.navigation.state.params.id)]);
   }
 
   render() {
-
-    let customDatesStyles = [];
-    let startDate = moment();
-    let endDate = moment(startDate).add(30, 'days');
-    let datesWhitelist = [{ start: startDate, end: endDate }];
-
-    let slots = [
-      { id: 0, time: '09:30 AM' },
-      { id: 1, time: '10:00 AM' },
-      { id: 2, time: '10:30 AM' },
-      { id: 3, time: '11:00 AM' },
-      { id: 4, time: '11:30 AM' },
-      { id: 5, time: '12:00 AM' },
-      { id: 12, time: '12:30 AM' },
-      { id: 6, time: '01:00 PM' },
-      { id: 7, time: '01:30 PM' },
-      { id: 8, time: '02:00 PM' },
-      { id: 9, time: '02:30 PM' },
-      { id: 10, time: '03:00 PM' },
-      { id: 11, time: '03:30 PM' },
-    ];
-
-    let services = [
-      { id: 0, name: 'treatment A' },
-      { id: 1, name: 'treatment B' },
-      { id: 2, name: 'treatment C' },
-      { id: 3, name: 'treatment D' },
-    ];
-
-    for (let i = 0; i < 40; i++) {
-      customDatesStyles.push({
-        startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
-
-        dateNameStyle: styles.dateNameStyle,
-        dateNumberStyle: styles.dateNumberStyle,
-        dateContainerStyle: {
-          backgroundColor: `#${`#00000${(
-            (Math.random() * (1 << 24)) |
-            0
-          ).toString(16)}`.slice(-6)}`,
-        },
-      });
-    }
-
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -219,7 +181,6 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             </View>
 
-
             <View style={styles.feesdisplay}>
               <View>
                 <Text>In-Clinic Appointment fee:</Text>
@@ -229,14 +190,15 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             </View>
           </View>
-          <View style={styles.calenderViewStyle}>
-            <CalendarStrip
-              style={styles.calenderStrip}
-              customDatesStyles={customDatesStyles}
-              maxDate={endDate}
-              datesWhitelist={datesWhitelist}
-              onDateSelected={this.displaySlots}></CalendarStrip>
-          </View>
+
+          <Calendar
+            current={moment().format('YYYY-MM-DD')}
+            minDate={moment().format('YYYY-MM-DD')}
+            maxDate={moment().add(30, 'days').format('YYYY-MM-DD')}
+            onDayPress={(day) => { this.displaySlots(day) }}
+            enableSwipeMonths={true}
+            hideExtraDays={false}
+          />
           <Text style={styles.sectionTitle}>
             Select available times on {this.state.selectedDate}
           </Text>
@@ -244,7 +206,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
             <Text style={styles.errorText}> Please Select Date And Time</Text>
           ) : null}
           <View style={styles.slotsView}>
-            {slots.map((item) => (
+            {this.state.slots.map((item) => (
               <View key={item.id} style={{ flexBasis: '25%' }}>
                 <TouchableOpacity
                   onPress={() => this.onpressTime(item.time)}
@@ -319,26 +281,36 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             </View>
           </View>
+
           <Text style={styles.sectionTitle}>Location</Text>
+
           <View style={styles.horizontalLine} />
+
           <Text style={styles.sectionTitle}>Clinic Photos</Text>
+
           <SliderBox
             images={this.state.hospitalImageList}
             sliderBoxHeight={180}
             dotColor="#FFEE58"
             inactiveDotColor="#90A4AE"
           />
+
           <View style={styles.horizontalLine} />
           <Text style={styles.sectionTitle}>Specialization</Text>
           <View style={styles.imagesRowSetUp}>
-            <View style={{ flexBasis: '50%' }}>
-              <SpecialityCard
-                data={this.state.specialistCarddata[0]}
-                style={{ backgroundColor: 'white' }}></SpecialityCard>
-            </View>
+            {this.state.specialistCarddata.map((item) => (
+              <View key={item.id} style={{ flexBasis: '50%' }}>
+                <SpecialityCard
+                  key={item.id}
+                  data={item}
+                  style={{ backgroundColor: 'white' }}></SpecialityCard>
+              </View>
+            ))}
           </View>
+
           <View style={styles.horizontalLine} />
           <Text style={styles.sectionTitle}>Services</Text>
+
           <View style={styles.slotsView}>
             {this.state.services.map((item) => (
               <View key={item.id} style={{ flexBasis: '31%' }}>
@@ -351,6 +323,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             ))}
           </View>
+
           <View style={styles.horizontalLine} />
           <Text style={styles.sectionTitle}>Working Hours</Text>
           <Table style={styles.tableStyle}>
