@@ -245,6 +245,10 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 80
-  },          
+  },  
+  space:{
+    width:20,
+    height:20
+  }        
 
 });
