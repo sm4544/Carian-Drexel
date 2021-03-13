@@ -1,6 +1,7 @@
 import ValidationComponent from 'react-native-form-validator';
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView, ImageBackground} from 'react-native';
+import {View, Text, Image, ScrollView, ImageBackground} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler' ;
 import styles from '../../styles/DoctorProfileStyles';
 import SpecialityCard from './Cards/SpecialityCard';
 import moment from 'moment';
@@ -9,6 +10,7 @@ import {Table, Row, Rows} from 'react-native-table-component';
 import CalendarStrip from 'react-native-calendar-strip';
 import CardView from 'react-native-cardview';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import {getAppointmentDetails} from '../services/doctorAppointmentService';
 const image = {
   uri:
     'https://st2.depositphotos.com/4111759/12123/v/950/depositphotos_121233300-stock-illustration-female-default-avatar-gray-profile.jpg',
@@ -19,25 +21,53 @@ export default class PatientsCalendarScreen extends Component {
     super(props);
     (this.state = {
       city: '',
+      name:'',
+      start_time:'',
+      end_time:'',
       show: false,
       profileD: {},
       selectedDate: moment().format('MM/DD/YYYY'),
       selectedTime: '',
+      appointmentDetails:[]
       
     }),
       (this.displaySlots = this.displaySlots.bind(this));
   //   this.onPressingContinueButton = this.onPressingContinueButton.bind(this);
   }
-  displaySlots = (date) => {
+  displaySlots = () => {
     this.setState({show:true});
-    console.log(date.format('MM/DD/YYYY'));
-    this.setState({selectedDate: date.format('MM/DD/YYYY')});
-    
+    this.displayAppointment();
   };
+
+  displayAppointment=()=>{
+    console.log(this.state.selectedDate);
+    const body = JSON.stringify({
+      doctor_id:13,
+      date: this.state.selectedDate
+    })
+    getAppointmentDetails(body).then(results =>{
+      console.log(results);
+      list1 =[]
+      for (i = 0; i < results.length; i++) {
+        list1.push({
+          name: results[i].name,
+          start_time: results[i].start_time,
+          end_time: results[i].end_time
+        });
+      }
+      this.setState({appointmentDetails: list1});
+      
+      
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   
 
-  onPressHospitalInfo = () => {
-    this.props.navigation.navigate('PatientsInfoScreen'); 
+  onPressHospitalInfo = (name, start_time,end_time) => {
+    
+    this.props.navigation.navigate('PatientsInfoScreen',{name : name, start_time:start_time,end_time:end_time});
   }
 
       
@@ -71,67 +101,26 @@ export default class PatientsCalendarScreen extends Component {
               customDatesStyles={customDatesStyles}
               maxDate={endDate}
               datesWhitelist={datesWhitelist}
-              onDateSelected={this.displaySlots}>
+              onDateSelected={date => {this.setState({selectedDate: date.format('YYYY-MM-DD')}),this.displaySlots()}} >
               </CalendarStrip>
               {this.state.show ? (
                 
-             <TouchableOpacity onPress={this.onPressHospitalInfo} style={{flexDirection:'column',
-      flex:1}}>
-         
-             <CardView cardElevation={2}
-                    cardMaxElevation={2}
-                    cornerRadius={10} style={{width:'100%',height:'70%', backgroundColor:'plum'}}>
+                <View>
+                {this.state.appointmentDetails.map((hospital) => (
+                  <View style={styles.cardContainer,{backgroundColor:'powderblue',paddingBottom:30,cornerRadius:100}}>
+                   
+                  <TouchableOpacity onPress={()=>this.onPressHospitalInfo(hospital.name,hospital.start_time,hospital.end_time)}style={{width:'100%',height:'30%', color:'pink', paddingBottom:100, borderRadius:10,flexDirection:"row",alignItems:'center',justifyContent:'center'},'Hello'}> 
+                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>Patient: {hospital.name} </Text>
+                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>From : {hospital.start_time} </Text>
+                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>To : {hospital.end_time} </Text>
+                   
+                    </TouchableOpacity>
                     
-                    {/* <ImageBackground  style={{width:'10%',height:'10%'}}> */}
-                        <Text style={styles.cardText}>Patient: John          Age: 30</Text>
-                        <Text style={styles.cardText}>Gender: Male</Text>
-                        <Text style={styles.cardText}>Appointment: 9:00 am to 9:30 am</Text>
-                        <Text style={styles.cardText}>Reason: Fever</Text>
-                    {/* </ImageBackground> */}
-                </CardView></TouchableOpacity>) : null}
-                {this.state.show ? (
-                <TouchableOpacity style={{flexDirection:'column',
-      flex:1}}>
-               
-             <CardView cardElevation={2}
-                    cardMaxElevation={2}
-                    cornerRadius={10} style={{width:'100%',height:'70%', backgroundColor:'lightcoral'}}>
-                        <Text style={styles.cardText}>Patient:  Sophia         Age: 50</Text>
-                        <Text style={styles.cardText}>Gender: Female</Text>
-                        <Text style={styles.cardText}>Appointment: 10:00 am to 10:30 am</Text>
-                        <Text style={styles.cardText}>Reason: Check-Up</Text>                    
-                </CardView></TouchableOpacity>) : null}
-                {this.state.show ? (
-                <TouchableOpacity style={{flexDirection:'column',
-      flex:1}}>
-               
-             <CardView cardElevation={2}
-                    cardMaxElevation={2}
-                    cornerRadius={10} style={{width:'100%',height:'70%', backgroundColor:'mediumturquoise'}}>
-                        <Text style={styles.cardText}>Patient:  James         Age: 65</Text>
-                        <Text style={styles.cardText}>Gender: Male</Text>
-                        <Text style={styles.cardText}>Appointment: 11:00 am to 12:30 pm</Text>
-                        <Text style={styles.cardText}>Reason: Dental</Text>                    
-                </CardView></TouchableOpacity>) : null}
-                {this.state.show ? (
-                <TouchableOpacity style={{flexDirection:'column',
-      flex:1}}>
-              
-               
-               <CardView cardElevation={2}
-                      cardMaxElevation={2}
-                      cornerRadius={10} style={{width:'100%',height:'70%', backgroundColor:'lightsteelblue'}}>
-                          <Text style={styles.cardText}>Patient:  Mia         Age: 15</Text>
-                          <Text style={styles.cardText}>Gender: Female</Text>
-                          <Text style={styles.cardText}>Appointment: 1:00 pm to 2:00 pm</Text>
-                          <Text style={styles.cardText}>Reason: Cough</Text>                    
-                  </CardView>
-                 </TouchableOpacity>) : null}
-                
-                 
-                 {/* ) : null} */}
-    </View>
-    
-          );
+                 </View>
+                ))}</View>
+               ): null} 
+  </View>
+  
+        );
   }
 }
