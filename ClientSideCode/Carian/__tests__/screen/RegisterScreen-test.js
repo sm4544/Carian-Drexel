@@ -7,7 +7,6 @@ import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { PostProfileApi } from '../../screen/services/profileService';
-import { launchImageLibrary } from 'react-native-image-picker';
 const navigation = { navigate: jest.fn() };
 global.expect = expect;
 global.sinon = sinon;
@@ -48,9 +47,6 @@ describe('<Register/>', () => {
   it('should have the Dropdown picker  input component with empaty value ', () => {
     expect(wrapper.state('securityQuestion')).to.equal('');
   });
-
-  
-
 
   it('should have 8 Textinput boxes', () => {
     expect(wrapper.find(TextInput)).to.have.length(7);
@@ -116,8 +112,6 @@ describe('<Register/>', () => {
     expect(wrapper.state('password')).to.equal('123456789');
   });
 
-
-
   it('should have the securityAnswer input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(6).props().value).to.equal('');
   });
@@ -135,19 +129,19 @@ describe('<Register/>', () => {
 
   it('should through error messages if user click on Register with empty Firstname', () => {
     const reisterButton = wrapper.find(TouchableOpacity).at(1);
-    reisterButton.simulate('press');    
+    reisterButton.simulate('press');
     expect(wrapper.contains('The field "firstName" is mandatory.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty lastName', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(1);
-    registerButton.simulate('press');    
+    registerButton.simulate('press');
     expect(wrapper.contains('The field "lastName" is mandatory.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty mobileNumber', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(1);
-    registerButton.simulate('press');    
+    registerButton.simulate('press');
     expect(wrapper.contains('The field "mobileNumber" is mandatory.')).to.equal(true);
   })
 
@@ -158,7 +152,7 @@ describe('<Register/>', () => {
     expect(wrapper.contains('The field "email" is mandatory.')).to.equal(true);
   })
 
-  it('should through error message if user click on Register with invalid email', () => {    
+  it('should through error message if user click on Register with invalid email', () => {
     const email = wrapper.find(TextInput).at(3);
     email.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(1);
@@ -180,7 +174,7 @@ describe('<Register/>', () => {
     regButton.simulate('press');
     expect(wrapper.contains('The field "password" length must be greater than 2.')).to.equal(true);
   })
-  
+
   it('should contain Sign in button', () => {
     expect(wrapper.contains(<Text style={styles.hyperlink}> Already have an account? Sign in</Text>)).to.equal(true);
     expect(wrapper.find(TouchableOpacity)).to.have.length(3);
@@ -193,7 +187,7 @@ describe('<Register/>', () => {
     sinon.assert.calledOnce(spyon);
   })
 
-  it('should navigate to staff info screen page component', async() => {
+  it('should navigate to staff info screen page component', async () => {
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(2).simulate('ChangeText', '123456');
@@ -201,45 +195,46 @@ describe('<Register/>', () => {
     wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(6).simulate('ChangeText', 'Who are you');
-    
     wrapper.setState({ profile_type: 'Doctor' });
     wrapper.setState({ securityQuestion: 'Doctor' });
-    
-    
-    const output = {"FirstName": "Admin", 
-                  "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk", 
-                  "LastName": "Admin", 
-                  "Message": "Added Profile", 
-                  "ProfileID": "39", 
-                  "Profile_Type": "test"};
-    
-    PostProfileApi.mockResolvedValue(output);    
+
+    const output = {
+      "FirstName": "Admin",
+      "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk",
+      "LastName": "Admin",
+      "Message": "Added Profile",
+      "ProfileID": "39",
+      "Profile_Type": "test"
+    };
+
+    PostProfileApi.mockResolvedValue(output);
     await wrapper.instance().onPressRegister();
-    sinon.assert.calledWith(spyon, "StaffInfoScreen", {  name: 'test,test', profileId: "39",  profile_type: 'Doctor'});
+    sinon.assert.calledWith(spyon, "StaffInfoScreen", { name: 'test,test', profileId: "39", profile_type: 'Doctor' });
     sinon.assert.calledOnce(spyon);
   })
 
-  it('should not navigate to staff info screen page component', async() => {
+  it('should not navigate to staff info screen page component', async () => {
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(2).simulate('ChangeText', '123456');
     wrapper.find(TextInput).at(3).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(5).simulate('ChangeText', '123456789632');
-    
     wrapper.find(TextInput).at(6).simulate('ChangeText', 'test');
     wrapper.setState({ profile_type: 'Doctor' });
     wrapper.setState({ securityQuestion: 'Doctor' });
     const register = wrapper.find(TouchableOpacity).at(0);
-    const output = {"FirstName": "Admin", 
-                  "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk", 
-                  "LastName": "Admin", 
-                  "Message": "Error in Profile", 
-                  "ProfileID": "39", 
-                  "Profile_Type": "test"};
-    
+    const output = {
+      "FirstName": "Admin",
+      "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImV4cCI6MTYwMzg0MjUyOH0.oiiepPL-XASk-D_TOCbNgt65Lk7dLycIRNc-J4Wj9Bk",
+      "LastName": "Admin",
+      "Message": "Error in Profile",
+      "ProfileID": "39",
+      "Profile_Type": "test"
+    };
+
     PostProfileApi.mockResolvedValue(output);
     await wrapper.instance().onPressRegister();
     sinon.assert.notCalled(spyon)
   })
-}); 
+});

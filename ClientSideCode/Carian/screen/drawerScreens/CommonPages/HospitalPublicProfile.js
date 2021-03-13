@@ -55,7 +55,6 @@ export default class HospitalPublicProfile extends ValidationComponent {
     });
     getAllHospitalsInfo(body)
       .then((res) => {  
-        console.log(res)
         var list2 =[];
         var list1 = [];
         for (i = 0; i < res.departments.length; i++) { 
@@ -70,7 +69,7 @@ export default class HospitalPublicProfile extends ValidationComponent {
         for (i = 0; i < res.doctors.length; i++) { 
                    
           list2.push({
-            id:res.doctors[i].id,
+            id:res.doctors[i].profile_id,
             image: image,
             name: res.doctors[i].name,
             specialization: res.doctors[i].specialization,

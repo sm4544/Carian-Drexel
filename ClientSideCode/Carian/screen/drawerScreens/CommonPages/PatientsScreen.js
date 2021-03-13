@@ -32,6 +32,8 @@ export default class PatientsScreen extends ValidationComponent {
 
     }
     onselecting = (patientId) => {
+        console.log(patientId);
+        
         this.setState({ patientId: patientId })
         this.props.navigation.navigate("paymentScreen", {
             patientId: this.state.patientId, doctor: this.state.doctor, hospital: this.state.hospital,
@@ -50,6 +52,7 @@ export default class PatientsScreen extends ValidationComponent {
         getdependents(profileId)
             .then((res) => {
                 var list1 = [];
+               
                 for (i = 0; i < res.length; i++) {
                     list1.push({
                         label: res[i].first_name + ' ' + res[i].last_name + ' (' + res[i].relation + ')',

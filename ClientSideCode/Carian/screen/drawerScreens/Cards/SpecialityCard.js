@@ -3,23 +3,10 @@ import React, { Component, useState } from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    Alert,
-    Image,
-    ScrollView,
-    style,
     ImageBackground
 } from 'react-native';
 import styles from '../../../styles/homeScreenStyles';
 import CardView from 'react-native-cardview';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from 'react-native-vector-icons/Feather';
-
-const image = { uri: "https://reactjs.org/logo-og.png" };
-
-
 
 export default class SpecialityCard extends ValidationComponent {
     render() {
@@ -35,7 +22,6 @@ export default class SpecialityCard extends ValidationComponent {
                     </ImageBackground>
                 </CardView>
             </View>
-
         )
     }
 };

@@ -2,13 +2,7 @@ import React from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    Alert,
-    Image,
-    ScrollView,
-    style,
+
 } from 'react-native';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
@@ -16,12 +10,6 @@ import sinon from 'sinon';
 import styles from '../../../styles/DoctorProfileStyles';
 import PaymentScreen from '../../../screen/drawerScreens/CommonPages/PaymentScreen';
 import DropDownPicker from 'react-native-dropdown-picker';
-import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
-import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
-import DoctorProfileCard from '../../../screen/drawerScreens/Cards/DoctorProfileCard';
-
-const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
-
 const navigation = {
     navigate: jest.fn(),
     state: {
@@ -30,8 +18,8 @@ const navigation = {
             selectedTime: '10:30AM',
             profileId: '10',
             patientId: '10',
-            doctor: {"area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist"},
-                        
+            doctor: { "area": "Delaware", "city": "Newark", "college_name": "AEC", "doctor_fee": "75.00", "email": "langer@gmail.com", "highestDegree": "MBBS", "hospital_id": "3", "hospital_name": "AEC", "id": "42", "licence_number": "188181", "name": "test test", "overallExperience": "5", "phoneNumber": "9918897651", "profile_id": "23", "specialization": "Neurologist" },
+
         }
     }
 };
@@ -39,8 +27,6 @@ global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
 jest.mock('../../../screen/services/profileService');
-
-
 
 describe('<PaymentScreen/>', () => {
     beforeEach(function () {
@@ -67,13 +53,12 @@ describe('<PaymentScreen/>', () => {
         expect(wrapper.find(DropDownPicker)).to.have.length(1);
     });
 
-
     it('should have pay at hospital section when paymen type is cash', () => {
-        wrapper.setState({paymentType: 'Cash'})
+        wrapper.setState({ paymentType: 'Cash' })
         expect(wrapper.contains(<Text>Pay $75.00 at the Hospital</Text>)).to.equal(true);
     });
     it('should have confirm button', () => {
-        wrapper.setState({paymentType: 'Cash'})
+        wrapper.setState({ paymentType: 'Cash' })
         expect(wrapper.contains(<Text style={styles.payButtonText}>Confirm Appointment</Text>)).to.equal(true);
     });
-    });
+});

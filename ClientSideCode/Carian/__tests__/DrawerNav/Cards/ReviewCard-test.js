@@ -9,20 +9,18 @@ import sinon from 'sinon';
 import styles from '../../../styles/homeScreenStyles';
 import ReviewCard from '../../../screen/drawerScreens/Cards/ReviewCard';
 
-
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
 
-
 const review = {
-    review_content: "Review Criticism imply careful examination of something, formulation of a judgement",
-    review_Timestamp: "2021-02-20",
-    review_Stars: 5,
-    review_By: "Srikar",
-    review_for_doctor: 13,
-    review_for_hospital: 1,
-    id: 2
+    "review_content": "Review Criticism imply careful examination of something, formulation of a judgement",
+    "review_Timestamp": "2021-02-20",
+    "review_Stars":4,
+    "review_By": "soundarya",
+    "review_for_doctor": "test",
+    "review_for_hospital": 3,
+    "id": 5
 }
 
 describe('<ReviewCard/>', () => {
@@ -39,11 +37,13 @@ describe('<ReviewCard/>', () => {
     });
 
     it('should have a letter h', () => {
-        expect(wrapper.contains(<Text style={{ fontSize: 20, color: '#307ecc' }}>S</Text>)).to.equal(true);
+
+        expect(wrapper.contains(<Text style={{ fontSize: 20, color: '#307ecc' }}>s</Text>)).to.equal(true);
     });
 
     it('should have diaply name hello', () => {
-        expect(wrapper.contains(<Text style={styles.profileHeaderText}>Srikar</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.profileHeaderText}>soundarya</Text>)).to.equal(true);
+
     });
 
     it('should have diaply date', () => {
@@ -51,7 +51,7 @@ describe('<ReviewCard/>', () => {
     });
 
     it('should have diaply rating', () => {
-        expect(wrapper.contains(<Text style={styles.profileHeaderText}>5</Text>)).to.equal(false);
+        expect(wrapper.contains(<Text style={styles.profileHeaderText}>4</Text>)).to.equal(false);
     });
 
     it('should have diaply comment', () => {
@@ -60,6 +60,6 @@ describe('<ReviewCard/>', () => {
 
     it('should have 5 text boxes ', () => {
         expect(wrapper.find(Text)).to.have.length(5);
-        
+
     });
 });

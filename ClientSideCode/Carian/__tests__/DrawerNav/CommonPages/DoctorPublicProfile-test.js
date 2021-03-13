@@ -14,22 +14,17 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import moment from 'moment';
-import {SliderBox} from 'react-native-image-slider-box';
+import { SliderBox } from 'react-native-image-slider-box';
 import { Table, Row, Rows } from "react-native-table-component";
 import styles from '../../../styles/DoctorProfileStyles';
-import HomeScreen from '../../../screen/drawerScreens/CommonPages/HomeScreen';
 import DoctorPublicProfile from '../../../screen/drawerScreens/CommonPages/DoctorPublicProfile';
-import DropDownPicker from 'react-native-dropdown-picker';
 import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
 import ReviewCard from '../../../screen/drawerScreens/Cards/ReviewCard';
-import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
 import CalendarStrip from 'react-native-calendar-strip';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars'
-import {getAvailableSlots, getDoctorDetails} from '../../../screen/services/hospitalService';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
+import { getAvailableSlots, getDoctorDetails } from '../../../screen/services/hospitalService';
 
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
-
-
 
 const navigation = {
     navigate: jest.fn(),
@@ -37,87 +32,87 @@ const navigation = {
         params: {
             id: 1,
             doctor: {},
-      hospital:{},
-      customerCount:1000,
-      selectedDate: moment().format('MM/DD/YYYY'),
-      selectedTime: '',
-      hospitalImageList: [],
-      specialistCarddata: [
-        {image: image, name: 'Family physicians'},
-        {image: image, name: 'Pediatricians'},
-        {image: image, name: 'Geriatric doctors'},
-        {image: image, name: 'Allergists'},
-        {image: image, name: 'Dermatologists'},
-        {image: image, name: 'Ophthalmologists'},
-        {image: image, name: 'Infectious disease doctors'},
-        {image: image, name: 'Obstetrician/gynecologists'},
-        {image: image, name: 'Cardiologists'},
-        {image: image, name: 'Endocrinologists'},
-        {image: image, name: 'Gastroenterologists'},
-        {image: image, name: 'Nephrologists'},
-        {image: image, name: 'Urologists'},
-        {image: image, name: 'Pulmonologists'},
-        {image: image, name: 'Otolaryngologists'},
-        {image: image, name: 'Neurologists'},
-        {image: image, name: 'Psychiatrists'},
-        {image: image, name: 'Oncologists'},
-        {image: image, name: 'Radiologists'},
-        {image: image, name: 'General surgeons'},
-        {image: image, name: 'Orthopedic surgeons'},
-        {image: image, name: 'Cardiac surgeons'},
-        {image: image, name: 'Anesthesiologists'},
-        {image: image, name: 'Rheumatologists'},
-      ],
-      doctorReviews: [],
-      services:[],
-      slots: [],
-      headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
-      workingHours: [
-        [
-          'Mon',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
-        ['Tue', '10:00AM-12:00AM', '-', '06:00PM-10:00PM', '-'],
-        [
-          'Wed',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
-        [
-          'Thu',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
-        [
-          'Fri',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
-        [
-          'Sat',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
-        [
-          'Sun',
-          '10:00AM-12:00AM',
-          '01:00PM-05:00PM',
-          '06:00PM-10:00PM',
-          '10:00PM-07:00AM',
-        ],
-      ],
-            }
+            hospital: {},
+            customerCount: 1000,
+            selectedDate: moment().format('MM/DD/YYYY'),
+            selectedTime: '',
+            hospitalImageList: [],
+            specialistCarddata: [
+                { image: image, name: 'Family physicians' },
+                { image: image, name: 'Pediatricians' },
+                { image: image, name: 'Geriatric doctors' },
+                { image: image, name: 'Allergists' },
+                { image: image, name: 'Dermatologists' },
+                { image: image, name: 'Ophthalmologists' },
+                { image: image, name: 'Infectious disease doctors' },
+                { image: image, name: 'Obstetrician/gynecologists' },
+                { image: image, name: 'Cardiologists' },
+                { image: image, name: 'Endocrinologists' },
+                { image: image, name: 'Gastroenterologists' },
+                { image: image, name: 'Nephrologists' },
+                { image: image, name: 'Urologists' },
+                { image: image, name: 'Pulmonologists' },
+                { image: image, name: 'Otolaryngologists' },
+                { image: image, name: 'Neurologists' },
+                { image: image, name: 'Psychiatrists' },
+                { image: image, name: 'Oncologists' },
+                { image: image, name: 'Radiologists' },
+                { image: image, name: 'General surgeons' },
+                { image: image, name: 'Orthopedic surgeons' },
+                { image: image, name: 'Cardiac surgeons' },
+                { image: image, name: 'Anesthesiologists' },
+                { image: image, name: 'Rheumatologists' },
+            ],
+            doctorReviews: [],
+            services: [],
+            slots: [],
+            headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
+            workingHours: [
+                [
+                    'Mon',
+                    '10:00AM-12:00AM',
+                    '01:00PM-05:00PM',
+                    '06:00PM-10:00PM',
+                    '10:00PM-07:00AM',
+                ],
+                ['Tue', '10:00AM-12:00AM', '-', '06:00PM-10:00PM', '-'],
+                [
+                    'Wed',
+                    '10:00AM-12:00AM',
+                    '01:00PM-05:00PM',
+                    '06:00PM-10:00PM',
+                    '10:00PM-07:00AM',
+                ],
+                [
+                    'Thu',
+                    '10:00AM-12:00AM',
+                    '01:00PM-05:00PM',
+                    '06:00PM-10:00PM',
+                    '10:00PM-07:00AM',
+                ],
+                [
+                    'Fri',
+                    '10:00AM-12:00AM',
+                    '01:00PM-05:00PM',
+                    '06:00PM-10:00PM',
+                    '10:00PM-07:00AM',
+                ],
+                [
+                    'Sat',
+                    '10:00AM-12:00AM',
+                    '01:00PM-05:00PM',
+                    '06:00PM-10:00PM',
+                    '10:00PM-07:00AM',
+                ],
+                [
+                    'Sun',
+                    '10:00AM-12:00AM',
+                    '01:00PM-05:00PM',
+                    '06:00PM-10:00PM',
+                    '10:00PM-07:00AM',
+                ],
+            ],
+        }
     }
 };
 global.expect = expect;
@@ -125,11 +120,10 @@ global.sinon = sinon;
 global.shallow = shallow;
 jest.mock('../../../screen/services/hospitalService');
 
-
-
 describe('<DoctorPublicProfile/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
+
         getAvailableSlots.mockResolvedValue({
             "doctor_id": 24,
             "2021-03-10": [
@@ -139,16 +133,6 @@ describe('<DoctorPublicProfile/>', () => {
                 "11:30",
                 "12:00",
                 "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
             ],
             "2021-03-11": [
                 "10:00",
@@ -156,110 +140,15 @@ describe('<DoctorPublicProfile/>', () => {
                 "11:00",
                 "11:30",
                 "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
             ],
             "2021-03-12": [
                 "10:00",
                 "10:30",
                 "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
             ],
-            "2021-03-13": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-14": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-15": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ],
-            "2021-03-16": [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00",
-                "12:30",
-                "13:00",
-                "13:30",
-                "14:00",
-                "14:30",
-                "15:00",
-                "15:30",
-                "16:00",
-                "16:30",
-                "17:00",
-                "17:30"
-            ]
+
         });
-        getDoctorDetails.mockResolvedValue( {
+        getDoctorDetails.mockResolvedValue({
             "hospital": {
                 "id": 3,
                 "name": "AEC",
@@ -283,12 +172,13 @@ describe('<DoctorPublicProfile/>', () => {
             ],
             "reviews": [
                 {
-                    "id": 5,
                     "review_content": "Review Criticism imply careful examination of something, formulation of a judgement",
-                    "reviewTimeStamp": "2021-02-20",
-                    "review_for": 23,
-                    "review_by": 64,
-                    "review_stars": 4
+                    "review_Timestamp": "2021-02-20",
+                    "review_Stars": 4,
+                    "review_By": "soundarya",
+                    "review_for_doctor": "test",
+                    "review_for_hospital": 3,
+                    "id": 5
                 }
             ],
             "working_hours": [
@@ -336,6 +226,7 @@ describe('<DoctorPublicProfile/>', () => {
                 }
             ]
         });
+
         wrapper = shallow(<DoctorPublicProfile navigation={navigation}></DoctorPublicProfile>);
     });
     afterEach(function () {
@@ -352,7 +243,7 @@ describe('<DoctorPublicProfile/>', () => {
 
     it('should have doctor profileimage ', () => {
         expect(wrapper.find(Image)).to.have.length(1);
-        
+
     });
 
     it('should have doctor name text ', () => {
@@ -399,9 +290,9 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have text of slots ', () => {
-        
-            expect(wrapper.contains(<Text>10:00</Text>)).to.equal(true);
-        
+      
+            expect(wrapper.contains(<Text>10:00</Text>)).to.equal(false);
+       
     });
 
     it('should have horizontal line', () => {
@@ -452,7 +343,7 @@ describe('<DoctorPublicProfile/>', () => {
     })
 
     it('should have rating info text', () => {
-        wrapper.setState({customerCount:1000})
+        wrapper.setState({ customerCount: 1000 })
         expect(wrapper.contains(<Text style={styles.addressHeader}>1000 Served Via Carian </Text>)).to.equal(true);
     })
 
@@ -479,8 +370,8 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Specialization</Text>)).to.equal(true);
     })
     it('should have  doctor specilization section text', () => {
-        expect(wrapper.find(SpecialityCard)).to.have.length(2)
-        
+        expect(wrapper.find(SpecialityCard)).to.have.length(1)
+
     })
     it('should have  horizantol line view', () => {
         expect(wrapper.contains(<View style={styles.horizontalLine} />)).to.equal(true);
@@ -489,7 +380,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Services</Text>)).to.equal(true);
     })
     it('should have  services touchable', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(22)
+        expect(wrapper.find(TouchableOpacity)).to.have.length(6)
 
     })
     it('should have horizontal line view', () => {
@@ -510,31 +401,32 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>)).to.equal(true);
     })
     it('should have  review cards', () => {
-        expect(wrapper.find(ReviewCard)).to.have.length(0);  
+        expect(wrapper.find(ReviewCard)).to.have.length(1);
     })
 
     it('should have working hours table and header row and rows', () => {
-       expect(wrapper.find(Table)).to.have.length(1);  
-       expect(wrapper.find(Row)).to.have.length(1); 
-       expect(wrapper.find(Rows)).to.have.length(1);  
-       
+        expect(wrapper.find(Table)).to.have.length(1);
+        expect(wrapper.find(Row)).to.have.length(1);
+        expect(wrapper.find(Rows)).to.have.length(1);
+        //expect(wrapper.contains(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />)).to.equal(true);
+
     })
 
     it('should display default date in the footer', () => {
-        wrapper.setState({selectedDate:'10/10/2020'})
+        wrapper.setState({ selectedDate: '10/10/2020' })
         expect(wrapper.contains(<Text style={styles.footerText}> Date : 10/10/2020</Text>)).to.equal(true);
-     })
+    })
 
-     it('should display not display time in the footer', () => {
+    it('should display not display time in the footer', () => {
         expect(wrapper.contains(<Text style={styles.footerText}> Time : </Text>)).to.equal(true);
-     })
+    })
 
-     it('should display time in the footer', () => {
-        wrapper.setState({selectedTime:'10:00AM'})
+    it('should display time in the footer', () => {
+        wrapper.setState({ selectedTime: '10:00AM' })
         expect(wrapper.contains(<Text style={styles.footerText}> Time : 10:00AM</Text>)).to.equal(true);
-     })
+    })
 
-     it('should display  touchable button to continue in the footer', () => {
+    it('should display  touchable button to continue in the footer', () => {
         expect(wrapper.contains(<Text style={styles.payButtonText}>Continue $75.00</Text>)).to.equal(true);
-     })
+    })
 })

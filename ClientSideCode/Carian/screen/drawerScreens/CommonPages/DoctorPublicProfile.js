@@ -8,13 +8,13 @@ import ReviewCard from '../Cards/ReviewCard';
 import { Table, Row, Rows } from 'react-native-table-component';
 import CalendarStrip from 'react-native-calendar-strip';
 import { SliderBox } from 'react-native-image-slider-box';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars'
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
 import { getAvailableSlots, getDoctorDetails } from '../../services/hospitalService';
 
 
 const image = {
   uri:
-    'https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg',
+  'https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg',
 };
 
 export default class DoctorPublicProfile extends ValidationComponent {
@@ -28,31 +28,32 @@ export default class DoctorPublicProfile extends ValidationComponent {
       selectedTime: '',
       hospitalImageList: [],
       slots: [],
-      specialistCarddata: [{id: 0, image: image, name: "family phy"}],
+      specialistCarddata: [{ id: 0, image: image, name: "family phy" }],
       doctorReviews: [],
       services: [],
       calen: {},
-      headerSlots: ['Days', 'Start time','End time',],
-      workingHours: [],
+      headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
+      workingHours: [
+      ],
     }),
-      this.displaySlots = this.displaySlots.bind(this);
+      (this.displaySlots = this.displaySlots.bind(this));
     this.onPressingContinueButton = this.onPressingContinueButton.bind(this);
   }
   displaySlots = (date) => {
-   
-      this.setState({ selectedDate: date.dateString});
-      var list1 = [];      
-      for (i = 0; i < this.state.calen[date.dateString].length; i++) {
-        list1.push({
-          id: i,
-          time: this.state.calen[date.dateString][i],
-        });
-      }
-      this.setState({ slots: list1})   
-    
+
+    this.setState({ selectedDate: date.dateString });
+    var list1 = [];
+    for (i = 0; i < this.state.calen[date.dateString].length; i++) {
+      list1.push({
+        id: i,
+        time: this.state.calen[date.dateString][i],
+      });
+    }
+    this.setState({ slots: list1 })
+
   };
   onpressTime = (time) => {
-    
+
     this.setState({ selectedTime: time });
   };
   onPressingContinueButton = () => {
@@ -71,11 +72,11 @@ export default class DoctorPublicProfile extends ValidationComponent {
   getAvailableSlots = (doctorID) => {
     const body = JSON.stringify({
       doctorID: doctorID,
-      days:30
+      days: 30
     });
     getAvailableSlots(body)
       .then((res) => {
-        
+
         var list1 = [];
         let day = moment().add(1, 'days').format("YYYY-MM-DD")
         for (i = 0; i < res[day].length; i++) {
@@ -90,13 +91,13 @@ export default class DoctorPublicProfile extends ValidationComponent {
         console.log(error);
       });
   };
+
   getDoctorDetails = (id) => {
     const body = JSON.stringify({
       doctor_id: id,
     });
     getDoctorDetails(body)
       .then((res) => {
-        
         const doc = {
           id: res.doctor.profile_id,
           name: res.doctor.name,
@@ -119,44 +120,40 @@ export default class DoctorPublicProfile extends ValidationComponent {
           avgRating: 4,
           totalNoOfReviews: 120,
           id: res.hospital.id,
+
         }
-        var list3 =[]
-        for (i = 0; i < 1; i++) { 
-        list3.push({
-          id:i,
-          image: image,
-          name: doc.specialization,
-        });
-      }
-
-      const hours = res.working_hours[0];
-     
-      const wHours = [["Monday", hours.Monday.split('-')[0], hours.Monday.split('-')[1]],
-       ["Tuesday", hours.Tuesday.split('-')[0], hours.Tuesday.split('-')[1]],
-       ["Wednesday", hours.Wednesday.split('-')[0], hours.Wednesday.split('-')[1]],
-       ["Thursday", hours.Thursday.split('-')[0], hours.Thursday.split('-')[1]],
-       ["Friday", hours.Friday.split('-')[0], hours.Friday.split('-')[1]],
-       ["Saturday", hours.Saturday.split('-')[0], hours.Saturday.split('-')[1]],
-       ["Sunday", hours.Sunday.split('-')[0], hours.Sunday.split('-')[1]]]
-      
-
-        this.setState({ hospitalImageList: res.hospitalImages, services: res.services, doctor: doc, hospital: h, workingHours: wHours, specialistCarddata: list3})
-        
+        var list3 = []
+        for (i = 0; i < 1; i++) {
+          list3.push({
+            id: i,
+            image: image,
+            name: doc.specialization,
+          });
+        }
+        const hours = res.working_hours[0];
+        const wHours = [["Monday", hours.Monday.split('-')[0], hours.Monday.split('-')[1]],
+        ["Tuesday", hours.Tuesday.split('-')[0], hours.Tuesday.split('-')[1]],
+        ["Wednesday", hours.Wednesday.split('-')[0], hours.Wednesday.split('-')[1]],
+        ["Thursday", hours.Thursday.split('-')[0], hours.Thursday.split('-')[1]],
+        ["Friday", hours.Friday.split('-')[0], hours.Friday.split('-')[1]],
+        ["Saturday", hours.Saturday.split('-')[0], hours.Saturday.split('-')[1]],
+        ["Sunday", hours.Sunday.split('-')[0], hours.Sunday.split('-')[1]]]
+        this.setState({
+          hospitalImageList: res.hospitalImages, services: res.services, doctor: doc,
+          doctorReviews: res.reviews, hospital: h, workingHours: wHours, specialistCarddata: list3
+        })
       })
       .catch((error) => {
         console.log(error);
       });
+
   }
   componentDidMount() {
-    Promise.all([this.getAvailableSlots(this.props.navigation.state.params.id), this.getDoctorDetails(this.props.navigation.state.params.id)]);
+    Promise.all([this.getAvailableSlots(this.props.navigation.state.params.id),
+    this.getDoctorDetails(this.props.navigation.state.params.id)]);
   }
 
-
-
   render() {
-
-    
-
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -184,7 +181,6 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             </View>
 
-
             <View style={styles.feesdisplay}>
               <View>
                 <Text>In-Clinic Appointment fee:</Text>
@@ -194,16 +190,12 @@ export default class DoctorPublicProfile extends ValidationComponent {
               </View>
             </View>
           </View>
-          <View style={styles.calenderViewStyle}>
 
-
-
-          </View>
           <Calendar
             current={moment().format('YYYY-MM-DD')}
             minDate={moment().format('YYYY-MM-DD')}
-            maxDate={moment().add(30,'days').format('YYYY-MM-DD')}
-            onDayPress={(day) => { this.displaySlots(day)}}            
+            maxDate={moment().add(30, 'days').format('YYYY-MM-DD')}
+            onDayPress={(day) => { this.displaySlots(day) }}
             enableSwipeMonths={true}
             hideExtraDays={false}
           />
@@ -296,8 +288,6 @@ export default class DoctorPublicProfile extends ValidationComponent {
 
           <Text style={styles.sectionTitle}>Clinic Photos</Text>
 
-
-
           <SliderBox
             images={this.state.hospitalImageList}
             sliderBoxHeight={180}
@@ -308,21 +298,14 @@ export default class DoctorPublicProfile extends ValidationComponent {
           <View style={styles.horizontalLine} />
           <Text style={styles.sectionTitle}>Specialization</Text>
           <View style={styles.imagesRowSetUp}>
-          {this.state.specialistCarddata.map((item) => (
-              <View key={item.id} style={{flexBasis: '50%'}}>
+            {this.state.specialistCarddata.map((item) => (
+              <View key={item.id} style={{ flexBasis: '50%' }}>
                 <SpecialityCard
                   key={item.id}
                   data={item}
-                  style={{backgroundColor: 'white'}}></SpecialityCard>
+                  style={{ backgroundColor: 'white' }}></SpecialityCard>
               </View>
             ))}
-            
-            
-            <View style={{ flexBasis: '50%' }}>
-              <SpecialityCard
-                data={this.state.specialistCarddata[0]}
-                style={{ backgroundColor: 'white' }}></SpecialityCard>
-            </View>
           </View>
 
           <View style={styles.horizontalLine} />

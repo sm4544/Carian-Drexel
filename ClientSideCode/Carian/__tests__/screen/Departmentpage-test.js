@@ -1,10 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import DepartmentPage from '../../screen/drawerScreens/DepartmentPage';
-import { View, Text, TextInput, TouchableOpacity,ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import styles from '../../styles/commonStyles';
 import RadioForm from 'react-native-simple-radio-button';
 import { postDepartmentInfoApi } from '../../screen/services/DepartmentService';
 const navigation = { navigate: jest.fn() };
@@ -77,27 +76,27 @@ describe('<DepartmentPage/>', () => {
   });
   it('should through error messages if user click on Register with empty Department_name', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');    
+    registerButton.simulate('press');
     expect(wrapper.contains('The field "Department_name" is mandatory.')).to.equal(true);
   })
   it('should through error messages if user click on Register with empty departmentAdmin_name', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');    
+    registerButton.simulate('press');
     expect(wrapper.contains('The field "departmentAdmin_name" is mandatory.')).to.equal(true);
   })
   it('should through error messages if user click on Register with empty email', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');    
+    registerButton.simulate('press');
     expect(wrapper.contains('The field "email" is mandatory.')).to.equal(true);
   })
   it('should through error messages if user click on Register with empty department_phone_number', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
-    registerButton.simulate('press');    
+    registerButton.simulate('press');
     expect(wrapper.contains('The field "department_phone_number" is mandatory.')).to.equal(true);
   })
 
   it('should navigate to department home screen ', async () => {
-    
+
     wrapper.setState({ is_same_as_hospital_address: false });
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
@@ -108,13 +107,13 @@ describe('<DepartmentPage/>', () => {
     wrapper.find(TextInput).at(6).simulate('ChangeText', 'city');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
     wrapper.find(TextInput).at(8).simulate('ChangeText', '19104');
-   
+
 
     const output = { "Message": "Added Department Staff", "Department_ID": "39" };
 
     postDepartmentInfoApi.mockResolvedValue(output);
     await wrapper.instance().onPressDepartmentInfo();
-    
+
     sinon.assert.calledWith(spyon, "DepartmentConfirmationScreen", { Department_name: 'test' });
     sinon.assert.calledOnce(spyon);
   })

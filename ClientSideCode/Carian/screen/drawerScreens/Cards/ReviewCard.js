@@ -3,22 +3,8 @@ import React, { Component, useState } from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    Alert,
-    Image,
-    ScrollView,
-    style,
-    ImageBackground
 } from 'react-native';
 import styles from '../../../styles/homeScreenStyles';
-import CardView from 'react-native-cardview';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from 'react-native-vector-icons/Feather';
-
-const image = { uri: "https://reactjs.org/logo-og.png" };
-
 
 export default class ReviewCard extends ValidationComponent {
     render() {
@@ -39,10 +25,10 @@ export default class ReviewCard extends ValidationComponent {
                         <Text style={styles.profileHeaderText}>{this.props.review.review_Stars}</Text>
                     </View>
                 </View>
-                <View style={{justifyContent:'center', width: '90%', marginLeft: 20 }}>
+                <View style={{ justifyContent: 'center', width: '90%', marginLeft: 20 }}>
                     <Text numberOfLines={5}>{this.props.review.review_content}</Text>
                 </View>
-                <View key={this.props.review.id} style={{borderTopColor: 'black', borderTopWidth: 1, marginLeft:20, marginRight:20, marginTop:10}}/>
+                <View key={this.props.review.id} style={{ borderTopColor: 'black', borderTopWidth: 1, marginLeft: 20, marginRight: 20, marginTop: 10 }} />
 
             </View>
         )

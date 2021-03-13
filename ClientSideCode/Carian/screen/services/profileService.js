@@ -53,7 +53,7 @@ export const createPatient = async (body) => {
 }
 
 export const postAppointment = async (body) => {
-    
+
     const res = await fetch(URL + 'Appointments/', {
         method: 'POST',
         headers: {
