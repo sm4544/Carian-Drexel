@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     View,
-    Text,    
+    Text,
     ImageBackground
 } from 'react-native';
 import { shallow } from 'enzyme';
@@ -41,7 +41,7 @@ describe('<StaffInfoScreen/>', () => {
     });
 
     it('should have text inside image', () => {
-        
+
         expect(wrapper.find(Text)).to.have.length(1);
         expect(wrapper.contains(<Text style={styles.cardText}>hello</Text>)).to.equal(true);
     });
