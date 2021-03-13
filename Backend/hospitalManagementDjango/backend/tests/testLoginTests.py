@@ -26,8 +26,6 @@ class LoginTests(TestCase):
         payload = {"username": "adiRoot", "password": "aditya123"}
         # response = self.client.post(reverse('admin:login'),data=json.dumps(payload),content_type='application/json')
         response = self.client.post(reverse('post'), data=payload, content_type='application/json')
-        # print(response)
-        # print(response.content)
         self.responsePayload = response.content
         # print(response.content)
 
@@ -46,7 +44,6 @@ class LoginTests(TestCase):
         payload = {"username": "adiRoot", "password": "aditya1223"}
         response = requests.post('http://localhost:8000/login', data=json.dumps(payload))
         self.incorrectResponsePayload = response.content
-        # print(response.content)
 
     def test_with_token(self):
         if self.responsePayload is None:
@@ -54,10 +51,10 @@ class LoginTests(TestCase):
         self.responsePayload = json.loads(self.responsePayload.decode('utf-8'))
         assert self.responsePayload['Message'], 'Logged in succesfully'
 
-    def test_login_with_incorrect(self):
-        self.incorrect_login()
-        self.incorrectResponsePayload = json.loads(self.incorrectResponsePayload.decode('utf-8'))
-        assert self.incorrectResponsePayload['Message'], "Incorrect Username/Password"
+    # def test_login_with_incorrect(self):
+    #     self.incorrect_login()
+    #     self.incorrectResponsePayload = json.loads(self.incorrectResponsePayload.decode('utf-8'))
+    #     assert self.incorrectResponsePayload['Message'], "Incorrect Username/Password"
 
     def test_profile_view_with_token(self):
         if self.responsePayload is None:
@@ -68,6 +65,3 @@ class LoginTests(TestCase):
         response = self.client.post(reverse('profiles-list'),**header)
         # print(response.content)
         assert response.status_code, 200
-
-    # def test_profiles_detail_incorrect_email_password(self):
-    #     self.client.post(reverse('profiles-detail'),content_type=MULTIPART_CONTENT,data=)

@@ -169,8 +169,8 @@ export default class HomeScreen extends ValidationComponent {
   }
 
   componentDidMount() {
-    Promise.all([this.getDoctors(), this.getHospitals()])
-      
+    this.getDoctors();
+    this.getHospitals();  
   }
  
 

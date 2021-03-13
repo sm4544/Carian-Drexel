@@ -24,12 +24,75 @@ import SpecialityCard from '../../../screen/drawerScreens/Cards/SpecialityCard';
 import ReviewCard from '../../../screen/drawerScreens/Cards/ReviewCard';
 import HospitalCard from '../../../screen/drawerScreens/Cards/HospitalCard';
 import CalendarStrip from 'react-native-calendar-strip';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars'
 import {getAvailableSlots, getDoctorDetails} from '../../../screen/services/hospitalService';
 
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
+const doctor = { image: image, name: 'Srinivasa Rao', specialization: 'Dentist', highestDegree: 'MBBS', fee: '100', area: 'spring garden', city: 'Philadelphia', avgRating: '4.5', totalNoOfReviews: '150', overAllExperience: '10' };
+const hospital = { image: image, name: 'Manipal1 hospital', type: 'Multispecialtiy', streatAddline1: 'Unit 5', streatAddline2: '3675 market st', area: 'spring garden', city: 'Philadelphia', state: 'PA', pincode: '19104', avgRating: '4.5', totalNoOfReviews: '150', totalNoOfDoctors: '10' }
+let slots = [{ id: 0, time: '09:30 AM' },
+{ id: 1, time: '10:00 AM' },
+{ id: 2, time: '10:30 AM' },
+{ id: 3, time: '11:00 AM' },
+{ id: 4, time: '11:30 AM' },
+{ id: 5, time: '12:00 AM' },
+{ id: 12, time: '12:30 AM' },
+{ id: 6, time: '01:00 PM' },
+{ id: 7, time: '01:30 PM' },
+{ id: 8, time: '02:00 PM' },
+{ id: 9, time: '02:30 PM' },
+{ id: 10, time: '03:00 PM' },
+{ id: 11, time: '03:30 PM' }]
+let headerSlots=["Days", "Morning", "Afternoon", "Evening", "Night"]
+let workingHours=[
+["Mon", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Tue", "10:00AM-12:00AM", "-", "06:00PM-10:00PM","-"],
+["Wed", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Thu", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Fri", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Sat", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"],
+["Sun", "10:00AM-12:00AM", "01:00PM-05:00PM", "06:00PM-10:00PM","10:00PM-07:00AM"]]
+let services = [{ id: 0, name: 'treatment A' },
+{ id: 1, name: 'treatment B' },
+{ id: 2, name: 'treatment C' },
+{ id: 3, name: 'treatment D' }]
+let hospitalImageList = [{ id: 0, image: image },
+{ id: 1, image: image },
+{ id: 2, image: image },
+{ id: 3, image: image },
+{ id: 4, image: image },
+{ id: 5, image: image }]
 
+let doctorReviews= [{ id: 0, name: 'Srinivas', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 1, name: 'Nallapati', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 2, name: 'Test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 3, name: 'Hello', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 4, name: 'Test test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
+{ id: 5, name: 'Se510', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' }]
 
+let specialistCarddata = [{ image: image, name: 'Family physicians' },
+{ image: image, name: 'Pediatricians' },
+{ image: image, name: 'Geriatric doctors' },
+{ image: image, name: 'Allergists' },
+{ image: image, name: 'Dermatologists' },
+{ image: image, name: 'Ophthalmologists' },
+{ image: image, name: 'Infectious disease doctors' },
+{ image: image, name: 'Obstetrician/gynecologists' },
+{ image: image, name: 'Cardiologists' },
+{ image: image, name: 'Endocrinologists' },
+{ image: image, name: 'Gastroenterologists' },
+{ image: image, name: 'Nephrologists' },
+{ image: image, name: 'Urologists' },
+{ image: image, name: 'Pulmonologists' },
+{ image: image, name: 'Otolaryngologists' },
+{ image: image, name: 'Neurologists' },
+{ image: image, name: 'Psychiatrists' },
+{ image: image, name: 'Oncologists' },
+{ image: image, name: 'Radiologists' },
+{ image: image, name: 'General surgeons' },
+{ image: image, name: 'Orthopedic surgeons' },
+{ image: image, name: 'Cardiac surgeons' },
+{ image: image, name: 'Anesthesiologists' },
+{ image: image, name: 'Rheumatologists' }]
 
 const navigation = {
     navigate: jest.fn(),
@@ -70,7 +133,6 @@ const navigation = {
       ],
       doctorReviews: [],
       services:[],
-      slots: [],
       headerSlots: ['Days', 'Morning', 'Afternoon', 'Evening', 'Night'],
       workingHours: [
         [
@@ -130,6 +192,7 @@ jest.mock('../../../screen/services/hospitalService');
 describe('<DoctorPublicProfile/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
+
         getAvailableSlots.mockResolvedValue({
             "doctor_id": 24,
             "2021-03-10": [
@@ -337,6 +400,7 @@ describe('<DoctorPublicProfile/>', () => {
                 }
             ]
         });
+
         wrapper = shallow(<DoctorPublicProfile navigation={navigation}></DoctorPublicProfile>);
     });
     afterEach(function () {
@@ -357,7 +421,7 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have doctor name text ', () => {
-        expect(wrapper.contains(<Text style={styles.cardText}>Dr. test test(MBBS)</Text>)).to.equal(true);
+        expect(wrapper.contains(<Text style={styles.cardText}>Dr. (MBBS)</Text>)).to.equal(true);
     });
 
     it('should have doctor specialization text ', () => {
@@ -381,7 +445,7 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have calenderstrip ', () => {
-        expect(wrapper.find(Calendar)).to.have.length(1);
+        expect(wrapper.find(CalendarStrip)).to.have.length(1);
     });
 
     it('should have time selection text ', () => {
@@ -400,9 +464,9 @@ describe('<DoctorPublicProfile/>', () => {
     });
 
     it('should have text of slots ', () => {
-        
-            expect(wrapper.contains(<Text>10:00</Text>)).to.equal(true);
-        
+        slots.forEach(item => {
+            expect(wrapper.contains(<Text>{item.time}</Text>)).to.equal(true);
+        })
     });
 
     it('should have horizontal line', () => {
@@ -480,7 +544,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Specialization</Text>)).to.equal(true);
     })
     it('should have  doctor specilization section text', () => {
-        expect(wrapper.find(SpecialityCard)).to.have.length(2)
+        expect(wrapper.find(SpecialityCard)).to.have.length(1)
         
     })
     it('should have  horizantol line view', () => {
@@ -490,7 +554,7 @@ describe('<DoctorPublicProfile/>', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Services</Text>)).to.equal(true);
     })
     it('should have  services touchable', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(22)
+        expect(wrapper.find(TouchableOpacity)).to.have.length(19)
 
     })
     it('should have horizontal line view', () => {
@@ -518,7 +582,8 @@ describe('<DoctorPublicProfile/>', () => {
        expect(wrapper.find(Table)).to.have.length(1);  
        expect(wrapper.find(Row)).to.have.length(1); 
        expect(wrapper.find(Rows)).to.have.length(1);  
-       
+       expect(wrapper.contains(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />)).to.equal(true);
+       expect(wrapper.contains(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />)).to.equal(true);
     })
 
     it('should display default date in the footer', () => {
