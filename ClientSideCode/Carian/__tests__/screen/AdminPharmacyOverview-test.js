@@ -31,6 +31,7 @@ import sinon from 'sinon';
 import { Table, Row, Rows } from "react-native-table-component";
 
 import styles from '../../styles/DoctorProfileStyles';
+import styles1 from '../../styles/commonStyles';
 import PharmacyOverview from '../../screen/drawerScreens/PharmacyOverview';
 
 import SpecialityCard from '../../screen/drawerScreens/Cards/SpecialityCard';
@@ -95,8 +96,8 @@ let specialistCarddata = [{ image: image, name: 'Family physicians' },
 
 let hospitalImages= [
 
+   
     "https://source.unsplash.com/1024x768/?nature",
-
     "https://source.unsplash.com/1024x768/?water",
 
     "https://source.unsplash.com/1024x768/?girl",
@@ -266,15 +267,15 @@ describe('<PharmacyOverview/>', () => {
 
 
 
-    it('should have  review cards', () => {
+    // it('should have  review cards', () => {
 
-        hospitalReviews.forEach(review => {
+    //     hospitalReviews.forEach(review => {
 
-            expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
+    //         expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
 
-        });
+    //     });
 
-    })
+    // })
 
     it('should contain 5 buttons', () => {
         expect(wrapper.find(TouchableOpacity)).to.have.length(5);
@@ -290,13 +291,12 @@ describe('<PharmacyOverview/>', () => {
         
       })
 
-      it('should navigate to PharmacyDetailsScreen screen component after clicking on delete', () => {
-        const del = wrapper.find(TouchableOpacity).at(4);
-        console.log(del)
-        del.simulate('press');    
-        sinon.assert.calledWith(spyon, "PharmacyDetailsScreen");
-        sinon.assert.calledOnce(spyon);
-        
-      })
+      it('should have hospital  reviews text', () => {
+
+        expect(wrapper.contains( < Text style={styles1.buttonText}> Delete </Text>)).to.equal(true);
+
+    })
+
+
 
 })

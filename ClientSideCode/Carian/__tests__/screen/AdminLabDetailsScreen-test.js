@@ -168,7 +168,7 @@ describe('<LabDetailsScreen/>', () => {
     wrapper.find(TextInput).at(6).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(8).simulate('ChangeText', '123456789632');  
-      const output = { "Message": "Invalid JSON-'name'" 
+      const output = { "Message": "Data" 
                     };
   
       postAdminLabApi.mockResolvedValue(output);    
@@ -189,7 +189,7 @@ describe('<LabDetailsScreen/>', () => {
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
     wrapper.find(TextInput).at(8).simulate('ChangeText', 'pincode');
   
-      const output = { "message": "Invalid" 
+      const output = { "message": "Data" 
                     };
   
      editAdminLabApi.mockResolvedValue(output);    

@@ -156,7 +156,7 @@ describe('<PharmacyDetailsScreen/>', () => {
     wrapper.find(TextInput).at(6).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'test@test.com');
 
-      const output = { "Message": "Invalid JSON-'name'" 
+      const output = { "Message": "Data" 
                     };
   
       postAdminPharmacyApi.mockResolvedValue(output);    
@@ -177,7 +177,7 @@ describe('<PharmacyDetailsScreen/>', () => {
     wrapper.find(TextInput).at(6).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'test@test.com');
 
-      const output = { "Message": "Invalid JSON-'name'" 
+      const output = { "Message": "Data" 
                     };
   
       editAdminPharmacyApi.mockResolvedValue(output);    

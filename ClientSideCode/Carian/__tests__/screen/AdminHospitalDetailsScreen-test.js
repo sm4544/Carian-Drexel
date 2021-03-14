@@ -157,7 +157,7 @@ it('should navigate to hospital component on submit', async() => {
   wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
   wrapper.find(TextInput).at(8).simulate('ChangeText', 'pincode');
 
-    const output = { "message": "Invalid" 
+    const output = { "message": "Data" 
                   };
 
     postAdminHospitalApi.mockResolvedValue(output);    
@@ -178,7 +178,7 @@ it('should navigate to hospital component on update', async() => {
   wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
   wrapper.find(TextInput).at(8).simulate('ChangeText', 'pincode');
 
-    const output = { "message": "Invalid" 
+    const output = { "message": "Data" 
                   };
 
    editAdminHospitalApi.mockResolvedValue(output);    

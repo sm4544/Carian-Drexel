@@ -58,9 +58,7 @@ class HospitalScreen extends Component {
   }
 
 
-  onPressingHospital = (name) =>{
-    this.props.navigation.navigate('HospitalOverview', {name : name});
-}
+
  
   render() {
     const state = this.state;
