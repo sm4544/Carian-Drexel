@@ -27,6 +27,7 @@ import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
 import PatientsRegisterScreen from './screen/drawerScreens/PatientsRegisterScreen';
 import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
+import LabTestsViewScreen from './screen/drawerScreens/LabTestsViewScreen';
 //import AddMedicinesScreen from './screen/drawerScreens/AddMedicinesScreen';
 import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
 import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
@@ -663,6 +664,10 @@ const OtherExternal = createStackNavigator({
    screen:LabTestsAddScreen,
    navigationOptions:{title:'LabTestsAddScreen'},
  },
+ LabTestsViewScreen:{
+   screen:LabTestsViewScreen,
+   navigationOptions:{title:'LabTestsViewScreen'},
+ }
 
 
 
