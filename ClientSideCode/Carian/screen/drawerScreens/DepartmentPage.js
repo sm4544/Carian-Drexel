@@ -89,7 +89,8 @@ export default class DepartmentPage extends ValidationComponent {
   };
 
   render() {
-
+    const hospital_id = this.props.navigation.state.params.hospital_id;
+    const profileId = this.props.navigation.state.params.profileId;
 
     return (
       <ScrollView>

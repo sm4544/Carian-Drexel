@@ -1,19 +1,36 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DepartmentPage from '../../screen/drawerScreens/DepartmentPage';
+import DepartmentUpdate from '../../screen/drawerScreens/DepartmentUpdate';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import RadioForm from 'react-native-simple-radio-button';
-import { postDepartmentInfoApi } from '../../screen/services/DepartmentService';
+import { putDepartmentInfoApi } from '../../screen/services/DepartmentService';
 const profileId = { profileId: global.profileId };
 const hospital_id= {hospital_id:hospital_id};
+const department_phone_number={department_phone_number:department_phone_number}
+const Department_name= {Department_name:Department_name};
+const addressine1={addressine1:addressine1};
+const is_same_as_hospital_address={is_same_as_hospital_address:is_same_as_hospital_address}
+const addressine2= {addressine2:addressine2}
+const city={city:city}
+const state={state:state}
+const id={id:id}
+const pincode={pincode:pincode}
 const navigation = {
   navigate: jest.fn(),
   state: {
     params: {
-      profileId: profileId,
-      hospital_id:hospital_id,
+         Department_name: '',
+            addressine1: addressine1,
+            is_same_as_hospital_address: is_same_as_hospital_address,
+            addressine2:addressine2,
+            city:city,
+            state:state,
+            pincode:pincode,
+            department_phone_number:'',
+            hospital_id:hospital_id,
+            id:id,
    }
   }
 };
@@ -22,10 +39,11 @@ global.sinon = sinon;
 global.shallow = shallow;
 jest.mock("../../screen/services/DepartmentService");
 
-describe('<DepartmentPage/>', () => {
+describe('<DepartmentUpdate/>', () => {
   beforeEach(function () {
     spyon = sinon.spy(navigation, 'navigate');
-    wrapper = shallow(<DepartmentPage navigation={navigation}></DepartmentPage>);
+    //putDepartmentInfoApi.mockResolvedValue(output);
+    wrapper = shallow(<DepartmentUpdate navigation={navigation}></DepartmentUpdate>);
   });
 
   afterEach(function () {
@@ -121,31 +139,12 @@ describe('<DepartmentPage/>', () => {
 
     const output = { "Message": "Added Department Staff", "Department_ID": "39" };
 
-    postDepartmentInfoApi.mockResolvedValue(output);
+    putDepartmentInfoApi.mockResolvedValue(output);
     await wrapper.instance().onPressDepartmentInfo();
 
     sinon.assert.calledWith(spyon, "DepartmentConfirmationScreen", { Department_name: 'test' });
     sinon.assert.calledOnce(spyon);
   })
 
-  it('should NOT navigate to department home  screen ', async () => {
-
-    wrapper.setState({ is_same_as_hospital_address: false });
-    wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(2).simulate('ChangeText', 'test@gmail.com');
-    wrapper.find(TextInput).at(3).simulate('ChangeText', 12345);
-    wrapper.find(TextInput).at(4).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(5).simulate('ChangeText', 'test');
-    wrapper.find(TextInput).at(6).simulate('ChangeText', 'city');
-    wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
-    wrapper.find(TextInput).at(8).simulate('ChangeText', '19104');
-
-    const output = { "Message": "ERROR", "Department_ID": "39" };
-
-    postDepartmentInfoApi.mockResolvedValue(output);
-    await wrapper.instance().onPressDepartmentInfo();
-    console.log(spyon + 'spyon')
-    sinon.assert.notCalled(spyon)
-  })
+ 
 });

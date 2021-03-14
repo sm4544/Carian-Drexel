@@ -1,20 +1,70 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, {  Component} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  SafeAreaView
+} from 'react-native';
 
-const ReportsScreen = () => {
-    global.currentScreenIndex = 'ReportsScreen';
-    return (
-        <View style={{ flex: 1, alignItems: 'center', marginTop: 100 }}>
-            <Text style={{ fontSize: 23, marginTop: 10 }}>ReportsScreen</Text>
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
-                Example to Dynamically Change Drawer/Sidebar Options in React Navigation Drawer
-            </Text>
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
-            ReportsScreen
+import styles from '../../styles/commonStyles';     
+import ValidationComponent from 'react-native-form-validator';
 
-            </Text>
-        </View>
+export default class ReportsScreen extends ValidationComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hospital_id: '',
+      flagDep: false,
+      selectedItems : [],
+      profileId:'',
+    };
+  }
+
+  
+
+  
+  render() {
+    const { selectedItems } = this.state;
+    const profileid = global.profileId;
+    
+
+    return ( 
+        (
+            <SafeAreaView style={styles.containerMultiSelecet}>
+              <View style={styles.containerMultiSelecet}>             
+             
+
+             
+        <TouchableOpacity style = {styles.appButtonContainer}
+          onPress = {() => { 
+            this.props.navigation.navigate('LabTestsAddScreen',{profileid:profileid})}
+            
+          } >
+          <Text style = {styles.appButtonText} >ADD LAB TESTS</Text> 
+          </TouchableOpacity>    
+          <View style={styles.space} />
+
+           <TouchableOpacity style = {styles.appButtonContainer}
+          onPress = {() => { 
+            this.props.navigation.navigate('LabTestsAddScreen',{profileid:profileid})}
+          } >
+          <Text style = {styles.appButtonText} >DELETE LAB TESTS</Text> 
+          </TouchableOpacity> 
+          <View style={styles.space} />   
+
+            <TouchableOpacity style = {styles.appButtonContainer}
+          onPress = {() => { 
+            this.props.navigation.navigate('LabTestsViewScreen',{profileid:profileid})}
+          } >
+          <Text style = {styles.appButtonText} >VIEW LAB TESTS</Text> 
+          </TouchableOpacity>       
+      
+          </View>
+            </SafeAreaView>
+          )
     );
-};
-
-export default ReportsScreen;
+        
+    }  
+}
+        
