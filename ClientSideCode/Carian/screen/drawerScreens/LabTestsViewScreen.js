@@ -5,17 +5,17 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  SafeAreaView
+  SafeAreaView,
+  ScrollView 
 } from 'react-native';
 
 import MultiSelect from 'react-native-multiple-select';
 import styles from '../../styles/commonStyles';     
 import ValidationComponent from 'react-native-form-validator';
-import ActionButton from 'react-native-action-button';
-import { getAllLabTests } from '../services/LabService';
+import { Table, Row, Rows } from 'react-native-table-component';
+import { getMyLabTests , getAllLabTests} from '../services/LabService';
 
-
-export default class LabTestsAddScreen extends ValidationComponent {
+export default class LabTestsViewScreen extends ValidationComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,18 +23,39 @@ export default class LabTestsAddScreen extends ValidationComponent {
       flagDep: false,
       selectedItems : [],
       profileId:'',
+      tableHead: ['S.NO', 'Test Name'],
+      tableData: [],
       items:[],
     };
   }
 
+
   componentDidMount() {
+
+    tableData=[]
+    id=0;
+    const body = 1
+    getMyLabTests(body)
+      .then(results => {
+        results.forEach((data) => {
+          id=id+1
+          tableData.push([id,
+             data.name
+          ]);
+
+        });
+      });
+    this.setState({
+      tableData: tableData
+    });
+
     var items = []
     getAllLabTests()
       .then(results => {
         results.forEach((data) => {
           items.push({
             id: data.id,
-            name: data.name
+            name: data.name,
           });
 
         });
@@ -44,7 +65,6 @@ export default class LabTestsAddScreen extends ValidationComponent {
     });
 
   }
-
   
 
   onSelectedItemsChange = selectedItems => {
@@ -54,17 +74,17 @@ export default class LabTestsAddScreen extends ValidationComponent {
 
   
 
+ 
+
   render() {
     const { selectedItems } = this.state;
-    const profileid = this.props.navigation.state.params.profileid;
     
 
     return ( 
         (
             <SafeAreaView style={styles.containerMultiSelecet}>
+                <ScrollView >
               <View style={styles.containerMultiSelecet}>
-                <Text style={styles.titleTextMulti}>Select Lab TESTS which are going to add</Text>
-                <View style={styles.space}/>
                 <MultiSelect
                   hideTags
                   items={this.state.items}
@@ -82,23 +102,15 @@ export default class LabTestsAddScreen extends ValidationComponent {
                   itemTextColor="#000"
                   displayKey="name"
                   searchInputStyle={{color: '#CCC'}}
-                  submitButtonColor="#48d22b"
-                  submitButtonText="Submit"
+                 
                 />
               </View>
-
-              {this.state.flagDep ? 
-        (<TouchableOpacity style = {styles.appButtonContainer}
-          onPress = {() => { 
-            this.props.navigation.navigate('ReportsScreen'),
-            this.setState({flagDep: false })}
-          } >
-          <Text style = {styles.appButtonText} > ADD </Text> 
-          </TouchableOpacity>         
-        ) : null
-      } 
- <ActionButton buttonColor="rgba(231,76,60,1)"  onPress={() => this.props.navigation.navigate('LabTestsDetailsScreen', {selectedItems: this.state.selectedItems,profileid:profileid})}>
-        </ActionButton> 
+              <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+          <Row data={this.state.tableHead} style={styles.head}/>
+          <Rows data={this.state.tableData} style={styles.head} textStyle={styles.text}/>
+        </Table>
+            
+        </ScrollView>
             </SafeAreaView>
           )
     );
