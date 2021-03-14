@@ -12,10 +12,10 @@ import CustomSidebarMenu from './screen/components/CustomSidebarMenu';
 import NavigationDrawerHeader from './screen/components/NavigationDrawerHeader';
 import StaffInfoScreen from './screen/stackNavScreens/StaffInfoScreen';
 import ConfirmationScreen from './screen/stackNavScreens/ConfirmationScreen';
+//import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
 
 import ManageCustomerAdminProfieScreen from './screen/drawerScreens/ManageCustomerAdminProfieScreen';
 import PatientCalenderScreen from './screen/drawerScreens/PatientsCalendarScreen';
-import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
 import ManageStaffProfileScreen from './screen/drawerScreens/ManageStaffProfileScreen';
 import MedicineAddScreen from './screen/drawerScreens/MedicineAddScreen';
 import PharmacyScreen from './screen/drawerScreens/PharmacyScreen';
@@ -27,12 +27,13 @@ import LabOrdersScreen from './screen/drawerScreens/LabOrdersScreen';
 import ReportsScreen from './screen/drawerScreens/ReportsScreen';
 import PatientsRegisterScreen from './screen/drawerScreens/PatientsRegisterScreen';
 import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
-import AddMedicinesScreen from './screen/drawerScreens/AddMedicinesScreen';
+//import AddMedicinesScreen from './screen/drawerScreens/AddMedicinesScreen';
 import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
 import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
 import HospitalScreen from './screen/drawerScreens/HospitalScreen';
 import HospitalDetailsScreen from './screen/drawerScreens/HospitalDetailsScreen';
 import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen';
+import LabTestsAddScreen from './screen/drawerScreens/LabTestsAddScreen'
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 import MedicineViewScreen from './screen/drawerScreens/MedicineViewScreen';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
@@ -603,12 +604,7 @@ const OtherExternal = createStackNavigator({
   PharmacyOverview: {
     screen: PharmacyOverview,
     navigationOptions: { title: 'PharmacyOverview' },
-  },
-  
-  AddMedicinesScreen:{
-    screen:AddMedicinesScreen,
-    navigationOptions:{title:'AddMedicinesScreen'},
-  },
+  },  
   
 
   PatDoctorDetails: {
@@ -655,12 +651,6 @@ const OtherExternal = createStackNavigator({
     screen: PatientsInfoScreen,
     navigationOptions:{title:'PatientsInfoScreen'},
   },
-  AddLabReportsScreen:{
-    screen: AddLabReportsScreen,
-    navigationOptions:{title: 'AddLabReportsScreen'}
-
-  }
-
   MedicineAddScreen:{
     screen:MedicineAddScreen,
     navigationOptions:{title:'MedicineAddScreen'},
@@ -669,6 +659,11 @@ const OtherExternal = createStackNavigator({
     screen:MedicineViewScreen,
     navigationOptions:{title:'MedicineViewScreen'},
   },
+ LabTestsAddScreen:{
+   screen:LabTestsAddScreen,
+   navigationOptions:{title:'LabTestsAddScreen'},
+ },
+
 
 
 });
