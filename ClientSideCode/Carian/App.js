@@ -20,6 +20,7 @@ import ManageStaffProfileScreen from './screen/drawerScreens/ManageStaffProfileS
 import MedicineAddScreen from './screen/drawerScreens/MedicineAddScreen';
 import PharmacyScreen from './screen/drawerScreens/PharmacyScreen';
 import LabScreen from './screen/drawerScreens/LabScreen';
+import Department_WRTHospital from './screen/drawerScreens/Department_WRTHospital';
 import ManageStaffScreen from './screen/drawerScreens/ManageStaffScreen';
 import PharmacyOrdersScreen from './screen/drawerScreens/PharmacyOrdersScreen';
 import MedicinesScreen from './screen/drawerScreens/MedicinesScreen';
@@ -39,6 +40,7 @@ import PharmacyDetailsScreen from './screen/drawerScreens/PharmacyDetailsScreen'
 import LabTestsAddScreen from './screen/drawerScreens/LabTestsAddScreen'
 import LabDetailsScreen from './screen/drawerScreens/LabDetailsScreen';
 import MedicineViewScreen from './screen/drawerScreens/MedicineViewScreen';
+import DepartmentUpdate from './screen/drawerScreens/DepartmentUpdate';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 import HospitalOverview from './screen/drawerScreens/HospitalOverview';
@@ -681,6 +683,14 @@ const OtherExternal = createStackNavigator({
  DepartmentPage:{
    screen:DepartmentPage,
    navigationOptions:{title:'DepartmentPage'}
+ },
+ Department_WRTHospital:{
+   screen:Department_WRTHospital,
+   navigationOptions:{title:'Department_WRTHospital'}
+ },
+ DepartmentUpdate:{
+   screen:DepartmentUpdate,
+   navigationOptions:{title:'DepartmentUpdate'}
  },
 
 
