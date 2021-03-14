@@ -6,7 +6,17 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import RadioForm from 'react-native-simple-radio-button';
 import { postDepartmentInfoApi } from '../../screen/services/DepartmentService';
-const navigation = { navigate: jest.fn() };
+const profileId = { profileId: global.profileId };
+const hospital_id= {hospital_id:hospital_id};
+const navigation = {
+  navigate: jest.fn(),
+  state: {
+    params: {
+      profileId: profileId,
+      hospital_id:hospital_id,
+   }
+  }
+};
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
