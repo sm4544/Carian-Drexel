@@ -678,6 +678,10 @@ const OtherExternal = createStackNavigator({
    screen:MedicineDetailsScreen,
    navigationOptions:{title:'MedicineDetailsScreen'}
  },
+ DepartmentPage:{
+   screen:DepartmentPage,
+   navigationOptions:{title:'DepartmentPage'}
+ },
 
 
 
