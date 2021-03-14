@@ -55,7 +55,7 @@ export default class StaffInfoScreen extends ValidationComponent {
         doctor_fee: this.state.doctor_fee,
         profileid: profileid,
         hospital_id: this.state.hospital_id,
-        department_id: 1,
+        department_id: 2,
         pharmacy_id: 1,
         lab_id: 1,
 
