@@ -55,7 +55,7 @@ export default class PatientsAppointments extends Component {
 
   onPressSubmit = () => {
     var body;
-    body = JSON.stringify({ profile_id: "11"  });
+    body = JSON.stringify({ profile_id: global.profileId  });
     var i;
     var tableData = [];
 
@@ -64,7 +64,7 @@ export default class PatientsAppointments extends Component {
  
 
       res.forEach((data) => {
-        if(data.profile_id == "11"){
+        if(data.profile_id == global.profileId){
         
         
         tableData.push(data);

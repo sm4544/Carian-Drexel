@@ -73,8 +73,4 @@ describe('<HospitalScreen/>', () => {
   
 })
 
-
-
-  })
-
 });

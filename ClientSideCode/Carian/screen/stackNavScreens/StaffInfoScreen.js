@@ -60,6 +60,7 @@ export default class StaffInfoScreen extends ValidationComponent {
         lab_id: 1,
 
       });
+      console.log(body)
       postStaffInfoProfileApi(body).then((res) => {
         console.log(res);
         if (res.Message == 'Added Staff') {
