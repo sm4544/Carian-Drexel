@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import AddMedicinesScreen from '../../screen/drawerScreens/MedicineAddScreen';
+import AddLabReportsScreen from '../../screen/drawerScreens/AddLabReportsScreen';
 import { View, Text, TextInput, TouchableOpacity,ScrollView ,SafeAreaView} from 'react-native';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
-import { getAllMedicine } from '../../screen/services/MedicineService';
+import {getLabList, getLabReportsList} from '../../screen/services/MedicineService';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
@@ -26,34 +26,38 @@ global.shallow = shallow;
 jest.mock("../../screen/services/MedicineService");
 const profileid = global.profileId;
 
-describe('<AddMedicinesScreen/>', () => {
+describe('<AddLabReportsScreen/>', () => {
     beforeEach(function () {
       spyon = sinon.spy(navigation, 'navigate');
-      getAllMedicine.mockResolvedValue([{ id: "1", name: "paracet" }])
-      wrapper = shallow(<AddMedicinesScreen navigation={navigation}></AddMedicinesScreen>);
+      getLabList.mockResolvedValue([{ id: "1", name: "ECG" }])
+      wrapper = shallow(<AddLabReportsScreen navigation={navigation}></AddLabReportsScreen>);
     });
 
     afterEach(function () {
         navigation.navigate.restore();
       });
 
-      it('should have view ', () => {
-        expect(wrapper.find(ScrollView)).to.have.length(0);
+    it('should have ScrollView', () => {
+        expect(wrapper.type()).to.equal(ScrollView);
     });
 
       it('should have View', () => {
-        expect(wrapper.find(View)).to.have.length(2);
+        expect(wrapper.find(View)).to.have.length(3);
       });
       it('should have Text ', () => {
         expect(wrapper.find(<Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20, color:'red'}}>Choose the Pharmacy</Text>));
       });
       it('should have  Select Medicines which are going to add  text component', () => {
         expect(wrapper.find(Text)).to.have.length(1);
-        expect(wrapper.contains("Select Medicines which are going to add")).to.equal(true);
+        // expect(wrapper.contains("Select Medicines which are going to add")).to.equal(true);
       });
       it('should have DropdownPicker', () => {
-        expect(wrapper.find(DropDownPicker)).to.have.length(0);
+        expect(wrapper.find(DropDownPicker)).to.have.length(1);
       });
+      it('should have TouchableOpacity ', async () => {
+        wrapper.setState({ display: true })
+        expect(wrapper.find(TouchableOpacity)).to.have.length(2);
+      })
       it('should have TextInput ', () => {
         expect(wrapper.find(<TextInput
           style={{backgroundColor:'steelblue',fontSize:15,alignItems:'center',height:40,width:150}}
