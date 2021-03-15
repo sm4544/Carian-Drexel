@@ -44,6 +44,7 @@ import DepartmentUpdate from './screen/drawerScreens/DepartmentUpdate';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 import HospitalOverview from './screen/drawerScreens/HospitalOverview';
+import MedicineOrderViewScreen from './screen/drawerScreens/MedicineOrderViewScreen';
 import LabOverview from './screen/drawerScreens/LabOverview';
 import StaffOverview from './screen/drawerScreens/StaffOverview';
 import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
@@ -699,7 +700,10 @@ const OtherExternal = createStackNavigator({
    screen:DepartmentUpdate,
    navigationOptions:{title:'DepartmentUpdate'}
  },
-
+ MedicineOrderViewScreen:{
+   screen:MedicineOrderViewScreen,
+   navigationOptions:{title:'MedicineOrderViewScreen'}
+ },
 
 
 });
