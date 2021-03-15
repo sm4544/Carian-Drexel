@@ -107,10 +107,12 @@ export default class HomeScreen extends ValidationComponent {
   };
 
   onPressingHospital = (id) => {
+    console.log(id)
     this.props.navigation.navigate('HospitalPublicProfile', { id: id });
   };
 
   onPressingDoctorCard = (id) => {
+    console.log(id)
     this.props.navigation.navigate('DoctorPublicProfile', { id: id });
   };
 
@@ -118,7 +120,7 @@ export default class HomeScreen extends ValidationComponent {
     getHospitals()
       .then((res1) => {
         var list1 = [];
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < res1.length; i++) {
           if (res1[i].doctors != 0) {
             list1.push({
               id: res1[i].hospital_id,
@@ -146,7 +148,7 @@ export default class HomeScreen extends ValidationComponent {
       .then((res2) => {
         console.log(res2)
         var list2 = [];
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < res2.length; i++) {
           list2.push({
             id: res2[i].profile_id,
             image: image,
