@@ -68,14 +68,14 @@ export const medicineOrders = async (orderid) => {
     return await res.json();   
 };
 
-export const labOrders = async () => {
+export const PostLabOrders = async (body) => {
     const res = await fetch(URL + 'LabReportOrders/',  {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-     
+     body:body,
     });
 
     return await res.json();   
