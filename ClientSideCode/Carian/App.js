@@ -12,10 +12,9 @@ import CustomSidebarMenu from './screen/components/CustomSidebarMenu';
 import NavigationDrawerHeader from './screen/components/NavigationDrawerHeader';
 import StaffInfoScreen from './screen/stackNavScreens/StaffInfoScreen';
 import ConfirmationScreen from './screen/stackNavScreens/ConfirmationScreen';
-//import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
-
 import ManageCustomerAdminProfieScreen from './screen/drawerScreens/ManageCustomerAdminProfieScreen';
 import PatientCalenderScreen from './screen/drawerScreens/PatientsCalendarScreen';
+import LabTestOrderViewScreen from './screen/drawerScreens/LabTestOrderViewScreen';
 import ManageStaffProfileScreen from './screen/drawerScreens/ManageStaffProfileScreen';
 import MedicineAddScreen from './screen/drawerScreens/MedicineAddScreen';
 import PharmacyScreen from './screen/drawerScreens/PharmacyScreen';
@@ -45,6 +44,7 @@ import DepartmentUpdate from './screen/drawerScreens/DepartmentUpdate';
 //import DisplayHospitalScreen from './screen/drawerScreens/DisplayHospitalScreen';
 import StaffDetailsScreen from './screen/drawerScreens/StaffDetailsScreen';
 import HospitalOverview from './screen/drawerScreens/HospitalOverview';
+import MedicineOrderViewScreen from './screen/drawerScreens/MedicineOrderViewScreen';
 import LabOverview from './screen/drawerScreens/LabOverview';
 import StaffOverview from './screen/drawerScreens/StaffOverview';
 import PharmacyOverview from './screen/drawerScreens/PharmacyOverview';
@@ -65,6 +65,9 @@ import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
 // import PatientsAppointment from './screen/drawerScreens/PatientsAppointment';
 import DepartmentPage from './screen/drawerScreens/DepartmentPage';
 import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
+import TimePickingScreen from './screen/drawerScreens/TimePickingScreen';
+import TimePickingLabScreen from './screen/drawerScreens/TimePickingLabScreen';
+import DoctorsDisplay from './screen/drawerScreens/DoctorsDisplay';
 
 
 const FirstActivity_StackNavigator = createStackNavigator({
@@ -652,12 +655,25 @@ const OtherExternal = createStackNavigator({
     screen: PatientAppointments,
     navigationOptions: { title: 'PatientAppointments' },
   },
+  
+    TimePickingScreen: {
+    screen: TimePickingScreen,
+    navigationOptions: { title: 'TimePickingScreen' },
+  },
 
+  TimePickingLabScreen: {
+    screen: TimePickingLabScreen,
+    navigationOptions: { title: 'TimePickingLabScreen' },
+  },
+ 
+  DoctorsDisplay: {
+    screen: DoctorsDisplay,
+    navigationOptions: { title: 'DoctorsDisplay' },
+  },
   PatientsInfoScreen:{
     screen: PatientsInfoScreen,
     navigationOptions:{title:'PatientsInfoScreen'},
   },
-
   AddLabReportsScreen:{
     screen: AddLabReportsScreen,
     navigationOptions:{title: 'AddLabReportsScreen'}
@@ -703,7 +719,14 @@ const OtherExternal = createStackNavigator({
    screen:DepartmentUpdate,
    navigationOptions:{title:'DepartmentUpdate'}
  },
-
+ MedicineOrderViewScreen:{
+   screen:MedicineOrderViewScreen,
+   navigationOptions:{title:'MedicineOrderViewScreen'}
+ },
+ LabTestOrderViewScreen:{
+   screen:LabTestOrderViewScreen,
+   navigationOptions:{title:'LabTestOrderViewScreen'}
+ }
 
 
 });

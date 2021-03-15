@@ -13,6 +13,13 @@ import styles from '../../styles/DoctorProfileStyles';
 import StaffOverview from '../../screen/drawerScreens/StaffOverview';
 import ReviewCard from '../../screen/drawerScreens/Cards/ReviewCard';
 
+
+import { SliderBox } from "react-native-image-slider-box";
+
+import { deleteAdminStaffApi} from '../../screen/services/adminStaffService'
+
+
+
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 const name = { name: name };
 const specialization = { specialization: specialization };
@@ -21,6 +28,11 @@ const overAllExperience = { overAllExperience: overAllExperience };
 const phonenumber = { phonenumber: phonenumber };
 const id = { id: id };
 const doctor = { image: image, };
+
+
+const hospital_id =   {hospital_id: hospital_id};
+
+
 let headerSlots = ["Days", "24Hours", "Opens At", "Closed at",]
 let workingHours = [
     ["Mon", "Yes", "-", "-"],
@@ -45,13 +57,17 @@ const navigation = {
             overAllExperience: overAllExperience,
             phonenumber: phonenumber,
             doctor: doctor,
+
+            id:id
+
+
         }
     }
 };
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
-
+jest.mock("../../screen/services/adminStaffService");
 describe('<StaffOverview/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
@@ -99,11 +115,18 @@ describe('<StaffOverview/>', () => {
         expect(wrapper.contains(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />)).to.equal(true);
     })
 
-    it('should have  review cards', () => {
-        hospitalReviews.forEach(review => {
-            expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
-        });
-    })
+
+
+    // it('should have  review cards', () => {
+
+    //     hospitalReviews.forEach(review => {
+
+    //         expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
+
+    //     });
+
+    // })
+
 
     it('should contain 2 buttons', () => {
         expect(wrapper.find(TouchableOpacity)).to.have.length(2);
@@ -117,11 +140,25 @@ describe('<StaffOverview/>', () => {
         sinon.assert.calledOnce(spyon);
     })
 
-    it('should navigate to StaffDetailsScreen screen component after clicking on delete', () => {
-        const del = wrapper.find(TouchableOpacity).at(1);
-        console.log(del)
-        del.simulate('press');
-        sinon.assert.calledWith(spyon, "StaffDetailsScreen");
+
+ 
+
+    it('should navigate to StaffDetailsScreen screen component after clicking on delete ', async () => {
+        
+ 
+
+        wrapper.contains(<Text style={   { fontSize: 18,
+            fontWeight: 'bold'}}>Dr. {name} {highestDegree}</Text>);
+       
+    
+        const output = { "id": "1" };
+    
+        deleteAdminStaffApi.mockResolvedValue(output);
+        await wrapper.instance().onPressDelete();
+        
+        sinon.assert.calledWith(spyon, "ManageStaffScreen");
         sinon.assert.calledOnce(spyon);
-    })
+      })
+
+
 })

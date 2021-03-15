@@ -142,11 +142,12 @@ export default StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 30,
-    color: '#CD6155',
+    color: 'blue',
     fontStyle: 'italic',
     paddingBottom: 10,
     paddingTop: 10,
-    width: '80%'
+    width: '80%',
+    textAlign:'center'
   },
 
   labelText: {
@@ -268,6 +269,12 @@ export default StyleSheet.create({
   space:{
     width:20,
     height:20
-  }        
+  }  ,
+
+  headOrder: { height: 40, backgroundColor: '#808B97' },
+  textOrder: { margin: 6,fontSize:20 },
+  rowOrder: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
+  btn: { width: 78, height: 32, backgroundColor: '#78B7BB',  borderRadius: 2 },
+  btnText: { textAlign: 'center', color: '#fff' }      
 
 });

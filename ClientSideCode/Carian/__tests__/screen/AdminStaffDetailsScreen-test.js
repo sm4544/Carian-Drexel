@@ -127,14 +127,14 @@ describe('<StaffDetailsScreen/>', () => {
     wrapper.find(TextInput).at(6).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'test@test.com');
 
-    const output = {
-      "Message": "Invalid JSON-'name'"
-    };
-
-    postAdminStaffApi.mockResolvedValue(output);
-    await wrapper.instance().onPressSubmit();
-    sinon.assert.calledWith(spyon, "ManageStaffScreen");
-    sinon.assert.calledOnce(spyon);
+      const output = { "Message": "Data" 
+                    };
+  
+      postAdminStaffApi.mockResolvedValue(output);    
+      await wrapper.instance().onPressSubmit();
+      sinon.assert.calledWith(spyon, "ManageStaffScreen");
+      sinon.assert.calledOnce(spyon);
+    
 
   })
 
@@ -148,14 +148,16 @@ describe('<StaffDetailsScreen/>', () => {
     wrapper.find(TextInput).at(6).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'test@test.com');
 
-    const output = {
-      "Message": "Invalid JSON-'name'"
-    };
 
-    editAdminStaffApi.mockResolvedValue(output);
-    await wrapper.instance().onPressUpdate();
-    sinon.assert.calledWith(spyon, "ManageStaffScreen");
-    sinon.assert.calledOnce(spyon);
-
+      const output = { "Message": "Data" 
+                    };
+  
+       editAdminStaffApi.mockResolvedValue(output);    
+      await wrapper.instance().onPressUpdate();
+      sinon.assert.calledWith(spyon, "ManageStaffScreen");
+      sinon.assert.calledOnce(spyon);
+    
   })
+
+
 });
