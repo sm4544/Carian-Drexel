@@ -1,51 +1,42 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import HospitalDetailsScreen from '../../screen/drawerScreens/HospitalDetailsScreen';
-import { View, Text, TextInput, TouchableOpacity,ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import styles from '../../styles/commonStyles';
-import ActionButton from 'react-native-action-button';
 import DatePicker from 'react-native-datepicker';
 import { postAdminHospitalApi, editAdminHospitalApi } from '../../screen/services/adminHospitalService';
 
-const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
-const name =  {name: name};
-const area =  {area: area};
-const city =  {city: city};
-const addressine1 =  {addressine1: addressine1};
-const addressine2 =  {addressine2: addressine2};
-const state = {state: state};
-const pincode =  {pincode: pincode};
-const licence_number =  {licence_number: licence_number};
-const originally_registered_date =  {originally_registered_date: originally_registered_date};
-const phonenumber =  {phonenumber: phonenumber};
-const id =  {id: id};
+const name = { name: name };
+const area = { area: area };
+const city = { city: city };
+const addressine1 = { addressine1: addressine1 };
+const addressine2 = { addressine2: addressine2 };
+const state = { state: state };
+const pincode = { pincode: pincode };
+const licence_number = { licence_number: licence_number };
+const originally_registered_date = { originally_registered_date: originally_registered_date };
+const phonenumber = { phonenumber: phonenumber };
+const id = { id: id };
 
 const navigation = {
-
   navigate: jest.fn(),
-
   state: {
+    params: {
+      name: name,
+      area: area,
+      city: city,
+      addressine1: addressine1,
+      addressine2: addressine2,
+      state: state,
+      pincode: pincode,
+      phonenumber: phonenumber,
+      originally_registered_date: originally_registered_date,
+      licence_number: licence_number,
 
-      params: {
-
-          name : name,
-          area :  area,
-          city :  city,
-          addressine1 :  addressine1,
-          addressine2 :  addressine2,
-          state : state,
-          pincode :  pincode,
-          phonenumber: phonenumber,
-          originally_registered_date: originally_registered_date,
-          licence_number:licence_number,
-          
-
-      }
-
+    }
   }
-
 };
 
 global.expect = expect;
@@ -63,9 +54,9 @@ describe('<HospitalDetailsScreen/>', () => {
     navigation.navigate.restore();
   });
 
-  
   it('should have view ', () => {
     expect(wrapper.find(ScrollView)).to.have.length(1);
+
 });
 
 it('should have hospital detail boxes', () => {
@@ -185,8 +176,8 @@ it('should navigate to hospital component on update', async() => {
     await wrapper.instance().onPressUpdate();
     sinon.assert.calledWith(spyon, "HospitalScreen");
     sinon.assert.calledOnce(spyon);
-  
-})
+
+  })
 
 
 });

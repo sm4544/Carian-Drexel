@@ -185,7 +185,7 @@ const CustomSidebarMenu = props => {
   getUser = () =>{
     if(loginAs === 'Customer'){
       return CustomerOptions;
-    }else if ( loginAs === 'admin'){
+    }else if ( loginAs === 'Admin'){
       return AdminOptions;
     }else if ( loginAs === 'Doctor'){
       return DoctorOptions;

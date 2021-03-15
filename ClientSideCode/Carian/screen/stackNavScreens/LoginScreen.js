@@ -31,7 +31,7 @@ export default class LoginScreen extends ValidationComponent {
   onPressLogin = () => {
     if (this.isValidForm()) {
       const body= JSON.stringify({ username: this.state.username,   password: this.state.password  }) ;      
-      postLoginApi(body).then((data) => {
+      Promise.all(postLoginApi(body).then((data) => {
         console.log(data)
         if(data.Message === 'Logged in succesfully') {
 
@@ -44,7 +44,7 @@ export default class LoginScreen extends ValidationComponent {
         } else{  
           return false;
         } 
-      }); 
+      })); 
     } else {
       return false;
     }

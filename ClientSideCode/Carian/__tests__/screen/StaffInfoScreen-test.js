@@ -25,7 +25,6 @@ const navigation = {
       name: 'hello',
       profileid: '1',
       profile_type: 'Doctor'
-
     }
   }
 };
@@ -34,7 +33,6 @@ global.sinon = sinon;
 global.shallow = shallow;
 jest.mock("../../screen/services/StaffInfoService");
 jest.mock("../../screen/services/hospitalService");
-
 
 describe('<StaffInfoScreen/>', () => {
   beforeEach(function () {
@@ -75,7 +73,7 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.find(TextInput).at(1).props().value).to.equal('');
   });
 
-  
+
   it('should have college name  input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(1).props().value).to.equal('');
   });
@@ -93,7 +91,7 @@ describe('<StaffInfoScreen/>', () => {
   it('should have Experience   input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(3).props().value).to.equal('');
   });
- 
+
 
   it('should have work_email_address  input component with empaty value ', () => {
     expect(wrapper.find(TextInput).at(2).props().value).to.equal('');
@@ -156,22 +154,15 @@ describe('<StaffInfoScreen/>', () => {
     expect(wrapper.contains('The field "Highest_degree" is mandatory.')).to.equal(true);
   })
 
- 
-
   it('should through error messages if user click on Register with empty College_name', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "College_name" is mandatory.')).to.equal(true);
   })
 
-  
-
-  
   it('should through error messages if user click on Register with empty work_phone_number', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "work_phone_number" is mandatory.')).to.equal(true);
   })
 
@@ -180,14 +171,12 @@ describe('<StaffInfoScreen/>', () => {
     work_phone_number.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "work_phone_number" must be a valid number.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty work_email_address', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "work_email_address" is mandatory.')).to.equal(true);
   })
 
@@ -196,16 +185,12 @@ describe('<StaffInfoScreen/>', () => {
     work_email_address.simulate('ChangeText', 'ram');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "work_email_address" must be a valid email address.')).to.equal(true);
   })
-
-
 
   it('should through error messages if user click on Register with empty licence_number', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "licence_number" is mandatory.')).to.equal(true);
   })
 
@@ -214,14 +199,12 @@ describe('<StaffInfoScreen/>', () => {
     License.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "licence_number" must be a valid number.')).to.equal(true);
   })
 
   it('should through error messages if user click on Register with empty doctor_fee', () => {
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "doctor_fee" is mandatory.')).to.equal(true);
   })
 
@@ -230,7 +213,6 @@ describe('<StaffInfoScreen/>', () => {
     doctor_fee.simulate('ChangeText', 'test');
     const registerButton = wrapper.find(TouchableOpacity).at(0);
     registerButton.simulate('press');
-
     expect(wrapper.contains('The field "doctor_fee" must be a valid number.')).to.equal(true);
   })
 
@@ -240,23 +222,17 @@ describe('<StaffInfoScreen/>', () => {
   })
 
   it('DROPDOWNDATA should NOT BE EMPTY', () => {
-    
-    //expect(wrapper.state('dropdowndata')).to.have.length(2);
     expect(wrapper.state('dropdowndata')).to.be.an('array').that.is.not.empty;
-    
   })
 
   it('should navigate to confirmation screen ', async () => {
-
     wrapper.find(TextInput).at(0).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(1).simulate('ChangeText', 'test');
     wrapper.find(TextInput).at(2).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(3).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(4).simulate('ChangeText', '12345');
     wrapper.find(TextInput).at(5).simulate('ChangeText', '100');
-    
     wrapper.setState({ hospital_id: '1' })
-
     const output = { "Message": "Added Staff", "StaffID": "39" };
 
     postStaffInfoProfileApi.mockResolvedValue(output);
@@ -274,11 +250,8 @@ describe('<StaffInfoScreen/>', () => {
     wrapper.find(TextInput).at(3).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(4).simulate('ChangeText', '12345');
     wrapper.find(TextInput).at(5).simulate('ChangeText', '100');
-  
     wrapper.setState({ hospital_id: '1' })
-
     const output = { "Message": "ERROR", "StaffID": "39" };
-
     postStaffInfoProfileApi.mockResolvedValue(output);
     await wrapper.instance().onPressStaffProfile('test', '30', 'Doctor');
     console.log(spyon + 'spyon')

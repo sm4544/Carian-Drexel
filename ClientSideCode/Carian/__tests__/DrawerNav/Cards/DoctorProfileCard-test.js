@@ -19,11 +19,9 @@ import DoctorProfileCard from '../../../screen/drawerScreens/Cards/DoctorProfile
 import image from '../../../image/drawer.png';
 import CardView from 'react-native-cardview';
 
-
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
-
 
 const doctor = {
     image: image,
@@ -35,7 +33,7 @@ const doctor = {
     avgRating: '4.5',
     totalNoOfReviews: '150',
     overAllExperience: '5',
-    doctor_fee:'100'
+    doctor_fee: '100'
 }
 
 describe('<StaffInfoScreen/>', () => {
@@ -83,8 +81,4 @@ describe('<StaffInfoScreen/>', () => {
     it('should have doctor rating text boxe ', () => {
         expect(wrapper.contains(<Text style={styles.cardSubBoldText}>4.5(150 Stories )</Text>)).to.equal(true);
     });
-
-
-
-
 });

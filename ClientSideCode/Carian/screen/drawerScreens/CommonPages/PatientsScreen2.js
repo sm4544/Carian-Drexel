@@ -36,7 +36,7 @@ export default class PatientsScreen extends ValidationComponent {
         console.log('hello')
         this.setState({ patientId: patientId })
         this.props.navigation.navigate("paymentScreen", {
-            patientId: this.state.patientId, doctor: this.state.doctor,
+            patientId: this.state.patientId, doctor: this.state.doctor,hospital: this.state.hospital,
             profileId: this.state.profileId, selectedDate: this.state.selectedDate, selectedTime: this.state.selectedTime
         });
 
