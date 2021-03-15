@@ -12,33 +12,58 @@ import styles from '../../styles/DoctorProfileStyles';
 import LabOverview from '../../screen/drawerScreens/LabOverview';
 import ReviewCard from '../../screen/drawerScreens/Cards/ReviewCard';
 import { SliderBox } from "react-native-image-slider-box";
-const name = { name: name };
-const area = { area: area };
-const city = { city: city };
-const addressine1 = { addressine1: addressine1 };
-const addressine2 = { addressine2: addressine2 };
-const state = { state: state };
-const pincode = { pincode: pincode };
-const licence_number = { licence_number: licence_number };
-const originally_registered_date = { originally_registered_date: originally_registered_date };
-const phonenumber = { phonenumber: phonenumber };
-const id = { id: id };
+
+import { deleteAdminLabApi, workingHoursGetLabApi} from '../../screen/services/adminLabService'
+
+
+
+const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
+const name =  {name: name};
+const area =  {area: area};
+const city =  {city: city};
+const addressine1 =  {addressine1: addressine1};
+const addressine2 =  {addressine2: addressine2};
+const state = {state: state};
+const pincode =  {pincode: pincode};
+const licence_number =  {licence_number: licence_number};
+const originally_registered_date =  {originally_registered_date: originally_registered_date};
+const phonenumber =  {phonenumber: phonenumber};
+const id =  {id: id};
+
+
 let headerSlots = ["Days", "24Hours", "Opens At", "Closed at",]
-let workingHours = [
-    ["Mon", "Yes", "-", "-"],
-    ["Tue", "No", "01:00PM", "06:00PM"],
-    ["Wed", "No", "01:00PM", "06:00PM"],
-    ["Thu", "No", "01:00PM", "06:00PM"],
-    ["Fri", "Yes", "-", "-"],
-    ["Sat", "Yes", "-", "-"],
-    ["Sun", "No", "01:00PM", "06:00PM"]]
+
+let workingHours = [ ["Mon","1:00PM","5:00AM"],["Tue","1:00PM","5:00AM"],
+["Wed","1:00PM","5:00AM"], ["Thu","1:00PM","5:00AM"],
+["Fri","1:00PM","5:00AM"], ["Sat","1:00PM","5:00AM"],
+["Sun","1:00PM","5:00AM"]
+
+]
+
+
 let hospitalReviews = [{ id: 0, name: 'Srinivas', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
 { id: 1, name: 'Nallapati', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
 { id: 2, name: 'Test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
 { id: 3, name: 'Hello', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
 ]
-let hospitalImages = [
-    "https://source.unsplash.com/1024x768/?nature",
+
+
+let specialistCarddata = [{ image: image, name: 'Family physicians' },
+
+{ image: image, name: 'Pediatricians' },
+
+{ image: image, name: 'Geriatric doctors' },
+
+{ image: image, name: 'Allergists' },
+
+{ image: image, name: 'Rheumatologists' }]
+
+
+
+let hospitalImages= [
+
+
+
     "https://source.unsplash.com/1024x768/?water",
     "https://source.unsplash.com/1024x768/?girl",
     "https://source.unsplash.com/1024x768/?tree"
@@ -61,9 +86,15 @@ global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
 
+jest.mock("../../screen/services/adminLabService");
+
 describe('<LabOverview/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
+        workingHoursGetLabApi.mockResolvedValue([["Mon","1:00PM","5:00AM"],["Tue","1:00PM","5:00AM"],
+        ["Wed","1:00PM","5:00AM"], ["Thu","1:00PM","5:00AM"],
+        ["Fri","1:00PM","5:00AM"], ["Sat","1:00PM","5:00AM"],
+        ["Sun","1:00PM","5:00AM"]])
         wrapper = shallow(<LabOverview navigation={navigation}></LabOverview>);
     });
 
@@ -130,33 +161,87 @@ describe('<LabOverview/>', () => {
         expect(wrapper.find(Table)).to.have.length(1);
         expect(wrapper.find(Row)).to.have.length(1);
         expect(wrapper.find(Rows)).to.have.length(1);
-        expect(wrapper.contains(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />)).to.equal(true);
-        expect(wrapper.contains(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />)).to.equal(true);
+
+
+        expect(wrapper.find(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />));
+
+        expect(wrapper.find(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />));
+
     })
 
-    it('should have  review cards', () => {
-        hospitalReviews.forEach(review => {
-            expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
-        });
-    })
 
-    it('should contain 5 buttons', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(5);
-    })
 
-    it('should navigate to LabDetailsScreen screen component after clicking on edit', () => {
+    // it('should have  review cards', () => {
+
+    //     hospitalReviews.forEach(review => {
+
+    //         expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
+
+    //     });
+
+    // })
+
+    it('should contain 6 buttons', () => {
+        expect(wrapper.find(TouchableOpacity)).to.have.length(6);
+      })
+
+      it('should navigate to TimepickingScreen screen component after clicking on addworkinhhours', () => {
         const edit = wrapper.find(TouchableOpacity).at(3);
         console.log(edit)
-        edit.simulate('press');
-        sinon.assert.calledWith(spyon, "LabDetailsScreen");
+        edit.simulate('press');    
+        sinon.assert.calledWith(spyon, "TimePickingLabScreen");
+
         sinon.assert.calledOnce(spyon);
     })
 
-    it('should navigate to LabDetailsScreen screen component after clicking on delete', () => {
-        const del = wrapper.find(TouchableOpacity).at(4);
-        console.log(del)
-        del.simulate('press');
+
+    
+      it('should navigate to LabDetailsScreen screen component after clicking on edit', () => {
+        const edit = wrapper.find(TouchableOpacity).at(4);
+        console.log(edit)
+        edit.simulate('press');    
         sinon.assert.calledWith(spyon, "LabDetailsScreen");
         sinon.assert.calledOnce(spyon);
+        
+      })
+
+
+      it('should navigate to LabScreen screen component after clicking on delete', async () => {
+  
+        const output = {
+             "id": "1"
+        };
+        deleteAdminLabApi.mockResolvedValue(output);
+        await wrapper.instance().onPressDelete();
+        sinon.assert.calledWith(spyon, "LabScreen");
+        sinon.assert.calledOnce(spyon);
+      })
+
+
+
+      it('should called submit component ', async() => {
+
+  
+        const output =  [ [ 'Mon', '1:00PM', '5:00AM' ],
+        [ 'Tue', '1:00PM', '5:00AM' ],
+        [ 'Wed', '1:00PM', '5:00AM' ],
+        [ 'Thu', '1:00PM', '5:00AM' ],
+        [ 'Fri', '1:00PM', '5:00AM' ],
+        [ 'Sat', '1:00PM', '5:00AM' ],
+        [ 'Sun', '1:00PM', '5:00AM' ]] ;
+    
+        workingHoursGetLabApi.mockResolvedValue(output);    
+        await wrapper.instance().onPressSubmit();
+       
+      
     })
+
+
+
+
+
+      
+    
+
+
 })

@@ -26,6 +26,19 @@ export const editAdminStaffApi = async (Body) => {
     return await res.json();   
 };
 
+export const deleteAdminStaffApi = async (Body) => {
+    
+    const res = await fetch(URL + 'Staff/', {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: Body,
+    });
+    return await res.json();   
+};
+
 export const StaffApi = async () => {
     const res2 = await fetch(URL + 'doctors-simple', {
         method: 'GET',

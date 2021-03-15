@@ -7,7 +7,7 @@ import styles from '../../styles/DoctorProfileStyles';
 import styles1 from '../../styles/commonStyles';
 import HospitalCard from './Cards/HospitalCard';
 import { SliderBox } from "react-native-image-slider-box";
-import ReviewCard from './Cards/ReviewCard';
+// import ReviewCard from './Cards/ReviewCard';
 import { Table, Row, Rows } from "react-native-table-component";
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
@@ -131,10 +131,10 @@ export default class HospitalOverview extends Component {
 
                     <Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>
 
-                    {this.state.hospitalReviews.map(review => (
+                    {/* {this.state.hospitalReviews.map(review => (
                         <ReviewCard key={review.id} review={review}></ReviewCard>
 
-                        ))}
+                        ))} */}
 
 
                 </ScrollView>
@@ -148,7 +148,7 @@ export default class HospitalOverview extends Component {
                   < Text style={styles1.buttonText}> Edit </Text>
 
                </TouchableOpacity>
-                <TouchableOpacity  onPress={() => this.props.navigation.navigate('PharmacyDetailsScreen')} activeOpacity={0.7} style={styles2.button} >
+                <TouchableOpacity  activeOpacity={0.7} style={styles2.button} >
    
                  < Text style={styles1.buttonText}> Delete </Text>
 
