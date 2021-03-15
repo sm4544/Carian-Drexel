@@ -93,3 +93,16 @@ export const labOrderDetails = async (orderid) => {
   
     return await res.json();   
 };
+
+export const labOrders = async () => {
+    const res = await fetch(URL + 'LabReportOrders' , {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+     
+    });
+  
+    return await res.json();   
+};
