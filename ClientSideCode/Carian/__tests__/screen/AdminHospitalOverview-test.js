@@ -3,32 +3,14 @@ import {
     View,
     Text,
     TouchableOpacity,
-
-    Linking,
-
-    TextInput,
-
-    StyleSheet,
-
-    Alert,
-
-    Image,
-
-
     ScrollView,
 } from 'react-native';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Table, Row, Rows } from "react-native-table-component";
-
-import getDirections from 'react-native-google-maps-directions'
-
-
 import styles from '../../styles/DoctorProfileStyles';
 import HospitalOverview from '../../screen/drawerScreens/HospitalOverview';
-import SpecialityCard from '../../screen/drawerScreens/Cards/SpecialityCard';
-import ReviewCard from '../../screen/drawerScreens/Cards/ReviewCard';
 import { SliderBox } from "react-native-image-slider-box";
 import { deleteAdminHospitalApi, workingHoursGetHospitalApi } from '../../screen/services/adminHospitalService';
 

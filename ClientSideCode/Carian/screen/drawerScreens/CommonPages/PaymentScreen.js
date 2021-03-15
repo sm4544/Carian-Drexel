@@ -46,6 +46,7 @@ export default class paymentScreen extends ValidationComponent {
             console.log(data)
 
         }));
+        this.props.navigation.navigate("PatientAppointments");
     }
     componentDidMount() {
         this.setState({

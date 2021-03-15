@@ -35,6 +35,7 @@ export default class DepartmentPage extends ValidationComponent {
       department_phone_number: '',
       departmentAdmin_name: '',
       email: '',
+      hospital_id:''
     };
   }
 
@@ -68,8 +69,8 @@ export default class DepartmentPage extends ValidationComponent {
         pincode: this.state.pincode,
         department_phone_number: this.state.department_phone_number,
         departmentAdmin_name: this.state.departmentAdmin_name,
-        email: this.state.email,
-        hospital: 'Apolo',
+        email: this.state.email,        
+        hospital_id: this.state.hospital_id
       });
       console.log(body)
       postDepartmentInfoApi(body).then((res) => {
@@ -87,11 +88,12 @@ export default class DepartmentPage extends ValidationComponent {
       return false;
     }
   };
+  componentDidMount(){
+    this.setState({ hospital_id : this.props.navigation.state.params.hospital_id})
+  }
 
   render() {
-    const hospital_id = this.props.navigation.state.params.hospital_id;
-    const profileId = this.props.navigation.state.params.profileId;
-
+    
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -223,7 +225,7 @@ export default class DepartmentPage extends ValidationComponent {
           </View>
 
 
-          <TouchableOpacity onPress={this.onPressDepartmentInfo} activeOpacity={0.7} style={styles.button} >
+          <TouchableOpacity onPress={() => this.onPressDepartmentInfo()} activeOpacity={0.7} style={styles.button} >
             <Text style={styles.buttonText}> Submit </Text>
 
           </TouchableOpacity>

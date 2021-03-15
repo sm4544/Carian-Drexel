@@ -28,7 +28,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
       selectedTime: '',
       hospitalImageList: [],
       slots: [],
-      specialistCarddata: [{ id: 0, image: image, name: "family phy" }],
+      specialistCarddata: [],
       doctorReviews: [],
       services: [],
       calen: {},
@@ -76,7 +76,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
     });
     getAvailableSlots(body)
       .then((res) => {
-
+        console.log(res)
         var list1 = [];
         let day = moment().add(1, 'days').format("YYYY-MM-DD")
         for (i = 0; i < res[day].length; i++) {
@@ -98,6 +98,7 @@ export default class DoctorPublicProfile extends ValidationComponent {
     });
     getDoctorDetails(body)
       .then((res) => {
+        console.log(res)
         const doc = {
           id: res.doctor.profile_id,
           name: res.doctor.name,
