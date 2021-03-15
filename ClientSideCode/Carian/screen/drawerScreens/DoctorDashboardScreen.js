@@ -45,7 +45,7 @@ export default class PatientsCalendarScreen extends Component {
   displayAppointment=()=>{
     console.log(this.state.selectedDate);
     const body = JSON.stringify({
-      doctor_id:13,
+      doctor_id:15,
       date: this.state.selectedDate
     })
     getAppointmentDetails(body).then(results =>{
@@ -73,7 +73,7 @@ export default class PatientsCalendarScreen extends Component {
 
   onPressHospitalInfo = (name,start_time,end_time,patient_id,appointment_id,hospital_id) => {
     
-    this.props.navigation.navigate('PatientsInfoScreen',{name : name, start_time:start_time,end_time:end_time, profileId:profileId,patient_id:patient_id,appointment_id:appointment_id,hospital_id:hospital_id});
+    this.props.navigation.navigate('PatientsInfoScreen',{name : name, start_time:start_time,end_time:end_time, profileId:profileId,patient_id:patient_id,appointment_id:appointment_id,hospital_id:hospital_id,selectedDate:this.state.selectedDate});
   }
 
       
@@ -121,7 +121,7 @@ export default class PatientsCalendarScreen extends Component {
                   <TouchableOpacity onPress={()=>this.onPressHospitalInfo(hospital.name,hospital.start_time,hospital.end_time,hospital.patient_id,hospital.appointment_id,hospital.hospital_id)}style={{width:'100%',height:'30%', color:'pink', paddingBottom:100, borderRadius:10,flexDirection:"row",alignItems:'center',justifyContent:'center'},'Hello'}> 
                     <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>Patient: {hospital.name} </Text>
                     <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>From : {hospital.start_time} </Text>
-                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>To : {hospital.end_time}{hospital.appointment_id}</Text>
+                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>To : {hospital.end_time}</Text>
                    
                     </TouchableOpacity>
                     

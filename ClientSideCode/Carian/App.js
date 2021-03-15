@@ -31,7 +31,8 @@ import PatientsInfoScreen from './screen/drawerScreens/PatientsInfoScreen';
 import LabTestsViewScreen from './screen/drawerScreens/LabTestsViewScreen';
 import LabTestsDetailsScreen from './screen/drawerScreens/LabTestsDetailsScreen';
 import MedicineDetailsScreen from './screen/drawerScreens/MedicineDetailsScreen';
-//import AddMedicinesScreen from './screen/drawerScreens/AddMedicinesScreen';
+import AddMedicinesScreen from './screen/drawerScreens/AddMedicinesScreen';
+import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
 import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
 import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
 import HospitalScreen from './screen/drawerScreens/HospitalScreen';
@@ -660,7 +661,10 @@ const OtherExternal = createStackNavigator({
   AddLabReportsScreen:{
     screen: AddLabReportsScreen,
     navigationOptions:{title: 'AddLabReportsScreen'}
-
+  },
+  AddMedicinesScreen:{
+    screen: AddMedicinesScreen,
+    navigationOptions:{title: 'AddMedicinesScreen'}
   },
 
   MedicineAddScreen:{
