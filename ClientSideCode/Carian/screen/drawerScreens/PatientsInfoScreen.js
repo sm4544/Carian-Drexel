@@ -44,12 +44,12 @@ export default class PatientsInfoScreen extends ValidationComponent {
     //     licensenumber: { numbers: true, required: true },          
     //   });
     // };
-    onPressMedicines =(appointment_id,hospital_id,patient_id)=>{
+    onPressMedicines =(appointment_id,hospital_id,patient_id,profileId)=>{
       console.log(hospital_id);
-      this.props.navigation.navigate('AddMedicinesScreen',{appointment_id:appointment_id,hospital_id:hospital_id,patient_id:patient_id,});
+      this.props.navigation.navigate('AddMedicinesScreen',{appointment_id:appointment_id,hospital_id:hospital_id,patient_id:patient_id,profileId:profileId});
     };
-    onPressLab =()=>{
-      this.props.navigation.navigate('AddLabReportsScreen');
+    onPressLab =(appointment_id,hospital_id,patient_id,profileId,selectedDate)=>{
+      this.props.navigation.navigate('AddLabReportsScreen',{appointment_id:appointment_id,hospital_id:hospital_id,patient_id:patient_id,profileId:profileId,selectedDate:selectedDate});
     };
    
     onPressHospitalInfo = () => {
@@ -76,6 +76,7 @@ export default class PatientsInfoScreen extends ValidationComponent {
       const patient_id = this.props.navigation.state.params.patient_id;
       const appointment_id= this.props.navigation.state.params.appointment_id;
       const hospital_id= this.props.navigation.state.params.hospital_id;
+      const selectedDate= this.props.navigation.state.params.selectedDate;
       
       
       return (
@@ -95,7 +96,7 @@ export default class PatientsInfoScreen extends ValidationComponent {
                             <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20, color:'red'}}>Name: {name}</Text>
                         </View>
                         <Text >From: {start_time}</Text>
-                        <Text >To: {end_time} {appointment_id}</Text>
+                        <Text >To: {end_time} </Text>
                         
                     </View>
                 </CardView>
@@ -119,7 +120,7 @@ export default class PatientsInfoScreen extends ValidationComponent {
                   <Icon name="heart" size={40} color="#900"/>
                     <Text style={styles.cardText}>Prescription</Text>                          
             </CardView></TouchableOpacity>
-            <TouchableOpacity onPress={this.onPressLab}style={{flexDirection:'row',flex:1}}> 
+            <TouchableOpacity onPress={()=>this.onPressLab(appointment_id,hospital_id,patient_id,profileId,selectedDate)}style={{flexDirection:'row',flex:1}}> 
            <CardView cardElevation={2}
                   cardMaxElevation={2}
                   cornerRadius={10} style={{width:'90%',height:'85%', backgroundColor:'lightsteelblue'}}>

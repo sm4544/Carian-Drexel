@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {getPharmacyList,getMyPharmacyMedicine, postMedicineOrder} from '../services/MedicineService';
 import { color } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native';
 // import icons from 'npm install react-native-vector-icons';
 // import MultiSelect from 're  ct-native-multiple-select';
 //  
@@ -94,10 +95,10 @@ export default class AddMedicinesScreen extends ValidationComponent {
       this.setState({dataTable:dataTable});
       alert('Medicine added to list, please submit to place the order!!');
     }
-    onPressSubmit =(appointment_id,hospital_id,patient_id)=>{
+    onPressSubmit =(appointment_id,patient_id,hospital_id)=>{
       
-      body=JSON.stringify({"appointment_id":appointment_id,"patient_id":"40","hospital_id":hospital_id,"doctor_id": profileId,"pharmacy_id":this.state.pharmacy_id,"order_status":"Initiated","medicines":[{[this.state.medicine_id] : {"qty": this.state.qty}}]})
-      console.log(body);
+      body=JSON.stringify({"appointment_id":appointment_id,"patient_id":patient_id,"hospital_id":hospital_id,"doctor_id": profileId,"pharmacy_id":this.state.pharmacy_id,"order_status":"Initiated","medicines":[{[this.state.medicine_id] : {"qty": this.state.qty}}]})
+      
     // console.log(this.state.dataTable);
     alert('Order placed Successfully!!');
     this.setState({display:false});
@@ -113,6 +114,7 @@ export default class AddMedicinesScreen extends ValidationComponent {
         const patient_id = this.props.navigation.state.params.patient_id;
         const appointment_id = this.props.navigation.state.params.appointment_id;
         const hospital_id = this.props.navigation.state.params.hospital_id;
+        
         
       return (
       <ScrollView>     

@@ -12,9 +12,6 @@ import CustomSidebarMenu from './screen/components/CustomSidebarMenu';
 import NavigationDrawerHeader from './screen/components/NavigationDrawerHeader';
 import StaffInfoScreen from './screen/stackNavScreens/StaffInfoScreen';
 import ConfirmationScreen from './screen/stackNavScreens/ConfirmationScreen';
-
-// import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
-
 import ManageCustomerAdminProfieScreen from './screen/drawerScreens/ManageCustomerAdminProfieScreen';
 import PatientCalenderScreen from './screen/drawerScreens/PatientsCalendarScreen';
 import LabTestOrderViewScreen from './screen/drawerScreens/LabTestOrderViewScreen';
@@ -34,7 +31,7 @@ import LabTestsViewScreen from './screen/drawerScreens/LabTestsViewScreen';
 import LabTestsDetailsScreen from './screen/drawerScreens/LabTestsDetailsScreen';
 import MedicineDetailsScreen from './screen/drawerScreens/MedicineDetailsScreen';
 import AddMedicinesScreen from './screen/drawerScreens/AddMedicinesScreen';
-// import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
+import AddLabReportsScreen from './screen/drawerScreens/AddLabReportsScreen';
 import PatientsScreen from './screen/drawerScreens/CommonPages/PatientsScreen';
 import PatientsScreen2 from './screen/drawerScreens/CommonPages/PatientsScreen2';
 import HospitalScreen from './screen/drawerScreens/HospitalScreen';
@@ -673,15 +670,16 @@ const OtherExternal = createStackNavigator({
     screen: DoctorsDisplay,
     navigationOptions: { title: 'DoctorsDisplay' },
   },
-
   PatientsInfoScreen:{
     screen: PatientsInfoScreen,
     navigationOptions:{title:'PatientsInfoScreen'},
   },
-
-  
+  AddLabReportsScreen:{
+    screen: AddLabReportsScreen,
+    navigationOptions:{title: 'AddLabReportsScreen'}
+  },
   AddMedicinesScreen:{
-    screen:AddMedicinesScreen,
+    screen: AddMedicinesScreen,
     navigationOptions:{title: 'AddMedicinesScreen'}
   },
 
