@@ -34,7 +34,7 @@ jest.mock("../../screen/services/customerDetailsService");
 describe('<Labreport/>', () => {
   beforeEach(function () {
     spyon = sinon.spy(navigation, 'navigate');
-    labOrders.mockResolvedValue([{ orderid: "1", orderdate: "1-1-2020", orderstatus: "initiated" }])
+    labOrders.mockResolvedValue( [{"id":1,"generated_by":13,"generated_for":2,"generated_date":"2021-03-11","order_status":"Initiated","labreport_id":1,"lab_id":1},{"id":2,"generated_by":13,"generated_for":2,"generated_date":"2021-03-11","order_status":"Initiated","labreport_id":4,"lab_id":1},{"id":3,"generated_by":15,"generated_for":40,"generated_date":"2021-03-15","order_status":"Initiated","labreport_id":1,"lab_id":2},{"id":4,"generated_by":15,"generated_for":40,"generated_date":"2021-03-15","order_status":"Initiated","labreport_id":38,"lab_id":2},{"id":5,"generated_by":15,"generated_for":40,"generated_date":"2021-03-15","order_status":"Initiated","labreport_id":3,"lab_id":1},{"id":6,"generated_by":74,"generated_for":40,"generated_date":"2021-03-15","order_status":"Initiated","labreport_id":1,"lab_id":1}])
     wrapper = shallow(<Labreport navigation={navigation}></Labreport>);
     console.log(wrapper)
   });

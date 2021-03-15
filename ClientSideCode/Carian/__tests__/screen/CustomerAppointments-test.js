@@ -40,11 +40,11 @@ describe('<PatientAppointments/>', () => {
   });
 
   it('should contain Appointments button', () => {
-    expect(wrapper.find(TouchableOpacity)).to.have.length(0);
+    expect(wrapper.find(TouchableOpacity)).to.have.length(1);
   })
 
   it('should have Card view', () => {
-    expect(wrapper.find(CardView)).to.have.length(0);
+    expect(wrapper.find(CardView)).to.have.length(1);
   });
   it('should have icon clock', () => {
     expect(wrapper.find(<Icon name="clock" color="black" size={30} />));

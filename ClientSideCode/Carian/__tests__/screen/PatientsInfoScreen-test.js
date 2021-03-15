@@ -69,7 +69,7 @@ describe('<PatientsInfoScreen/>', () => {
   });
 
   it('should have ScrollView ', () => {
-    expect(wrapper.find(ScrollView)).to.have.length(0);
+    expect(wrapper.find(ScrollView)).to.have.length(1);
 });
 it('should have View ', () => {
   expect(wrapper.find(View)).to.have.length(7);
