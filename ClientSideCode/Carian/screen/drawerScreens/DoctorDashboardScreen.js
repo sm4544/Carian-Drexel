@@ -26,6 +26,9 @@ export default class PatientsCalendarScreen extends Component {
       end_time:'',
       show: false,
       profileD: {},
+      patient_id:'',
+      hospital_id:'',
+      appointment_id:'',
       selectedDate: moment().format('MM/DD/YYYY'),
       selectedTime: '',
       appointmentDetails:[]
@@ -46,13 +49,16 @@ export default class PatientsCalendarScreen extends Component {
       date: this.state.selectedDate
     })
     getAppointmentDetails(body).then(results =>{
-      console.log(results);
+      // console.log(results);
       list1 =[]
       for (i = 0; i < results.length; i++) {
         list1.push({
+          appointment_id: results[i].appointment_id,
           name: results[i].name,
           start_time: results[i].start_time,
-          end_time: results[i].end_time
+          end_time: results[i].end_time,
+          patient_id:results[i].patient_id,
+          hospital_id:results[i].hospital_id,
         });
       }
       this.setState({appointmentDetails: list1});
@@ -65,9 +71,9 @@ export default class PatientsCalendarScreen extends Component {
   }
   
 
-  onPressHospitalInfo = (name,start_time,end_time) => {
+  onPressHospitalInfo = (name,start_time,end_time,patient_id,appointment_id,hospital_id) => {
     
-    this.props.navigation.navigate('PatientsInfoScreen',{name : name, start_time:start_time,end_time:end_time});
+    this.props.navigation.navigate('PatientsInfoScreen',{name : name, start_time:start_time,end_time:end_time, profileId:profileId,patient_id:patient_id,appointment_id:appointment_id,hospital_id:hospital_id});
   }
 
       
@@ -78,6 +84,9 @@ export default class PatientsCalendarScreen extends Component {
     let startDate = moment();
     let endDate = moment(startDate).add(30, 'days');
     let datesWhitelist = [{start: startDate, end: endDate}];
+    const profileId = global.profileId;
+   
+    // const patient_id = global.patient_id;
     
 
     for (let i = 0; i < 40; i++) {
@@ -109,10 +118,10 @@ export default class PatientsCalendarScreen extends Component {
                 {this.state.appointmentDetails.map((hospital) => (
                   <View style={styles.cardContainer,{backgroundColor:'powderblue',paddingBottom:30,cornerRadius:100}}>
                    
-                  <TouchableOpacity onPress={()=>this.onPressHospitalInfo(hospital.name,hospital.start_time,hospital.end_time)}style={{width:'100%',height:'30%', color:'pink', paddingBottom:100, borderRadius:10,flexDirection:"row",alignItems:'center',justifyContent:'center'},'Hello'}> 
+                  <TouchableOpacity onPress={()=>this.onPressHospitalInfo(hospital.name,hospital.start_time,hospital.end_time,hospital.patient_id,hospital.appointment_id,hospital.hospital_id)}style={{width:'100%',height:'30%', color:'pink', paddingBottom:100, borderRadius:10,flexDirection:"row",alignItems:'center',justifyContent:'center'},'Hello'}> 
                     <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>Patient: {hospital.name} </Text>
                     <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>From : {hospital.start_time} </Text>
-                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>To : {hospital.end_time} </Text>
+                    <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20}}>To : {hospital.end_time}{hospital.appointment_id}</Text>
                    
                     </TouchableOpacity>
                     

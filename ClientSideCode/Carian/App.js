@@ -657,6 +657,13 @@ const OtherExternal = createStackNavigator({
     screen: PatientsInfoScreen,
     navigationOptions:{title:'PatientsInfoScreen'},
   },
+
+  AddLabReportsScreen:{
+    screen: AddLabReportsScreen,
+    navigationOptions:{title: 'AddLabReportsScreen'}
+
+  },
+
   MedicineAddScreen:{
     screen:MedicineAddScreen,
     navigationOptions:{title:'MedicineAddScreen'},
