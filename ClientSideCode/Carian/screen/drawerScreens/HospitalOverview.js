@@ -11,6 +11,12 @@ import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from "react-native-table-component";
 import SpecialityCard from './Cards/SpecialityCard';
 import { deleteAdminHospitalApi, workingHoursGetHospitalApi } from '../services/adminHospitalService'
+
+//import MapView from 'react-native-maps';
+import getDirections from 'react-native-google-maps-directions'
+import MapViewDirections from 'react-native-maps-directions';
+import Geocoder from 'react-native-geocoding';
+
 import { getAllDepartments } from '../services/DepartmentService'
 
 
