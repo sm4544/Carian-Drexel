@@ -72,6 +72,18 @@ export const getLabReportsList = async () => {
     });
     return await res.json();   
 };
+export const postMedicineOrder = async (body) => {
+    console.log(body);
+    const res = await fetch(URL + 'MedicineOrder/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+       body:body,
+    });
+    return await res.json();   
+};
 
   
 

@@ -17,10 +17,12 @@ export default class PatientsInfoScreen extends ValidationComponent {
     constructor(props) {   
       super(props);   
       this.state = {   
-        profileD: '',
+        profileID: '',
+        
         name:'',
         start_time:'',
         end_time:'',
+        // patient_id:'',
         // hospitalname: '',
         // hospitaladd1: '',
         // hospitaladd2: '',
@@ -42,9 +44,9 @@ export default class PatientsInfoScreen extends ValidationComponent {
     //     licensenumber: { numbers: true, required: true },          
     //   });
     // };
-    onPressMedicines =()=>{
-      console.log('hi');
-      this.props.navigation.navigate('AddMedicinesScreen');
+    onPressMedicines =(appointment_id,hospital_id,patient_id)=>{
+      console.log(hospital_id);
+      this.props.navigation.navigate('AddMedicinesScreen',{appointment_id:appointment_id,hospital_id:hospital_id,patient_id:patient_id,});
     };
     onPressLab =()=>{
       this.props.navigation.navigate('AddLabReportsScreen');
@@ -70,6 +72,11 @@ export default class PatientsInfoScreen extends ValidationComponent {
       const name = this.props.navigation.state.params.name;
       const start_time = this.props.navigation.state.params.start_time;
       const end_time = this.props.navigation.state.params.end_time;
+      const profileId = this.props.navigation.state.params.profileId;
+      const patient_id = this.props.navigation.state.params.patient_id;
+      const appointment_id= this.props.navigation.state.params.appointment_id;
+      const hospital_id= this.props.navigation.state.params.hospital_id;
+      
       
       return (
         <ScrollView> 
@@ -88,7 +95,7 @@ export default class PatientsInfoScreen extends ValidationComponent {
                             <Text style={{fontStyle:'italic', fontWeight:'bold',fontSize:20, color:'red'}}>Name: {name}</Text>
                         </View>
                         <Text >From: {start_time}</Text>
-                        <Text >To: {end_time}</Text>
+                        <Text >To: {end_time} {appointment_id}</Text>
                         
                     </View>
                 </CardView>
@@ -105,7 +112,7 @@ export default class PatientsInfoScreen extends ValidationComponent {
                     
                                        
             </CardView></TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.onPressMedicines()}style={{flexDirection:'row',flex:1}}>          
+            <TouchableOpacity onPress={()=>this.onPressMedicines(appointment_id,hospital_id,patient_id)}style={{flexDirection:'row',flex:1}}>          
          <CardView cardElevation={2}
                 cardMaxElevation={2}
                 cornerRadius={10} style={{width:'90%',height:'85%', backgroundColor:'mediumturquoise'}}>
