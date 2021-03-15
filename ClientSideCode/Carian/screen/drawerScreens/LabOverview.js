@@ -7,8 +7,10 @@ import styles from '../../styles/DoctorProfileStyles';
 import styles1 from '../../styles/commonStyles';
 import HospitalCard from './Cards/HospitalCard';
 import { SliderBox } from "react-native-image-slider-box";
-import ReviewCard from './Cards/ReviewCard';
+// import ReviewCard from './Cards/ReviewCard';
 import { Table, Row, Rows } from "react-native-table-component";
+import { deleteAdminLabApi, workingHoursGetLabApi } from '../services/adminLabService'
+
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
 export default class HospitalOverview extends Component {
@@ -25,7 +27,6 @@ export default class HospitalOverview extends Component {
     ],
 
     hospitalImages: [
-      "https://source.unsplash.com/1024x768/?nature",
       "https://source.unsplash.com/1024x768/?water",
       "https://source.unsplash.com/1024x768/?girl",
       "https://source.unsplash.com/1024x768/?tree"
@@ -40,17 +41,65 @@ export default class HospitalOverview extends Component {
 
   headerSlots: ["Days", "24Hours", "Opens At", "Closed at",],
   workingHours: [
-      ["Mon", "Yes", "-", "-"],
-      ["Tue", "No", "01:00PM", "06:00PM"],
-      ["Wed", "No", "01:00PM", "06:00PM"],
-      ["Thu", "No", "01:00PM", "06:00PM"],
-      ["Fri", "Yes", "-", "-"],
-      ["Sat", "Yes", "-", "-"],
-      ["Sun", "No", "01:00PM", "06:00PM"]],
+  ],
  
-
+      id: this.props.navigation.state.params.id,
+      flag : true
       };
     }
+
+    onPressDelete = () => {
+      var body;
+      console.log("hi")
+        body = JSON.stringify({ id: this.state.id });
+        
+        console.log(body)
+          
+        deleteAdminLabApi(body).then((res) => {
+           console.log(res);
+          this.props.navigation.navigate('LabScreen');
+  
+        });
+  
+ 
+  
+   };
+
+   componentDidMount(){
+    console.log("loading labs");
+this.onPressSubmit();
+
+}
+
+   onPressSubmit = () => {
+    var body;
+    body = JSON.stringify({ lab_id: this.props.navigation.state.params.id  });
+
+    var tableData = [];
+    console.log("wrknghrs")
+    console.log(body);
+    workingHoursGetLabApi().then((res) => {
+        console.log(res);
+
+        res.forEach((data) => {
+          if(this.props.navigation.state.params.id == data.lab_id){
+            this.setState({ flag: false });
+
+          
+          tableData.push(["Mon",data.mon_start_time,data.mon_end_time],["Tue",data.tue_start_time,data.tue_end_time],
+            ["Wed",data.wed_start_time,data.wed_end_time], ["Thu",data.thu_start_time,data.thu_end_time],
+            ["Fri",data.fri_start_time,data.fri_end_time], ["Sat",data.sat_start_time,data.sat_end_time],
+            ["Sun",data.sun_start_time,data.sun_end_time]);
+          }
+        });
+        this.setState({ workingHours: tableData });
+        console.log("loadinglabs1")
+      
+        });
+  
+
+  }
+
  
    
     render() {
@@ -115,6 +164,20 @@ export default class HospitalOverview extends Component {
                                 <Text style={styles.adressText}> {area}, {city} ,{state}, {pincode}</Text>
                             </View>
                         </View>
+
+                        <View>   
+                          {   this.state.flag?
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('TimePickingLabScreen', { id: id})}activeOpacity={0.7} style={styles2.button}  >
+   
+           <Text style={styles.buttonText}> Add Working Hours </Text>
+ 
+ </TouchableOpacity>
+    :            <TouchableOpacity onPress={() => this.props.navigation.navigate('TimePickingLabScreen', { id: id})}activeOpacity={0.7} style={styles2.button}  >
+   
+    <Text style={styles.buttonText}> Edit Working Hours </Text>
+
+</TouchableOpacity>}
+</View>
                         
 
 <View style={styles.horizontalLine} />
@@ -131,10 +194,10 @@ export default class HospitalOverview extends Component {
 
                     <Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>
 
-                    {this.state.hospitalReviews.map(review => (
+                    {/* {this.state.hospitalReviews.map(review => (
                         <ReviewCard key={review.id} review={review}></ReviewCard>
 
-                        ))}
+                        ))} */}
 
 
                 </ScrollView>
@@ -147,7 +210,7 @@ export default class HospitalOverview extends Component {
                   < Text style={styles1.buttonText}> Edit </Text>
 
                </TouchableOpacity>
-                <TouchableOpacity  onPress={() => this.props.navigation.navigate('LabDetailsScreen')} activeOpacity={0.7} style={styles2.button} >
+                <TouchableOpacity  onPress={this.onPressDelete} activeOpacity={0.7} style={styles2.button} >
    
                  < Text style={styles1.buttonText}> Delete </Text>
 

@@ -51,4 +51,20 @@ describe('<LabScreen/>', () => {
     sinon.assert.calledOnce(spyon);
   })
 
+
+  it('should called submit component ', async() => {
+
+  
+    const output = {"name": "labname", "area": "hospitalarea", "city": "hospitalcity",
+    "addressine1": "hospitaladdressine1", "addressine2": "hospitaladdressine2", "phonenumber": "1234888888", state: "hospitalstate", pincode: "987", licence_number: "6555", originally_registered_date: "11-2-2020",
+    "id": "1"};
+
+    LabApi.mockResolvedValue(output);    
+    await wrapper.instance().onPressSubmit();
+   
+  
+})
+
+  
+
 });

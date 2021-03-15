@@ -8,6 +8,25 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
+  space: {
+    width: 20, 
+    height: 20,
+  },
+  containerMultiSelecet: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  head: { height: 40, backgroundColor: '#f1f8ff', borderWidth: 2 },
+  text: { margin: 1 ,fontWeight: 'bold',fontSize:1},
+
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  },
 
   AppTitle: {
     fontWeight: "bold",
@@ -123,11 +142,12 @@ export default StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 30,
-    color: '#CD6155',
+    color: 'blue',
     fontStyle: 'italic',
     paddingBottom: 10,
     paddingTop: 10,
-    width: '80%'
+    width: '80%',
+    textAlign:'center'
   },
 
   labelText: {
@@ -245,6 +265,16 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 80
-  },          
+  },  
+  space:{
+    width:20,
+    height:20
+  }  ,
+
+  headOrder: { height: 40, backgroundColor: '#808B97' },
+  textOrder: { margin: 6,fontSize:20 },
+  rowOrder: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
+  btn: { width: 78, height: 32, backgroundColor: '#78B7BB',  borderRadius: 2 },
+  btnText: { textAlign: 'center', color: '#fff' }      
 
 });

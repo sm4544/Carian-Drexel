@@ -8,8 +8,8 @@ def encrypt(plain_text):
     cipher_suite = Fernet(FERNET_KEY)
     encrypted_text = cipher_suite.encrypt(str.encode(plain_text))
     return encrypted_text.decode('utf-8')
-
-
-def decrypt(encrypted_text):
-    cipher_suite = Fernet(FERNET_KEY)
-    return cipher_suite.decrypt(str.encode(encrypted_text)).decode('utf-8')
+#
+#
+# def decrypt(encrypted_text):
+#     cipher_suite = Fernet(FERNET_KEY)
+#     return cipher_suite.decrypt(str.encode(encrypted_text)).decode('utf-8')

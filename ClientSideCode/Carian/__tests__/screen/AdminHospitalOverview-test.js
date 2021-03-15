@@ -3,17 +3,34 @@ import {
     View,
     Text,
     TouchableOpacity,
+
+    Linking,
+
+    TextInput,
+
+    StyleSheet,
+
+    Alert,
+
+    Image,
+
+
     ScrollView,
 } from 'react-native';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Table, Row, Rows } from "react-native-table-component";
+
+import getDirections from 'react-native-google-maps-directions'
+
+
 import styles from '../../styles/DoctorProfileStyles';
 import HospitalOverview from '../../screen/drawerScreens/HospitalOverview';
 import SpecialityCard from '../../screen/drawerScreens/Cards/SpecialityCard';
 import ReviewCard from '../../screen/drawerScreens/Cards/ReviewCard';
 import { SliderBox } from "react-native-image-slider-box";
+import { deleteAdminHospitalApi, workingHoursGetHospitalApi } from '../../screen/services/adminHospitalService';
 
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 const name = { name: name };
@@ -28,14 +45,15 @@ const originally_registered_date = { originally_registered_date: originally_regi
 const phonenumber = { phonenumber: phonenumber };
 const id = { id: id };
 let headerSlots = ["Days", "24Hours", "Opens At", "Closed at",]
-let workingHours = [
-    ["Mon", "Yes", "-", "-"],
-    ["Tue", "No", "01:00PM", "06:00PM"],
-    ["Wed", "No", "01:00PM", "06:00PM"],
-    ["Thu", "No", "01:00PM", "06:00PM"],
-    ["Fri", "Yes", "-", "-"],
-    ["Sat", "Yes", "-", "-"],
-    ["Sun", "No", "01:00PM", "06:00PM"]]
+
+
+let workingHours = [ ["Mon","1:00PM","5:00AM"],["Tue","1:00PM","5:00AM"],
+["Wed","1:00PM","5:00AM"], ["Thu","1:00PM","5:00AM"],
+["Fri","1:00PM","5:00AM"], ["Sat","1:00PM","5:00AM"],
+["Sun","1:00PM","5:00AM"]
+
+  ]
+
 let hospitalReviews = [{ id: 0, name: 'Srinivas', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
 { id: 1, name: 'Nallapati', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
 { id: 2, name: 'Test', rating: 4, date: '11/12/2020', comment: 'Review, criticism imply careful examination of something, formulation of a judgment' },
@@ -46,33 +64,67 @@ let specialistCarddata = [{ image: image, name: 'Family physicians' },
 { image: image, name: 'Geriatric doctors' },
 { image: image, name: 'Allergists' },
 { image: image, name: 'Rheumatologists' }]
-let hospitalImages = [
-    "https://source.unsplash.com/1024x768/?nature",
+
+
+
+
+let hospitalImages= [
+
+    
     "https://source.unsplash.com/1024x768/?water",
     "https://source.unsplash.com/1024x768/?girl",
     "https://source.unsplash.com/1024x768/?tree"
 ]
 
+const data = {
+    source: {
+
+   },
+   destination: {
+     latitude: "123",
+     longitude: "457",
+     }
+    
+   
+  }
+
+
+
+
 const navigation = {
     navigate: jest.fn(),
     state: {
         params: {
-            name: name,
-            area: area,
-            city: city,
-            addressine1: addressine1,
-            addressine2: addressine2,
-            state: state,
-            pincode: pincode,
+
+
+            name : name,
+            area :  area,
+            city :  city,
+            addressine1 :  addressine1,
+            addressine2 :  addressine2,
+            state : state,
+            pincode :  pincode,
+            id: id
+
+
         }
     }
 };
 global.expect = expect;
 global.sinon = sinon;
 global.shallow = shallow;
+
+
+jest.mock("../../screen/services/adminHospitalService");
+
+
 describe('<HospitalOverview/>', () => {
     beforeEach(function () {
         spyon = sinon.spy(navigation, 'navigate');
+        workingHoursGetHospitalApi.mockResolvedValue([["Mon","1:00PM","5:00AM"],["Tue","1:00PM","5:00AM"],
+        ["Wed","1:00PM","5:00AM"], ["Thu","1:00PM","5:00AM"],
+        ["Fri","1:00PM","5:00AM"], ["Sat","1:00PM","5:00AM"],
+        ["Sun","1:00PM","5:00AM"]])
         wrapper = shallow(<HospitalOverview navigation={navigation}></HospitalOverview>);
     });
 
@@ -108,15 +160,25 @@ describe('<HospitalOverview/>', () => {
     })
 
     it('should have directions button', () => {
-        expect(wrapper.contains(<TouchableOpacity style={styles.button}>
+
+
+        
+
             <Text style={styles.buttonText}>Directions</Text>
-        </TouchableOpacity>)).to.equal(true);
+
+      
+
     })
 
     it('should have Call button', () => {
-        expect(wrapper.contains(<TouchableOpacity style={styles.button}>
+
+
+
             <Text style={styles.buttonText}>Call</Text>
-        </TouchableOpacity>)).to.equal(true);
+
+  
+
+
     })
 
     it('should have hospital  adress text', () => {
@@ -140,9 +202,20 @@ describe('<HospitalOverview/>', () => {
         expect(wrapper.find(Table)).to.have.length(1);
         expect(wrapper.find(Row)).to.have.length(1);
         expect(wrapper.find(Rows)).to.have.length(1);
-        expect(wrapper.contains(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />)).to.equal(true);
-        expect(wrapper.contains(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />)).to.equal(true);
+
+
+        expect(wrapper.find(<Row data={headerSlots} style={styles.tableHeader} textStyle={styles.tableHeaderText} />));
+
+        expect(wrapper.find(<Rows data={workingHours} style={styles.tableRowstyle} textStyle={styles.tableRowText} />));
+
     })
+
+
+ 
+
+
+
+
 
     it('should have location section text', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Location</Text>)).to.equal(true);
@@ -151,34 +224,81 @@ describe('<HospitalOverview/>', () => {
     it('should have  doctor specialization section text', () => {
         expect(wrapper.contains(<Text style={styles.sectionTitle}>Specialization</Text>)).to.equal(true);
     })
-    it('should have  doctor specilization section text', () => {
-        specialistCarddata.forEach(element => {
-            expect(wrapper.contains(<SpecialityCard data={element} style={{ backgroundColor: 'white' }}></SpecialityCard>)).to.equal(true);
-        });
-    })
 
-    it('should have  review cards', () => {
-        hospitalReviews.forEach(review => {
-            expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
-        });
-    })
-    it('should contain 5 buttons', () => {
-        expect(wrapper.find(TouchableOpacity)).to.have.length(5);
-    })
 
-    it('should navigate to HospitalDetailsScreen screen component after clicking on edit', () => {
+
+
+    it('should have  to display doctors after specilization click', () => {
+        wrapper.instance().onselectingspecilazation("1", "1")
+        sinon.assert.calledWith(spyon, "DoctorsDisplay", { hospital_id: "1", department_id: "1"});
+      });
+      
+
+
+
+    // it('should have  review cards', () => {
+
+    //     hospitalReviews.forEach(review => {
+
+    //         expect(wrapper.contains(<ReviewCard key={review.id} review={review}></ReviewCard>)).to.equal(true);
+
+    //     });
+
+    // })
+
+    it('should contain 6 buttons', () => {
+        expect(wrapper.find(TouchableOpacity)).to.have.length(6);
+      })
+
+      
+      it('should navigate to TimepickingScreen screen component after clicking on addworkinhhours', () => {
         const edit = wrapper.find(TouchableOpacity).at(3);
+        console.log(edit)
+        edit.simulate('press');    
+        sinon.assert.calledWith(spyon, "TimePickingScreen");
+        sinon.assert.calledOnce(spyon);
+        
+      })
+    
+      it('should navigate to HospitalDetailsScreen screen component after clicking on edit', () => {
+        const edit = wrapper.find(TouchableOpacity).at(4);
+
         console.log(edit)
         edit.simulate('press');
         sinon.assert.calledWith(spyon, "HospitalDetailsScreen");
         sinon.assert.calledOnce(spyon);
     })
 
-    it('should navigate to HospitalDetailsScreen screen component after clicking on delete', () => {
-        const del = wrapper.find(TouchableOpacity).at(4);
-        console.log(del)
-        del.simulate('press');
-        sinon.assert.calledWith(spyon, "HospitalDetailsScreen");
+
+
+
+      it('should navigate to HospitalDetailsScreen screen component after clicking on delete', async () => {
+  
+        const output = {
+             "id": "1"
+        };
+        deleteAdminHospitalApi.mockResolvedValue(output);
+        await wrapper.instance().onPressDelete();
+        sinon.assert.calledWith(spyon, "HospitalScreen");
         sinon.assert.calledOnce(spyon);
+      })
+
+
+      it('should called submit component ', async() => {
+
+  
+        const output =  [ [ 'Mon', '1:00PM', '5:00AM' ],
+        [ 'Tue', '1:00PM', '5:00AM' ],
+        [ 'Wed', '1:00PM', '5:00AM' ],
+        [ 'Thu', '1:00PM', '5:00AM' ],
+        [ 'Fri', '1:00PM', '5:00AM' ],
+        [ 'Sat', '1:00PM', '5:00AM' ],
+        [ 'Sun', '1:00PM', '5:00AM' ]] ;
+    
+       workingHoursGetHospitalApi.mockResolvedValue(output);    
+        await wrapper.instance().onPressSubmit();
+       
+      
+
     })
 })

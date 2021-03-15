@@ -91,12 +91,12 @@ DATABASES = {
          'PASSWORD':'d67468267148f3e443d7d09608d479647a7da8ffc3d7f0d76c040d62c67a9f65',
          'HOST':'ec2-34-235-62-201.compute-1.amazonaws.com',
          'PORT':'5432'
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #'NAME':'hospitalmanagement',
-        #'USER':'postgres',
-        #'PASSWORD':'postgres123',
-        #'HOST':'localhost',
-        #'PORT':'5432'
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME':'hospitalmanagement',
+        # 'USER':'postgres',
+        # 'PASSWORD':'postgres123',
+        # 'HOST':'localhost',
+        # 'PORT':'5432'
     },
 
 
