@@ -7,7 +7,9 @@ import styles from '../../styles/DoctorProfileStyles';
 import styles1 from '../../styles/commonStyles';
 import HospitalCard from './Cards/HospitalCard';
 import { Table, Row, Rows } from "react-native-table-component";
-import ReviewCard from './Cards/ReviewCard';
+// import ReviewCard from './Cards/ReviewCard';
+import { deleteAdminStaffApi } from '../services/adminStaffService';
+
 const image = { uri: "https://thomsonhospitals.com/wp-content/uploads/2019/07/Thomson-Hospital-Kota-Damansara-Specialties-Obstetrics-Gynaecology-Thumbnail.jpg" };
 
 export default class HospitalOverview extends Component {
@@ -34,12 +36,29 @@ export default class HospitalOverview extends Component {
       ["Fri", "Yes", "-", "-"],
       ["Sat", "Yes", "-", "-"],
       ["Sun", "No", "01:00PM", "06:00PM"]],
+
+      id: this.props.navigation.state.params.id,
  
 
       };
     }
  
-
+    onPressDelete = () => {
+      var body;
+      console.log("hi")
+        body = JSON.stringify({ id: this.state.id });
+        
+        console.log(body)
+          
+        deleteAdminStaffApi(body).then((res) => {
+           console.log(res);
+          this.props.navigation.navigate('ManageStaffScreen');
+  
+        });
+  
+ 
+  
+   };
   
    
     render() {
@@ -56,6 +75,7 @@ export default class HospitalOverview extends Component {
       const id =  this.props.navigation.state.params.id
       const profile_id =  this.props.navigation.state.params.profile_id
       const hospital_id =  this.props.navigation.state.params.hospital_id
+      const department_id =  this.props.navigation.state.params.department_id
 
       // const name =  this.props.navigation.getParam('name', 'nothing sent')
  
@@ -101,11 +121,11 @@ export default class HospitalOverview extends Component {
                       <Text style={styles.sectionTitle}>Patient Reviews</Text>
 
                       <Text style={styles.reviewsSubText}>These reviews represent patient opinions and experiences. And they do not reflect the Doctor's medical capabilities.</Text>
-
+{/* 
                       {this.state.hospitalReviews.map(review => (
                           <ReviewCard key={review.id} review={review}></ReviewCard>
 
-                          ))}
+                          ))} */}
 
 
 
@@ -116,12 +136,12 @@ export default class HospitalOverview extends Component {
                 <View style={{ flexDirection:"row" }}>
                 <TouchableOpacity  onPress={() => this.props.navigation.navigate('StaffDetailsScreen', {name: name, specialization: specialization, highestDegree: highestDegree, overAllExperience: overAllExperience, 
                   phonenumber: phonenumber, email: email, college_name: college_name, doctor_fee: doctor_fee,
-                  licence_number: licence_number, id: id, profile_id: profile_id,hospital_id: hospital_id})}  activeOpacity={0.7} style={styles2.button} >
+                  licence_number: licence_number, id: id, profile_id: profile_id,hospital_id: hospital_id, department_id: department_id})}  activeOpacity={0.7} style={styles2.button} >
    
                   < Text style={styles1.buttonText}> Edit </Text>
 
                </TouchableOpacity>
-                <TouchableOpacity  onPress={() => this.props.navigation.navigate('StaffDetailsScreen')} activeOpacity={0.7} style={styles2.button} >
+                <TouchableOpacity  onPress={this.onPressDelete} activeOpacity={0.7} style={styles2.button} >
    
                  < Text style={styles1.buttonText}> Delete </Text>
 

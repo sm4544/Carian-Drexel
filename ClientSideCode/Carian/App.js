@@ -65,6 +65,9 @@ import paymentScreen from './screen/drawerScreens/CommonPages/PaymentScreen';
 // import PatientsAppointment from './screen/drawerScreens/PatientsAppointment';
 import DepartmentPage from './screen/drawerScreens/DepartmentPage';
 import DepartmentConfirmationScreen from './screen/drawerScreens/DepartmentConfirmationScreen';
+import TimePickingScreen from './screen/drawerScreens/TimePickingScreen';
+import TimePickingLabScreen from './screen/drawerScreens/TimePickingLabScreen';
+import DoctorsDisplay from './screen/drawerScreens/DoctorsDisplay';
 
 
 const FirstActivity_StackNavigator = createStackNavigator({
@@ -651,6 +654,21 @@ const OtherExternal = createStackNavigator({
   PatientAppointments: {
     screen: PatientAppointments,
     navigationOptions: { title: 'PatientAppointments' },
+  },
+  
+    TimePickingScreen: {
+    screen: TimePickingScreen,
+    navigationOptions: { title: 'TimePickingScreen' },
+  },
+
+  TimePickingLabScreen: {
+    screen: TimePickingLabScreen,
+    navigationOptions: { title: 'TimePickingLabScreen' },
+  },
+ 
+  DoctorsDisplay: {
+    screen: DoctorsDisplay,
+    navigationOptions: { title: 'DoctorsDisplay' },
   },
 
   PatientsInfoScreen:{

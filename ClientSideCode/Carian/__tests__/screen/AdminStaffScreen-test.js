@@ -54,4 +54,19 @@ describe('<ManageStaffScreen/>', () => {
     sinon.assert.calledOnce(spyon);
   })
 
+
+  it('should called submit component ', async() => {
+
+  
+    const output = {"name": "doctorname", "specialization": "ortho", "highestDegree": "mbbs", "overAllExperience": "10",
+    "phonenumber": "1234", "email": "xyz", "college_name": "abc","doctor_fee": "200","licence_number": "345", "id": "1", "profile_id": "2", "hospital_id": "2"};
+
+    StaffApi.mockResolvedValue(output);    
+    await wrapper.instance().onPressSubmit();
+   
+  
+})
+
+
+
 });

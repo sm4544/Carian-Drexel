@@ -139,14 +139,17 @@ describe('<LabDetailsScreen/>', () => {
     wrapper.find(TextInput).at(5).simulate('ChangeText', 'test@test.com');
     wrapper.find(TextInput).at(6).simulate('ChangeText', '123456789632');
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'test@test.com');
-    wrapper.find(TextInput).at(8).simulate('ChangeText', '123456789632');
-    const output = {
-      "Message": "Invalid JSON-'name'"
-    };
-    postAdminLabApi.mockResolvedValue(output);
-    await wrapper.instance().onPressSubmit();
-    sinon.assert.calledWith(spyon, "LabScreen");
-    sinon.assert.calledOnce(spyon);
+
+    wrapper.find(TextInput).at(8).simulate('ChangeText', '123456789632');  
+      const output = { "Message": "Data" 
+                    };
+  
+      postAdminLabApi.mockResolvedValue(output);    
+      await wrapper.instance().onPressSubmit();
+      sinon.assert.calledWith(spyon, "LabScreen");
+      sinon.assert.calledOnce(spyon);
+    
+
   })
 
   it('should navigate to hospital component on update', async () => {
@@ -160,13 +163,17 @@ describe('<LabDetailsScreen/>', () => {
     wrapper.find(TextInput).at(7).simulate('ChangeText', 'state');
     wrapper.find(TextInput).at(8).simulate('ChangeText', 'pincode');
 
-    const output = {
-      "message": "Invalid"
-    };
-
-    editAdminLabApi.mockResolvedValue(output);
-    await wrapper.instance().onPressUpdate();
-    sinon.assert.calledWith(spyon, "LabScreen");
-    sinon.assert.calledOnce(spyon);
+  
+      const output = { "message": "Data" 
+                    };
+  
+     editAdminLabApi.mockResolvedValue(output);    
+      await wrapper.instance().onPressUpdate();
+      sinon.assert.calledWith(spyon, "LabScreen");
+      sinon.assert.calledOnce(spyon);
+    
   })
+  
+
+
 });
